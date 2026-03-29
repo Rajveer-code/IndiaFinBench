@@ -1,0 +1,166 @@
+id,task_type,difficulty,your_answer
+REG_001,regulatory_interpretation,easy,at least fifteen crore rupees
+REG_002,regulatory_interpretation,easy,At least seventy five per cent.
+REG_003,regulatory_interpretation,easy,At least twenty per cent. of the post-issue capital.
+REG_004,regulatory_interpretation,medium,One-third of the anchor investor portion shall be reserved for domestic mutual funds.
+REG_005,regulatory_interpretation,medium,Three years from the date of allotment in the initial public offer.
+REG_006,regulatory_interpretation,easy,Ten crore rupees.
+REG_007,regulatory_interpretation,easy,Twenty-five per cent or more of the voting rights in such target company.
+REG_008,regulatory_interpretation,medium,5 per cent of the voting rights.
+REG_009,regulatory_interpretation,medium,Twenty five lakh rupees.
+REG_010,regulatory_interpretation,medium,"not less than five percent of the corpus or ten crore rupees, whichever is lower."
+REG_011,regulatory_interpretation,easy,Not more than one hundred and twenty days.
+REG_012,regulatory_interpretation,medium,"Rupees one thousand crore or ten per cent of the annual consolidated turnover of the listed entity, whichever is lower."
+REG_013,regulatory_interpretation,easy,Within two trading days of receipt of the disclosure.
+REG_014,regulatory_interpretation,easy,at least sixty days
+REG_015,regulatory_interpretation,hard,"Sixty days from the expiry of the sixty-day window, or one hundred and twenty calendar days."
+REG_016,regulatory_interpretation,medium,atleast fifty percent
+REG_017,regulatory_interpretation,easy,The exit load of an open-ended mutual fund scheme shall not exceed three per cent of the applicable net asset value.
+REG_018,regulatory_interpretation,easy,Seventy-five per cent of the unit holders of a scheme must pass a resolution for its winding up.
+REG_019,regulatory_interpretation,easy,50 crore.
+REG_020,regulatory_interpretation,easy,At least twenty-one days.
+REG_021,regulatory_interpretation,easy,A REIT shall have a minimum asset size of five hundred crore rupees or more.
+REG_022,regulatory_interpretation,medium,Eight years
+REG_023,regulatory_interpretation,medium,Five per cent of the paid-up equity share capital.
+REG_024,regulatory_interpretation,medium,More than ten per cent of the paid-up share capital of that issuer.
+REG_025,regulatory_interpretation,medium,More than five per cent of the paid-up equity share capital of such depository.
+NUM_001,numerical_reasoning,medium,3 crore rupees * 3 years = 9 crore rupees.
+NUM_002,numerical_reasoning,medium,"60% of 900 crore rupees is 540 crore rupees, and one-third of 540 crore rupees is 180 crore rupees."
+NUM_003,numerical_reasoning,medium,20 * 5 crore = 100 crore.
+NUM_004,numerical_reasoning,hard,"2.5% of 20 crore rupees is 0.5 crore rupees, and 5 crore rupees is higher, so the minimum continuing interest is 0.5 crore rupees, but since 0.5 crore rupees is lower than 5 crore rupees and 2.5% of 20 crore rupees is 0.5 crore rupees, the minimum is 5 crore rupees is not applicable, 2.5% of the corpus is 0.5 crore rupees. 
+2.5% of 20 crore rupees = 0.025 * 20 = 0.5 crore rupees. 
+The minimum continuing interest the Manager or Sponsor must maintain is 0.5 crore rupees or 5 crore rupees, whichever is lower, so 0.5 crore rupees. 
+0.5 crore rupees."
+NUM_005,numerical_reasoning,hard,"20% of 500 crore rupees is 100 crore rupees, and 15% of 100 crore rupees for 6 months is 7.5 crore rupees."
+NUM_006,numerical_reasoning,medium,"Minimum members = 3, at least two-thirds independent, so minimum independent = 2/3 * 3 = 2. 
+2"
+NUM_007,numerical_reasoning,hard,"60 days (initial window) + 60 days (additional delayed period, since it's 60 calendar days from the expiry of the period specified, which itself is 60 days) = 120 days."
+NUM_008,numerical_reasoning,medium,The difference between the highest price paid during the twenty-six weeks period (Rs. 300) and the offer price (Rs. 250) is Rs. 50 per share.
+NUM_009,numerical_reasoning,hard,"The warrant is valid for 18 months from 1 January 2024, so the last day is 30 June 2025, but the holder must exercise within 3 months of paying the warrant exercise price. If the price is paid on 30 June 2025, the latest date is 30 September 2025, but since the price can be paid earlier, the latest date the holder can exercise is 3 months after the 18th month, which is 3 months after 30 June 2025, but since the warrant itself expires on 30 June 2025, the payment must be made before this, and within 3 months of this payment, the exercise must happen, so the latest date is 30 June 2025 + 3 months - 18 months = 30 September 2025 - 15 months = 30 June 2025 + 3 months - 18 months, which simplifies to 3 months after the"
+NUM_010,numerical_reasoning,medium,"To find the latest date for the second board meeting, 120 days must be added to the date of the first meeting. 
+120 days after 1 April is 29 July. 
+
+29 July"
+NUM_011,numerical_reasoning,easy,10% of 500 crore rupees = 0.1 * 500 crore rupees = 50 crore rupees.
+NUM_012,numerical_reasoning,easy,"50% of 8 is 4. 
+4"
+CON_001,contradiction_detection,medium,"Yes. Passage A prescribes a lock-in period of three years from the date of commencement of commercial production or date of allotment, whereas Passage B prescribes a lock-in period of eighteen months from the date of allotment for the general case."
+CON_002,contradiction_detection,medium,No. Both passages prescribe a lock-in period of six months from the date of allotment in the initial public offer.
+CON_003,contradiction_detection,easy,"Yes. Passage A prescribes a minimum continuing interest of ""not less than two and half percent of the corpus or five crore rupees, whichever is lower"", while Passage B prescribes a higher threshold of ""not less than five percent of the corpus or ten crore rupees, whichever is lower"" for Category III Alternative Investment Fund."
+CON_004,contradiction_detection,easy,No. The maximum time gap of one hundred and twenty days is specified for both the board meetings and the audit committee meetings.
+CON_005,contradiction_detection,hard,"Yes. The threshold for recognised stock exchanges is fifteen per cent for certain entities, whereas the threshold for depositories is five per cent."
+CON_006,contradiction_detection,medium,No. Both passages require notification to the stock exchange within two trading days of receipt of the disclosure.
+CON_007,contradiction_detection,hard,"No. Passage A states that an applicant who withdraws an application shall not be permitted to make another application in respect of the same default, while Passage B allows for a second application under certain conditions, such as an increase of at least fifty percent over the settlement amount."
+CON_008,contradiction_detection,hard,"Yes. Passage A focuses on voting rights and director representation, while Passage B considers directorship and paid-up capital ownership by the sponsor or its associates."
+CON_009,contradiction_detection,medium,No. The limit of fifty per cent on monetary assets shall not be applicable in case the initial public offer is made entirely through an offer for sale.
+CON_010,contradiction_detection,hard,"No. Passage A requires at least twenty-one days' notice for exercisable rights, while Passage B requires redemption within one month from the last date of the redemption period without specifying a notice period."
+CON_011,contradiction_detection,easy,"Yes. The social impact fund requires a corpus of at least five crore rupees, while the Alternative Investment Fund requires a corpus of at least twenty crore rupees."
+CON_012,contradiction_detection,medium,"No. The passages indicate that the open offer trigger threshold is twenty-five per cent for most target companies, but forty-nine per cent for those listed on the Innovators Growth Platform."
+TMP_001,temporal_reasoning,medium,"The definition of 'key managerial personnel' substituted by the SEBI (Issue of Capital and Disclosure Requirements) (Amendment) Regulations, 2023, w.e.f. 31.01.2023, is currently in force."
+TMP_002,temporal_reasoning,easy,Three years.
+TMP_003,temporal_reasoning,hard,The provisions of sub-regulation (4) of regulation 23 and regulation 31A.
+TMP_004,temporal_reasoning,medium,"No, the term 'Delisting Regulations' was not a defined term at the time those regulations came into force."
+TMP_005,temporal_reasoning,easy,Institutional trading platform
+TMP_006,temporal_reasoning,medium,"The SEBI (ICDR) (Amendment) Regulations, 2025."
+TMP_007,temporal_reasoning,medium,"SEBI (Issue and Listing of Debt Securities) Regulations, 2008."
+TMP_008,temporal_reasoning,medium,"For a period of five years from the commencement of the SEBI (AIF) Regulations, 2012."
+TMP_009,temporal_reasoning,medium,The draft letter of offer was required to be filed with the Board prior to 08.03.2025.
+TMP_010,temporal_reasoning,hard,"Regulation 2(ee) of the SEBI (Issue of Capital and Disclosure Requirements) Regulations, 2018."
+TMP_011,temporal_reasoning,hard,The phrase 'is made' was used in place of 'is required to be made under these regulations'.
+TMP_012,temporal_reasoning,easy,Cannot be determined from context
+TMP_013,temporal_reasoning,easy,The SEBI (Mutual Funds) Regulations originally notified in 1996.
+TMP_014,temporal_reasoning,medium,sponsors
+TMP_015,temporal_reasoning,easy,The SEBI (ICDR) Regulations 2009 was enacted earlier.
+TMP_016,temporal_reasoning,medium,2018
+TMP_017,temporal_reasoning,medium,25.07.2022
+REG_067,regulatory_interpretation,easy,Not later than thirty days of receipt of the complete application.
+REG_068,regulatory_interpretation,easy,not later than fifteen days of the occurrence of such change.
+REG_069,regulatory_interpretation,easy,forty-five days of receipt thereof
+REG_070,regulatory_interpretation,easy,for a period of one year from the date of such rejection.
+REG_071,regulatory_interpretation,medium,"Within sixty days, and prior approval shall be deemed to have been granted if the decision is not communicated within this period."
+REG_072,regulatory_interpretation,easy,A photocopy of the certificate and the name and contact details of the compliance officer.
+REG_073,regulatory_interpretation,medium,"The certificate can cease to be valid if it is surrendered by the intermediary, suspended, or cancelled in accordance with these regulations."
+REG_074,regulatory_interpretation,easy,ten crore rupees.
+REG_075,regulatory_interpretation,easy,"Twenty-five per cent or less of the aggregate of paid-up capital and free reserves, based on the standalone or consolidated financial statements of the company, whichever sets out a lower amount."
+REG_076,regulatory_interpretation,easy,2:1
+REG_077,regulatory_interpretation,easy,One year reckoned from the date of expiry of buyback period of the preceding offer of buy-back.
+REG_078,regulatory_interpretation,medium,A company may fund a buy-back from (a) its free reserves; (b) the securities premium account; or (c) the proceeds of the issue of any shares or other specified securities. No such buy-back shall be made out of the proceeds of an earlier issue of the same kind of shares or same kind of other specified securities.
+REG_079,regulatory_interpretation,medium,Three years after the default ceased to subsist.
+REG_080,regulatory_interpretation,easy,"""compulsory delisting"" means delisting of equity shares of a company by a recognised stock exchange under Chapter V of these regulations."
+REG_081,regulatory_interpretation,easy,the period within which shareholders may tender their shares in acceptance of the offer for delisting of equity shares of the company made under these regulations.
+REG_082,regulatory_interpretation,easy,On the ninetieth day from the date of their publication in the Official Gazette.
+REG_083,regulatory_interpretation,easy,A person whose only business activity is research analysis or preparation and/or publication of research report.
+REG_084,regulatory_interpretation,easy,Financial Year (FY) 2026-27.
+REG_085,regulatory_interpretation,easy,Small Finance Banks (SFBs)
+REG_086,regulatory_interpretation,easy,75% of the PAT for the period for which the dividend is being proposed.
+REG_087,regulatory_interpretation,medium,"The Board of Directors shall consider: (1) divergence in asset classification and provisioning for Non-Performing Assets, (2) Auditors' Report, (3) current and projected capital position, and (4) long term growth plans."
+REG_088,regulatory_interpretation,easy,Within a fortnight of declaration of dividend.
+REG_089,regulatory_interpretation,easy,The bank shall not be under any explicit restrictions for declaration of dividends from the Reserve Bank or any other authority.
+REG_090,regulatory_interpretation,medium,'Adjusted Profit After Tax (PAT)' means PAT of the financial year for which the dividend is proposed to be paid minus 50 per cent of Net NPA as on March 31 of the financial year for which the dividend is to be paid.
+REG_091,regulatory_interpretation,easy,"Section B of the Directions on implementation of Unique Transaction Identifier (UTI) shall come into effect from January 01, 2027."
+REG_092,regulatory_interpretation,easy,Entities without an LEI code shall not be eligible to undertake transactions in the financial markets regulated by the Reserve Bank.
+REG_093,regulatory_interpretation,medium,USD one million or equivalent thereof in other currencies.
+REG_094,regulatory_interpretation,easy,"The minimum nominal amount is Rs. 10,000/- and they are issued in multiples of Rs. 10,000/- thereafter."
+NUM_067,numerical_reasoning,easy,"Adjusted PAT = ₹17,000 crore - 50% of ₹6,500 crore = ₹17,000 crore - ₹3,250 crore = ₹13,750 crore."
+NUM_068,numerical_reasoning,medium,"Maximum dividend allowable: 40% of ₹13,750 crore = ₹5,500 crore."
+NUM_069,numerical_reasoning,medium,"75% of PAT is ₹12,750 crore, and the Table 1 limit is ₹5,500 crore, so the Maximum Eligible Dividend is ₹5,500 crore."
+NUM_070,numerical_reasoning,medium,Maximum Eligible Dividend as percentage of PAT: 32.35%
+NUM_071,numerical_reasoning,medium,"Maximum permissible final dividend: (G) - (H) = 1,125 - 500 = 625 crore."
+NUM_072,numerical_reasoning,easy,"Adjusted PAT = (A) - 50% of (B) = 40,500 - 50% of 5,000 = 40,500 - 2,500 = 38,000 crore."
+NUM_073,numerical_reasoning,hard,"Maximum dividend allowed per Table 1: 19,000 crore, 75% of PAT: 30,375 crore"
+NUM_074,numerical_reasoning,medium,"₹29,000 crore (notified amount) + ₹2,000 crore (additional subscription for the first security) + ₹2,000 crore (additional subscription for the second security) = ₹29,000 crore + ₹4,000 crore = ₹33,000 crore."
+NUM_075,numerical_reasoning,medium,"Total notified amount for the 7.43% GS 2076 security: ₹12,000 crore. 
+Total auction amount: ₹17,000 crore + ₹12,000 crore = ₹29,000 crore. 
+Fraction: ₹12,000 crore / ₹29,000 crore. 
+Fraction in decimal form: 12,000 / 29,000 = 0.414. 
+As a percentage: 0.414 * 100 = 41.4%. 
+So, the 7.43% GS 2076 security is ₹12,000 crore, which is 41.4% of the total auction amount of ₹29,000 crore."
+NUM_076,numerical_reasoning,easy,"₹57,408 Crore"
+NUM_077,numerical_reasoning,easy,"1500 + 1500 + 900 = 3900 
+3900 crore"
+NUM_078,numerical_reasoning,easy,Cannot be determined from context
+NUM_079,numerical_reasoning,easy,"8,20,000 crore."
+NUM_080,numerical_reasoning,easy,"₹29,000 crore + ₹34,000 crore = ₹63,000 crore"
+NUM_081,numerical_reasoning,easy,"₹5,000 crore + ₹5,000 crore = ₹10,000 crore"
+NUM_082,numerical_reasoning,easy,"Total Reserves: US$ 709,759 million, Variation over Week: US$ -7,052 million."
+NUM_083,numerical_reasoning,easy,11.9%
+NUM_084,numerical_reasoning,medium,"Year-on-Year growth rate = ((31,30,192 - 30,298,040) / 30,298,040) * 100, but the context passage directly provides the Year-on-Year 2026 growth rate: 11.5%."
+NUM_085,numerical_reasoning,medium,"Value of gold reserves as on March 13, 2026: US$ 130,681 million. Increase over the year: US$ 56,289 million."
+NUM_086,numerical_reasoning,hard,"Maximum buy-back amount: 25% of ₹500 crore = ₹125 crore. 
+Maximum total debt after buy-back: 2 * (₹500 crore - ₹125 crore) = ₹750 crore."
+CON_028,contradiction_detection,easy,"No. The aggregate amounts stated are ₹55,688 Crore and ₹57,408 Crore in the March 20, 2026, and March 21, 2026, press releases, respectively."
+CON_029,contradiction_detection,easy,"No. Bucket B1 allows a dividend payout of 0% of adjusted PAT, while Bucket B10 allows a dividend payout of 100% of adjusted PAT."
+CON_030,contradiction_detection,easy,"No. Section A comes into force with immediate effect, while Section B comes into effect from January 01, 2027."
+CON_031,contradiction_detection,medium,"No. Passage A sets the maximum limit at twenty-five per cent, while Passage B sets a lower limit of less than fifteen per cent for buy-back from the open market through stock exchanges till March 31, 2023."
+CON_032,contradiction_detection,medium,"No. The passages are not contradictory as Passage A refers to ""explicit restrictions"" while Passage B mentions restrictions in cases of non-compliance."
+CON_033,contradiction_detection,medium,"No. Passage A describes intermediaries with permanent certificates, while Passage B refers to certificates granted for a specified period, implying they are not permanent."
+CON_034,contradiction_detection,medium,No. The auction will be conducted using multiple price method.
+CON_035,contradiction_detection,easy,Yes. Both passages state that five per cent of the notified amount will be reserved for non-competitive bidding.
+CON_036,contradiction_detection,medium,"Yes. Passage A refers to ""exceptional and / or extra-ordinary profits / income"" and Passage B refers to ""net unrealised gains arising on fair valuation of Level 3 financial instruments (including derivatives)"" as ineligible for dividend payment."
+CON_037,contradiction_detection,medium,No. A company shall not buy-back its shares or other specified securities so as to delist its shares or other specified securities from the stock exchange.
+CON_038,contradiction_detection,medium,"No. Notwithstanding such repeal, any action taken or purported to have been taken, or initiated under the repealed Directions, instructions, or guidelines shall continue to be governed by the provisions thereof."
+CON_039,contradiction_detection,medium,"No. The original press release states 1280 for the 18-year tenor, while the revised press release states 1500 for the same tenor."
+CON_040,contradiction_detection,hard,"Yes. Passage B allows non-resident entities that are not legal entities in their country of incorporation to use the LEI code of the parent/management company, thus creating an exception to the rule in Passage A."
+CON_041,contradiction_detection,hard,"No. The provisions of Chapters V and VI come into force on the date of publication of these regulations in the Official Gazette, whereas the regulations as a whole come into force in relation to different classes of intermediaries on dates appointed by the Board."
+CON_042,contradiction_detection,easy,"No. Bucket B2 allows a dividend of 20% of adjusted PAT, while Bucket B3 allows a dividend of 30% of adjusted PAT."
+CON_043,contradiction_detection,easy,"No. The definitions differ as an ""independent research analyst"" has only research analysis as their business activity, whereas a ""part-time research analyst"" is also engaged in any other business activity or employment."
+CON_044,contradiction_detection,medium,"Yes. Both Auction Week 2 and Auction Week 6 have the same structure, with ₹34,000 crore for a 10 Year security."
+CON_045,contradiction_detection,hard,"No. Passage A states that buy-back from the open market through the stock exchange shall not be allowed with effect from April 1, 2025, while Passage B lists it as a method, indicating a potential change or restriction."
+TMP_028,temporal_reasoning,easy,The LEI framework was implemented first.
+TMP_029,temporal_reasoning,medium,"CO.FMRD.MIOD.No.8/11.01.057/2025-26 dated February 18, 2026."
+TMP_030,temporal_reasoning,medium,9 years.
+TMP_031,temporal_reasoning,medium,"Buy-back limit is reduced step-by-step: (i) to 15% of paid up capital and free reserves till March 31, 2023; (ii) to 10% till March 31, 2024; (iii) to 5% till March 31, 2025; and buy-back is not allowed with effect from April 1, 2025."
+TMP_032,temporal_reasoning,medium,The 2025 Directions were in effect during FY 2025-26.
+TMP_033,temporal_reasoning,medium,"March 28, 2026, March 30, 2026, April 02, 2026, April 06, 2026."
+TMP_034,temporal_reasoning,easy,"The sequence of key events is: Press Release announcement on March 21, 2026, auction on March 24, 2026, and payment by successful bidders on March 25, 2026."
+TMP_035,temporal_reasoning,medium,Two years plus up to six months.
+TMP_036,temporal_reasoning,medium,"They came into force on the ninetieth day from the date of their publication, approximately December 1, 2014, but more precisely, November 30, 2014."
+TMP_037,temporal_reasoning,medium,"Auction Week 4, ₹5,000 crore for 30 Year SGrB."
+TMP_038,temporal_reasoning,easy,"The 2025 Directions (repealed circular dated November 28, 2025) were issued before the 2026 Directions."
+TMP_039,temporal_reasoning,hard,"No, Section B on UTI comes into effect from January 01, 2027."
+TMP_040,temporal_reasoning,hard,Three months prior to expiry of two years from the commencement of these regulations.
+TMP_041,temporal_reasoning,medium,"The Al-Nusrah Front was listed on the ISIL (Da'esh) and Al-Qaida Sanctions List for approximately 12 years, from 14 May 2014."
+TMP_042,temporal_reasoning,easy,on the fourth Monday of the month.
+TMP_043,temporal_reasoning,easy,Within five Mumbai business days from the date of the transaction.
+TMP_044,temporal_reasoning,medium,"June 15, 2026."
+TMP_045,temporal_reasoning,hard,The Maximum Eligible Dividend constraint applies cumulatively across both payments.

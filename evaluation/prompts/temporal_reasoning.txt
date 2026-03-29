@@ -1,0 +1,11 @@
+You are an expert in Indian regulatory compliance.
+Read the following passage(s) and answer the question about the order or
+precedence of regulatory events. Be precise about dates and sequences.
+
+Passage:
+{context}
+
+Question:
+{question}
+
+Answer:

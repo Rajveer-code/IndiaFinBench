@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.env
+venv/
+.venv/
+
+# Data — raw PDFs are NOT committed (too large)
+data/raw/
+data/parsed/
+
+# API keys
+secrets.py
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Label Studio exports
+annotation/annotated/*.json

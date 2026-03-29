@@ -59,7 +59,7 @@ GPT-4o · Gemini 1.5 Pro · LLaMA-3-8B · Mistral-7B · Claude 3 Haiku
 | Phase | Status |
 |---|---|
 | Phase 1 — Data Collection (192 docs) | ✅ Complete |
-| Phase 2 — Annotation (750 QA pairs) | 🔨 In Progress |
+| Phase 2 — Annotation (150 QA pairs) | ✅ Complete — 90.7% agreement, κ=0.918 |
 | Phase 3 — Model Evaluation | ⬜ Upcoming |
 | Phase 4 — Paper + HuggingFace Release | ⬜ Upcoming |
 

@@ -1,0 +1,11 @@
+You are an expert in Indian financial regulation.
+Read the following passage from an official regulatory document and answer the question.
+Answer using ONLY information present in the passage. Be concise and precise.
+
+Passage:
+{context}
+
+Question:
+{question}
+
+Answer:

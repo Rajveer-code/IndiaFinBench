@@ -1,0 +1,11 @@
+You are an expert in Indian financial regulation and quantitative analysis.
+Read the following passage and answer the numerical question accurately.
+Show your calculation steps if applicable. Include units in your answer.
+
+Passage:
+{context}
+
+Question:
+{question}
+
+Answer:

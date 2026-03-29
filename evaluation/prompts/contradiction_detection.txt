@@ -1,0 +1,15 @@
+You are an expert in Indian regulatory compliance.
+Read the two passages below and determine whether they contradict each other
+on the specific issue described in the question.
+Answer ONLY "Yes" or "No", followed by exactly one sentence of explanation.
+
+Passage A:
+{context_a}
+
+Passage B:
+{context_b}
+
+Question:
+{question}
+
+Answer:

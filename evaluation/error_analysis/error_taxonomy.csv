@@ -1,0 +1,21 @@
+model,error_type,count
+Claude 3 Haiku,Domain Knowledge Failure,4
+Claude 3 Haiku,Numerical Reasoning Failure,2
+Claude 3 Haiku,Temporal Reasoning Failure,7
+Claude 3 Haiku,Context Grounding Failure,0
+Gemini 2.5 Flash,Domain Knowledge Failure,3
+Gemini 2.5 Flash,Numerical Reasoning Failure,5
+Gemini 2.5 Flash,Temporal Reasoning Failure,9
+Gemini 2.5 Flash,Context Grounding Failure,1
+LLaMA-3.3-70B,Domain Knowledge Failure,12
+LLaMA-3.3-70B,Numerical Reasoning Failure,5
+LLaMA-3.3-70B,Temporal Reasoning Failure,10
+LLaMA-3.3-70B,Context Grounding Failure,1
+LLaMA-3-8B,Domain Knowledge Failure,13
+LLaMA-3-8B,Numerical Reasoning Failure,12
+LLaMA-3-8B,Temporal Reasoning Failure,11
+LLaMA-3-8B,Context Grounding Failure,1
+Mistral-7B,Domain Knowledge Failure,17
+Mistral-7B,Numerical Reasoning Failure,10
+Mistral-7B,Temporal Reasoning Failure,13
+Mistral-7B,Context Grounding Failure,1

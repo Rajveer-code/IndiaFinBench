@@ -65,7 +65,8 @@ def normalise_record(raw: dict, index: int) -> dict:
     dict
         Normalised record with exactly the required columns.
     """
-    item_id = raw.get("id", f"indiafinbench_{index + 1:03d}")
+    raw_id  = raw.get("id", f"indiafinbench_{index + 1:03d}")
+    item_id = raw_id if str(raw_id).startswith("indiafinbench_") else f"indiafinbench_{raw_id}"
 
     # For contradiction detection items, combine context_a + context_b
     if raw.get("task_type") == "contradiction_detection":
@@ -82,7 +83,7 @@ def normalise_record(raw: dict, index: int) -> dict:
         source_doc = raw.get("document", raw.get("regulation", "unknown"))
 
     return {
-        "id":               f"indiafinbench_{item_id}",
+        "id":               item_id,
         "task_type":        TASK_TYPE_MAP.get(raw.get("task_type", ""), raw.get("task_type", "")),
         "difficulty":       raw.get("difficulty", "medium").lower(),
         "source":           raw.get("source", "SEBI").upper(),
@@ -105,7 +106,7 @@ def build_dataset():
     Returns
     -------
     datasets.DatasetDict
-        A dict with keys 'validation' (30 items) and 'test' (120 items),
+        A dict with keys 'dev' (30 items) and 'test' (120 items),
         stratified by task_type with random_state=42.
     """
     try:
@@ -157,15 +158,15 @@ def build_dataset():
         val_records  = shuffled[:n_val]
         test_records = shuffled[n_val:]
 
-    print(f"Split: {len(test_records)} test / {len(val_records)} validation")
+    print(f"Split: {len(test_records)} test / {len(val_records)} dev")
     print(f"Random state: {RANDOM_STATE} (reproducible)")
 
     # ------------------------------------------------------------------
     # Build DatasetDict
     # ------------------------------------------------------------------
     dataset_dict = DatasetDict({
-        "test":       Dataset.from_list(test_records),
-        "validation": Dataset.from_list(val_records),
+        "test": Dataset.from_list(test_records),
+        "dev":  Dataset.from_list(val_records),
     })
 
     return dataset_dict
@@ -243,7 +244,7 @@ English (Indian regulatory English — SEBI/RBI documents)
 
 | Split | Size |
 |---|---|
-| validation | 30 |
+| dev  | 30  |
 | test | 120 |
 
 ## Dataset Creation

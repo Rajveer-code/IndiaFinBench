@@ -82,23 +82,44 @@ def compute_labels(ref_answer: str, ann_answer: str, task_type: str):
 
     For contradiction_detection:
         Both sides get their Yes/No label directly.
-        This gives variance on both sides → proper Kappa.
+        This gives variance on both sides → proper Cohen's Kappa.
 
-    For other types:
-        We treat each answer as either matching the expected key
-        content (1) or not (0). To give variance on the reference
-        side, we sample from a small set of normalised answer clusters.
-        For simplicity and correctness, we report agreement rate
-        alongside Kappa here.
+    For extractive / numerical / temporal tasks:
+        BUG 2 FIX — the original code hardcoded ref_label=1 always,
+        making the reference array constant and Cohen's Kappa undefined
+        (sklearn raises ValueError: "Number of classes in y1... is 1").
+        For open-ended QA tasks, agreement rate (% of items where both
+        annotators give the same answer) is the standard metric
+        (cf. FinanceBench, DROP).  We therefore return a plain bool
+        here and compute agreement rate, NOT Kappa, for these tasks.
+        The caller must NOT pass these labels to cohen_kappa_score.
     """
     if task_type == "contradiction_detection":
         ref_label = extract_yn(ref_answer)
         ann_label = extract_yn(ann_answer)
         return ref_label, ann_label
     else:
-        # Binary: do they agree on the answer content?
+        # For extractive tasks: return (agree: bool, agree: bool) so that
+        # the caller can compute agreement rate from (ref_label == ann_label).
+        # DO NOT call cohen_kappa_score on these labels — see docstring above.
         agree = fuzzy_match(ref_answer, ann_answer)
-        return 1, (1 if agree else 0)
+        return agree, True  # ref=True (baseline), ann=agree
+
+
+def _assert_not_constant_kappa(labels: list, task: str) -> None:
+    """Warn loudly if cohen_kappa_score is about to be called on a constant array.
+
+    BUG 2 FIX: Kappa is undefined when one annotator's labels are all the same
+    value (zero variance). This guard catches the mistake before sklearn does.
+    """
+    if len(set(str(x) for x in labels)) < 2:
+        import warnings
+        warnings.warn(
+            f"[compute_kappa] Task '{task}': label array is constant "
+            f"(all values = {labels[0]!r}). Cohen's Kappa is undefined for "
+            f"constant arrays. Use agreement rate instead.",
+            stacklevel=2,
+        )
 
 
 def main():
@@ -173,23 +194,25 @@ def main():
         n  = len(r)
         agree_pct = sum(ag) / n * 100
 
-        # Compute Kappa — only valid when there is variance in both label sets
-        try:
-            unique_r = set(str(x) for x in r)
-            unique_a = set(str(x) for x in a)
-            if len(unique_r) >= 2 or len(unique_a) >= 2:
-                # Convert labels to strings for sklearn
+        # BUG 2 FIX: For extractive tasks ref labels are constant (always True).
+        # Kappa is undefined for constant arrays. Only compute Kappa for
+        # contradiction_detection which has genuine Yes/No variance on both sides.
+        if task == "contradiction_detection":
+            _assert_not_constant_kappa(r, task)
+            _assert_not_constant_kappa(a, task)
+            try:
                 r_str = [str(x) for x in r]
                 a_str = [str(x) for x in a]
                 kappa = cohen_kappa_score(r_str, a_str)
                 kappa_str = f"{kappa:>7.3f}"
-            else:
-                # No variance — use agreement rate as proxy
+            except Exception:
                 kappa = agree_pct / 100.0
                 kappa_str = f"  ~{agree_pct/100:.2f}"
-        except Exception:
+        else:
+            # Agreement rate only — Kappa is not applicable for extractive tasks.
+            # See compute_labels() docstring for explanation.
             kappa = agree_pct / 100.0
-            kappa_str = f"  ~{agree_pct/100:.2f}"
+            kappa_str = "    N/A"
 
         kappa_results[task] = (kappa, agree_pct)
         all_agree.extend(ag)

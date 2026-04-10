@@ -18,39 +18,22 @@ Usage:
 
 import json, csv, os, time, re, argparse
 
+# BUG 4 FIX: Hard import — rapidfuzz is required; silent fallback would silently
+# change all accuracy numbers if the package were missing.
+try:
+    from rapidfuzz import fuzz as _rapidfuzz_fuzz  # noqa: F401
+except ImportError:
+    raise ImportError("rapidfuzz required: pip install rapidfuzz")
+
 # ══════════════════════════════════════════════════════════════════
 #  EDIT THIS SECTION — paste your keys here
 # ══════════════════════════════════════════════════════════════════
 
-# Gemini keys — one per Gmail account (create at aistudio.google.com)
-GEMINI_KEYS = [
-    "AIzaSyBX8HmcwFZMX6Iv54h8pL1M-Q9tl4KX5hM",   # ← ADD COMMA
-    "AIzaSyABMSiBBNM0aJ_rLhe05bGUrtX4tGyfaz0",    # ← ADD COMMA
-    "AIzaSyDe82mAeyDxjSaxp568tyNk7Jjbiyi0IL4",
-    "AIzaSyBlW4dH9-lerQpfR0VMgy4DzbvNKVHQPRM",
-    "AIzaSyD16Wh2GxQocZDFmcTSzibNLgFRL3latRI",
-    "AIzaSyBp6Gi83vyypwSD896nQ6BdlmpFCpuAY5c",
-    "AIzaSyDiCgOPo1i30KxMOvE-l3vEinyacHNGZzw",
-    "AIzaSyDiCgOPo1i30KxMOvE-l3vEinyacHNGZzw",
-    "AIzaSyAK4tznUtOKduGz6xpK7jDpXGkPibikLv4",
-    "AIzaSyCZeDg8nIdxz48sAQOvhJkNLDIreFPTyqQ",
-    "AIzaSyApAdZER94yxKNWeu2s0yMvGDJCm8YOqpE",
-    "AIzaSyBX8HmcwFZMX6Iv54h8pL1M-Q9tl4KX5hM",
-    "AIzaSyAGlwa2b-ifVYP_e-xruhq4-3HHiaZHWSk",
-    "AIzaSyABe4XF0KzJc9PPrN-lFdsbMKcIirw12ts",
-    "AIzaSyANeNFbJIWaw9eqhHXTpCuS5drySxe7M3c",
-    "AIzaSyC8x9EiDr0MJQ4tNF_j2ABqR3hCGQC5X2U",
-    "AIzaSyCYpQdgdme62X9rMx2BtNY5LSF6dUHtMSw",  
-    "AIzaSyA7KpYjBM0IoccAx5bkMjcfUUxgzA9UFAU",  # ← ADD COMMA
-    # add more keys here, each with a comma
-]
+GROQ_KEY = ""  # Set via: export GROQ_API_KEY=your_key
 
-# Groq key — from console.groq.com (free, no card needed)
-# You already have one from the annotation phase
-GROQ_KEY = "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"   # paste here e.g. "gsk_..."
+GEMINI_KEYS = []  # Set via: export GOOGLE_API_KEY=your_key
 
-# Anthropic key — for Claude Haiku (already ran, but keep for reruns)
-ANTHROPIC_KEY = ""  # paste here OR use: export ANTHROPIC_API_KEY=...
+ANTHROPIC_KEY = ""  # Set via: export ANTHROPIC_API_KEY=your_key
 
 # ══════════════════════════════════════════════════════════════════
 
@@ -62,26 +45,31 @@ MODELS = {
         "label":    "LLaMA-3-8B",
         "provider": "ollama",
         "model_id": "llama3",
+        "version":  "meta-llama/Meta-Llama-3-8B-Instruct",
     },
     "mistral": {
         "label":    "Mistral-7B",
         "provider": "ollama",
         "model_id": "mistral",
+        "version":  "mistralai/Mistral-7B-Instruct-v0.3",
     },
     "haiku": {
         "label":    "Claude 3 Haiku",
         "provider": "anthropic",
-        "model_id": "claude-haiku-4-5-20251001",
+        "model_id": "claude-3-haiku-20240307",  # BUG 1 FIX: was claude-haiku-4-5-20251001
+        "version":  "claude-3-haiku-20240307",
     },
     "gemini": {
         "label":    "Gemini 2.5 Flash",
         "provider": "gemini_pool",
         "model_id": "gemini-2.5-flash",
+        "version":  "gemini-2.5-flash",
     },
     "groq70b": {
         "label":    "LLaMA-3.3-70B (Groq)",
         "provider": "groq",
         "model_id": "llama-3.3-70b-versatile",
+        "version":  "meta-llama/Llama-3.3-70B-Instruct",
     },
 }
 
@@ -96,7 +84,9 @@ Be concise and precise. Give only the answer — no preamble."""
 def build_prompt(item: dict) -> str:
     task = item["task_type"]
     q    = item["question"]
-    ctx  = item.get("context", "")[:3000]
+    # BUG 5 FIX: word-boundary truncation instead of mid-word char slice
+    _ctx_words = item.get("context", "").split()
+    ctx = " ".join(_ctx_words[:450])  # ~3000 chars, word-boundary safe
 
     if task == "contradiction_detection":
         return (
@@ -299,10 +289,8 @@ def normalise(text: str) -> str:
 def score_answer(ref: str, pred: str, task_type: str) -> int:
     if not pred or "fail:" in pred.lower() or "cannot be determined" in pred.lower():
         return 0
-    try:
-        from rapidfuzz import fuzz
-    except ImportError:
-        return int(normalise(ref) == normalise(pred))
+    # BUG 4 FIX: rapidfuzz is imported at module level (hard fail); no silent fallback.
+    from rapidfuzz import fuzz
 
     if task_type == "contradiction_detection":
         r = normalise(ref)
@@ -394,13 +382,14 @@ def evaluate_model(model_key: str, data: list):
 
         task_sc[task].append(correct)
         results.append({
-            "id":         iid,
-            "task_type":  task,
-            "difficulty": item.get("difficulty", ""),
-            "question":   item["question"][:80],
-            "ref_answer": item["answer"][:100],
-            "prediction": pred[:200],
-            "correct":    correct,
+            "id":           iid,
+            "task_type":    task,
+            "difficulty":   item.get("difficulty", ""),
+            "question":     item["question"][:80],
+            "ref_answer":   item["answer"][:100],
+            "prediction":   pred[:200],
+            "correct":      correct,
+            "model_version": cfg.get("version", model_id),  # BUG 1 FIX: log exact version
         })
 
         print(f"  [{i:03d}/150]  {iid:<12}  {'✓' if correct else '✗'}")
@@ -434,7 +423,7 @@ def evaluate_model(model_key: str, data: list):
 def _save(rows, path):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     fields = ["id","task_type","difficulty","question",
-              "ref_answer","prediction","correct"]
+              "ref_answer","prediction","correct","model_version"]
     with open(path, "w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
         w.writeheader(); w.writerows(rows)

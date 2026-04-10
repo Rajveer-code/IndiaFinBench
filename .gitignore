@@ -12,9 +12,10 @@ venv/
 data/raw/
 data/parsed/
 
-# API keys
+# API keys / secrets
 secrets.py
 .env
+*.env
 
 # OS
 .DS_Store
@@ -25,3 +26,32 @@ Thumbs.db
 
 # Label Studio exports
 annotation/annotated/*.json
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.synctex.gz
+
+# Scratch / debug output files
+gemini_out*.txt
+doc_texts.txt
+tables_preview.json
+*_out.txt
+
+# Temp directories
+paper/unpacked_*/
+
+# Claude Code local settings
+.claude/
+
+# SQLite databases (generated at runtime)
+demo/leaderboard.db
+
+# Demo __pycache__
+demo/__pycache__/
+demo/database/__pycache__/
+demo/evaluation/__pycache__/
+demo/ui/__pycache__/

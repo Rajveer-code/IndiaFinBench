@@ -1,0 +1,222 @@
+id,task_type,difficulty,question,ref_answer,prediction,correct,model_version
+REG_001,regulatory_interpretation,easy,What is the minimum average operating profit an issuer must have over the preced,At least fifteen crore rupees,Fifteen crore rupees.,1,gemma4
+REG_002,regulatory_interpretation,easy,"Under SEBI ICDR Regulations, 2018, what percentage of the net offer must an issu",At least seventy five per cent.,Seventy five per cent.,1,gemma4
+REG_003,regulatory_interpretation,easy,"Under SEBI ICDR Regulations, 2018, what is the minimum percentage of post-issue ",At least twenty per cent.,At least twenty per cent. of the post-issue capital.,1,gemma4
+REG_004,regulatory_interpretation,medium,"Under SEBI ICDR Regulations, 2018, what fraction of the anchor investor portion ",One-third,One-third,1,gemma4
+REG_005,regulatory_interpretation,medium,"Under SEBI ICDR Regulations, 2018, for how long is the minimum promoters' contri",Three years from the date of allotment in the initial public offer,Three years from the date of allotment in the initial public offer.,1,gemma4
+REG_006,regulatory_interpretation,easy,What is the minimum application value for an entity to qualify as an anchor inve,At least ten crore rupees,At least ten crore rupees.,1,gemma4
+REG_007,regulatory_interpretation,easy,"Under SEBI Takeover Regulations 2011, at what threshold of voting rights does an",Twenty-five per cent or more of the voting rights,Twenty-five per cent or more of the voting rights.,1,gemma4
+REG_008,regulatory_interpretation,medium,"Under SEBI Takeover Regulations 2011, an acquirer holding 25% or more in a targe",More than five per cent of the voting rights,More than five per cent. (The acquirer shall not acquire rights entitling them to exercise more than five per cent.),1,gemma4
+REG_009,regulatory_interpretation,medium,What is the minimum investment amount an employee or director of the Manager of ,Twenty five lakh rupees,Twenty five lakh rupees.,1,gemma4
+REG_010,regulatory_interpretation,medium,"Under SEBI AIF Regulations, 2012, what is the minimum continuing interest that t","Not less than five percent of the corpus or ten crore rupees, whichever is lower","Not less than five percent of the corpus or ten crore rupees, whichever is lower.",1,gemma4
+REG_011,regulatory_interpretation,easy,"Under SEBI LODR Regulations 2015, what is the maximum permissible gap between tw",One hundred and twenty days,One hundred and twenty days.,1,gemma4
+REG_012,regulatory_interpretation,medium,"Under SEBI LODR Regulations 2015, a related party transaction is considered mate","Rupees one thousand crore or ten per cent of the annual consolidated turnover of the listed entity as per the last audited financial statements, which","Rupees one thousand crore or ten per cent. of the annual consolidated turnover of the listed entity, whichever is lower.",1,gemma4
+REG_013,regulatory_interpretation,easy,"Under SEBI PIT Regulations 2015, within how many trading days must a company not",Within two trading days,Two trading days,1,gemma4
+REG_014,regulatory_interpretation,easy,"Under SEBI PIT Regulations 2015, what is the mandatory cooling-off period that m",At least sixty days,At least sixty days.,1,gemma4
+REG_015,regulatory_interpretation,hard,"Under SEBI Settlement Proceedings Regulations 2018, what is the absolute latest ","One hundred and twenty calendar days from the expiry of the sixty-day period, or after the first hearing, whichever is earlier",,0,gemma4
+REG_016,regulatory_interpretation,medium,"Under SEBI Settlement Proceedings Regulations 2018, by what minimum percentage m",At least fifty percent,Atleast fifty percent.,1,gemma4
+REG_017,regulatory_interpretation,easy,"Under SEBI Mutual Funds Regulations, what is the maximum exit load that an open-",Three per cent of the applicable net asset value,Three per cent of the applicable net asset value.,1,gemma4
+REG_018,regulatory_interpretation,easy,"Under SEBI Mutual Funds Regulations, what percentage of unit holders must pass a",Seventy-five per cent of the unit holders,Seventy-five per cent,1,gemma4
+REG_019,regulatory_interpretation,easy,"Under SEBI Stock Brokers Regulations 2026, what is the minimum net worth require",50 crore,50 crore,1,gemma4
+REG_020,regulatory_interpretation,easy,"Under SEBI NCS Regulations 2021, what is the minimum notice period that an issue",At least twenty-one days,At least twenty-one days.,1,gemma4
+REG_021,regulatory_interpretation,easy,"Under SEBI REIT Regulations 2014, what is the minimum asset size required for a ",Five hundred crore rupees or more,Five hundred crore rupees or more.,1,gemma4
+REG_022,regulatory_interpretation,medium,"Under SEBI RTI & STA Regulations 2025, for how long must a registrar to an issue",A minimum period of eight years,A minimum period of eight years after completion of the issue.,1,gemma4
+REG_023,regulatory_interpretation,medium,"Under SEBI Stock Exchanges and Clearing Corporations Regulations 2018, what is t",Five per cent of the paid-up equity share capital,Fifteen per cent.,0,gemma4
+REG_024,regulatory_interpretation,medium,"Under SEBI Credit Rating Agencies Regulations 1999, above what percentage shareh",More than ten per cent of the paid-up share capital,More than ten per cent of the paid-up share capital of that issuer.,1,gemma4
+REG_025,regulatory_interpretation,medium,"Under SEBI Depositories and Participants Regulations 2018, what is the threshold",More than five per cent of the paid-up equity share capital,More than five per cent of the paid-up equity share capital.,1,gemma4
+NUM_001,numerical_reasoning,medium,"Under SEBI ICDR Regulations 2018, what is the minimum total net tangible assets ",Nine crore rupees (three crore rupees per year × three years),"Calculation: 3 crore rupees (Year 1) + 3 crore rupees (Year 2) + 3 crore rupees (Year 3) = 9 crore rupees
+
+Final Answer: 9 crore rupees",0,gemma4
+NUM_002,numerical_reasoning,medium,If the total portion available for allocation to qualified institutional buyers ,180 crore rupees (60% of 900 = 540 crore for anchor investors; one-third of 540 = 180 crore for domestic mutual funds),"Calculation:
+1. Maximum Anchor Investor portion = 60% of the QIB portion
+   $900 \text{ crore} \times 0.60 = 540 \text{ crore rupees}$
+2. Domestic Mutual Fund portion = One-third of the Anchor Investor portion
+   $540 \text{ crore} \times (1/3) = 180 \text{ crore rupees}$
+
+Final Answer: 180 crore ru",1,gemma4
+NUM_003,numerical_reasoning,medium,"Under SEBI Stock Brokers Regulations 2026, what is the maximum underwriting obli",100 crore rupees (5 crore net worth × 20 = 100 crore),"Calculation:
+Underwriting Obligation = 20 $\times$ Self-Clearing Member Net Worth
+Underwriting Obligation = 20 $\times$ 5 crore
+Underwriting Obligation = 100 crore
+
+Final Answer: 100 crore",1,gemma4
+NUM_004,numerical_reasoning,hard,"For a Category I AIF with a scheme corpus of exactly twenty crore rupees, what i","0.50 crore rupees (2.5% of 20 crore = 0.50 crore, which is lower than 5 crore)",,0,gemma4
+NUM_005,numerical_reasoning,hard,If a mutual fund scheme with net assets of 500 crore rupees borrows the maximum ,7.5 crore rupees (20% of 500 = 100 crore borrowed; 15% per annum for 6 months = 7.5% of 100 = 7.5 crore),"**Calculation:**
+
+1.  **Maximum Borrowing Amount (Principal):** 20% of 500 crore rupees = 0.20 $\times",0,gemma4
+NUM_006,numerical_reasoning,medium,For a listed entity whose audit committee has the minimum permissible number of ,"Two independent directors (two-thirds of minimum 3 members = 2, since two-thirds of 3 = 2)","Calculation:
+Minimum total members = 3
+Minimum independent directors = $\frac{2}{3} \times 3 = 2$
+
+Final Answer: 2 directors",1,gemma4
+NUM_007,numerical_reasoning,hard,"Under SEBI Settlement Proceedings Regulations 2018, what is the total maximum nu",180 calendar days (60 days initial window + 120 days additional delayed period = 180 days total),,0,gemma4
+NUM_008,numerical_reasoning,medium,"Under SEBI Takeover Regulations 2011, if an acquirer pays Rs. 250 per share in a",Rs. 50 per share (Rs. 300 highest price minus Rs. 250 offer price = Rs. 50 difference),"Calculation: Rs. 300 (Highest price paid) - Rs. 250 (Offer price) = Rs. 50
+
+Final Answer: Rs. 50 per share",1,gemma4
+NUM_009,numerical_reasoning,hard,"Under SEBI ICDR Regulations 2018, if a warrant is allotted on 1 January 2024, wh",1 October 2025 (warrant tenure ends 18 months from allotment = 1 July 2025; exercise option within 3 months from payment = 1 October 2025),,0,gemma4
+NUM_010,numerical_reasoning,medium,"Under SEBI LODR Regulations 2015, if a listed entity holds its first board meeti",By 29 July of the same year (1 April + 120 days = 29 July),,0,gemma4
+NUM_011,numerical_reasoning,easy,"Under SEBI AIF Regulations 2012, if a Category III AIF scheme has investable fun",50 crore rupees (10% of 500 crore = 50 crore),"Calculation:
+$500 \text{ crore} \times 10\% = 50 \text{ crore}$
+
+Final Answer: 50 crore rupees",1,gemma4
+NUM_012,numerical_reasoning,easy,"Under SEBI Mutual Funds Regulations, an AMC's board has 8 directors. What is the",Four independent directors (at least 50% of 8 = 4),"Calculation: 8 directors $\times$ 50% = 4
+
+Final Answer: 4 directors",1,gemma4
+CON_001,contradiction_detection,medium,Do the two passages prescribe different lock-in periods for minimum promoters' c,Yes,"Yes: Passage A mandates a three-year lock-in period from the later of commercial production or IPO allotment, whereas Passage B mandates an eighteen-month lock-in period from the date of allotment in the initial public offer for the general case.",1,gemma4
+CON_002,contradiction_detection,medium,Do the two passages prescribe different lock-in durations for excess promoters' ,No,No. Both passages prescribe a lock-in duration of six months from the date of allotment in the initial public offer.,1,gemma4
+CON_003,contradiction_detection,easy,Do the two passages prescribe different minimum continuing interest thresholds f,Yes,"Yes: Passage A sets the general continuing interest threshold at not less than two and half percent of the corpus or five crore rupees, while Passage B specifies a higher threshold of not less than five percent of the corpus or ten crore rupees for Category III Alternative Investment Funds.",1,gemma4
+CON_004,contradiction_detection,easy,Do the two passages prescribe different maximum permissible gaps between consecu,No,"No. Both passages prescribe a maximum gap of one hundred and twenty days between consecutive meetings for the board and the audit committee, respectively.",1,gemma4
+CON_005,contradiction_detection,hard,Do the two passages impose different shareholding thresholds triggering mandator,No,"Yes: Passage A specifies a fifteen per cent limit for stock exchanges, whereas Passage B specifies a five per cent limit for depositories.",0,gemma4
+CON_006,contradiction_detection,medium,Do the two passages prescribe different disclosure timelines for companies versu,No,"Yes. Passage A specifies the timeline as two trading days of receipt of the disclosure or becoming aware of the trade, while Passage B specifies two trading days of receipt of the disclosure.",0,gemma4
+CON_007,contradiction_detection,hard,Do the two passages contradict each other regarding whether a second settlement ,No,"No. Passage A prohibits a second application only if the initial application was withdrawn, whereas Passage B describes the reconsideration of an application that was previously rejected.",1,gemma4
+CON_008,contradiction_detection,hard,Do the two passages prescribe different tests for disqualifying a custodian from,Yes,,0,gemma4
+CON_009,contradiction_detection,medium,Do the two passages collectively indicate that the 50% monetary asset limit alwa,No,No. The limit of fifty per cent. on monetary assets is not applicable if the initial public offer is made entirely through an offer for sale.,1,gemma4
+CON_010,contradiction_detection,hard,Do the two passages impose the same advance notice period for different types of,No,"No. Passage A requires notice at least twenty-one days before the right is exercisable, while Passage B mandates redemption within one month from the last date of the redemption period.",1,gemma4
+CON_011,contradiction_detection,easy,Do the two passages prescribe different minimum corpus requirements for social i,Yes,"Yes: Social impact funds require a minimum corpus of five crore rupees, while Alternative Investment Fund schemes require a minimum corpus of twenty crore rupees.",1,gemma4
+CON_012,contradiction_detection,medium,Do the two passages indicate that the same open offer trigger threshold applies ,No,"No: Passage B specifies that for a target company listed on the Innovators Growth Platform, the reference to 'twenty-five per cent' is read as 'forty-nine per cent'.",1,gemma4
+TMP_001,temporal_reasoning,medium,"Under SEBI ICDR Regulations, which definition of 'key managerial personnel' is c","The definition aligning with Companies Act 2013 sub-section (51) of section 2, effective from 31.01.2023",,0,gemma4
+TMP_002,temporal_reasoning,easy,Which lock-in regime for minimum promoters' contribution applied before 13 Augus,"Three years from the date of commencement of commercial production or date of allotment, whichever is later",Three years.,0,gemma4
+TMP_003,temporal_reasoning,hard,"Under SEBI LODR Regulations 2015, which provisions came into force on the date o",Sub-regulation (4) of regulation 23 and regulation 31A,The provisions of sub-regulation (4) of regulation 23 and regulation 31A shall come into force on the date of notification of these regulations.,1,gemma4
+TMP_004,temporal_reasoning,medium,Was the term 'Delisting Regulations' a defined term in the SEBI Takeover Regulat,"No — the definition of 'Delisting Regulations' was only inserted by the Third Amendment Regulations, 2021, effective from 6 December 2021","Previously, the regulations did not contain an explicit definition of 'Delisting Regulations' as a defined term.",0,gemma4
+TMP_005,temporal_reasoning,easy,What was the name of the trading platform for emerging issuers under SEBI ICDR R,Institutional trading platform,'institutional trading platform',1,gemma4
+TMP_006,temporal_reasoning,medium,Which amendment to SEBI ICDR Regulations broadened the definition of 'associate',"The SEBI (ICDR) (Amendment) Regulations, 2025, effective from 08.03.2025","SEBI (ICDR) (Amendment) Regulations, 2025, w.e.f. 08.03.2025.",1,gemma4
+TMP_007,temporal_reasoning,medium,"Before 7 September 2021, which SEBI regulations were cross-referenced in SEBI LO","The SEBI (Issue and Listing of Debt Securities) Regulations, 2008","'Debt securities' as defined under the SEBI (Issue and Listing of Debt Securities) Regulations, 2008.",1,gemma4
+TMP_008,temporal_reasoning,medium,"Under SEBI AIF Regulations 2012, how long could funds registered under the earli","Five years from the commencement of the SEBI (AIF) Regulations, 2012","Five years from the commencement of the SEBI (AIF) Regulations, 2012.",1,gemma4
+TMP_009,temporal_reasoning,medium,"Under SEBI ICDR Regulations, where was the draft letter of offer filed before th",With the Board (SEBI),The Board.,0,gemma4
+TMP_010,temporal_reasoning,hard,"After May 2021, which regulation number in which SEBI regulations defines the te","Regulation 2(ee) of the SEBI (Issue of Capital and Disclosure Requirements) Regulations, 2018","Regulation 2(ee) of the SEBI (Issue of Capital and Disclosure Requirements) Regulations, 2018.",1,gemma4
+TMP_011,temporal_reasoning,hard,"Before September 2018, what phrase was used in the SEBI Takeover Regulations 201",Is made,'is made',1,gemma4
+TMP_012,temporal_reasoning,easy,The SEBI (Merchant Bankers) Regulations 1992 were enacted under which SEBI Act a,"The Securities and Exchange Board of India Act, 1992",The context does not specify the SEBI Act under which the regulations were enacted.,0,gemma4
+TMP_013,temporal_reasoning,easy,Which set of SEBI regulations originally established the regulatory framework fo,"The SEBI (Mutual Funds) Regulations, 1996","The SEBI (Mutual Funds) Regulations, originally notified in 1996.",1,gemma4
+TMP_014,temporal_reasoning,medium,What term was used in SEBI REIT Regulations 2014 before the 2016 amendment repla,Sponsor(s),'sponsors',1,gemma4
+TMP_015,temporal_reasoning,easy,Which was enacted earlier — the SEBI (ICDR) Regulations 2009 or the SEBI (ICDR) ,"The SEBI (ICDR) Regulations, 2009 was enacted earlier","The SEBI (Issue of Capital and Disclosure Requirements) Regulations, 2009, were superseded by the SEBI (ICDR) Regulations 2018.",1,gemma4
+TMP_016,temporal_reasoning,medium,In which year was the concept of 'fugitive economic offender' first incorporated,"2018, effective from 16 November 2018","The provision was inserted in 2018 by the SEBI (LODR) (Sixth Amendment) Regulations, 2018.",0,gemma4
+TMP_017,temporal_reasoning,medium,"Under SEBI AIF Regulations, from which date could social impact funds start issu","25 July 2022, following the Third Amendment Regulations, 2022",25.07.2022,0,gemma4
+REG_067,regulatory_interpretation,easy,Within how many days must a stock exchange forward a completed registration appl,Thirty days,Not later than thirty days of receipt of the complete application with the specified application fees.,1,gemma4
+REG_068,regulatory_interpretation,easy,Within how many days must an intermediary update material changes to the informa,Fifteen days,Fifteen days,1,gemma4
+REG_069,regulatory_interpretation,easy,What is the maximum time within which an intermediary must redress investor grie,Forty-five days of receipt of the grievance,Forty-five days of receipt thereof.,1,gemma4
+REG_070,regulatory_interpretation,easy,For how long is an applicant barred from making a fresh registration application,One year from the date of rejection,One year from the date of such rejection.,1,gemma4
+REG_071,regulatory_interpretation,medium,"Under SEBI (Intermediaries) Regulations 2008, within how many days must SEBI dis","Sixty days. If SEBI fails to communicate within sixty days, prior approval shall be deemed to have been granted.","The Board must dispose of a complete prior approval request within sixty days from the date of receipt. If the decision is not communicated within this sixty-day period, the prior approval shall be deemed to have been granted.",1,gemma4
+REG_072,regulatory_interpretation,easy,What two things must a SEBI-registered intermediary prominently display at all i,"A photocopy of the certificate of registration, and the name and contact details of the compliance officer.","A photocopy of the certificate, and the name and contact details of the compliance officer.",1,gemma4
+REG_073,regulatory_interpretation,medium,Under what three circumstances can a permanent certificate granted to an interme,"If the certificate is surrendered by the intermediary, or suspended, or cancelled in accordance with the regulations.","Surrendered by the intermediary, suspended, or cancelled in accordance with these regulations.",1,gemma4
+REG_074,regulatory_interpretation,easy,What minimum investment amount must an accredited investor commit to a portfolio,Ten crore rupees,Ten crore rupees.,1,gemma4
+REG_075,regulatory_interpretation,easy,What is the maximum permissible limit for any buy-back as a percentage of the ag,"Twenty-five per cent, based on standalone or consolidated financial statements, whichever sets out a lower amount.","Twenty-five per cent or less of the aggregate of paid-up capital and free reserves, based on the standalone or consolidated financial statements of the company, whichever sets out a lower amount.",1,gemma4
+REG_076,regulatory_interpretation,easy,What is the maximum debt-to-capital ratio (secured plus unsecured debts to paid-,2:1,2:1,1,gemma4
+REG_077,regulatory_interpretation,easy,"Under SEBI (Buy-Back of Securities) Regulations 2018, how long must a company wa",One year from the date of expiry of the buyback period of the preceding offer.,One year reckoned from the date of expiry of the buyback period of the preceding offer of buy-back.,1,gemma4
+REG_078,regulatory_interpretation,medium,From which three sources may a company fund a buy-back of its shares under SEBI ,"Free reserves, securities premium account, or proceeds of issue of shares or specified securities. A company cannot use proceeds of an earlier issue o",A company may fund a buy-back from (a) its free reserves; (b) the securities premium account; or (c) the proceeds of the issue of any shares or other specified securities. A restriction exists that the buy-back cannot be made out of the proceeds of an earlier issue of the same kind of shares or same,1,gemma4
+REG_079,regulatory_interpretation,medium,A company defaulted on repayment of a term loan. The default was remedied. After,After three years have lapsed since the default ceased to subsist.,A period of three years has lapsed after such default ceased to subsist.,1,gemma4
+REG_080,regulatory_interpretation,easy,"How does SEBI (Delisting of Equity Shares) Regulations, 2021 define 'compulsory ",Delisting of equity shares of a company by a recognised stock exchange under Chapter V of these regulations.,Delisting of equity shares of a company by a recognised stock exchange under Chapter V of these regulations.,1,gemma4
+REG_081,regulatory_interpretation,easy,What is the 'bidding period' as defined in SEBI (Delisting of Equity Shares) Reg,The period within which shareholders may tender their shares in acceptance of the offer for delisting of equity shares of the company.,The period within which shareholders may tender their shares in acceptance of the offer for delisting of equity shares of the company made under these regulations.,1,gemma4
+REG_082,regulatory_interpretation,easy,"When did the SEBI (Research Analysts) Regulations, 2014 come into force relative",On the ninetieth day from the date of publication in the Official Gazette.,The regulations shall come into force on the ninetieth day from the date of their publication in the Official Gazette.,1,gemma4
+REG_083,regulatory_interpretation,easy,"Under SEBI (Research Analysts) Regulations 2014, who qualifies as an 'independen",A person whose only business activity is research analysis or preparation and/or publication of research report.,A person whose only business activity is research analysis or preparation and/or publication of research report.,1,gemma4
+REG_084,regulatory_interpretation,easy,From which financial year do the Reserve Bank of India (Small Finance Banks - Pr,Financial Year 2026-27,Financial Year (FY) 2026-27.,1,gemma4
+REG_085,regulatory_interpretation,easy,To which category of banks do the RBI (Small Finance Banks - Prudential Norms on,Small Finance Banks (SFBs),Small Finance Banks (SFBs),1,gemma4
+REG_086,regulatory_interpretation,easy,"Under the RBI SFB Dividend Directions 2026, what is the maximum aggregate divide",Not exceeding 75% of the PAT for the period for which the dividend is proposed.,,0,gemma4
+REG_087,regulatory_interpretation,medium,What four factors must the Board of Directors of a Small Finance Bank consider w,1. Divergence in NPA classification and provisioning as observed in RBI supervisory findings; 2. Auditors' Report including modified opinion or Emphas,,0,gemma4
+REG_088,regulatory_interpretation,easy,"After declaring a dividend, within what time period must a Small Finance Bank su",Within a fortnight (two weeks) of the declaration of dividend.,Within a fortnight of declaration of dividend.,1,gemma4
+REG_089,regulatory_interpretation,easy,"Under the RBI SFB Dividend Directions 2026, is a bank eligible to declare divide",No. A bank that is under any explicit restrictions for declaration of dividends from the Reserve Bank or any other authority is not eligible to declar,"No, the bank shall not be eligible.",0,gemma4
+REG_090,regulatory_interpretation,medium,How is 'Adjusted Profit After Tax (PAT)' defined under the RBI SFB Dividend Dire,PAT of the financial year for which the dividend is proposed minus 50% of Net NPA as on March 31 of that financial year.,'Adjusted Profit After Tax (PAT)' means PAT of the financial year for which the dividend is proposed to be paid minus 50 per cent of Net NPA as on March 31 of the financial year for which the dividend is to be paid.,1,gemma4
+REG_091,regulatory_interpretation,easy,"Under the RBI Master Direction on Unique Identifiers in Financial Markets 2026, ","January 01, 2027","January 01, 2027.",1,gemma4
+REG_092,regulatory_interpretation,easy,"Under the RBI Master Direction on Unique Identifiers 2026, are entities without ",No. Entities without an LEI code are not eligible to undertake transactions in the financial markets regulated by the Reserve Bank.,"No, entities without an LEI code shall not be eligible to undertake transactions in the financial markets regulated by the Reserve Bank.",1,gemma4
+REG_093,regulatory_interpretation,medium,"For non-derivative foreign exchange transactions, at what minimum transaction am",USD one million or equivalent thereof in other currencies.,USD one million or equivalent thereof in other currencies.,1,gemma4
+REG_094,regulatory_interpretation,easy,What is the minimum nominal amount for which Government of India dated securitie,"Minimum ₹10,000 (nominal), in multiples of ₹10,000 thereafter.","The minimum amount is Rs. 10,000/- (nominal), and they are issued in multiples of Rs. 10,000/- thereafter.",1,gemma4
+NUM_067,numerical_reasoning,easy,"Using the formula for Adjusted PAT, calculate the Adjusted PAT for a Small Finan","₹13,750 crore. Calculation: ₹17,000 - (50% × ₹6,500) = ₹17,000 - ₹3,250 = ₹13,750 crore.","Calculation:
+Adjusted PAT = PAT - (50% of Net NPA)
+Adjusted PAT = ₹17,000 crore - (0.50 * ₹6,500 crore)
+Adjusted PAT = ₹17,000 crore - ₹3,250 crore
+Adjusted PAT = ₹13,750 crore",1,gemma4
+NUM_068,numerical_reasoning,medium,A Small Finance Bank has a Tier 1 Capital Ratio of 11.72% and an Adjusted PAT of,"₹5,500 crore. Calculation: Bank falls in Bucket B4 (above 11.5% and up to 13.5%), which allows 40% of Adjusted PAT. 40% × ₹13,750 = ₹5,500 crore.","Calculation: 40% of ₹13,750 crore = ₹5,500 crore
+
+Final Answer: ₹5,500 crore",1,gemma4
+NUM_069,numerical_reasoning,medium,"Under RBI SFB Dividend Directions 2026, the Maximum Eligible Dividend is the low","₹5,500 crore. This is the lower of 75% of PAT (₹12,750 crore) and the Table 1 limit (₹5,500 crore).",Calculation: Lower of (75% of,0,gemma4
+NUM_070,numerical_reasoning,medium,"In Illustration 1 of the RBI SFB Dividend Directions 2026, the Maximum Eligible ","32.35%. Calculation: (₹5,500 ÷ ₹17,000) × 100 = 32.35%.","Calculation: (5,500 / 17,000) * 100 = 32.35%
+
+Final Answer: 32.35%",1,gemma4
+NUM_071,numerical_reasoning,medium,"In Illustration 3, a Small Finance Bank has Maximum Eligible Dividend of ₹1,125 ","₹625 crore. Calculation: Maximum Eligible Dividend (₹1,125 crore) minus interim dividend already paid (₹500 crore) = ₹625 crore.","Calculation: Maximum Eligible Dividend (G) - Interim dividend paid (H)
+1,125 - 500 = 625
+
+Final Answer: ₹625 crore",1,gemma4
+NUM_072,numerical_reasoning,easy,"A Small Finance Bank has a PAT of ₹40,500 crore and Net NPA of ₹5,000 crore. Wha","₹38,000 crore. Calculation: ₹40,500 - (50% × ₹5,000) = ₹40,500 - ₹2,500 = ₹38,000 crore.","Calculation:
+Adjusted PAT (C) = PAT (A) - 50% of Net NPAs (B)
+Adjusted PAT (C) = 40,500 crore - 50% of 5,000 crore
+Adjusted PAT (C) = 40,500 crore - 2",1,gemma4
+NUM_073,numerical_reasoning,hard,"In Illustration 2, with Adjusted PAT of ₹38,000 crore and Bucket B5 (50% limit),","Maximum per Table 1: ₹19,000 crore (50% × ₹38,000). 75% of PAT: ₹30,375 crore (75% × ₹40,500). The Maximum Eligible Dividend is ₹19,000 crore, being t",,0,gemma4
+NUM_074,numerical_reasoning,medium,"In the GoI dated securities auction announced on March 28, 2026, what is the max","₹33,000 crore. Calculation: Notified amount ₹29,000 crore + greenshoe of ₹2,000 crore per security × 2 securities = ₹29,000 + ₹4,000 = ₹33,000 crore.",,0,gemma4
+NUM_075,numerical_reasoning,medium,"In the GoI dated securities auction announced on March 28, 2026, what is the tot","₹12,000 crore. It represents approximately 41.4% of the total notified amount (₹12,000 ÷ ₹29,000 × 100 ≈ 41.4%).",,0,gemma4
+NUM_076,numerical_reasoning,easy,What is the total aggregate face value amount offered by all State Governments i,"₹57,408 crore","Calculation:
+Aggregate amount offered = ₹57,408 Crore (Face Value)
+
+Final Answer: ₹57,408 Crore (Face Value)",1,gemma4
+NUM_077,numerical_reasoning,easy,How much in total is Andhra Pradesh seeking to raise across all three of its sec,"₹3,900 crore. Calculation: ₹1,500 + ₹1,500 + ₹900 = ₹3,900 crore.","Calculation: 1500 + 1500 + 900 = 3900
+Final Answer: 3900 crore",1,gemma4
+NUM_078,numerical_reasoning,easy,What is the total amount Karnataka is raising across all its five securities in ,"₹10,000 crore. Calculation: ₹2,000 × 5 securities = ₹10,000 crore.",The context does not provide the total amount Karnataka is raising in the,0,gemma4
+NUM_079,numerical_reasoning,easy,What is the total amount of Government of India dated securities to be issued du,"₹8,20,000 crore","Calculation: Total amount for the period April 01, 2026 to September 30, 2026 is provided in the context.
+
+Final Answer: 8,20,000 crore",1,gemma4
+NUM_080,numerical_reasoning,easy,"In the GoI securities issuance calendar for H1 FY2026-27, what is the combined a","₹63,000 crore. Calculation: ₹29,000 (Week 1) + ₹34,000 (Week 2) = ₹63,000 crore.","Calculation: ₹29,000 crore (Week 1) + ₹34,000 crore (Week 2) = ₹63,000 crore
+
+Final Answer: ₹63,000 crore",1,gemma4
+NUM_081,numerical_reasoning,easy,"In auction week 4 (April 20-24, 2026) of the GoI issuance calendar, what is the ","₹10,000 crore. Calculation: ₹5,000 crore (30-year regular) + ₹5,000 crore (30-year SGrB) = ₹10,000 crore.","Calculation:
+₹5,000 crore (30 Year) + ₹5,000 crore (30 Year SGrB) = ₹10,000 crore
+
+Final Answer: ₹10,000 crore",1,gemma4
+NUM_082,numerical_reasoning,easy,"As on March 13, 2026, what was India's total foreign exchange reserve in US doll","Total reserves: US$ 709,759 million. Weekly variation: a decrease of US$ 7,052 million.","Calculation: US$ 709,759 million (Total Reserves) + (-US$ 7,052 million) (Variation) = US$ 702,707 million
+
+Final Answer: US$ 709,759 million, and it decreased by US$ 7,052 million.",1,gemma4
+NUM_083,numerical_reasoning,easy,What was the year-on-year growth rate of aggregate deposits of Scheduled Commerc,11.9%,"Calculation: Year-on-Year growth rate is directly provided in the context.
+
+Final Answer: 11.9%",1,gemma4
+NUM_084,numerical_reasoning,medium,"As of February 28, 2026, what was the year-on-year growth rate of M3 (broad mone",11.5%,"Calculation: The context states the Year-on-Year 2026 growth rate is 11.5%.
+
+Final Answer: 11.5%",1,gemma4
+NUM_085,numerical_reasoning,medium,"What was the value of India's gold reserves as on March 13, 2026 in US dollar te","Gold reserves as on March 13, 2026: US$ 130,681 million. Increase over the year: US$ 56,289 million.","Calculation:
+Value as on Mar. 13, 2026 = US$ 130,681 million
+Increase over Year = US$ 56,289 million
+
+Final Answer: The value was US$ 130,681 million, and the increase over the year was US$ 56,289 million.",1,gemma4
+NUM_086,numerical_reasoning,hard,A company has paid-up capital and free reserves of ₹500 crore before a buy-back.,Maximum buy-back amount: ₹125 crore (25% × ₹500 crore). Maximum debt after buy-back: ₹750 crore assuming free reserves after buyback are ₹375 crore (2,"**Maximum Buy-back Calculation:**
+Maximum Buy-back = 25% of (Paid-up Capital and Free Reserves)
+Maximum Buy-back = 0.25 $\times$ ₹500 crore
+Maximum Buy-back = ₹125 crore
+
+**Maximum Total Debt Calculation",1,gemma4
+CON_028,contradiction_detection,easy,Do the two press releases state the same aggregate amount for the State Governme,No,"No. Passage A states an aggregate amount of ₹55,688 Crore, while Passage B states an aggregate amount of ₹57,408 Crore.",1,gemma4
+CON_029,contradiction_detection,easy,Do Bucket B1 and Bucket B10 permit the same dividend payout as a percentage of A,No,"No. Bucket B1 allows a dividend of 0% of adjusted PAT, while Bucket B10 allows a dividend of 100% of adjusted PAT.",1,gemma4
+CON_030,contradiction_detection,easy,Do Section A and Section B of the RBI Master Direction on Unique Identifiers in ,No,"No. Section A comes into force with immediate effect, while Section B comes into effect from January 01, 2027.",1,gemma4
+CON_031,contradiction_detection,medium,Do the two passages prescribe the same maximum limit for all buy-back transactio,No,"No. Passage A sets the maximum limit for any buy-back at twenty-five per cent, while Passage B specifies a limit of less than fifteen per cent for buy-back from the open market through stock exchanges.",1,gemma4
+CON_032,contradiction_detection,medium,Are the two passages contradictory regarding RBI's authority over Small Finance ,No,"Yes: Passage A states the bank shall not be under any explicit restrictions, while Passage B reserves the right for the Reserve Bank to place restrictions if the bank is found to be non-compliant.",0,gemma4
+CON_033,contradiction_detection,medium,Do both passages describe intermediaries who hold permanent certificates under S,No,"No: Passage B describes a certificate granted for a specified period, whereas Passage A describes a certificate that shall be permanent.",1,gemma4
+CON_034,contradiction_detection,medium,"Does the GoI dated securities auction announced on March 28, 2026 use a uniform ",No,,0,gemma4
+CON_035,contradiction_detection,easy,Do both passages state the same percentage of the notified amount reserved for n,Yes,Yes: Both passages mention that five per cent of the notified amount is reserved or allotted for non-competitive bidding.,1,gemma4
+CON_036,contradiction_detection,medium,Do both passages identify different categories of profits ineligible for dividen,Yes,"Yes: Passage A prohibits dividend payment from exceptional and/or extra-ordinary profits, while Passage B prohibits payment from net unrealised gains arising on fair valuation of Level 3 financial instruments.",1,gemma4
+CON_037,contradiction_detection,medium,Do the two passages together suggest that a company can use buy-back as a mechan,No,No. Passage B explicitly states that a company shall not buy-back its shares so as to delist its shares.,1,gemma4
+CON_038,contradiction_detection,medium,Does the repeal of the 2025 SFB Dividend Directions mean that all actions previo,No,"No. Any action taken or initiated under the repealed Directions shall continue to be governed by the provisions thereof, notwithstanding the repeal.",1,gemma4
+CON_039,contradiction_detection,medium,Do the original and revised press releases state the same borrowing amount for U,No,"No. The original press release stated 1280 crore for the 18-year tenor, while the revised press release stated 1500 crore.",1,gemma4
+CON_040,contradiction_detection,hard,Does Passage B create an exception to the general rule in Passage A that every e,Yes,"Yes: Passage B allows non-residents (such as funds) to use the LEI code of the parent/management company, rather than requiring each individual entity to have its own LEI code.",1,gemma4
+CON_041,contradiction_detection,hard,Do Chapters V and VI of the SEBI (Intermediaries) Regulations 2008 come into for,No,,0,gemma4
+CON_042,contradiction_detection,easy,"Under the RBI SFB Dividend Directions 2026, do Bucket B2 and Bucket B3 allow the",No,"No. Bucket B2 allows a dividend of 20% of adjusted PAT, while Bucket B3 allows a dividend of 30% of adjusted PAT.",1,gemma4
+CON_043,contradiction_detection,easy,Do the definitions of 'independent research analyst' and 'part-time research ana,No,"No. An 'independent research analyst' must have research analysis or report preparation as their sole business activity, whereas a 'part-time research analyst' is engaged in research services while also being involved in other business activities or employment.",1,gemma4
+CON_044,contradiction_detection,medium,Do auction weeks 2 and 6 of the GoI issuance calendar for H1 FY2026-27 have the ,Yes,,0,gemma4
+CON_045,contradiction_detection,hard,Do the two passages together indicate that open-market buy-back through stock ex,No,"No. Passage A explicitly states that buy-back from the open market through the stock exchange shall not be allowed with effect from April 1,",1,gemma4
+TMP_028,temporal_reasoning,easy,Which was implemented first under the RBI Master Direction on Unique Identifiers,"The LEI framework (Section A) was implemented first, coming into force with immediate effect from March 27, 2026. The UTI framework (Section B) comes ","The LEI framework was implemented first, as Section A came into force with immediate effect, while Section B of the UTI framework is scheduled to come into effect from January 01, 2027.",1,gemma4
+TMP_029,temporal_reasoning,medium,Among the five circulars superseded by the RBI Master Direction on Unique Identi,"CO.FMRD.MIOD.No.8/11.01.057/2025-26 dated February 18, 2026, which is the most recent of the five superseded circulars.",,0,gemma4
+TMP_030,temporal_reasoning,medium,"How many years elapsed between the issuance of the first LEI circular (June 01, ","Approximately 8 years and 10 months elapsed between June 1, 2017 and March 27, 2026.","The period elapsed is from June 01, 2017, to March 27, 2026.",0,gemma4
+TMP_031,temporal_reasoning,medium,Describe the step-by-step reduction in the maximum open-market buy-back limit th,"15% (until March 31, 2023) → 10% (until March 31, 2024) → 5% (until March 31, 2025) → Complete prohibition from April 1, 2025.","The maximum open-market buy-back limit is set at the following stages:
+
+1.  **Till March 31, 2",0,gemma4
+TMP_032,temporal_reasoning,medium,Which set of RBI directions on Small Finance Bank dividend norms was in effect d,"The 2025 Directions (issued November 28, 2025) were in effect during FY 2025-26. The 2026 Directions come into effect only from FY 2026-27 (i.e., from",,0,gemma4
+TMP_033,temporal_reasoning,medium,"In chronological order, what are the key dates in the lifecycle of the GoI dated","March 28 (announcement), March 30 – April 02 ('When Issued' trading period), April 02 (auction day, bids submitted), April 06 (settlement, payment by ","March 28, 2026 (Notification date) $\rightarrow$ March 30, 2026 (Start of When Issued trading period) $\rightarrow$ April 02, 2026 (End of When Issued trading period / Auction Date) $\rightarrow$ April 06, 2026 (Settlement Date)",1,gemma4
+TMP_034,temporal_reasoning,easy,For the State Government securities auction covered in this revised press releas,"March 21, 2026 (revised press release issued) → March 24, 2026 (auction conducted on E-Kuber) → March 25, 2026 (payment by successful bidders).","The sequence is:
+1.  **Announcement:** Press Release dated March 21, 2026.
+2.  **Auction:** March 24, 2026 (Tuesday), conducted on the RBI Core Banking Solution (E-Kuber) system.
+3.  **Payment/Settlement:** March 25, 2026 (Wednesday), during banking hours.",1,gemma4
+TMP_035,temporal_reasoning,medium,"Under SEBI (Intermediaries) Regulations 2008, an intermediary holding a permanen","Two years plus up to six months extension, for a maximum of two and a half years from the commencement of these regulations.","The initial period is two years, which may be extended by the Board up to a period of six months.",0,gemma4
+TMP_036,temporal_reasoning,medium,"The SEBI (Research Analysts) Regulations 2014 were published on September 1, 201","On the ninetieth day from September 1, 2014, which is approximately November 30, 2014.","The regulations came into force on the ninetieth day from the publication date of September 1, 2014, which is November 3",1,gemma4
+TMP_037,temporal_reasoning,medium,"In the GoI securities issuance calendar for H1 FY2026-27, which is the first auc","Auction Week 4 (April 20-24, 2026) is the first week to include Sovereign Green Bonds, with ₹5,000 crore allocated for the 30-year SGrB.","Auction Week 4 (April 20-24, 2026), with ₹5,000 crore allocated for the 30 Year SGrB.",1,gemma4
+TMP_038,temporal_reasoning,easy,"The RBI SFB Dividend Directions 2026 were issued on March 10, 2026 but take effe","The 2025 Directions were issued before the 2026 Directions — on November 28, 2025, compared to March 10, 2026 for the 2026 Directions.",,0,gemma4
+TMP_039,temporal_reasoning,hard,"A counterparty entered into an OTC derivative transaction on December 15, 2026. ","No. The UTI requirements (Section B) come into effect from January 01, 2027, and apply only to transactions entered into on or after that date. A tran","No, because the directions are applicable to OTC derivative transactions entered into on or after the date they come into effect, and Section B on UTI comes into effect from January 01, 2027.",1,gemma4
+TMP_040,temporal_reasoning,hard,An intermediary's time-limited certificate expires in 18 months from the commenc,"The intermediary must apply at least three months before the earlier of: (a) expiry of the certificate (15 months from commencement), or (b) three mon","At least three months prior to the expiry of the specified period (18 months), which is 15 months from the commencement of the regulations.",1,gemma4
+TMP_041,temporal_reasoning,medium,For how long was the Al-Nusrah Front listed on the ISIL (Da'esh) and Al-Qaida Sa,"Approximately 11 years and 9 months — from May 14, 2014 to February 27, 2026.","The Al-Nusrah Front was listed starting on 14 May 2014 and was removed per the UNSC press release dated February 27, 2026.",0,gemma4
+TMP_042,temporal_reasoning,easy,"Under the RBI GoI issuance calendar for H1 FY2026-27, if the third Monday of a m",On the fourth Monday of that month.,The switch auction will be conducted on the fourth Monday of the month.,1,gemma4
+TMP_043,temporal_reasoning,easy,"Under the RBI Master Direction on UTI 2026, if a market participant cannot obtai",Within five Mumbai business days from the date of the transaction.,Within five Mumbai business days from the date of the transaction.,1,gemma4
+TMP_044,temporal_reasoning,medium,"A company completed its buy-back (i.e., made the final payment to shareholders) ","June 15, 2026 — one year from the expiry date (June 15, 2025) of the buyback period of the preceding offer.","June 15, 2026 (one year from the date on which payment of consideration to shareholders was made).",0,gemma4
+TMP_045,temporal_reasoning,hard,"In Illustration 3 of the RBI SFB Dividend Directions 2026, the bank paid interim","The constraint applies cumulatively across both payments. The Maximum Eligible Dividend (₹1,125 crore) is the total permitted across the full financia","The final dividend shall not be more than (Maximum Eligible Dividend) minus (Interim dividend already paid), implying the constraint applies cumulatively across both payments.",1,gemma4

@@ -1,0 +1,53 @@
+\begin{table}[h]
+\centering
+\small
+\caption{95\% Wilson score confidence intervals for all models.}
+\label{tab:wilson_ci}
+\begin{tabular}{llrrrr}
+\toprule
+\textbf{Model} & \textbf{Task} & \textbf{n} & \textbf{Acc\%} & \textbf{CI lower} & \textbf{CI upper} \\
+\midrule
+Claude 3 Haiku & REG & 53 & 92.5 & 82.1 & 97.0 \\
+Claude 3 Haiku & NUM & 32 & 93.8 & 79.9 & 98.3 \\
+Claude 3 Haiku & CON & 30 & 86.7 & 70.3 & 94.7 \\
+Claude 3 Haiku & TMP & 35 & 91.4 & 77.6 & 97.0 \\
+Claude 3 Haiku & ALL & 150 & 91.3 & 85.7 & 94.9 \\
+\midrule
+Gemini 2.5 Flash & REG & 53 & 96.2 & 87.2 & 99.0 \\
+Gemini 2.5 Flash & NUM & 32 & 84.4 & 68.2 & 93.1 \\
+Gemini 2.5 Flash & CON & 30 & 83.3 & 66.4 & 92.7 \\
+Gemini 2.5 Flash & TMP & 35 & 80.0 & 64.1 & 90.0 \\
+Gemini 2.5 Flash & ALL & 150 & 87.3 & 81.1 & 91.7 \\
+\midrule
+Llama 4 Scout 17B & REG & 53 & 79.2 & 66.5 & 88.0 \\
+Llama 4 Scout 17B & NUM & 32 & 75.0 & 57.9 & 86.7 \\
+Llama 4 Scout 17B & CON & 30 & 100.0 & 88.6 & 100.0 \\
+Llama 4 Scout 17B & TMP & 35 & 80.0 & 64.1 & 90.0 \\
+Llama 4 Scout 17B & ALL & 150 & 82.7 & 75.8 & 87.9 \\
+\midrule
+Qwen3-32B & REG & 53 & 77.4 & 64.5 & 86.5 \\
+Qwen3-32B & NUM & 32 & 75.0 & 57.9 & 86.7 \\
+Qwen3-32B & CON & 30 & 86.7 & 70.3 & 94.7 \\
+Qwen3-32B & TMP & 35 & 94.3 & 81.4 & 98.4 \\
+Qwen3-32B & ALL & 150 & 82.7 & 75.8 & 87.9 \\
+\midrule
+LLaMA-3.3-70B (Groq) & REG & 53 & 77.4 & 64.5 & 86.5 \\
+LLaMA-3.3-70B (Groq) & NUM & 32 & 84.4 & 68.2 & 93.1 \\
+LLaMA-3.3-70B (Groq) & CON & 30 & 90.0 & 74.4 & 96.5 \\
+LLaMA-3.3-70B (Groq) & TMP & 35 & 77.1 & 61.0 & 87.9 \\
+LLaMA-3.3-70B (Groq) & ALL & 150 & 81.3 & 74.3 & 86.8 \\
+\midrule
+LLaMA-3-8B & REG & 53 & 77.4 & 64.5 & 86.5 \\
+LLaMA-3-8B & NUM & 32 & 62.5 & 45.3 & 77.1 \\
+LLaMA-3-8B & CON & 30 & 86.7 & 70.3 & 94.7 \\
+LLaMA-3-8B & TMP & 35 & 74.3 & 57.9 & 85.8 \\
+LLaMA-3-8B & ALL & 150 & 75.3 & 67.9 & 81.5 \\
+\midrule
+Mistral-7B & REG & 53 & 69.8 & 56.5 & 80.5 \\
+Mistral-7B & NUM & 32 & 68.8 & 51.4 & 82.0 \\
+Mistral-7B & CON & 30 & 80.0 & 62.7 & 90.5 \\
+Mistral-7B & TMP & 35 & 74.3 & 57.9 & 85.8 \\
+Mistral-7B & ALL & 150 & 72.7 & 65.0 & 79.2 \\
+\bottomrule
+\end{tabular}
+\end{table}

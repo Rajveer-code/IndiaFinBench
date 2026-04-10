@@ -1,0 +1,157 @@
+[
+  {
+    "model_id": "claude_haiku",
+    "label": "Claude 3 Haiku",
+    "hf_id": "anthropic/claude-3-haiku-20240307",
+    "params": "—",
+    "type": "Frontier API",
+    "scores": {
+      "REG": 0.9245,
+      "NUM": 0.9375,
+      "CON": 0.8667,
+      "TMP": 0.9143
+    },
+    "overall": 0.9133,
+    "n_items": 150,
+    "submitted": "2026-03-30",
+    "baseline": true,
+    "note": "Retired by Anthropic on April 19, 2026. Outputs cached for reproducibility."
+  },
+  {
+    "model_id": "gemini_flash",
+    "label": "Gemini 2.5 Flash",
+    "hf_id": "google/gemini-2.5-flash",
+    "params": "—",
+    "type": "Frontier API",
+    "scores": {
+      "REG": 0.9623,
+      "NUM": 0.8438,
+      "CON": 0.8333,
+      "TMP": 0.8000
+    },
+    "overall": 0.8733,
+    "n_items": 150,
+    "submitted": "2026-03-31",
+    "baseline": true
+  },
+  {
+    "model_id": "llama4scout",
+    "label": "Llama 4 Scout 17B",
+    "hf_id": "meta-llama/llama-4-scout-17b-16e-instruct",
+    "params": "17B",
+    "type": "Open-weight API",
+    "scores": {
+      "REG": 0.7925,
+      "NUM": 0.7500,
+      "CON": 1.0000,
+      "TMP": 0.8000
+    },
+    "overall": 0.8267,
+    "n_items": 150,
+    "submitted": "2026-04-08",
+    "baseline": true
+  },
+  {
+    "model_id": "qwen3_32b",
+    "label": "Qwen3-32B",
+    "hf_id": "Qwen/Qwen3-32B",
+    "params": "32B",
+    "type": "Open-weight API",
+    "scores": {
+      "REG": 0.7736,
+      "NUM": 0.7500,
+      "CON": 0.8667,
+      "TMP": 0.9429
+    },
+    "overall": 0.8267,
+    "n_items": 150,
+    "submitted": "2026-04-08",
+    "baseline": true
+  },
+  {
+    "model_id": "llama33_70b",
+    "label": "LLaMA-3.3-70B",
+    "hf_id": "meta-llama/Llama-3.3-70B-Instruct",
+    "params": "70B",
+    "type": "Open-weight API",
+    "scores": {
+      "REG": 0.7736,
+      "NUM": 0.8438,
+      "CON": 0.9000,
+      "TMP": 0.7714
+    },
+    "overall": 0.8133,
+    "n_items": 150,
+    "submitted": "2026-03-31",
+    "baseline": true
+  },
+  {
+    "model_id": "llama3_8b",
+    "label": "LLaMA-3-8B",
+    "hf_id": "meta-llama/Meta-Llama-3-8B-Instruct",
+    "params": "8B",
+    "type": "Local (Ollama)",
+    "scores": {
+      "REG": 0.7736,
+      "NUM": 0.6250,
+      "CON": 0.8667,
+      "TMP": 0.7429
+    },
+    "overall": 0.7533,
+    "n_items": 150,
+    "submitted": "2026-03-31",
+    "baseline": true
+  },
+  {
+    "model_id": "gemma4_e4b",
+    "label": "Gemma 4 E4B",
+    "hf_id": "google/gemma-4-e4b",
+    "params": "4B",
+    "type": "Local (Ollama)",
+    "scores": {
+      "REG": 0.9057,
+      "NUM": 0.6563,
+      "CON": 0.7667,
+      "TMP": 0.5714
+    },
+    "overall": 0.7467,
+    "n_items": 150,
+    "submitted": "2026-04-10",
+    "baseline": true
+  },
+  {
+    "model_id": "mistral_7b",
+    "label": "Mistral-7B",
+    "hf_id": "mistralai/Mistral-7B-Instruct-v0.3",
+    "params": "7B",
+    "type": "Local (Ollama)",
+    "scores": {
+      "REG": 0.6981,
+      "NUM": 0.6875,
+      "CON": 0.8000,
+      "TMP": 0.7429
+    },
+    "overall": 0.7267,
+    "n_items": 150,
+    "submitted": "2026-03-31",
+    "baseline": true
+  },
+  {
+    "model_id": "deepseek_r1_70b",
+    "label": "DeepSeek R1 70B",
+    "hf_id": "deepseek-ai/DeepSeek-R1-Distill-Llama-70B",
+    "params": "70B distilled",
+    "type": "Reasoning API",
+    "scores": {
+      "REG": 0.6038,
+      "NUM": 0.7813,
+      "CON": 0.9333,
+      "TMP": 0.6000
+    },
+    "overall": 0.7067,
+    "n_items": 150,
+    "submitted": "2026-04-10",
+    "baseline": true,
+    "note": "Evaluated via OpenRouter (retired from Groq October 2, 2025). Identical model weights."
+  }
+]

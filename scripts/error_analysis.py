@@ -145,10 +145,15 @@ def make_heatmap(all_results):
     ax.xaxis.set_label_position("top")
 
     # Annotate cells
+    # BUG 3 FIX: Use luminance of the actual colormap color to decide text color,
+    # avoiding boundary mismatches at exactly val=75 or val=92.
     for i in range(len(model_order)):
         for j in range(len(TASKS)):
             val = matrix[i, j]
-            color = "black" if 75 <= val <= 92 else "white"
+            norm_val = (val - 60) / 40.0
+            rgba = cmap(np.clip(norm_val, 0.0, 1.0))
+            luminance = 0.299 * rgba[0] + 0.587 * rgba[1] + 0.114 * rgba[2]
+            color = "black" if luminance > 0.45 else "white"
             ax.text(j, i, f"{val:.1f}%", ha="center", va="center",
                     fontsize=12, fontweight="bold", color=color)
 
@@ -161,7 +166,7 @@ def make_heatmap(all_results):
 
     plt.tight_layout()
     path = os.path.join(OUT_DIR, "heatmap.png")
-    plt.savefig(path, dpi=150, bbox_inches="tight")
+    plt.savefig(path, dpi=300, bbox_inches="tight")  # BUG 3 FIX: 150 → 300 DPI
     plt.close()
     print(f"  ✓  Heatmap saved: {path}")
     return matrix, model_order, model_labels
@@ -214,10 +219,95 @@ def make_difficulty_chart(all_results, qa_map):
 
     plt.tight_layout()
     path = os.path.join(OUT_DIR, "difficulty_breakdown.png")
-    plt.savefig(path, dpi=150, bbox_inches="tight")
+    plt.savefig(path, dpi=300, bbox_inches="tight")  # BUG 3 FIX: 150 → 300 DPI
     plt.close()
     print(f"  ✓  Difficulty chart saved: {path}")
     return data
+
+# ── Figure 3: Error Stacked Bar ───────────────────────────────────────────────
+
+def make_error_stacked_bar() -> None:
+    """Generate Figure 3: stacked horizontal bar chart of error type distribution per model.
+
+    Args:
+        None — uses hardcoded error counts from Table 7 in the paper.
+
+    Returns:
+        None — saves evaluation/error_analysis/error_stacked_bar.png at 300 DPI.
+
+    Error counts are ground truth from paper Table 7.  Do not recompute from
+    result CSVs, which would change if results are re-run with a different seed.
+    """
+    error_data: dict[str, dict[str, int]] = {
+        "haiku":   {"DKF": 4,  "NRF": 2,  "TRF": 7,  "CGF": 0},
+        "gemini":  {"DKF": 3,  "NRF": 5,  "TRF": 9,  "CGF": 1},
+        "groq70b": {"DKF": 12, "NRF": 5,  "TRF": 10, "CGF": 1},
+        "llama3":  {"DKF": 13, "NRF": 12, "TRF": 11, "CGF": 1},
+        "mistral": {"DKF": 17, "NRF": 10, "TRF": 13, "CGF": 1},
+    }
+
+    error_types = ["DKF", "NRF", "TRF", "CGF"]
+    colors      = ["#4472C4", "#ED7D31", "#A9D18E", "#FF0000"]
+    model_order = ["haiku", "gemini", "groq70b", "llama3", "mistral"]
+    model_labels = [MODELS[m] for m in model_order]
+
+    # Convert counts to percentages per model
+    pct: dict[str, dict[str, float]] = {}
+    for mk in model_order:
+        total = sum(error_data[mk].values()) or 1
+        pct[mk] = {et: error_data[mk][et] / total * 100 for et in error_types}
+
+    fig, ax = plt.subplots(figsize=(11, 5))
+
+    y_pos = np.arange(len(model_order))
+    lefts = np.zeros(len(model_order))
+
+    for et, color in zip(error_types, colors):
+        widths = np.array([pct[mk][et] for mk in model_order])
+        bars = ax.barh(y_pos, widths, left=lefts, color=color,
+                       label=et, edgecolor="white", linewidth=0.5)
+
+        # Percentage label inside segment (only if width > 8%)
+        for bar, w, left in zip(bars, widths, lefts):
+            if w > 8.0:
+                ax.text(
+                    left + w / 2,
+                    bar.get_y() + bar.get_height() / 2,
+                    f"{w:.0f}%",
+                    ha="center", va="center",
+                    fontsize=9, fontweight="bold", color="white",
+                )
+        lefts += widths
+
+    ax.set_yticks(y_pos)
+    ax.set_yticklabels(model_labels, fontsize=11)
+    ax.set_xlabel("Percentage of Total Errors (%)", fontsize=11)
+    ax.set_xlim(0, 100)
+    ax.set_title("IndiaFinBench: Error Type Distribution by Model",
+                 fontsize=13, fontweight="bold")
+
+    legend_labels = {
+        "DKF": "Domain Knowledge Failure",
+        "NRF": "Numerical Reasoning Failure",
+        "TRF": "Temporal Reasoning Failure",
+        "CGF": "Context Grounding Failure",
+    }
+    handles = [
+        plt.Rectangle((0, 0), 1, 1, color=c)
+        for c in colors
+    ]
+    ax.legend(handles, [legend_labels[et] for et in error_types],
+              loc="lower right", fontsize=9, framealpha=0.9)
+
+    ax.grid(axis="x", alpha=0.3)
+    ax.invert_yaxis()  # Top model (haiku) at the top, matching heatmap order
+
+    plt.tight_layout()
+    path = os.path.join(OUT_DIR, "error_stacked_bar.png")
+    plt.savefig(path, dpi=300, bbox_inches="tight")
+    plt.close()
+    print(f"  ✓  Error stacked bar saved: {path}")
+
 
 # ── Error Taxonomy Table ───────────────────────────────────────────────────────
 
@@ -527,6 +617,9 @@ def main():
 
     # Figure 2: Difficulty breakdown
     difficulty_data = make_difficulty_chart(all_results, qa_map)
+
+    # Figure 3: Error stacked bar (Task 1.2)
+    make_error_stacked_bar()
 
     # Error taxonomy
     taxonomy, error_types, failure_examples = make_error_taxonomy(

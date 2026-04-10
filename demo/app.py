@@ -1,367 +1,391 @@
 """
 demo/app.py
-------------
-Gradio demo for IndiaFinBench — deployable to HuggingFace Spaces.
-
-Loads the IndiaFinBench dataset from HuggingFace Hub and provides an
-interactive interface to browse random questions by task type and difficulty,
-with a hidden reference answer reveal feature.
-
-Usage (local):
-    pip install gradio datasets
+-----------
+Purpose:  Full IndiaFinBench leaderboard on HuggingFace Spaces.
+          Tab 1 — Live sortable leaderboard (pre-populated with 5 baselines).
+          Tab 2 — Submit: enter a HF model ID, get auto-scored on all 150 items.
+          Tab 3 — About: paper abstract, dataset stats, citation.
+Inputs:   demo/data/questions.json, demo/data/baselines.json, demo/leaderboard.db
+Outputs:  Interactive Gradio web app
+Usage:
     python demo/app.py
-
-HuggingFace Spaces:
-    Upload this file and requirements.txt to a new Space.
-    The Space will auto-install dependencies and launch the app.
+    gradio demo/app.py
 """
 
+import json
 import random
-from typing import Optional
+import sys
+import threading
+from pathlib import Path
 
 import gradio as gr
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 
-# ---------------------------------------------------------------------------
-# Dataset loading
-# ---------------------------------------------------------------------------
+# Ensure demo/ is on the Python path when running from repo root
+_DEMO_DIR = Path(__file__).parent
+if str(_DEMO_DIR) not in sys.path:
+    sys.path.insert(0, str(_DEMO_DIR))
 
-DATASET_REPO = "Rajveer-code/IndiaFinBench"
-_dataset_cache: Optional[list] = None
+from database.db import get_leaderboard, init_db, save_result
+from evaluation.scorer import score_submission
+from evaluation.tasks import build_prompt, extract_answer
 
+# ── Globals ────────────────────────────────────────────────────────────────────
 
-def load_dataset_once() -> list:
-    """
-    Load and cache the IndiaFinBench test split from HuggingFace Hub.
+QUESTIONS_PATH = _DEMO_DIR / "data/questions.json"
 
-    Returns
-    -------
-    list
-        List of dataset records (dicts).
-    """
-    global _dataset_cache
-    if _dataset_cache is None:
-        try:
-            from datasets import load_dataset
-            ds = load_dataset(DATASET_REPO, split="test")
-            _dataset_cache = list(ds)
-        except Exception as e:
-            # Graceful fallback: return a placeholder record so the UI doesn't crash
-            _dataset_cache = [
-                {
-                    "id": "placeholder_001",
-                    "task_type": "regulatory_interpretation",
-                    "difficulty": "easy",
-                    "source": "SEBI",
-                    "context": (
-                        "[Dataset not yet available on HuggingFace. "
-                        "Please run scripts/upload_to_huggingface.py first.] "
-                        f"Error: {e}"
-                    ),
-                    "question": "When will IndiaFinBench be available?",
-                    "reference_answer": "Upon upload to HuggingFace Hub.",
-                    "source_document": "N/A",
-                }
-            ]
-    return _dataset_cache
+with QUESTIONS_PATH.open(encoding="utf-8") as _f:
+    QUESTIONS: list[dict] = json.load(_f)
 
-
-# ---------------------------------------------------------------------------
-# Filtering helper
-# ---------------------------------------------------------------------------
-
-TASK_DISPLAY = {
-    "All":                        None,
-    "Regulatory Interpretation":  "regulatory_interpretation",
-    "Numerical Reasoning":        "numerical_reasoning",
-    "Contradiction Detection":    "contradiction_detection",
-    "Temporal Reasoning":         "temporal_reasoning",
+TASK_FULL = {
+    "regulatory_interpretation": "Regulatory Interpretation",
+    "numerical_reasoning":       "Numerical Reasoning",
+    "contradiction_detection":   "Contradiction Detection",
+    "temporal_reasoning":        "Temporal Reasoning",
 }
 
-DIFFICULTY_DISPLAY = {
-    "All":    None,
-    "Easy":   "easy",
-    "Medium": "medium",
-    "Hard":   "hard",
-}
+# Initialise DB (creates tables + inserts baselines if needed)
+init_db()
 
+# ── Leaderboard helpers ────────────────────────────────────────────────────────
 
-def filter_items(task_label: str, difficulty_label: str) -> list:
+def refresh_leaderboard() -> pd.DataFrame:
+    """Reload the leaderboard DataFrame from SQLite.
+
+    Returns:
+        Sorted leaderboard DataFrame.
     """
-    Return dataset items matching the selected task and difficulty filters.
+    return get_leaderboard()
 
-    Parameters
-    ----------
-    task_label : str
-        Display label from the task dropdown (e.g. "Regulatory Interpretation").
-    difficulty_label : str
-        Display label from the difficulty dropdown (e.g. "Easy").
 
-    Returns
-    -------
-    list
-        Filtered list of dataset records.
+def build_bar_chart(df: pd.DataFrame) -> plt.Figure:
+    """Build an overall-accuracy bar chart from the leaderboard DataFrame.
+
+    Args:
+        df: Leaderboard DataFrame returned by get_leaderboard().
+
+    Returns:
+        Matplotlib Figure.
     """
-    data = load_dataset_once()
-    task_key  = TASK_DISPLAY.get(task_label)
-    diff_key  = DIFFICULTY_DISPLAY.get(difficulty_label)
+    if df.empty:
+        fig, ax = plt.subplots(figsize=(6, 3))
+        ax.text(0.5, 0.5, "No data yet", ha="center", va="center")
+        return fig
 
-    filtered = [
-        item for item in data
-        if (task_key  is None or item["task_type"]  == task_key)
-        and (diff_key is None or item["difficulty"] == diff_key)
-    ]
-    return filtered if filtered else data  # fallback to all if no match
+    models  = df["Model"].tolist()
+    overall = df["Overall (%)"].tolist()
 
+    palette = plt.cm.Blues(np.linspace(0.4, 0.8, len(models)))
+    fig, ax = plt.subplots(figsize=(max(6, len(models)), 4))
+    bars = ax.bar(models, overall, color=palette, edgecolor="white")
 
-# ---------------------------------------------------------------------------
-# Event handlers
-# ---------------------------------------------------------------------------
-
-_current_item: dict = {}
-
-
-def load_random_question(task_label: str, difficulty_label: str):
-    """
-    Select a random item from the filtered dataset and populate the UI fields.
-
-    Parameters
-    ----------
-    task_label : str
-        Selected task type display label.
-    difficulty_label : str
-        Selected difficulty display label.
-
-    Returns
-    -------
-    tuple
-        Values to populate: (context, question, meta_label, answer_box)
-    """
-    global _current_item
-
-    candidates = filter_items(task_label, difficulty_label)
-    item       = random.choice(candidates)
-    _current_item = item
-
-    task_pretty = item["task_type"].replace("_", " ").title()
-    diff_pretty = item["difficulty"].capitalize()
-    meta        = f"🏷️  Task: {task_pretty} · Difficulty: {diff_pretty} · Source: {item['source']}"
-
-    return (
-        item["context"],    # context_box
-        item["question"],   # question_box
-        meta,               # meta_label
-        "",                 # clear the answer box on each new question
-        "",                 # clear the source_doc box
-    )
-
-
-def reveal_answer():
-    """
-    Reveal the reference answer and source document for the current item.
-
-    Returns
-    -------
-    tuple
-        (reference_answer_text, source_document_text)
-    """
-    if not _current_item:
-        return "Load a question first.", ""
-    return (
-        _current_item.get("reference_answer", "N/A"),
-        f"📄 {_current_item.get('source_document', 'N/A')}",
-    )
-
-
-# ---------------------------------------------------------------------------
-# Results table (for About tab)
-# ---------------------------------------------------------------------------
-
-RESULTS_TABLE_MD = """
-| Model | REG | NUM | CON | TMP | Overall |
-|---|---|---|---|---|---|
-| Claude 3 Haiku | 92.5% | **93.8%** | 86.7% | **91.4%** | **91.3%** |
-| Gemini 2.5 Flash | **96.2%** | 84.4% | 83.3% | 82.4% | 87.9% |
-| LLaMA-3.3-70B | 77.4% | 84.4% | **90.0%** | 77.1% | 81.3% |
-| LLaMA-3-8B | 77.4% | 62.5% | 86.7% | 74.3% | 75.3% |
-| Mistral-7B | 69.8% | 68.8% | 80.0% | 74.3% | 72.7% |
-
-REG = Regulatory Interpretation · NUM = Numerical Reasoning ·
-CON = Contradiction Detection · TMP = Temporal Reasoning
-"""
-
-ABOUT_MD = f"""
-## IndiaFinBench
-
-**The first publicly available evaluation benchmark for LLM performance on
-Indian financial regulatory text.**
-
-IndiaFinBench contains **150 expert-annotated question-answer pairs** drawn from
-192 documents sourced from the Securities and Exchange Board of India (SEBI) and
-the Reserve Bank of India (RBI), spanning documents from 1992 to 2026.
-
-### Four Task Types
-
-| Task | Items | Description |
-|---|---|---|
-| Regulatory Interpretation | 53 | Extract rules, thresholds, applicability scopes |
-| Numerical Reasoning | 32 | Arithmetic over regulatory figures |
-| Contradiction Detection | 30 | Identify contradictions between two passages |
-| Temporal Reasoning | 35 | Chronological ordering of regulatory events |
-
-### Evaluation Results (Zero-Shot)
-
-{RESULTS_TABLE_MD}
-
-### Key Findings
-
-- **Best model:** Claude 3 Haiku (91.3% overall)
-- **Most discriminative task:** Numerical Reasoning (~31 point spread)
-- **Dominant frontier-model failure:** Temporal Reasoning (54% of Claude's errors)
-- **Dominant small-model failure:** Domain Knowledge (41% of Mistral's errors)
-
-### Links
-
-- 📄 [Paper (arXiv — coming soon)](https://arxiv.org/)
-- 💾 [GitHub Repository](https://github.com/Rajveer-code/IndiaFinBench)
-- 🤗 [HuggingFace Dataset](https://huggingface.co/datasets/Rajveer-code/IndiaFinBench)
-
-### Citation
-
-```bibtex
-@article{{pall2025indiafinbench,
-  title={{IndiaFinBench: An Evaluation Benchmark for Large Language Model
-         Performance on Indian Financial Regulatory Text}},
-  author={{Pall, Rajveer Singh}},
-  journal={{arXiv preprint}},
-  year={{2025}}
-}}
-```
-
-### License
-
-Dataset: CC BY 4.0 · Source documents: Public domain (Government of India)
-"""
-
-# ---------------------------------------------------------------------------
-# UI — gr.Blocks layout
-# ---------------------------------------------------------------------------
-
-with gr.Blocks(
-    title="IndiaFinBench — LLM Benchmark Demo",
-    theme=gr.themes.Soft(
-        primary_hue="indigo",
-        secondary_hue="blue",
-        neutral_hue="slate",
-    ),
-    css="""
-    .header-box { text-align: center; margin-bottom: 1em; }
-    .answer-box textarea { font-weight: bold; background: #f0f7ff; }
-    """,
-) as demo:
-
-    # ---- Header ----
-    with gr.Column(elem_classes="header-box"):
-        gr.Markdown(
-            "# 🏛️ IndiaFinBench — LLM Benchmark Demo\n"
-            "### Evaluating LLM performance on Indian financial regulatory text"
+    for bar, val in zip(bars, overall):
+        ax.text(
+            bar.get_x() + bar.get_width() / 2,
+            bar.get_height() + 0.3,
+            f"{val:.1f}%",
+            ha="center", va="bottom", fontsize=9, fontweight="bold",
         )
 
-    with gr.Tabs():
+    ax.set_ylabel("Overall Accuracy (%)")
+    ax.set_title("IndiaFinBench Leaderboard — Overall Accuracy", fontweight="bold")
+    ax.set_ylim(0, 105)
+    ax.tick_params(axis="x", labelrotation=20)
+    ax.grid(axis="y", alpha=0.3)
+    plt.tight_layout()
+    return fig
 
-        # ================================================================
-        # TAB 1 — Interactive Question Browser
-        # ================================================================
-        with gr.Tab("🔍 Browse Questions"):
 
-            gr.Markdown(
-                "Select a **task type** and **difficulty level**, then click "
-                "**Load Random Question** to sample a benchmark item. "
-                "Try to answer before clicking **Reveal Reference Answer**."
-            )
+# ── Submit helpers ─────────────────────────────────────────────────────────────
 
-            with gr.Row():
-                task_dropdown = gr.Dropdown(
-                    choices=list(TASK_DISPLAY.keys()),
-                    value="All",
-                    label="Task Type",
-                    interactive=True,
-                )
-                difficulty_dropdown = gr.Dropdown(
-                    choices=list(DIFFICULTY_DISPLAY.keys()),
-                    value="All",
-                    label="Difficulty",
-                    interactive=True,
-                )
+_eval_lock = threading.Lock()  # Prevent concurrent evaluations on Spaces
 
-            load_btn = gr.Button("⚡ Load Random Question", variant="primary")
 
-            meta_label = gr.Markdown(
-                value="*Load a question to see its metadata.*",
-                label="",
-            )
+def validate_hf_id(hf_id: str) -> tuple[bool, str]:
+    """Basic validation of a HuggingFace model ID.
 
-            context_box = gr.Textbox(
-                label="📜 Context Passage",
-                lines=8,
-                interactive=False,
-                placeholder="Context passage will appear here…",
-            )
+    Args:
+        hf_id: Model ID string (e.g. "mistralai/Mistral-7B-Instruct-v0.3").
 
-            question_box = gr.Textbox(
-                label="❓ Question",
-                lines=3,
-                interactive=False,
-                placeholder="Question will appear here…",
-            )
+    Returns:
+        (is_valid, error_message) tuple.
+    """
+    hf_id = hf_id.strip()
+    if not hf_id:
+        return False, "Please enter a HuggingFace model ID."
+    if len(hf_id) > 200:
+        return False, "Model ID is too long."
+    return True, ""
 
-            reveal_btn = gr.Button("👁️ Reveal Reference Answer", variant="secondary")
 
-            answer_box = gr.Textbox(
-                label="✅ Reference Answer",
-                lines=2,
-                interactive=False,
-                placeholder="Click 'Reveal Reference Answer' to show the gold answer…",
-                elem_classes="answer-box",
-            )
+def run_evaluation(
+    hf_id: str,
+    display_name: str,
+    params_str: str,
+    smoke_test: bool,
+) -> tuple[str, pd.DataFrame, plt.Figure]:
+    """Run evaluation of a HuggingFace model against IndiaFinBench.
 
-            source_doc_box = gr.Textbox(
-                label="📄 Source Document",
-                lines=1,
-                interactive=False,
-                placeholder="Source document will appear here…",
-            )
+    Args:
+        hf_id:        HuggingFace model ID.
+        display_name: Display label for the leaderboard.
+        params_str:   Parameter count string (e.g. "7B").
+        smoke_test:   If True, evaluate only first 10 items.
 
-            # ---- Wiring ----
-            load_btn.click(
-                fn=load_random_question,
-                inputs=[task_dropdown, difficulty_dropdown],
-                outputs=[context_box, question_box, meta_label, answer_box, source_doc_box],
-            )
+    Returns:
+        (status_message, leaderboard_df, bar_chart_figure)
+    """
+    hf_id = hf_id.strip()
+    valid, err = validate_hf_id(hf_id)
+    if not valid:
+        return err, refresh_leaderboard(), build_bar_chart(refresh_leaderboard())
 
-            reveal_btn.click(
-                fn=reveal_answer,
-                inputs=[],
-                outputs=[answer_box, source_doc_box],
-            )
+    label = display_name.strip() if display_name.strip() else hf_id.split("/")[-1]
 
-        # ================================================================
-        # TAB 2 — About
-        # ================================================================
-        with gr.Tab("ℹ️ About This Benchmark"):
-            gr.Markdown(ABOUT_MD)
+    if not _eval_lock.acquire(blocking=False):
+        return (
+            "Another evaluation is already running. Please wait a moment and try again.",
+            refresh_leaderboard(),
+            build_bar_chart(refresh_leaderboard()),
+        )
 
-    gr.Markdown(
-        "---\n*IndiaFinBench is released under CC BY 4.0. "
-        "Source documents are public domain (Government of India publications).*"
+    try:
+        from evaluation.evaluator import IndiaFinBenchEvaluator
+
+        n_items    = 10 if smoke_test else len(QUESTIONS)
+        eval_items = QUESTIONS[:n_items]
+
+        evaluator = IndiaFinBenchEvaluator(hf_id)
+        preds     = evaluator.run(eval_items)
+
+        result    = score_submission(preds, eval_items)
+        overall   = result["overall"]
+        per_task  = result["per_task"]
+
+        save_result(
+            hf_id=hf_id,
+            label=label,
+            overall=overall,
+            per_task=per_task,
+            params=params_str or "Unknown",
+            n_items=n_items,
+            notes="smoke_test" if smoke_test else "",
+        )
+
+        status = (
+            f"Evaluation complete!\n"
+            f"Model: {label}\n"
+            f"Overall: {overall*100:.1f}%\n"
+            f"REG: {per_task.get('REG',0)*100:.1f}%  "
+            f"NUM: {per_task.get('NUM',0)*100:.1f}%  "
+            f"CON: {per_task.get('CON',0)*100:.1f}%  "
+            f"TMP: {per_task.get('TMP',0)*100:.1f}%\n"
+            f"Items evaluated: {n_items}/150"
+        )
+        df  = refresh_leaderboard()
+        return status, df, build_bar_chart(df)
+
+    except Exception as e:
+        return (
+            f"Evaluation failed: {str(e)[:300]}",
+            refresh_leaderboard(),
+            build_bar_chart(refresh_leaderboard()),
+        )
+    finally:
+        _eval_lock.release()
+
+
+# ── Dataset Explorer helpers ───────────────────────────────────────────────────
+
+def get_random_example(task_filter: str, diff_filter: str) -> str:
+    """Return a formatted markdown block for a random filtered example.
+
+    Args:
+        task_filter: Display label for task type, or "All".
+        diff_filter: Difficulty level ("Easy", "Medium", "Hard", "All").
+
+    Returns:
+        Markdown-formatted example string.
+    """
+    pool = list(QUESTIONS)
+    if task_filter != "All":
+        pool = [q for q in pool
+                if TASK_FULL.get(q["task_type"], "") == task_filter]
+    if diff_filter != "All":
+        pool = [q for q in pool if q["difficulty"] == diff_filter.lower()]
+
+    if not pool:
+        return "No examples match the selected filters."
+
+    q    = random.choice(pool)
+    task = TASK_FULL.get(q["task_type"], q["task_type"])
+
+    ctx = q.get("context") or (
+        f"**Passage A:** {q.get('context_a','')}\n\n"
+        f"**Passage B:** {q.get('context_b','')}"
     )
 
-# ---------------------------------------------------------------------------
-# Entry point
-# ---------------------------------------------------------------------------
+    return (
+        f'**Task:** `{task}` &nbsp;&nbsp; **Difficulty:** `{q["difficulty"].upper()}`\n\n'
+        f"---\n\n"
+        f"**Context:**\n\n> {ctx[:800]}{'...' if len(ctx) > 800 else ''}\n\n"
+        f"---\n\n"
+        f"**Question:** {q['question']}\n\n"
+        f"**Reference Answer:** {q['gold_answer']}"
+    )
+
+
+# ── About content ──────────────────────────────────────────────────────────────
+
+ABOUT_MD = """
+## Abstract
+
+**IndiaFinBench** is the first benchmark for evaluating Large Language Models on
+Indian financial regulatory text. It comprises **150 expert-annotated QA pairs** from
+192 SEBI and RBI documents, covering four task types:
+
+| Task | N | Description |
+|---|---|---|
+| Regulatory Interpretation (REG) | 53 | Extract rules, thresholds, compliance conditions |
+| Numerical Reasoning (NUM) | 32 | Arithmetic over repo rates, capital ratios, thresholds |
+| Contradiction Detection (CON) | 30 | Identify contradictions between two regulatory passages |
+| Temporal Reasoning (TMP) | 35 | Sequence amendments and effective dates |
+
+## Dataset Statistics
+
+| Statistic | Value |
+|---|---|
+| Total QA pairs | 150 |
+| Difficulty (Easy / Medium / Hard) | 50 / 60 / 40 |
+| SEBI source documents | 142 |
+| RBI source documents | 89 |
+| Inter-annotator agreement | 90.7% |
+| Contradiction Cohen's kappa | 0.918 |
+
+## How to Submit
+
+1. Enter your HuggingFace model ID in the **Submit** tab (e.g. `mistralai/Mistral-7B-Instruct-v0.3`)
+2. Optionally run a 10-item smoke test first
+3. Click **Run Evaluation** — the model is loaded, run zero-shot against all 150 items, and the result is saved to the leaderboard
+
+**Note:** Evaluation requires the model to be publicly accessible on HuggingFace.
+Large models (>30B) may time out on Spaces CPU — use GPU-enabled Spaces or run locally.
+
+## Citation
+
+```bibtex
+@inproceedings{indiafinbench2026,
+  title     = {{IndiaFinBench}: A Benchmark for Evaluating LLMs
+               on Indian Financial Regulatory Text},
+  author    = {Pall, Rajveer Singh},
+  booktitle = {Proceedings of EMNLP 2026},
+  year      = {2026},
+}
+```
+
+## Links
+
+- **Paper:** arXiv (link TBD after review)
+- **GitHub:** Repository link TBD
+- **HuggingFace Dataset:** Coming soon
+"""
+
+
+# ── Build Gradio app ───────────────────────────────────────────────────────────
+
+def build_app() -> gr.Blocks:
+    """Build the full 3-tab Gradio leaderboard app.
+
+    Returns:
+        Configured gr.Blocks instance.
+    """
+    init_df  = refresh_leaderboard()
+    init_fig = build_bar_chart(init_df)
+
+    with gr.Blocks(
+        title="IndiaFinBench Leaderboard",
+        theme=gr.themes.Soft(),
+    ) as demo:
+
+        gr.Markdown(
+            "# IndiaFinBench\n"
+            "### The first LLM benchmark for Indian financial regulatory text\n"
+            "150 QA pairs · SEBI + RBI corpus · 4 task types · Zero-shot evaluation"
+        )
+
+        with gr.Tabs():
+
+            # ── Tab 1: Leaderboard ─────────────────────────────────────────────
+            with gr.Tab("Leaderboard"):
+                gr.Markdown("### Model Rankings (click column headers to sort)")
+                lb_table = gr.Dataframe(
+                    value=init_df,
+                    interactive=False,
+                    wrap=False,
+                )
+                refresh_btn = gr.Button("Refresh Leaderboard", size="sm")
+                gr.Markdown("### Overall Accuracy")
+                lb_chart = gr.Plot(value=init_fig)
+
+                refresh_btn.click(
+                    fn=lambda: (refresh_leaderboard(), build_bar_chart(refresh_leaderboard())),
+                    inputs=[],
+                    outputs=[lb_table, lb_chart],
+                )
+
+            # ── Tab 2: Submit ──────────────────────────────────────────────────
+            with gr.Tab("Submit a Model"):
+                gr.Markdown(
+                    "Enter a public HuggingFace model ID to evaluate it zero-shot "
+                    "on all 150 IndiaFinBench questions. Results are added to the leaderboard.\n\n"
+                    "> **Tip:** Run a smoke test (10 items) first to check the model loads correctly."
+                )
+
+                with gr.Row():
+                    hf_id_box = gr.Textbox(
+                        label="HuggingFace Model ID",
+                        placeholder="e.g. mistralai/Mistral-7B-Instruct-v0.3",
+                    )
+                    name_box = gr.Textbox(
+                        label="Display Name (optional)",
+                        placeholder="e.g. Mistral-7B",
+                    )
+
+                with gr.Row():
+                    params_box = gr.Textbox(
+                        label="Parameter Count (optional)",
+                        placeholder="e.g. 7B",
+                    )
+                    smoke_chk = gr.Checkbox(
+                        label="Smoke test only (10 items)",
+                        value=True,
+                    )
+
+                run_btn    = gr.Button("Run Evaluation", variant="primary")
+                status_out = gr.Textbox(label="Status", lines=6, interactive=False)
+                sub_table  = gr.Dataframe(label="Updated Leaderboard",
+                                          interactive=False, wrap=False)
+                sub_chart  = gr.Plot(label="Updated Chart")
+
+                run_btn.click(
+                    fn=run_evaluation,
+                    inputs=[hf_id_box, name_box, params_box, smoke_chk],
+                    outputs=[status_out, sub_table, sub_chart],
+                )
+
+            # ── Tab 3: About ───────────────────────────────────────────────────
+            with gr.Tab("About"):
+                gr.Markdown(ABOUT_MD)
+
+    return demo
+
+
+# ── Entry point ────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    demo.launch(
-        server_name="0.0.0.0",
-        server_port=7860,
-        share=False,
-    )
+    app = build_app()
+    app.launch(server_name="0.0.0.0", server_port=7860, share=False)

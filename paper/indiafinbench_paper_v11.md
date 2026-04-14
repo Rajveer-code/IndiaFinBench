@@ -8,7 +8,7 @@ rajveer.singhpall.cb23@ggits.net
 
 ## Abstract
 
-We introduce IndiaFinBench, to our knowledge the first publicly available evaluation benchmark for assessing large language model (LLM) performance on Indian financial regulatory text. Existing financial NLP benchmarks draw exclusively from Western financial corpora — SEC filings, US earnings reports, and English-language financial news — leaving a significant gap in coverage of non-Western regulatory frameworks. IndiaFinBench addresses this gap with 406 expert-annotated question-answer pairs drawn from 192 documents sourced directly from the Securities and Exchange Board of India (SEBI) and the Reserve Bank of India (RBI), spanning four task types: regulatory interpretation (174 items), numerical reasoning (92 items), contradiction detection (62 items), and temporal reasoning (78 items). We evaluate eleven models under zero-shot conditions on the full 406-item benchmark, spanning closed-source frontier models, open-weight large models, and locally-deployed small models. Accuracy ranges from 70.4% (Gemma 4 E4B) to 89.7% (Gemini 2.5 Flash), with all models substantially outperforming a human expert baseline of 60.0%. Numerical reasoning is the most discriminative task, with a 34.8 percentage-point spread between the best and worst performing models. Bootstrap significance testing reveals three broad performance tiers, with several model pairs statistically indistinguishable within tiers. A qualitative error analysis identifies temporal reasoning failure as the dominant error mode for top-performing models and domain knowledge failure for smaller models. IndiaFinBench provides a reproducible testbed for evaluating LLM robustness in non-Western regulatory environments. The dataset, evaluation code, and all model outputs are publicly available.
+We introduce IndiaFinBench, to our knowledge the first publicly available evaluation benchmark for assessing large language model (LLM) performance on Indian financial regulatory text. Existing financial NLP benchmarks draw exclusively from Western financial corpora — SEC filings, US earnings reports, and English-language financial news — leaving a significant gap in coverage of non-Western regulatory frameworks. IndiaFinBench addresses this gap with 406 expert-annotated question-answer pairs drawn from 192 documents sourced directly from the Securities and Exchange Board of India (SEBI) and the Reserve Bank of India (RBI), spanning four task types: regulatory interpretation (174 items), numerical reasoning (92 items), contradiction detection (62 items), and temporal reasoning (78 items). Annotation quality is validated via a model-based secondary pass (κ = 0.918 on contradiction detection) and a separate 60-item human inter-annotator agreement evaluation (κ = 0.611 for contradiction detection; 76.7% overall agreement across task types). We evaluate eleven models under zero-shot conditions on the full 406-item benchmark, spanning closed-source frontier models, open-weight large models, and locally-deployed small models. Accuracy ranges from 70.4% (Gemma 4 E4B) to 89.7% (Gemini 2.5 Flash), with all models substantially outperforming a human expert baseline of 60.0%. Numerical reasoning is the most discriminative task, with a 34.8 percentage-point spread between the best and worst performing models. Bootstrap significance testing reveals three broad performance tiers, with several model pairs statistically indistinguishable within tiers. A qualitative error analysis identifies temporal reasoning failure as the dominant error mode for top-performing models and domain knowledge failure for smaller models. IndiaFinBench provides a reproducible testbed for evaluating LLM robustness in non-Western regulatory environments. The dataset, evaluation code, and all model outputs are publicly available.
 
 ---
 
@@ -18,15 +18,16 @@ Large language models have demonstrated remarkable capabilities across a wide ra
 
 This gap has practical consequences. India's financial regulatory architecture is governed by SEBI circulars, RBI monetary policy directives, and a dense network of amendment chains between regulatory instruments. These documents present challenges that are qualitatively different from those captured in existing benchmarks. Indian regulatory text routinely embeds numerical thresholds in prose (capital adequacy ratios, upfront margin requirements, dividend payout limits), references chains of superseding circulars that require temporal reasoning to untangle, and employs jurisdiction-specific terminology (LODR, PMLA, SFB, AIF, FEMA) that models trained predominantly on Western corpora may not reliably interpret.
 
-We introduce **IndiaFinBench**, an evaluation benchmark designed to measure LLM performance on these specific challenges. The benchmark was constructed entirely from publicly available primary sources — SEBI and RBI regulatory documents downloaded directly from official government portals — and validated with a secondary agreement pass achieving κ = 0.918 on contradiction detection tasks.
+We introduce **IndiaFinBench**, an evaluation benchmark designed to measure LLM performance on these specific challenges. The benchmark was constructed entirely from publicly available primary sources — SEBI and RBI regulatory documents downloaded directly from official government portals — and validated via both a model-based secondary quality pass (κ = 0.918 on contradiction detection) and a 60-item human inter-annotator agreement evaluation (κ = 0.611 for contradiction detection; 76.7% overall agreement).
 
 Our contributions are:
 
 1. **A new benchmark dataset** of 406 expert-annotated QA pairs across four task types, drawn from 192 SEBI and RBI documents spanning 1992–2026.
 2. **A comprehensive zero-shot evaluation** of eleven contemporary LLMs on the full 406-item benchmark, revealing three performance tiers and substantial inter-task variation.
 3. **Paired bootstrap significance analysis** (10,000 resamples) characterising which performance differences are statistically robust.
-4. **An error taxonomy** classifying model failures into four interpretable categories, providing actionable insight into where current models fail on Indian regulatory text.
-5. **A public release** of the dataset, evaluation code, and all model predictions, supporting reproducibility and ongoing research in multilingual and domain-specific financial NLP.
+4. **Dual-layer annotation validation**: a model-based secondary quality pass confirming item unambiguity, and a separate human inter-annotator agreement evaluation on 60 items establishing human-human agreement rates across all four task types.
+5. **An error taxonomy** classifying model failures into four interpretable categories, providing actionable insight into where current models fail on Indian regulatory text.
+6. **A public release** of the dataset, evaluation code, and all model predictions, supporting reproducibility and ongoing research in multilingual and domain-specific financial NLP.
 
 ---
 
@@ -95,11 +96,13 @@ Difficulty assignments were made at question-authoring time using this rubric as
 
 Every item was individually reviewed to ensure: (1) the answer is unambiguously derivable from the provided context; (2) the question has exactly one correct answer; and (3) the context is sufficient without external knowledge. This design philosophy follows FinanceBench (Islam et al., 2023), which showed that high-quality items with verified gold answers provide strong discriminative signal across model tiers.
 
-### 3.4 Secondary Validation
+### 3.4 Model-Based Secondary Validation
 
 To confirm that items are unambiguously answerable from context, a secondary validation pass was conducted using LLaMA-3.3-70B-Versatile (via Groq API) as an independent quality-checker under a context-only, zero-shot prompt (temperature = 0). Although LLaMA-3.3-70B also appears in the main evaluation, the two uses are functionally distinct: the validation pass asks whether a question is *unambiguously answerable from its context passage* — a different task from the evaluation's open-ended QA. The validation endpoint was accessed in isolation from the evaluation pipeline, preventing cross-contamination of outputs.
 
-This approach — using a model-based validator as a proxy for question unambiguity — is consistent with recent benchmark construction practice (Islam et al., 2023; Hendrycks et al., 2021), provided it is clearly disclosed. We note that this measures agreement between two independent zero-shot responders, not human inter-annotator agreement in the traditional sense; we therefore use the term *secondary validation agreement* throughout.
+This approach — using a model-based validator as a proxy for question unambiguity — is consistent with recent benchmark construction practice (Islam et al., 2023; Hendrycks et al., 2021), provided it is clearly disclosed. We note that this measures agreement between two independent zero-shot responders, not human inter-annotator agreement in the traditional sense; we therefore use the term *model-based secondary validation* to distinguish it from the human IAA reported in Section 3.5.
+
+**Table: Model-Based Secondary Validation Agreement (150-item subset)**
 
 | Task Type | Items Validated | Agreement | Cohen's κ |
 |-----------|-----------------|-----------|-----------|
@@ -110,6 +113,26 @@ This approach — using a model-based validator as a proxy for question unambigu
 | **Overall** | **150** | **90.7%** | — |
 
 Cohen's κ is reported for contradiction detection, where both validators assign categorical Yes/No labels. For extractive tasks, agreement rate is reported, consistent with open-ended QA benchmarks such as DROP (Dua et al., 2019) and FinanceBench. The 90.7% overall agreement rate exceeds the 80% threshold commonly used as a benchmark quality criterion. Items with genuine disagreement (~1.3% of the initial set) were removed.
+
+### 3.5 Human Inter-Annotator Agreement
+
+Beyond the model-based secondary validation, we conducted a proper human inter-annotator agreement evaluation in which a second human annotator independently answered 60 randomly selected items from across all four task types, without access to the primary annotator's reference answers.
+
+The second annotator was given the same context passages and questions but provided answers independently. Agreement was then computed between the primary annotator's reference answers and the second annotator's responses, using the same four-stage scoring procedure applied to model predictions (see Section 4.3). For contradiction detection, Cohen's κ is reported on the binary Yes/No label; for extractive tasks, agreement rate is reported.
+
+**Table: Human Inter-Annotator Agreement (60-item sample)**
+
+| Task Type | Items | Agreement | Cohen's κ |
+|-----------|-------|-----------|-----------|
+| Regulatory Interpretation | 11 | **100.0%** | — |
+| Temporal Reasoning | 16 | 87.5% | — |
+| Contradiction Detection | 17 | 82.4% | **0.611** |
+| Numerical Reasoning | 16 | 43.8% | — |
+| **Overall** | **60** | **76.7%** | — |
+
+The human IAA results differ notably from the model-based secondary validation in two respects. First, the overall agreement is lower (76.7% vs 90.7%), which is expected: a model validator is optimised for consistency with its own priors, while a human annotator brings independent judgment. Second, the pattern across task types is more informative: Regulatory Interpretation (100%) and Temporal Reasoning (87.5%) show high human agreement, confirming that the primary answers are unambiguous and well-defined. Contradiction Detection (82.4%, κ=0.611) reflects the inherent subjectivity of borderline cases — a κ of 0.61 falls in the "substantial agreement" band by Landis and Koch (1977) conventions and is comparable to human agreement rates reported for similar contradiction detection tasks in legal NLP. Numerical Reasoning (43.8%) reflects genuine disagreement about unit formatting and intermediate rounding conventions — not about whether the answer is correct in principle, but about the level of precision and form expected in the reference answer.
+
+Taken together, the two validation passes complement each other: the model-based pass provides breadth (150 items) and confirms that items are tractable from context; the human pass provides depth (60 items with independent human judgment) and confirms that the primary answers are interpretable and non-trivial across all task types. Both are included in the repository.
 
 ---
 
@@ -326,7 +349,7 @@ The hardest task for human annotators was numerical reasoning (44.4%), consisten
 
 ### 7.3 Benchmark Characteristics and Limitations
 
-Several limitations of this study should be noted. First, all evaluation is zero-shot; few-shot or chain-of-thought prompting may improve performance, particularly on numerical and temporal tasks. Second, automated scoring may marginally overestimate correctness on numerical tasks when models arrive at the correct output through incorrect reasoning. Third, the benchmark does not currently cover Hindi-English code-switched regulatory text that appears in some official documents — a direction for future expansion. Fourth, the secondary validation pass used a model-based validator, not human inter-annotator agreement in the traditional sense; while this is disclosed and consistent with recent practice, it is a methodological limitation relative to full human annotation.
+Several limitations of this study should be noted. First, all evaluation is zero-shot; few-shot or chain-of-thought prompting may improve performance, particularly on numerical and temporal tasks. Second, automated scoring may marginally overestimate correctness on numerical tasks when models arrive at the correct output through incorrect reasoning. Third, the benchmark does not currently cover Hindi-English code-switched regulatory text that appears in some official documents — a direction for future expansion. Fourth, the human IAA evaluation covers 60 of the 406 items; extending human agreement measurement to the full benchmark would provide stronger statistical guarantees, though the current sample is representative across all four task types and difficulty levels.
 
 ---
 

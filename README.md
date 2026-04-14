@@ -147,8 +147,8 @@ IndiaFinBench/
 │   ├── guidelines/
 │   │   └── annotation_guide_v1.md               # Annotation protocol
 │   ├── inter_annotator/
-│   │   └── kappa_report.csv                     # Cohen's kappa = 0.918
-│   └── human_eval/                              # Human annotator answer sheets
+│   │   └── kappa_report.csv                     # Model-based secondary validation κ = 0.918
+│   └── human_eval/                              # Human IAA evaluation (60 items, κ=0.611 CON)
 │
 ├── data/
 │   ├── metadata_sebi.csv                        # 92 SEBI docs with source URLs
@@ -249,6 +249,26 @@ Answers are scored using a four-stage procedure:
 4. Yes/No match for contradiction detection
 
 The 0.72 fuzzy threshold was calibrated by manual inspection of borderline cases and validated against adjacent thresholds (0.65 too permissive, 0.80 too strict). Full ablation data in `evaluation/error_analysis/fuzzy_ablation_*.csv`.
+
+---
+
+## Annotation Quality
+
+IndiaFinBench was validated through two complementary passes:
+
+**1. Model-based secondary validation (150 items):** LLaMA-3.3-70B-Versatile independently attempted each item to verify unambiguous answerability from context. Overall agreement: 90.7%. Cohen's κ = 0.918 for contradiction detection (binary Yes/No labels).
+
+**2. Human inter-annotator agreement (60 items):** A second human annotator independently answered a stratified random sample of 60 items across all four task types, without access to the primary annotator's reference answers.
+
+| Task | Items | Agreement | Cohen's κ |
+|------|-------|-----------|-----------|
+| Regulatory Interpretation | 11 | 100.0% | — |
+| Temporal Reasoning | 16 | 87.5% | — |
+| Contradiction Detection | 17 | 82.4% | **0.611** |
+| Numerical Reasoning | 16 | 43.8% | — |
+| **Overall** | **60** | **76.7%** | — |
+
+The κ = 0.611 for contradiction detection falls in the "substantial agreement" range (Landis & Koch, 1977), consistent with human IAA on similar regulatory contradiction tasks. The lower numerical reasoning agreement (43.8%) reflects differences in unit formatting and rounding conventions, not substantive disagreement about correct answers.
 
 ---
 

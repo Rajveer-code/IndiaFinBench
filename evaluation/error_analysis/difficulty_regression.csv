@@ -1,0 +1,7 @@
+term,coef,p_value,ci_lo,ci_hi,sig
+Intercept,1.6371,0.0,1.472,1.8021,True
+"C(difficulty, Treatment(reference='easy'))[T.hard]",-0.029,0.8365,-0.3046,0.2466,False
+"C(difficulty, Treatment(reference='easy'))[T.medium]",-0.0026,0.9789,-0.1973,0.1921,False
+"C(task_type, Treatment(reference='regulatory_interpretation'))[T.contradiction_detection]",0.5025,0.0025,0.1766,0.8283,True
+"C(task_type, Treatment(reference='regulatory_interpretation'))[T.numerical_reasoning]",-0.8126,0.0,-1.0285,-0.5967,True
+"C(task_type, Treatment(reference='regulatory_interpretation'))[T.temporal_reasoning]",-0.294,0.0189,-0.5394,-0.0485,True

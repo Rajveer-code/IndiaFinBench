@@ -12,8 +12,8 @@ try:
 except ImportError:
     raise ImportError("pip install rapidfuzz")
 
-SHEET_PATH = Path("annotation/human_eval/human_eval_answer_sheet(AutoRecovered).csv")
-QA_PATH    = Path("annotation/raw_qa/indiafinbench_qa_combined_150.json")
+SHEET_PATH = Path(r"D:\Projects\IndiaFinBench\annotation\human_eval\human_annotator_answer_sheet_filled.csv")
+QA_PATH    = Path(r"D:\Projects\IndiaFinBench\annotation\raw_qa\indiafinbench_qa_combined_406.json")
 
 with open(QA_PATH, encoding="utf-8") as f:
     qa_data = json.load(f)

@@ -1,0 +1,58 @@
+% table_dataset_expanded.tex
+% IndiaFinBench dataset distribution — full 406-item benchmark
+% Generated: Session 6 (2026-04-11)
+
+\begin{table}[h]
+\centering
+\caption{IndiaFinBench dataset distribution (406 items total). Evaluation results in Table~\ref{tab:main_results} are reported on a 150-item evaluation subset.}
+\label{tab:dataset_distribution}
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Task Type} & \textbf{Easy} & \textbf{Medium} & \textbf{Hard} & \textbf{Total} \\
+\midrule
+Regulatory Interpretation (REG) & 70  & 78  & 26  & \textbf{174} \\
+Numerical Reasoning (NUM)       & 36  & 40  & 16  & \textbf{92}  \\
+Contradiction Detection (CON)   & 25  & 28  & 9   & \textbf{62}  \\
+Temporal Reasoning (TMP)        & 29  & 36  & 13  & \textbf{78}  \\
+\midrule
+\textbf{Total}                  & \textbf{160} & \textbf{182} & \textbf{64} & \textbf{406} \\
+\textbf{(\%)}                   & (39.4\%) & (44.8\%) & (15.8\%) & (100\%) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% Per-source breakdown
+\begin{table}[h]
+\centering
+\caption{IndiaFinBench source document coverage (406 items, 192 source documents).}
+\label{tab:source_breakdown}
+\begin{tabular}{lrrrrrr}
+\toprule
+\textbf{Source} & \textbf{REG} & \textbf{NUM} & \textbf{CON} & \textbf{TMP} & \textbf{Total} & \textbf{Docs} \\
+\midrule
+SEBI & 130 & 67 & 46 & 60 & \textbf{303} & 92 \\
+RBI  & 44  & 25 & 16 & 18 & \textbf{103} & 100 \\
+\midrule
+\textbf{Total} & \textbf{174} & \textbf{92} & \textbf{62} & \textbf{78} & \textbf{406} & \textbf{192} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% Answer type distribution
+\begin{table}[h]
+\centering
+\caption{Answer type distribution across IndiaFinBench task types.}
+\label{tab:answer_types}
+\begin{tabular}{llr}
+\toprule
+\textbf{Task Type} & \textbf{Answer Type} & \textbf{Count} \\
+\midrule
+Regulatory Interpretation & Extractive span & 174 \\
+Numerical Reasoning & Calculated value & 92 \\
+Contradiction Detection & Yes/No + explanation & 62 \\
+Temporal Reasoning & Extractive span & 78 \\
+\midrule
+\textbf{Total} & & \textbf{406} \\
+\bottomrule
+\end{tabular}
+\end{table}

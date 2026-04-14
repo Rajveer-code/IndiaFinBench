@@ -30,7 +30,7 @@ from pathlib import Path
 # Constants
 # ---------------------------------------------------------------------------
 
-QA_PATH        = "annotation/raw_qa/indiafinbench_qa_combined_150.json"
+QA_PATH        = "annotation/raw_qa/indiafinbench_qa_combined_406.json"
 CARD_PATH      = "README_HF.md"
 HF_REPO_ID     = "Rajveer-code/IndiaFinBench"
 RANDOM_STATE   = 42
@@ -50,7 +50,7 @@ TASK_TYPE_MAP = {
 
 def normalise_record(raw: dict, index: int) -> dict:
     """
-    Convert a raw JSON item from indiafinbench_qa_combined_150.json into the
+    Convert a raw JSON item from indiafinbench_qa_combined_406.json into the
     canonical HuggingFace column schema.
 
     Parameters

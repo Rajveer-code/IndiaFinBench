@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IndiaFinBench — LLM Benchmark for Indian Financial Regulatory Text</title>
+  <meta name="description" content="The first expert-annotated benchmark for evaluating LLMs on Indian financial regulatory text from SEBI and RBI corpora." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #FFFFFF;
+      --bg-2:       #F8FAFC;
+      --bg-3:       #F1F5F9;
+      --text:       #0F172A;
+      --text-2:     #334155;
+      --text-3:     #64748B;
+      --text-4:     #94A3B8;
+      --border:     #E2E8F0;
+      --border-2:   #CBD5E1;
+      --accent:     #2563EB;
+      --accent-2:   #3B82F6;
+      --accent-soft:#EFF6FF;
+      --gold:       #D97706;
+      --gold-bg:    #FFFBEB;
+      --silver:     #475569;
+      --silver-bg:  #F8FAFC;
+      --green:      #059669;
+      --green-bg:   #ECFDF5;
+      --yellow:     #D97706;
+      --yellow-bg:  #FFFBEB;
+      --red:        #DC2626;
+      --red-bg:     #FEF2F2;
+      --purple:     #7C3AED;
+      --purple-bg:  #F5F3FF;
+      --shadow-xs:  0 1px 2px rgba(15,23,42,0.04);
+      --shadow-sm:  0 2px 4px rgba(15,23,42,0.06);
+      --shadow:     0 4px 12px rgba(15,23,42,0.08);
+      --shadow-md:  0 8px 24px rgba(15,23,42,0.09);
+      --shadow-lg:  0 16px 40px rgba(15,23,42,0.10);
+      --r:          12px;
+      --r-sm:       8px;
+      --r-xs:       6px;
+      --mono:       'JetBrains Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ═══════════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════════ */
+    .nav-outer {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+      width: calc(100% - 40px);
+      max-width: 1100px;
+    }
+
+    nav {
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(226,232,240,0.8);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(15,23,42,0.08), 0 1px 0 rgba(255,255,255,0.9) inset;
+      padding: 0 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .nav-logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #FF9933 0%, #fff 50%, #138808 100%);
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-xs);
+    }
+
+    .nav-logo-text { font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
+    .nav-logo-sub { font-size: 11px; color: var(--text-3); font-weight: 500; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1px;
+    }
+
+    .nav-link {
+      padding: 7px 13px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--text-3);
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .nav-link:hover  { background: var(--bg-3); color: var(--text-2); }
+    .nav-link.active { background: var(--bg-3); color: var(--text); }
+
+    .nav-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 15px;
+      background: var(--text);
+      color: #fff;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .nav-pill:hover { background: var(--accent); }
+
+    /* ═══════════════════════════════════════════
+       LAYOUT HELPERS
+    ═══════════════════════════════════════════ */
+    .section { padding: 64px 20px; }
+    .section-alt { background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .section-eyebrow {
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-size: clamp(22px, 2.8vw, 30px);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .section-sub {
+      font-size: 15px;
+      color: var(--text-3);
+      max-width: 580px;
+      line-height: 1.65;
+    }
+    .section-hd { margin-bottom: 36px; }
+
+    /* ═══════════════════════════════════════════
+       CARD
+    ═══════════════════════════════════════════ */
+    .card {
+      background: rgba(255,255,255,0.95);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: var(--shadow-md);
+      overflow: hidden;
+    }
+    .card-pad { padding: 28px 28px; }
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .card-desc { font-size: 13.5px; color: var(--text-3); }
+
+    /* ═══════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════ */
+    .hero {
+      padding-top: 130px;
+      padding-bottom: 56px;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid #BFDBFE;
+      border-radius: 100px;
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 22px;
+      letter-spacing: 0.03em;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 5.5vw, 68px);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    .hero h1 em { font-style: normal; color: var(--accent); }
+
+    .hero-sub {
+      font-size: clamp(15px, 1.8vw, 17.5px);
+      color: var(--text-3);
+      max-width: 600px;
+      margin: 0 auto 40px;
+      line-height: 1.65;
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .stat-chip {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 22px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      min-width: 110px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .stat-chip:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
+
+    .stat-num {
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+    .stat-lbl {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+    .stat-chip.c-gold   .stat-num { color: var(--gold); }
+    .stat-chip.c-blue   .stat-num { color: var(--accent); }
+    .stat-chip.c-green  .stat-num { color: var(--green); }
+
+    /* ═══════════════════════════════════════════
+       BAR CHART
+    ═══════════════════════════════════════════ */
+    .chart-controls {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .task-tabs {
+      display: inline-flex;
+      gap: 3px;
+      background: var(--bg-3);
+      border-radius: 10px;
+      padding: 3px;
+      flex-shrink: 0;
+    }
+    .task-tab {
+      padding: 5px 13px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-3);
+      cursor: pointer;
+      transition: all 0.15s;
+      border: none;
+      background: none;
+      font-family: inherit;
+    }
+    .task-tab:hover  { color: var(--text-2); }
+    .task-tab.active {
+      background: var(--bg);
+      color: var(--text);
+      box-shadow: var(--shadow-xs);
+      font-weight: 600;
+    }
+
+    /* Individual bar row */
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .bar-model-label {
+      width: 168px;
+      min-width: 168px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+      text-align: right;
+    }
+
+    .bar-rank-num {
+      font-size: 11px;
+      color: var(--text-4);
+      font-weight: 600;
+      min-width: 20px;
+      text-align: right;
+    }
+
+    .bar-model-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 130px;
+    }
+    .bar-model-name.is-human { color: var(--text-3); font-style: italic; font-weight: 400; }
+
+    .bar-track {
+      flex: 1;
+      height: 46px;
+      background: var(--bg-3);
+      border-radius: 10px;
+      position: relative;
+      overflow: visible;
+      cursor: default;
+    }
+    .bar-track:hover { background: #E8EDF3; }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      width: 0%;
+      transition: width 1.1s cubic-bezier(0.22, 0.61, 0.36, 1);
+      background: linear-gradient(90deg, var(--accent) 0%, #6366F1 100%);
+    }
+    .bar-fill.g-gold   { background: linear-gradient(90deg, #D97706 0%, #F59E0B 100%); }
+    .bar-fill.g-silver { background: linear-gradient(90deg, #475569 0%, #64748B 100%); }
+    .bar-fill.g-bronze { background: linear-gradient(90deg, #92400E 0%, #B45309 100%); }
+    .bar-fill.g-human  { background: linear-gradient(90deg, #94A3B8 0%, #CBD5E1 100%); }
+
+    .bar-label-inside {
+      position: absolute;
+      left: 11px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 13px;
+      font-weight: 700;
+      color: white;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.25s 0.85s;
+      font-family: var(--mono);
+    }
+
+    .bar-fill.revealed .bar-label-inside { opacity: 1; }
+
+    /* Hover tooltip */
+    .bar-tooltip {
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--text);
+      color: white;
+      border-radius: 10px;
+      padding: 11px 15px;
+      font-size: 12.5px;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+      z-index: 99;
+      box-shadow: var(--shadow-lg);
+    }
+    .bar-tooltip::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--text);
+    }
+    .bar-track:hover .bar-tooltip { opacity: 1; }
+
+    .tt-name { font-weight: 700; font-size: 13px; margin-bottom: 7px; padding-bottom: 7px; border-bottom: 1px solid rgba(255,255,255,0.15); }
+    .tt-grid { display: grid; grid-template-columns: auto auto; gap: 2px 18px; }
+    .tt-key { color: rgba(255,255,255,0.6); }
+    .tt-val { font-weight: 600; font-family: var(--mono); text-align: right; }
+
+    .chart-legend {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 12.5px;
+      color: var(--text-4);
+    }
+
+    /* ═══════════════════════════════════════════
+       TABLE
+    ═══════════════════════════════════════════ */
+    .table-scroll { overflow-x: auto; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+
+    thead tr { border-bottom: 1.5px solid var(--border); }
+
+    th {
+      padding: 11px 14px;
+      text-align: left;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+      background: var(--bg-2);
+      transition: color 0.12s;
+    }
+    th:hover { color: var(--text-2); }
+    th.c { text-align: center; }
+
+    .sort-arr { margin-left: 4px; opacity: 0.35; font-size: 10px; }
+    th.sorted .sort-arr { opacity: 1; color: var(--accent); }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.1s;
+    }
+    tbody tr:hover { background: var(--bg-2); }
+    tbody tr:last-child { border-bottom: none; }
+
+    td { padding: 13px 14px; white-space: nowrap; vertical-align: middle; }
+    td.c { text-align: center; }
+
+    /* Rank badge */
+    .rank-badge {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .rb-1  { background: var(--gold-bg);   color: #92400E; }
+    .rb-2  { background: var(--silver-bg); color: #334155; }
+    .rb-3  { background: #FEF3C7;          color: #92400E; opacity: 0.75; }
+    .rb-n  { background: var(--bg-3);      color: var(--text-3); }
+    .rb-h  { background: var(--bg-3);      color: var(--text-4); font-size: 11px; }
+
+    /* Model cell */
+    .model-cell { display: flex; align-items: center; gap: 11px; }
+    .model-icon {
+      width: 34px; height: 34px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11.5px;
+      font-weight: 800;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+      letter-spacing: -0.02em;
+    }
+    .model-name  { font-size: 13.5px; font-weight: 600; color: var(--text); }
+    .model-hfid  { font-size: 11.5px; color: var(--text-4); font-family: var(--mono); margin-top: 1px; }
+    .model-note  { font-size: 11px; color: var(--text-4); font-style: italic; }
+
+    /* Score badge */
+    .sc {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .sc-hi { background: var(--green-bg);  color: #065F46; }
+    .sc-md { background: var(--yellow-bg); color: #78350F; }
+    .sc-lo { background: var(--red-bg);    color: #991B1B; }
+
+    /* Overall badge (larger) */
+    .ov {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-family: var(--mono);
+      font-size: 13.5px;
+      font-weight: 700;
+    }
+
+    /* Type badge */
+    .type-badge {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 100px;
+      font-size: 11.5px;
+      font-weight: 500;
+      border: 1px solid;
+      white-space: nowrap;
+    }
+    .tb-frontier  { background: var(--accent-soft); color: #1D4ED8; border-color: #BFDBFE; }
+    .tb-open      { background: var(--green-bg);    color: #15803D; border-color: #BBF7D0; }
+    .tb-local     { background: var(--purple-bg);   color: #6D28D9; border-color: #DDD6FE; }
+    .tb-reasoning { background: var(--yellow-bg);   color: #C2410C; border-color: #FDE68A; }
+    .tb-human     { background: var(--bg-3);        color: var(--text-3); border-color: var(--border-2); }
+
+    /* Human row */
+    tr.tr-human { background: var(--bg-2); }
+    tr.tr-human td { color: var(--text-3); }
+    tr.tr-human .model-name { font-style: italic; font-weight: 400; }
+
+    /* ═══════════════════════════════════════════
+       BREAKDOWN CARDS
+    ═══════════════════════════════════════════ */
+    .breakdown-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .breakdown-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .breakdown-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+
+    .bc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .bc-code {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .bc-n { font-size: 12px; color: var(--text-3); }
+    .bc-title { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+    .bc-desc { font-size: 12.5px; color: var(--text-3); margin-bottom: 14px; line-height: 1.5; }
+
+    .bc-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      padding: 4px 0;
+    }
+    .bc-model { display: flex; align-items: center; gap: 6px; }
+    .bc-pos { font-size: 11px; color: var(--text-4); width: 16px; font-weight: 600; }
+    .bc-name { font-weight: 500; color: var(--text); }
+    .bc-score { font-family: var(--mono); font-size: 12.5px; font-weight: 700; }
+
+    .bc-divider {
+      border-top: 1px dashed var(--border-2);
+      margin: 8px 0;
+      padding-top: 8px;
+    }
+
+    /* ═══════════════════════════════════════════
+       SUBMIT
+    ═══════════════════════════════════════════ */
+    .submit-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 24px; }
+
+    .form-grp { display: flex; flex-direction: column; gap: 6px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-lbl { font-size: 13px; font-weight: 600; color: var(--text-2); }
+    .form-sub { font-size: 11.5px; color: var(--text-4); }
+
+    .form-input {
+      padding: 10px 13px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-sm);
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--bg);
+      transition: border-color 0.15s, box-shadow 0.15s;
+      outline: none;
+    }
+    .form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,0.08); }
+    .form-input::placeholder { color: var(--text-4); }
+
+    .chk-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 13.5px;
+      color: var(--text-2);
+      cursor: pointer;
+    }
+    .chk-row input[type=checkbox] { width: 15px; height: 15px; accent-color: var(--accent); cursor: pointer; }
+
+    .submit-btn {
+      padding: 11px 26px;
+      background: var(--text);
+      color: white;
+      border: none;
+      border-radius: var(--r-sm);
+      font-size: 14px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .submit-btn:hover   { background: var(--accent); }
+    .submit-btn:active  { transform: scale(0.98); }
+    .submit-btn:disabled{ opacity: 0.55; cursor: not-allowed; transform: none !important; }
+
+    .status-box {
+      padding: 13px 15px;
+      border-radius: var(--r-sm);
+      font-size: 13.5px;
+      line-height: 1.5;
+      display: none;
+    }
+    .st-queued  { background: var(--accent-soft); color: #1D4ED8; border: 1px solid #BFDBFE; }
+    .st-running { background: var(--yellow-bg);   color: #92400E; border: 1px solid #FDE68A; }
+    .st-done    { background: var(--green-bg);    color: #065F46; border: 1px solid #A7F3D0; }
+    .st-error   { background: var(--red-bg);      color: #991B1B; border: 1px solid #FECACA; }
+
+    /* Step list */
+    .step-list { display: flex; flex-direction: column; gap: 13px; }
+    .step-item { display: flex; gap: 12px; }
+    .step-num {
+      width: 24px; height: 24px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11.5px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-text { font-size: 13.5px; color: var(--text-2); line-height: 1.5; }
+    code {
+      background: var(--bg-3);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: var(--mono);
+      color: var(--text-2);
+    }
+
+    /* ═══════════════════════════════════════════
+       ABOUT
+    ═══════════════════════════════════════════ */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+
+    .stat-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    .stat-table th {
+      padding: 9px 12px;
+      font-size: 11.5px;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+      background: var(--bg-3);
+      cursor: default;
+    }
+    .stat-table th:hover { color: var(--text-3); }
+    .stat-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); }
+    .stat-table td:last-child {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .citation-wrap {
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: 16px;
+      position: relative;
+    }
+    .citation-pre {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--text-2);
+      line-height: 1.75;
+      white-space: pre;
+      overflow-x: auto;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 10px; right: 10px;
+      padding: 4px 11px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-3);
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+    .copy-btn:hover { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 15px;
+      border: 1.5px solid var(--border);
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .link-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+
+    .task-pill {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .task-pill-reg { background: var(--accent-soft); color: var(--accent); }
+    .task-pill-num { background: var(--gold-bg);     color: var(--gold); }
+    .task-pill-con { background: var(--green-bg);    color: var(--green); }
+    .task-pill-tmp { background: var(--purple-bg);   color: var(--purple); }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════ */
+    footer {
+      padding: 32px 20px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .footer-main { font-size: 14px; font-weight: 500; color: var(--text-2); }
+    .footer-sub { font-size: 12.5px; color: var(--text-4); margin-top: 5px; }
+
+    /* ═══════════════════════════════════════════
+       ANIMATIONS
+    ═══════════════════════════════════════════ */
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fu { animation: fade-up 0.55s cubic-bezier(0.22,0.61,0.36,1) both; }
+    .fu-1 { animation-delay: 0.05s; }
+    .fu-2 { animation-delay: 0.13s; }
+    .fu-3 { animation-delay: 0.22s; }
+    .fu-4 { animation-delay: 0.31s; }
+
+    /* ═══════════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .about-grid, .submit-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .bar-model-label { width: 110px; min-width: 110px; }
+      .bar-model-name  { max-width: 86px; }
+      .section { padding: 44px 16px; }
+      .hero { padding-top: 110px; padding-bottom: 40px; }
+      .hero h1 { font-size: 34px; }
+      .form-row { grid-template-columns: 1fr; }
+      .breakdown-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .breakdown-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ╔══════════════════════════════════════╗
+     ║  NAVBAR                              ║
+     ╚══════════════════════════════════════╝ -->
+<div class="nav-outer">
+  <nav>
+    <a href="#top" class="nav-logo">
+      <div class="nav-logo-mark">🏛</div>
+      <div>
+        <div class="nav-logo-text">IndiaFinBench</div>
+        <div class="nav-logo-sub">LLM Evaluation</div>
+      </div>
+    </a>
+
+    <div class="nav-links">
+      <a href="#leaderboard" class="nav-link active">Leaderboard</a>
+      <a href="#breakdown"   class="nav-link">Tasks</a>
+      <a href="#submit"      class="nav-link">Submit</a>
+      <a href="#about"       class="nav-link">About</a>
+    </div>
+
+    <a href="#about" class="nav-pill">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+      </svg>
+      Read Paper
+    </a>
+  </nav>
+</div>
+
+<!-- ╔══════════════════════════════════════╗
+     ║  HERO                                ║
+     ╚══════════════════════════════════════╝ -->
+<div id="top"></div>
+<section class="hero section">
+  <div class="container">
+
+    <div class="hero-badge fu">
+      <span class="hero-badge-dot"></span>
+      EMNLP 2026 &nbsp;·&nbsp; Zero-Shot Evaluation &nbsp;·&nbsp; SEBI &amp; RBI Corpus
+    </div>
+
+    <h1 class="fu fu-1">
+      IndiaFinBench<br/>
+      <em>Leaderboard</em>
+    </h1>
+
+    <p class="hero-sub fu fu-2">
+      The first expert-annotated benchmark for evaluating large language models
+      on Indian financial regulatory text — SEBI circulars and RBI policy documents.
+    </p>
+
+    <div class="stats-row fu fu-3">
+      <div class="stat-chip">
+        <div class="stat-num">150</div>
+        <div class="stat-lbl">QA Pairs</div>
+      </div>
+      <div class="stat-chip c-blue">
+        <div class="stat-num">9</div>
+        <div class="stat-lbl">Models</div>
+      </div>
+      <div class="stat-chip">
+        <div class="stat-num">4</div>
+        <div class="stat-lbl">Tasks</div>
+      </div>
+      <div class="stat-chip">
+        <div class="stat-num">192</div>
+        <div class="stat-lbl">Documents</div>
+      </div>
+      <div class="stat-chip c-gold">
+        <div class="stat-num">91.3%</div>
+        <div class="stat-lbl">Best Score</div>
+      </div>
+      <div class="stat-chip c-green">
+        <div class="stat-num">60.0%</div>
+        <div class="stat-lbl">Human Expert</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════╗
+     ║  BAR CHART LEADERBOARD               ║
+     ╚══════════════════════════════════════╝ -->
+<section id="leaderboard" class="section" style="padding-top:24px">
+  <div class="container">
+
+    <div class="card">
+      <div class="card-pad">
+
+        <div class="chart-controls">
+          <div>
+            <div class="card-title" id="chartTitle">IndiaFinBench Leaderboard</div>
+            <div class="card-desc" id="chartDesc">Overall accuracy · zero-shot · n = 150 items</div>
+          </div>
+          <div class="task-tabs" id="taskTabs">
+            <button class="task-tab active" data-t="overall">Overall</button>
+            <button class="task-tab" data-t="reg">REG</button>
+            <button class="task-tab" data-t="num">NUM</button>
+            <button class="task-tab" data-t="con">CON</button>
+            <button class="task-tab" data-t="tmp">TMP</button>
+          </div>
+        </div>
+
+        <div id="barChart"></div>
+
+        <div class="chart-legend">
+          Rankings by zero-shot accuracy &nbsp;·&nbsp; Bar length proportional to score &nbsp;·&nbsp; Hover for per-task breakdown
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════╗
+     ║  FULL TABLE                          ║
+     ╚══════════════════════════════════════╝ -->
+<section class="section" style="padding-top:16px">
+  <div class="container">
+
+    <div class="section-hd">
+      <div class="section-eyebrow">Complete Results</div>
+      <div class="section-title">Full Leaderboard</div>
+      <div class="section-sub">Click column headers to sort. All models evaluated zero-shot on the same 150-item test set.</div>
+    </div>
+
+    <div class="card" style="overflow:hidden">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th class="c" onclick="tSort('rank')">Rank<span class="sort-arr">↕</span></th>
+              <th>Model</th>
+              <th onclick="tSort('params')">Params<span class="sort-arr">↕</span></th>
+              <th>Type</th>
+              <th class="c" onclick="tSort('reg')">REG<span class="sort-arr">↕</span></th>
+              <th class="c" onclick="tSort('num')">NUM<span class="sort-arr">↕</span></th>
+              <th class="c" onclick="tSort('con')">CON<span class="sort-arr">↕</span></th>
+              <th class="c" onclick="tSort('tmp')">TMP<span class="sort-arr">↕</span></th>
+              <th class="c" onclick="tSort('overall')" id="th-overall">Overall<span class="sort-arr">↓</span></th>
+            </tr>
+          </thead>
+          <tbody id="tBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════╗
+     ║  TASK BREAKDOWN                      ║
+     ╚══════════════════════════════════════╝ -->
+<section id="breakdown" class="section section-alt">
+  <div class="container">
+
+    <div class="section-hd">
+      <div class="section-eyebrow">Per-Task Analysis</div>
+      <div class="section-title">Task Breakdown</div>
+      <div class="section-sub">Top performers on each of the four evaluation tasks. Each task tests a distinct reasoning capability over Indian financial regulatory text.</div>
+    </div>
+
+    <div class="breakdown-grid" id="breakdownGrid"></div>
+
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════╗
+     ║  SUBMIT                              ║
+     ╚══════════════════════════════════════╝ -->
+<section id="submit" class="section">
+  <div class="container">
+
+    <div class="section-hd">
+      <div class="section-eyebrow">Open Evaluation</div>
+      <div class="section-title">Submit a Model</div>
+      <div class="section-sub">Evaluate any public HuggingFace model zero-shot on all 150 IndiaFinBench questions and add it to the leaderboard.</div>
+    </div>
+
+    <div class="submit-grid">
+
+      <!-- Form card -->
+      <div class="card">
+        <div class="card-pad" style="display:flex;flex-direction:column;gap:18px">
+          <div>
+            <div class="card-title">Model Evaluation</div>
+            <div class="card-desc">Enter a public HuggingFace model ID. The model is loaded via <code>transformers.pipeline</code> and evaluated zero-shot on all 150 items.</div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-grp">
+              <label class="form-lbl" for="hfId">HuggingFace Model ID <span style="color:var(--red)">*</span></label>
+              <input class="form-input" type="text" id="hfId"
+                     placeholder="e.g. mistralai/Mistral-7B-Instruct-v0.3" />
+            </div>
+            <div class="form-grp">
+              <label class="form-lbl" for="dispName">Display Name</label>
+              <input class="form-input" type="text" id="dispName"
+                     placeholder="e.g. Mistral-7B" />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-grp">
+              <label class="form-lbl" for="params">Parameter Count</label>
+              <input class="form-input" type="text" id="params"
+                     placeholder="e.g. 7B" />
+            </div>
+            <div class="form-grp">
+              <label class="form-lbl" for="mtype">Model Type</label>
+              <select class="form-input" id="mtype">
+                <option value="Open-weight API">Open-weight API</option>
+                <option value="Frontier API">Frontier API</option>
+                <option value="Local (Ollama)">Local (Ollama)</option>
+                <option value="Reasoning API">Reasoning API</option>
+                <option value="Open">Other Open</option>
+              </select>
+            </div>
+          </div>
+
+          <label class="chk-row">
+            <input type="checkbox" id="smokeChk" checked />
+            Smoke test only (10 items) — verify the model loads before full run
+          </label>
+
+          <div>
+            <button class="submit-btn" id="subBtn" onclick="doSubmit()">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+              Run Evaluation
+            </button>
+          </div>
+
+          <div class="status-box" id="statusBox"></div>
+
+        </div>
+      </div>
+
+      <!-- Notes card -->
+      <div class="card" style="background:var(--bg-2)">
+        <div class="card-pad">
+          <div class="card-title" style="margin-bottom:18px">How it works</div>
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-text">Enter a public HF model ID. It will be loaded via <code>transformers.pipeline</code> with deterministic decoding (<code>do_sample=False</code>).</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-text">Run a <strong>smoke test (10 items)</strong> first to confirm the model loads and responds correctly before the full run.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-text">Full evaluation scores all 150 items zero-shot. Scoring is task-aware: fuzzy match for REG/TMP, numeric match for NUM, exact Yes/No for CON.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">4</div>
+              <div class="step-text">Results are saved to the leaderboard immediately. Reload the page after completion to see updated rankings.</div>
+            </div>
+          </div>
+          <div style="margin-top:18px;padding:12px 14px;background:var(--yellow-bg);border:1px solid #FDE68A;border-radius:9px;font-size:13px;color:#78350F">
+            <strong>Note:</strong> Models larger than 30B parameters may time out on CPU-only servers. Run large models locally using <code>python app.py</code>.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════╗
+     ║  ABOUT                               ║
+     ╚══════════════════════════════════════╝ -->
+<section id="about" class="section section-alt">
+  <div class="container">
+
+    <div class="section-hd">
+      <div class="section-eyebrow">Research Benchmark</div>
+      <div class="section-title">About IndiaFinBench</div>
+      <div class="section-sub">The first expert-annotated benchmark for evaluating LLMs on Indian financial regulatory text from SEBI and RBI corpora, spanning 2000–2026.</div>
+    </div>
+
+    <div class="about-grid">
+
+      <!-- Left column -->
+      <div style="display:flex;flex-direction:column;gap:20px">
+
+        <div class="card">
+          <div class="card-pad">
+            <div class="card-title" style="margin-bottom:16px">Task Types</div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+
+              <div style="display:flex;gap:12px;align-items:flex-start">
+                <span class="task-pill task-pill-reg">REG</span>
+                <div>
+                  <div style="font-size:13.5px;font-weight:600;margin-bottom:3px">Regulatory Interpretation · n = 53</div>
+                  <div style="font-size:12.5px;color:var(--text-3);line-height:1.5">Extract compliance rules, deadlines, and financial thresholds from SEBI and RBI circulars.</div>
+                </div>
+              </div>
+
+              <div style="display:flex;gap:12px;align-items:flex-start">
+                <span class="task-pill task-pill-num">NUM</span>
+                <div>
+                  <div style="font-size:13.5px;font-weight:600;margin-bottom:3px">Numerical Reasoning · n = 32</div>
+                  <div style="font-size:12.5px;color:var(--text-3);line-height:1.5">Arithmetic over repo rates, capital adequacy ratios, and numerical financial thresholds.</div>
+                </div>
+              </div>
+
+              <div style="display:flex;gap:12px;align-items:flex-start">
+                <span class="task-pill task-pill-con">CON</span>
+                <div>
+                  <div style="font-size:13.5px;font-weight:600;margin-bottom:3px">Contradiction Detection · n = 30</div>
+                  <div style="font-size:12.5px;color:var(--text-3);line-height:1.5">Identify whether two regulatory passages contradict each other (Yes/No binary).</div>
+                </div>
+              </div>
+
+              <div style="display:flex;gap:12px;align-items:flex-start">
+                <span class="task-pill task-pill-tmp">TMP</span>
+                <div>
+                  <div style="font-size:13.5px;font-weight:600;margin-bottom:3px">Temporal Reasoning · n = 35</div>
+                  <div style="font-size:12.5px;color:var(--text-3);line-height:1.5">Sequence regulatory amendments, effective dates, and supersession events across circulars.</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-pad">
+            <div class="card-title" style="margin-bottom:12px">Key Finding</div>
+            <p style="font-size:14px;line-height:1.7;color:var(--text-2)">
+              All 9 evaluated LLMs surpass the human expert baseline of <strong>60.0%</strong>.
+              Claude 3 Haiku achieves <strong>91.3%</strong> — a <strong>+31.3 pp</strong> margin over human experts.
+              Numerical Reasoning shows the largest inter-model spread (<strong>31.3 pp</strong>), making it
+              the most discriminating task. Temporal Reasoning accounts for <strong>54%</strong> of
+              Claude 3 Haiku's failures. Llama 4 Scout achieves a perfect <strong>100%</strong> on
+              Contradiction Detection.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right column -->
+      <div style="display:flex;flex-direction:column;gap:20px">
+
+        <div class="card">
+          <div class="card-pad">
+            <div class="card-title" style="margin-bottom:16px">Dataset Statistics</div>
+            <table class="stat-table">
+              <thead>
+                <tr><th>Statistic</th><th style="text-align:right">Value</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Total QA pairs</td><td>150</td></tr>
+                <tr><td>Easy / Medium / Hard</td><td>50 / 60 / 40</td></tr>
+                <tr><td>SEBI source documents</td><td>142</td></tr>
+                <tr><td>RBI source documents</td><td>89</td></tr>
+                <tr><td>Total source documents</td><td>192</td></tr>
+                <tr><td>Document span</td><td>2000 – 2026</td></tr>
+                <tr><td>Inter-annotator agreement</td><td>90.7%</td></tr>
+                <tr><td>Cohen's κ (CON task)</td><td>0.918</td></tr>
+                <tr><td>Human expert baseline</td><td>60.0%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-pad">
+            <div class="card-title" style="margin-bottom:12px">Citation</div>
+            <div class="citation-wrap">
+              <button class="copy-btn" onclick="copyCite()" id="copyBtn">Copy</button>
+              <pre class="citation-pre" id="citeText">{% raw %}@inproceedings{indiafinbench2026,
+  title     = {{IndiaFinBench}: A Benchmark for
+               Evaluating LLMs on Indian Financial
+               Regulatory Text},
+  author    = {Pall, Rajveer Singh},
+  booktitle = {Proceedings of EMNLP 2026},
+  year      = {2026},
+}{% endraw %}</pre>
+            </div>
+
+            <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px">
+              <a href="#" class="link-btn">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                arXiv (TBD)
+              </a>
+              <a href="#" class="link-btn">
+                <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                GitHub (TBD)
+              </a>
+              <a href="#" class="link-btn">
+                🤗 HF Dataset (Soon)
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════╗
+     ║  FOOTER                              ║
+     ╚══════════════════════════════════════╝ -->
+<footer>
+  <div class="footer-main">IndiaFinBench 2026 &nbsp;·&nbsp; EMNLP 2026 Submission &nbsp;·&nbsp; <strong>Rajveer Singh Pall</strong></div>
+  <div class="footer-sub" style="margin-top:5px">
+    192 SEBI &amp; RBI documents &nbsp;·&nbsp; 150 expert-annotated QA pairs &nbsp;·&nbsp; Zero-shot LLM evaluation
+  </div>
+</footer>
+
+
+<!-- ╔══════════════════════════════════════╗
+     ║  JAVASCRIPT                          ║
+     ╚══════════════════════════════════════╝ -->
+<script>
+/* ── DATA injected from Flask ─────────────────────────────────────── */
+const MODELS = {{ models | tojson | safe }};
+const HUMAN  = {{ human  | tojson | safe }};
+
+/* ── Icon helpers ─────────────────────────────────────────────────── */
+const ICON_PALETTE = [
+  ['#FEF3C7','#92400E'], ['#EFF6FF','#1D4ED8'], ['#F0FDF4','#15803D'],
+  ['#F5F3FF','#6D28D9'], ['#FFF7ED','#C2410C'], ['#ECFDF5','#065F46'],
+  ['#F0F9FF','#0369A1'], ['#FEE2E2','#991B1B'], ['#F8FAFC','#334155'],
+];
+
+function iconHtml(label, idx) {
+  const parts = label.split(/[\s\-\.]+/);
+  const abbr  = parts.map(p => p[0] || '').join('').slice(0,2).toUpperCase();
+  const [bg, fg] = ICON_PALETTE[idx % ICON_PALETTE.length];
+  return `<div class="model-icon" style="background:${bg};color:${fg}">${abbr}</div>`;
+}
+
+function scClass(v) {
+  return v >= 85 ? 'sc-hi' : v >= 70 ? 'sc-md' : 'sc-lo';
+}
+
+function typeClass(t) {
+  const m = {
+    'Frontier API':'tb-frontier','Open-weight API':'tb-open',
+    'Local (Ollama)':'tb-local','Reasoning API':'tb-reasoning',
+    'Human Baseline':'tb-human',
+  };
+  return m[t] || 'tb-open';
+}
+
+function typePill(t) {
+  return `<span class="type-badge ${typeClass(t)}">${t}</span>`;
+}
+
+/* ── BAR CHART ────────────────────────────────────────────────────── */
+const TASK_META = {
+  overall: { key:'overall', desc:'Overall accuracy · zero-shot · n = 150 items', title:'IndiaFinBench Leaderboard' },
+  reg:     { key:'reg',     desc:'Regulatory Interpretation (REG) · n = 53 items', title:'REG — Regulatory Interpretation' },
+  num:     { key:'num',     desc:'Numerical Reasoning (NUM) · n = 32 items', title:'NUM — Numerical Reasoning' },
+  con:     { key:'con',     desc:'Contradiction Detection (CON) · n = 30 items', title:'CON — Contradiction Detection' },
+  tmp:     { key:'tmp',     desc:'Temporal Reasoning (TMP) · n = 35 items', title:'TMP — Temporal Reasoning' },
+};
+
+function buildBarChart(task) {
+  const meta   = TASK_META[task];
+  const key    = meta.key;
+  document.getElementById('chartTitle').textContent = meta.title;
+  document.getElementById('chartDesc').textContent  = meta.desc;
+
+  const rows = [...MODELS.map((m,i) => ({...m,_i:i})),
+                {...HUMAN, _i:MODELS.length}];
+  rows.sort((a,b) => (b[key]||0) - (a[key]||0));
+
+  const maxVal = Math.max(...rows.map(r => r[key]||0));
+
+  const container = document.getElementById('barChart');
+  container.innerHTML = '';
+
+  rows.forEach((m, ri) => {
+    const score   = m[key] || 0;
+    const pct     = maxVal > 0 ? (score / maxVal) * 100 : 0;
+    const isHuman = m.is_human;
+    const fillCls = isHuman   ? 'bar-fill g-human' :
+                    ri === 0  ? 'bar-fill g-gold'   :
+                    ri === 1  ? 'bar-fill g-silver'  :
+                    ri === 2  ? 'bar-fill g-bronze'  : 'bar-fill';
+
+    const row = document.createElement('div');
+    row.className = 'bar-row';
+    row.innerHTML = `
+      <div class="bar-model-label">
+        <span class="bar-rank-num">#${ri+1}</span>
+        <span class="bar-model-name ${isHuman?'is-human':''}">${m.label}</span>
+      </div>
+      <div class="bar-track">
+        <div class="${fillCls}" data-pct="${pct}">
+          <span class="bar-label-inside">${score.toFixed(1)}%</span>
+        </div>
+        <div class="bar-tooltip">
+          <div class="tt-name">${m.label}</div>
+          <div class="tt-grid">
+            <span class="tt-key">Overall</span><span class="tt-val">${(m.overall||0).toFixed(1)}%</span>
+            <span class="tt-key">REG</span><span class="tt-val">${(m.reg||0).toFixed(1)}%</span>
+            <span class="tt-key">NUM</span><span class="tt-val">${(m.num||0).toFixed(1)}%</span>
+            <span class="tt-key">CON</span><span class="tt-val">${(m.con||0).toFixed(1)}%</span>
+            <span class="tt-key">TMP</span><span class="tt-val">${(m.tmp||0).toFixed(1)}%</span>
+            <span class="tt-key">Items</span><span class="tt-val">${m.n_items||150}</span>
+          </div>
+        </div>
+      </div>
+    `;
+    container.appendChild(row);
+  });
+
+  /* Animate: wait two rAF cycles so widths start at 0 */
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    document.querySelectorAll('#barChart .bar-fill').forEach((bar, i) => {
+      bar.style.transitionDelay = `${i * 55}ms`;
+      bar.style.width = bar.dataset.pct + '%';
+      setTimeout(() => bar.classList.add('revealed'), 900 + i * 55);
+    });
+  }));
+}
+
+/* Task tab switching */
+document.getElementById('taskTabs').addEventListener('click', e => {
+  const btn = e.target.closest('.task-tab');
+  if (!btn) return;
+  document.querySelectorAll('.task-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  buildBarChart(btn.dataset.t);
+});
+
+/* ── TABLE ────────────────────────────────────────────────────────── */
+let _sortCol = 'overall';
+let _sortDir = -1;   /* -1 = desc, 1 = asc */
+
+function buildTable(col, dir) {
+  const sorted = [...MODELS].sort((a, b) => {
+    const av = a[col]; const bv = b[col];
+    if (typeof av === 'number') return (av - bv) * dir;
+    return String(av).localeCompare(String(bv)) * dir;
+  });
+
+  const tbody = document.getElementById('tBody');
+  tbody.innerHTML = '';
+
+  sorted.forEach((m, i) => {
+    const displayRank = col === 'rank' ? m.rank : i + 1;
+    const rbCls = displayRank === 1 ? 'rb-1' :
+                  displayRank === 2 ? 'rb-2' :
+                  displayRank === 3 ? 'rb-3' : 'rb-n';
+
+    const hfShort = m.hf_id.length > 42 ? m.hf_id.slice(0,40)+'…' : m.hf_id;
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="c"><span class="rank-badge ${rbCls}">${displayRank}</span></td>
+      <td>
+        <div class="model-cell">
+          ${iconHtml(m.label, i)}
+          <div>
+            <div class="model-name">${m.label}</div>
+            <div class="model-hfid">${hfShort}</div>
+          </div>
+        </div>
+      </td>
+      <td><span style="font-family:var(--mono);font-size:13px">${m.params||'—'}</span></td>
+      <td>${typePill(m.type)}</td>
+      <td class="c"><span class="sc ${scClass(m.reg)}">${m.reg.toFixed(1)}%</span></td>
+      <td class="c"><span class="sc ${scClass(m.num)}">${m.num.toFixed(1)}%</span></td>
+      <td class="c"><span class="sc ${scClass(m.con)}">${m.con.toFixed(1)}%</span></td>
+      <td class="c"><span class="sc ${scClass(m.tmp)}">${m.tmp.toFixed(1)}%</span></td>
+      <td class="c"><span class="ov ${scClass(m.overall)}">${m.overall.toFixed(1)}%</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  /* Human baseline row — always appended last */
+  const h  = HUMAN;
+  const tr = document.createElement('tr');
+  tr.className = 'tr-human';
+  tr.innerHTML = `
+    <td class="c"><span class="rank-badge rb-h">—</span></td>
+    <td>
+      <div class="model-cell">
+        <div class="model-icon" style="background:var(--bg-3);color:var(--text-4)">HE</div>
+        <div>
+          <div class="model-name">${h.label} <span style="font-size:11px;font-weight:400;font-style:normal">(n=30)</span></div>
+          <div class="model-hfid">Expert annotators</div>
+        </div>
+      </div>
+    </td>
+    <td><span style="color:var(--text-4)">—</span></td>
+    <td>${typePill('Human Baseline')}</td>
+    <td class="c"><span class="sc ${scClass(h.reg)}">${h.reg.toFixed(1)}%</span></td>
+    <td class="c"><span class="sc ${scClass(h.num)}">${h.num.toFixed(1)}%</span></td>
+    <td class="c"><span class="sc ${scClass(h.con)}">${h.con.toFixed(1)}%</span></td>
+    <td class="c"><span class="sc ${scClass(h.tmp)}">${h.tmp.toFixed(1)}%</span></td>
+    <td class="c"><span class="ov ${scClass(h.overall)}">${h.overall.toFixed(1)}%</span></td>
+  `;
+  tbody.appendChild(tr);
+
+  /* Update sort indicators */
+  document.querySelectorAll('th[onclick]').forEach(th => {
+    th.classList.remove('sorted');
+    const arr = th.querySelector('.sort-arr');
+    if (arr) arr.textContent = '↕';
+  });
+  const active = document.querySelector(`th[onclick="tSort('${col}')"]`);
+  if (active) {
+    active.classList.add('sorted');
+    const arr = active.querySelector('.sort-arr');
+    if (arr) arr.textContent = dir === -1 ? '↓' : '↑';
+  }
+}
+
+function tSort(col) {
+  if (_sortCol === col) { _sortDir = -_sortDir; }
+  else { _sortCol = col; _sortDir = -1; }
+  buildTable(_sortCol, _sortDir);
+}
+
+/* ── TASK BREAKDOWN ───────────────────────────────────────────────── */
+const TASKS_DEF = [
+  { code:'REG', key:'reg', label:'Regulatory Interpretation', n:53,
+    desc:'Extract compliance rules, thresholds, and deadlines from SEBI and RBI regulatory text.',
+    pillCls:'task-pill-reg', scoreFg:'var(--accent)' },
+  { code:'NUM', key:'num', label:'Numerical Reasoning', n:32,
+    desc:'Arithmetic over repo rates, capital ratios, and numeric financial thresholds.',
+    pillCls:'task-pill-num', scoreFg:'var(--gold)' },
+  { code:'CON', key:'con', label:'Contradiction Detection', n:30,
+    desc:'Determine whether two regulatory passages contradict each other (binary Yes/No).',
+    pillCls:'task-pill-con', scoreFg:'var(--green)' },
+  { code:'TMP', key:'tmp', label:'Temporal Reasoning', n:35,
+    desc:'Sequence regulatory amendments and identify supersession across effective dates.',
+    pillCls:'task-pill-tmp', scoreFg:'var(--purple)' },
+];
+
+function buildBreakdown() {
+  const grid = document.getElementById('breakdownGrid');
+  grid.innerHTML = '';
+
+  TASKS_DEF.forEach(task => {
+    const ranked = [...MODELS].sort((a,b) => (b[task.key]||0)-(a[task.key]||0));
+    const top5   = ranked.slice(0,5);
+
+    const card = document.createElement('div');
+    card.className = 'breakdown-card';
+    card.innerHTML = `
+      <div class="bc-header">
+        <span class="task-pill ${task.pillCls} bc-code">${task.code}</span>
+        <span class="bc-n">n = ${task.n}</span>
+      </div>
+      <div class="bc-title">${task.label}</div>
+      <div class="bc-desc">${task.desc}</div>
+      <div>
+        ${top5.map((m,i)=>`
+          <div class="bc-row">
+            <div class="bc-model">
+              <span class="bc-pos">#${i+1}</span>
+              <span class="bc-name">${m.label}</span>
+            </div>
+            <span class="bc-score" style="color:${task.scoreFg}">${(m[task.key]||0).toFixed(1)}%</span>
+          </div>
+        `).join('')}
+        <div class="bc-row bc-divider" style="opacity:0.65">
+          <div class="bc-model">
+            <span class="bc-pos">—</span>
+            <span class="bc-name" style="font-style:italic;color:var(--text-3)">Human Expert</span>
+          </div>
+          <span class="bc-score" style="color:var(--text-3);font-family:var(--mono)">${HUMAN[task.key].toFixed(1)}%</span>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+/* ── SUBMIT ───────────────────────────────────────────────────────── */
+let _jobId = null;
+let _poll  = null;
+
+function doSubmit() {
+  const hfId  = document.getElementById('hfId').value.trim();
+  const label = document.getElementById('dispName').value.trim();
+  const prms  = document.getElementById('params').value.trim();
+  const mtype = document.getElementById('mtype').value;
+  const smoke = document.getElementById('smokeChk').checked;
+
+  if (!hfId) { showStatus('st-error', 'Please enter a HuggingFace model ID.'); return; }
+
+  document.getElementById('subBtn').disabled = true;
+  showStatus('st-queued', 'Queuing evaluation…');
+
+  fetch('/api/submit', {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify({ hf_id:hfId, label, params:prms, model_type:mtype, smoke }),
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) {
+      showStatus('st-error', data.error);
+      document.getElementById('subBtn').disabled = false;
+      return;
+    }
+    _jobId = data.job_id;
+    showStatus('st-running', 'Evaluation running… this may take several minutes for large models. Do not close the page.');
+    _poll = setInterval(pollJob, 3000);
+  })
+  .catch(e => {
+    showStatus('st-error', 'Network error: ' + e.message);
+    document.getElementById('subBtn').disabled = false;
+  });
+}
+
+function pollJob() {
+  if (!_jobId) return;
+  fetch('/api/job/' + _jobId)
+    .then(r => r.json())
+    .then(job => {
+      if (job.status === 'done') {
+        clearInterval(_poll);
+        const r = job.result;
+        const pt = r.per_task || {};
+        showStatus('st-done',
+          `✓ Evaluation complete! — ${r.label}\n` +
+          `Overall: ${r.overall}%  ·  REG: ${pt.REG||0}%  ·  NUM: ${pt.NUM||0}%  ·  CON: ${pt.CON||0}%  ·  TMP: ${pt.TMP||0}%\n` +
+          `Items evaluated: ${r.n_items} · Reload to see updated leaderboard.`
+        );
+        document.getElementById('subBtn').disabled = false;
+      } else if (job.status === 'error') {
+        clearInterval(_poll);
+        showStatus('st-error', 'Error: ' + (job.error || 'Unknown error'));
+        document.getElementById('subBtn').disabled = false;
+      }
+    });
+}
+
+function showStatus(cls, msg) {
+  const box = document.getElementById('statusBox');
+  box.className = 'status-box ' + cls;
+  box.style.display = 'block';
+  box.style.whiteSpace = 'pre-line';
+  box.textContent = msg;
+}
+
+/* ── CITATION COPY ────────────────────────────────────────────────── */
+function copyCite() {
+  const text = document.getElementById('citeText').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2200);
+  });
+}
+
+/* ── NAV ACTIVE STATE on scroll ──────────────────────────────────── */
+const _sections = ['leaderboard','breakdown','submit','about'];
+window.addEventListener('scroll', () => {
+  let cur = '';
+  _sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && window.scrollY >= el.offsetTop - 100) cur = id;
+  });
+  document.querySelectorAll('.nav-link').forEach(a => {
+    const href = a.getAttribute('href').replace('#','');
+    a.classList.toggle('active', href === (cur || 'leaderboard'));
+  });
+}, { passive: true });
+
+/* ── INIT ─────────────────────────────────────────────────────────── */
+buildBarChart('overall');
+buildTable('overall', -1);
+buildBreakdown();
+</script>
+
+</body>
+</html>

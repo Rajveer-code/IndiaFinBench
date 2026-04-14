@@ -40,6 +40,16 @@ gemini_out*.txt
 doc_texts.txt
 tables_preview.json
 *_out.txt
+*_scrape.log
+generation_todo.txt
+
+# Word / Office drafts (committed paper is the .md)
+*.docx
+*.xlsx
+
+# Batch question staging files (keep only combined JSON in annotation/)
+batch*_new_questions.json
+batch_invit_municipal.json
 
 # Temp directories
 paper/unpacked_*/

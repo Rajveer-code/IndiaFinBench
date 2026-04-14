@@ -1,0 +1,497 @@
+{
+  "Gemini 2.5 Flash vs Qwen3-32B": {
+    "model_a": "Gemini 2.5 Flash",
+    "model_b": "Qwen3-32B",
+    "acc_a": 89.66,
+    "acc_b": 85.47,
+    "delta": 4.19,
+    "p_value": 0.0574,
+    "significant": false
+  },
+  "Gemini 2.5 Flash vs LLaMA-3.3-70B": {
+    "model_a": "Gemini 2.5 Flash",
+    "model_b": "LLaMA-3.3-70B",
+    "acc_a": 89.66,
+    "acc_b": 83.74,
+    "delta": 5.91,
+    "p_value": 0.0081,
+    "significant": true
+  },
+  "Gemini 2.5 Flash vs Llama 4 Scout 17B": {
+    "model_a": "Gemini 2.5 Flash",
+    "model_b": "Llama 4 Scout 17B",
+    "acc_a": 89.66,
+    "acc_b": 83.25,
+    "delta": 6.4,
+    "p_value": 0.0051,
+    "significant": true
+  },
+  "Gemini 2.5 Flash vs Kimi K2": {
+    "model_a": "Gemini 2.5 Flash",
+    "model_b": "Kimi K2",
+    "acc_a": 89.66,
+    "acc_b": 81.53,
+    "delta": 8.13,
+    "p_value": 0.0002,
+    "significant": true
+  },
+  "Gemini 2.5 Flash vs LLaMA-3-8B": {
+    "model_a": "Gemini 2.5 Flash",
+    "model_b": "LLaMA-3-8B",
+    "acc_a": 89.66,
+    "acc_b": 78.08,
+    "delta": 11.58,
+    "p_value": 0.0,
+    "significant": true
+  },
+  "Gemini 2.5 Flash vs GPT-OSS 120B": {
+    "model_a": "Gemini 2.5 Flash",
+    "model_b": "GPT-OSS 120B",
+    "acc_a": 89.66,
+    "acc_b": 77.09,
+    "delta": 12.56,
+    "p_value": 0.0,
+    "significant": true
+  },
+  "Gemini 2.5 Flash vs GPT-OSS 20B": {
+    "model_a": "Gemini 2.5 Flash",
+    "model_b": "GPT-OSS 20B",
+    "acc_a": 89.66,
+    "acc_b": 76.85,
+    "delta": 12.81,
+    "p_value": 0.0,
+    "significant": true
+  },
+  "Gemini 2.5 Flash vs Mistral-7B": {
+    "model_a": "Gemini 2.5 Flash",
+    "model_b": "Mistral-7B",
+    "acc_a": 89.66,
+    "acc_b": 75.86,
+    "delta": 13.79,
+    "p_value": 0.0,
+    "significant": true
+  },
+  "Gemini 2.5 Flash vs DeepSeek R1 70B": {
+    "model_a": "Gemini 2.5 Flash",
+    "model_b": "DeepSeek R1 70B",
+    "acc_a": 89.66,
+    "acc_b": 75.12,
+    "delta": 14.53,
+    "p_value": 0.0,
+    "significant": true
+  },
+  "Gemini 2.5 Flash vs Gemma 4 E4B": {
+    "model_a": "Gemini 2.5 Flash",
+    "model_b": "Gemma 4 E4B",
+    "acc_a": 89.66,
+    "acc_b": 70.44,
+    "delta": 19.21,
+    "p_value": 0.0,
+    "significant": true
+  },
+  "Qwen3-32B vs LLaMA-3.3-70B": {
+    "model_a": "Qwen3-32B",
+    "model_b": "LLaMA-3.3-70B",
+    "acc_a": 85.47,
+    "acc_b": 83.74,
+    "delta": 1.72,
+    "p_value": 0.37,
+    "significant": false
+  },
+  "Qwen3-32B vs Llama 4 Scout 17B": {
+    "model_a": "Qwen3-32B",
+    "model_b": "Llama 4 Scout 17B",
+    "acc_a": 85.47,
+    "acc_b": 83.25,
+    "delta": 2.22,
+    "p_value": 0.2723,
+    "significant": false
+  },
+  "Qwen3-32B vs Kimi K2": {
+    "model_a": "Qwen3-32B",
+    "model_b": "Kimi K2",
+    "acc_a": 85.47,
+    "acc_b": 81.53,
+    "delta": 3.94,
+    "p_value": 0.0716,
+    "significant": false
+  },
+  "Qwen3-32B vs LLaMA-3-8B": {
+    "model_a": "Qwen3-32B",
+    "model_b": "LLaMA-3-8B",
+    "acc_a": 85.47,
+    "acc_b": 78.08,
+    "delta": 7.39,
+    "p_value": 0.0011,
+    "significant": true
+  },
+  "Qwen3-32B vs GPT-OSS 120B": {
+    "model_a": "Qwen3-32B",
+    "model_b": "GPT-OSS 120B",
+    "acc_a": 85.47,
+    "acc_b": 77.09,
+    "delta": 8.37,
+    "p_value": 0.0002,
+    "significant": true
+  },
+  "Qwen3-32B vs GPT-OSS 20B": {
+    "model_a": "Qwen3-32B",
+    "model_b": "GPT-OSS 20B",
+    "acc_a": 85.47,
+    "acc_b": 76.85,
+    "delta": 8.62,
+    "p_value": 0.0,
+    "significant": true
+  },
+  "Qwen3-32B vs Mistral-7B": {
+    "model_a": "Qwen3-32B",
+    "model_b": "Mistral-7B",
+    "acc_a": 85.47,
+    "acc_b": 75.86,
+    "delta": 9.61,
+    "p_value": 0.0,
+    "significant": true
+  },
+  "Qwen3-32B vs DeepSeek R1 70B": {
+    "model_a": "Qwen3-32B",
+    "model_b": "DeepSeek R1 70B",
+    "acc_a": 85.47,
+    "acc_b": 75.12,
+    "delta": 10.34,
+    "p_value": 0.0001,
+    "significant": true
+  },
+  "Qwen3-32B vs Gemma 4 E4B": {
+    "model_a": "Qwen3-32B",
+    "model_b": "Gemma 4 E4B",
+    "acc_a": 85.47,
+    "acc_b": 70.44,
+    "delta": 15.02,
+    "p_value": 0.0,
+    "significant": true
+  },
+  "LLaMA-3.3-70B vs Llama 4 Scout 17B": {
+    "model_a": "LLaMA-3.3-70B",
+    "model_b": "Llama 4 Scout 17B",
+    "acc_a": 83.74,
+    "acc_b": 83.25,
+    "delta": 0.49,
+    "p_value": 0.7933,
+    "significant": false
+  },
+  "LLaMA-3.3-70B vs Kimi K2": {
+    "model_a": "LLaMA-3.3-70B",
+    "model_b": "Kimi K2",
+    "acc_a": 83.74,
+    "acc_b": 81.53,
+    "delta": 2.22,
+    "p_value": 0.3312,
+    "significant": false
+  },
+  "LLaMA-3.3-70B vs LLaMA-3-8B": {
+    "model_a": "LLaMA-3.3-70B",
+    "model_b": "LLaMA-3-8B",
+    "acc_a": 83.74,
+    "acc_b": 78.08,
+    "delta": 5.67,
+    "p_value": 0.0145,
+    "significant": true
+  },
+  "LLaMA-3.3-70B vs GPT-OSS 120B": {
+    "model_a": "LLaMA-3.3-70B",
+    "model_b": "GPT-OSS 120B",
+    "acc_a": 83.74,
+    "acc_b": 77.09,
+    "delta": 6.65,
+    "p_value": 0.0054,
+    "significant": true
+  },
+  "LLaMA-3.3-70B vs GPT-OSS 20B": {
+    "model_a": "LLaMA-3.3-70B",
+    "model_b": "GPT-OSS 20B",
+    "acc_a": 83.74,
+    "acc_b": 76.85,
+    "delta": 6.9,
+    "p_value": 0.0009,
+    "significant": true
+  },
+  "LLaMA-3.3-70B vs Mistral-7B": {
+    "model_a": "LLaMA-3.3-70B",
+    "model_b": "Mistral-7B",
+    "acc_a": 83.74,
+    "acc_b": 75.86,
+    "delta": 7.88,
+    "p_value": 0.0007,
+    "significant": true
+  },
+  "LLaMA-3.3-70B vs DeepSeek R1 70B": {
+    "model_a": "LLaMA-3.3-70B",
+    "model_b": "DeepSeek R1 70B",
+    "acc_a": 83.74,
+    "acc_b": 75.12,
+    "delta": 8.62,
+    "p_value": 0.0002,
+    "significant": true
+  },
+  "LLaMA-3.3-70B vs Gemma 4 E4B": {
+    "model_a": "LLaMA-3.3-70B",
+    "model_b": "Gemma 4 E4B",
+    "acc_a": 83.74,
+    "acc_b": 70.44,
+    "delta": 13.3,
+    "p_value": 0.0,
+    "significant": true
+  },
+  "Llama 4 Scout 17B vs Kimi K2": {
+    "model_a": "Llama 4 Scout 17B",
+    "model_b": "Kimi K2",
+    "acc_a": 83.25,
+    "acc_b": 81.53,
+    "delta": 1.72,
+    "p_value": 0.4375,
+    "significant": false
+  },
+  "Llama 4 Scout 17B vs LLaMA-3-8B": {
+    "model_a": "Llama 4 Scout 17B",
+    "model_b": "LLaMA-3-8B",
+    "acc_a": 83.25,
+    "acc_b": 78.08,
+    "delta": 5.17,
+    "p_value": 0.0217,
+    "significant": true
+  },
+  "Llama 4 Scout 17B vs GPT-OSS 120B": {
+    "model_a": "Llama 4 Scout 17B",
+    "model_b": "GPT-OSS 120B",
+    "acc_a": 83.25,
+    "acc_b": 77.09,
+    "delta": 6.16,
+    "p_value": 0.0079,
+    "significant": true
+  },
+  "Llama 4 Scout 17B vs GPT-OSS 20B": {
+    "model_a": "Llama 4 Scout 17B",
+    "model_b": "GPT-OSS 20B",
+    "acc_a": 83.25,
+    "acc_b": 76.85,
+    "delta": 6.4,
+    "p_value": 0.0053,
+    "significant": true
+  },
+  "Llama 4 Scout 17B vs Mistral-7B": {
+    "model_a": "Llama 4 Scout 17B",
+    "model_b": "Mistral-7B",
+    "acc_a": 83.25,
+    "acc_b": 75.86,
+    "delta": 7.39,
+    "p_value": 0.0039,
+    "significant": true
+  },
+  "Llama 4 Scout 17B vs DeepSeek R1 70B": {
+    "model_a": "Llama 4 Scout 17B",
+    "model_b": "DeepSeek R1 70B",
+    "acc_a": 83.25,
+    "acc_b": 75.12,
+    "delta": 8.13,
+    "p_value": 0.0013,
+    "significant": true
+  },
+  "Llama 4 Scout 17B vs Gemma 4 E4B": {
+    "model_a": "Llama 4 Scout 17B",
+    "model_b": "Gemma 4 E4B",
+    "acc_a": 83.25,
+    "acc_b": 70.44,
+    "delta": 12.81,
+    "p_value": 0.0,
+    "significant": true
+  },
+  "Kimi K2 vs LLaMA-3-8B": {
+    "model_a": "Kimi K2",
+    "model_b": "LLaMA-3-8B",
+    "acc_a": 81.53,
+    "acc_b": 78.08,
+    "delta": 3.45,
+    "p_value": 0.1322,
+    "significant": false
+  },
+  "Kimi K2 vs GPT-OSS 120B": {
+    "model_a": "Kimi K2",
+    "model_b": "GPT-OSS 120B",
+    "acc_a": 81.53,
+    "acc_b": 77.09,
+    "delta": 4.43,
+    "p_value": 0.0375,
+    "significant": true
+  },
+  "Kimi K2 vs GPT-OSS 20B": {
+    "model_a": "Kimi K2",
+    "model_b": "GPT-OSS 20B",
+    "acc_a": 81.53,
+    "acc_b": 76.85,
+    "delta": 4.68,
+    "p_value": 0.0412,
+    "significant": true
+  },
+  "Kimi K2 vs Mistral-7B": {
+    "model_a": "Kimi K2",
+    "model_b": "Mistral-7B",
+    "acc_a": 81.53,
+    "acc_b": 75.86,
+    "delta": 5.67,
+    "p_value": 0.02,
+    "significant": true
+  },
+  "Kimi K2 vs DeepSeek R1 70B": {
+    "model_a": "Kimi K2",
+    "model_b": "DeepSeek R1 70B",
+    "acc_a": 81.53,
+    "acc_b": 75.12,
+    "delta": 6.4,
+    "p_value": 0.0107,
+    "significant": true
+  },
+  "Kimi K2 vs Gemma 4 E4B": {
+    "model_a": "Kimi K2",
+    "model_b": "Gemma 4 E4B",
+    "acc_a": 81.53,
+    "acc_b": 70.44,
+    "delta": 11.08,
+    "p_value": 0.0,
+    "significant": true
+  },
+  "LLaMA-3-8B vs GPT-OSS 120B": {
+    "model_a": "LLaMA-3-8B",
+    "model_b": "GPT-OSS 120B",
+    "acc_a": 78.08,
+    "acc_b": 77.09,
+    "delta": 0.99,
+    "p_value": 0.6836,
+    "significant": false
+  },
+  "LLaMA-3-8B vs GPT-OSS 20B": {
+    "model_a": "LLaMA-3-8B",
+    "model_b": "GPT-OSS 20B",
+    "acc_a": 78.08,
+    "acc_b": 76.85,
+    "delta": 1.23,
+    "p_value": 0.6254,
+    "significant": false
+  },
+  "LLaMA-3-8B vs Mistral-7B": {
+    "model_a": "LLaMA-3-8B",
+    "model_b": "Mistral-7B",
+    "acc_a": 78.08,
+    "acc_b": 75.86,
+    "delta": 2.22,
+    "p_value": 0.3819,
+    "significant": false
+  },
+  "LLaMA-3-8B vs DeepSeek R1 70B": {
+    "model_a": "LLaMA-3-8B",
+    "model_b": "DeepSeek R1 70B",
+    "acc_a": 78.08,
+    "acc_b": 75.12,
+    "delta": 2.96,
+    "p_value": 0.2942,
+    "significant": false
+  },
+  "LLaMA-3-8B vs Gemma 4 E4B": {
+    "model_a": "LLaMA-3-8B",
+    "model_b": "Gemma 4 E4B",
+    "acc_a": 78.08,
+    "acc_b": 70.44,
+    "delta": 7.64,
+    "p_value": 0.0052,
+    "significant": true
+  },
+  "GPT-OSS 120B vs GPT-OSS 20B": {
+    "model_a": "GPT-OSS 120B",
+    "model_b": "GPT-OSS 20B",
+    "acc_a": 77.09,
+    "acc_b": 76.85,
+    "delta": 0.25,
+    "p_value": 0.9071,
+    "significant": false
+  },
+  "GPT-OSS 120B vs Mistral-7B": {
+    "model_a": "GPT-OSS 120B",
+    "model_b": "Mistral-7B",
+    "acc_a": 77.09,
+    "acc_b": 75.86,
+    "delta": 1.23,
+    "p_value": 0.6122,
+    "significant": false
+  },
+  "GPT-OSS 120B vs DeepSeek R1 70B": {
+    "model_a": "GPT-OSS 120B",
+    "model_b": "DeepSeek R1 70B",
+    "acc_a": 77.09,
+    "acc_b": 75.12,
+    "delta": 1.97,
+    "p_value": 0.4646,
+    "significant": false
+  },
+  "GPT-OSS 120B vs Gemma 4 E4B": {
+    "model_a": "GPT-OSS 120B",
+    "model_b": "Gemma 4 E4B",
+    "acc_a": 77.09,
+    "acc_b": 70.44,
+    "delta": 6.65,
+    "p_value": 0.0204,
+    "significant": true
+  },
+  "GPT-OSS 20B vs Mistral-7B": {
+    "model_a": "GPT-OSS 20B",
+    "model_b": "Mistral-7B",
+    "acc_a": 76.85,
+    "acc_b": 75.86,
+    "delta": 0.99,
+    "p_value": 0.6936,
+    "significant": false
+  },
+  "GPT-OSS 20B vs DeepSeek R1 70B": {
+    "model_a": "GPT-OSS 20B",
+    "model_b": "DeepSeek R1 70B",
+    "acc_a": 76.85,
+    "acc_b": 75.12,
+    "delta": 1.72,
+    "p_value": 0.496,
+    "significant": false
+  },
+  "GPT-OSS 20B vs Gemma 4 E4B": {
+    "model_a": "GPT-OSS 20B",
+    "model_b": "Gemma 4 E4B",
+    "acc_a": 76.85,
+    "acc_b": 70.44,
+    "delta": 6.4,
+    "p_value": 0.0298,
+    "significant": true
+  },
+  "Mistral-7B vs DeepSeek R1 70B": {
+    "model_a": "Mistral-7B",
+    "model_b": "DeepSeek R1 70B",
+    "acc_a": 75.86,
+    "acc_b": 75.12,
+    "delta": 0.74,
+    "p_value": 0.7834,
+    "significant": false
+  },
+  "Mistral-7B vs Gemma 4 E4B": {
+    "model_a": "Mistral-7B",
+    "model_b": "Gemma 4 E4B",
+    "acc_a": 75.86,
+    "acc_b": 70.44,
+    "delta": 5.42,
+    "p_value": 0.0652,
+    "significant": false
+  },
+  "DeepSeek R1 70B vs Gemma 4 E4B": {
+    "model_a": "DeepSeek R1 70B",
+    "model_b": "Gemma 4 E4B",
+    "acc_a": 75.12,
+    "acc_b": 70.44,
+    "delta": 4.68,
+    "p_value": 0.119,
+    "significant": false
+  }
+}

@@ -23,13 +23,18 @@ import numpy as np
 RESULTS_DIR = Path("evaluation/results")
 OUT_CSV     = Path("evaluation/error_analysis/bootstrap_significance.csv")
 
-MODEL_ORDER = ["haiku", "gemini", "groq70b", "llama3", "mistral"]
+MODEL_ORDER = ["haiku", "gemini", "groq70b", "llama3", "mistral",
+               "llama4scout", "qwen3_32b", "deepseek_r1_70b", "gemma4_e4b"]
 MODEL_LABELS = {
-    "haiku":   "Claude 3 Haiku",
-    "gemini":  "Gemini 2.5 Flash",
-    "groq70b": "LLaMA-3.3-70B",
-    "llama3":  "LLaMA-3-8B",
-    "mistral": "Mistral-7B",
+    "haiku":            "Claude 3 Haiku",
+    "gemini":           "Gemini 2.5 Flash",
+    "groq70b":          "LLaMA-3.3-70B",
+    "llama3":           "LLaMA-3-8B",
+    "mistral":          "Mistral-7B",
+    "llama4scout":      "Llama 4 Scout 17B",
+    "qwen3_32b":        "Qwen3-32B",
+    "deepseek_r1_70b":  "DeepSeek R1 70B",
+    "gemma4_e4b":       "Gemma 4 E4B",
 }
 
 TASK_ORDER = ["regulatory_interpretation", "numerical_reasoning",

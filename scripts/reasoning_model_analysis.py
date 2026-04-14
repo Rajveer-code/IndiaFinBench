@@ -27,7 +27,7 @@ TASK_ABBR = {
 
 # Models to compare: reasoning vs standard
 REASONING_MODELS = {
-    "deepseek_r1_results": "DeepSeek-R1",
+    "deepseek_r1_70b_results": "DeepSeek-R1",
     "qwen3_32b_results": "Qwen3-32B",    # has thinking mode (disabled for eval)
 }
 STANDARD_MODELS = {

@@ -46,6 +46,36 @@ TMP_031,Gemini 2.5 Flash,temporal_reasoning,medium,Temporal Reasoning Failure,De
 (i"
 TMP_040,Gemini 2.5 Flash,temporal_reasoning,hard,Domain Knowledge Failure,An intermediary's time-limited certificate expires in 18 months from the commencement of the SEBI (Intermediaries) Regul,The intermediary must apply at least three months before the earlier of: (a) expiry of the certifica,Three months prior to the expiry of such period.
 TMP_041,Gemini 2.5 Flash,temporal_reasoning,medium,Temporal Reasoning Failure,For how long was the Al-Nusrah Front listed on the ISIL (Da'esh) and Al-Qaida Sanctions List before it was removed per t,"Approximately 11 years and 9 months — from May 14, 2014 to February 27, 2026.","The Al-Nusrah Front was listed from May 14, 2014, until its removal on February 27, 2026."
+NUM_033,Gemini 2.5 Flash,numerical_reasoning,medium,Numerical Reasoning Failure,,"Twenty lakh rupees (two per cent of ten crore rupees, being lower than fifty lakh rupees â€” the rul","Calculation:
+2% of ten crore rupees = 0.02 * 10,00,00,000 = 20,00,000 rupees
+Comparing with fifty la"
+NUM_034,Gemini 2.5 Flash,numerical_reasoning,medium,Numerical Reasoning Failure,,"No. The 45 qualified institutional buyers are excluded from the calculation, so only 170 persons are","Calculation: 170 non-QIB investors + 0 QIB investors = 170 investors
+
+Final Answer: 170 persons. Thi"
+NUM_037,Gemini 2.5 Flash,numerical_reasoning,medium,Numerical Reasoning Failure,,No. The minimum threshold for government ownership is at least seventy-five per cent; seventy per ce,"No.
+
+Calculation:
+The entity is 70% directly owned by a sovereign government.
+The requirement for a "
+NUM_038,Gemini 2.5 Flash,numerical_reasoning,medium,Numerical Reasoning Failure,,"No. Eight lakh rupees out of ninety lakh rupees is approximately 8.9 per cent, which is below the te","Calculation: (8,00,000 / 90,00,000) * 100 = 8.89%
+
+No, a partner of that firm would not be disqualif"
+NUM_039,Gemini 2.5 Flash,numerical_reasoning,medium,Numerical Reasoning Failure,,"By 24 April (thirty days from 25 March, the date all required information was furnished, being the l","The later of the two dates is March 25, when all information has been furnished.
+SEBI must dispose o"
+REG_109,Gemini 2.5 Flash,regulatory_interpretation,medium,Domain Knowledge Failure,,Divergence in NPA asset classification and provisioning including its trend; Auditors' Report includ,"The provided context does not mention SFBs (Small Finance Banks). It refers to ""a bank"" in general."
+NUM_087,Gemini 2.5 Flash,numerical_reasoning,medium,Numerical Reasoning Failure,,At least rupees ten crore,Average net annual profit = ₹10 crore
+NUM_103,Gemini 2.5 Flash,numerical_reasoning,medium,Numerical Reasoning Failure,,"No. The combined holding would reach 10.5%, exceeding the 10 per cent cap on ownership of any compan","9.5% + 1% = 10.5%
+
+No, they may not acquire a further 1%."
+REG_141,Gemini 2.5 Flash,regulatory_interpretation,medium,Domain Knowledge Failure,,"No, not immediately. Under Regulation 15(7), an investment adviser is prohibited from entering trans",No.
+REG_146,Gemini 2.5 Flash,regulatory_interpretation,medium,Domain Knowledge Failure,,"No on both counts. Under Regulation 22(1), an individual investment adviser is prohibited from provi",No. No.
+NUM_114,Gemini 2.5 Flash,numerical_reasoning,medium,Numerical Reasoning Failure,,The 15-day prohibition window runs from April 1 to April 15 (inclusive). April 16 falls outside the ,"Yes, the April 16 transaction is permissible.
+
+Calculation:
+Original advice given: April 1
+15-day re"
+TMP_059,Gemini 2.5 Flash,temporal_reasoning,medium,Temporal Reasoning Failure,,"Under the original 2013 regulations, Regulation 7(1)(a) required a professional qualification or PG ",Pre-2020 Amendment (Regulation 7(1)(a)): A professional qualification or graduate degree or post-gra
+REG_153,Gemini 2.5 Flash,regulatory_interpretation,medium,Domain Knowledge Failure,,"Under Regulation 10(b), each scheme of an AIF must have a corpus of at least Rs twenty crore. Howeve",The minimum corpus requirement for each scheme of an Alternative Investment Fund is twenty crore rup
 REG_002,LLaMA-3.3-70B,regulatory_interpretation,easy,Domain Knowledge Failure,"Under SEBI ICDR Regulations, 2018, what percentage of the net offer must an issuer that does not meet the standard eligi",At least seventy five per cent.,75%
 REG_003,LLaMA-3.3-70B,regulatory_interpretation,easy,Domain Knowledge Failure,"Under SEBI ICDR Regulations, 2018, what is the minimum percentage of post-issue capital that promoters must hold followi",At least twenty per cent.,20%
 REG_007,LLaMA-3.3-70B,regulatory_interpretation,easy,Domain Knowledge Failure,"Under SEBI Takeover Regulations 2011, at what threshold of voting rights does an acquirer become obligated to make a pub",Twenty-five per cent or more of the voting rights,25%
@@ -81,6 +111,68 @@ TMP_030,LLaMA-3.3-70B,temporal_reasoning,medium,Temporal Reasoning Failure,"How 
 TMP_036,LLaMA-3.3-70B,temporal_reasoning,medium,Temporal Reasoning Failure,"The SEBI (Research Analysts) Regulations 2014 were published on September 1, 2014. On approximately which date did they ","On the ninetieth day from September 1, 2014, which is approximately November 30, 2014.","December 30, 2014."
 TMP_038,LLaMA-3.3-70B,temporal_reasoning,easy,Temporal Reasoning Failure,"The RBI SFB Dividend Directions 2026 were issued on March 10, 2026 but take effect from FY 2026-27. Were the 2025 Direct","The 2025 Directions were issued before the 2026 Directions — on November 28, 2025, compared to March","Before, as the repealed circular is dated November 28, 2025, which is prior to the issuance of the 2"
 TMP_044,LLaMA-3.3-70B,temporal_reasoning,medium,Temporal Reasoning Failure,"A company completed its buy-back (i.e., made the final payment to shareholders) on June 15, 2025. What is the earliest d","June 15, 2026 — one year from the expiry date (June 15, 2025) of the buyback period of the preceding","June 15, 2026."
+REG_057,LLaMA-3.3-70B,regulatory_interpretation,medium,Domain Knowledge Failure,,Not less than fifty one per cent of the equity share capital or interest,51%
+REG_058,LLaMA-3.3-70B,regulatory_interpretation,medium,Domain Knowledge Failure,,Not less than ninety per cent,90%
+REG_064,LLaMA-3.3-70B,regulatory_interpretation,medium,Domain Knowledge Failure,,Not more than four,4
+REG_065,LLaMA-3.3-70B,regulatory_interpretation,medium,Domain Knowledge Failure,,The preceding three hundred and sixty five days,365 days.
+NUM_033,LLaMA-3.3-70B,numerical_reasoning,medium,Numerical Reasoning Failure,,"Twenty lakh rupees (two per cent of ten crore rupees, being lower than fifty lakh rupees â€” the rul","2% of 10 crore rupees = 0.02 * 10,00,00,000 = 20,00,000 rupees. 
+Since 20,00,000 rupees is greater t"
+NUM_034,LLaMA-3.3-70B,numerical_reasoning,medium,Numerical Reasoning Failure,,"No. The 45 qualified institutional buyers are excluded from the calculation, so only 170 persons are","170 (non-QIB investors) + 0 (QIBs are excluded from the limit) = 170 
+170 is less than 200.
+No, it d"
+NUM_036,LLaMA-3.3-70B,numerical_reasoning,medium,Numerical Reasoning Failure,,No. The threshold is more than five hundred crore rupees; four hundred and ninety nine crore rupees ,"499 crore rupees (net worth) < 500 crore rupees (required net worth)
+No"
+NUM_037,LLaMA-3.3-70B,numerical_reasoning,medium,Numerical Reasoning Failure,,No. The minimum threshold for government ownership is at least seventy-five per cent; seventy per ce,"75% (required ownership) > 70% (actual ownership), No."
+NUM_038,LLaMA-3.3-70B,numerical_reasoning,medium,Numerical Reasoning Failure,,"No. Eight lakh rupees out of ninety lakh rupees is approximately 8.9 per cent, which is below the te","Transaction amount: 8 lakh rupees
+Gross turnover: 90 lakh rupees
+Percentage = (8 / 90) * 100 = 8.89%"
+NUM_040,LLaMA-3.3-70B,numerical_reasoning,medium,Numerical Reasoning Failure,,By 1 April 2018 (three months from the closure of the issue on 1 January 2018),"1 January 2018 + 3 months = 1 April 2018 
+1 April 2018 (in months) = 3 months 
+Latest date = 1 Janua"
+REG_097,LLaMA-3.3-70B,regulatory_interpretation,medium,Domain Knowledge Failure,,At least fifty per cent,50%
+NUM_088,LLaMA-3.3-70B,numerical_reasoning,medium,Numerical Reasoning Failure,,Not less than rupees fifty crore,50 crore rupees.
+NUM_090,LLaMA-3.3-70B,numerical_reasoning,medium,Numerical Reasoning Failure,,Not less than rupees ten crore,"Minimum networth = rupees ten crore 
+= rupees 10,00,00,000
+= 10 crore rupees 
+
+10 crore rupees"
+NUM_091,LLaMA-3.3-70B,numerical_reasoning,medium,Numerical Reasoning Failure,,AMC net worth not less than rupees one hundred fifty crore; locked-in for five years; total combined,"1. AMC capitalization threshold: ₹150 crore
+2. Lock-in period: 5 years
+3. Minimum combined experienc"
+NUM_092,LLaMA-3.3-70B,numerical_reasoning,medium,Numerical Reasoning Failure,,"5 per cent of aggregate purchases and sales, measured for a block of any three months",5% over a block of 3 months.
+NUM_093,LLaMA-3.3-70B,numerical_reasoning,medium,Numerical Reasoning Failure,,PAT of the financial year minus 50 per cent of Net NPA as on March 31 of the financial year for whic,"Adjusted Profit After Tax (PAT) = PAT - 0.5 * Net NPA 
+ Units: Rupees (assuming PAT and Net NPA are "
+NUM_098,LLaMA-3.3-70B,numerical_reasoning,medium,Numerical Reasoning Failure,,Bucket B1: 0 per cent of Adjusted PAT; Bucket B10: 100 per cent of Adjusted PAT,"0% for Bucket B1, 100% for Bucket B10."
+TMP_046,LLaMA-3.3-70B,temporal_reasoning,medium,Temporal Reasoning Failure,,At least 50 per cent,At least 50% (before 12-1-1998).
+TMP_047,LLaMA-3.3-70B,temporal_reasoning,medium,Temporal Reasoning Failure,,Rupees fifty crore (replacing the original requirement of rupees ten crore),"Rupees fifty crore, effective 06-05-2014."
+REG_116,LLaMA-3.3-70B,regulatory_interpretation,medium,Domain Knowledge Failure,,Not more than ten per cent of any company's paid up capital carrying voting rights,10%
+REG_125,LLaMA-3.3-70B,regulatory_interpretation,medium,Domain Knowledge Failure,,Prior approval of the trustees,The trustees.
+NUM_103,LLaMA-3.3-70B,numerical_reasoning,medium,Numerical Reasoning Failure,,"No. The combined holding would reach 10.5%, exceeding the 10 per cent cap on ownership of any compan","Current holding: 9.5%
+Proposed acquisition: 1%
+Total holding: 9.5% + 1% = 10.5%
+Limit: 10%
+Since 10."
+NUM_106,LLaMA-3.3-70B,numerical_reasoning,medium,Numerical Reasoning Failure,,Six per cent of funds raised; the clause was omitted w.e.f. 16-4-2008,"6% of the funds raised. 
+This provision was omitted on 16-4-2008, but the percentage is 6%."
+TMP_053,LLaMA-3.3-70B,temporal_reasoning,medium,Temporal Reasoning Failure,,"Replaced the limited allowance for unlisted equity (5% for open-ended, 10% for close-ended) with a c","The SEBI (Mutual Funds) (Second Amendment) Regulations, 2019, effective 23-09-2019, changed the trea"
+TMP_055,LLaMA-3.3-70B,temporal_reasoning,medium,Temporal Reasoning Failure,,"No. The original Regulation 45 absolutely prohibited the use of scheme funds in option trading, shor","No, prior to 31-10-2007."
+TMP_056,LLaMA-3.3-70B,temporal_reasoning,medium,Temporal Reasoning Failure,,"Transactions entered on or after January 15, 1998","January 15, 1998, as per the amendment effective from January 12, 1998."
+REG_138,LLaMA-3.3-70B,regulatory_interpretation,medium,Domain Knowledge Failure,,A part-time investment adviser shall not have more than seventy-five clients in total at any point i,75
+REG_143,LLaMA-3.3-70B,regulatory_interpretation,medium,Domain Knowledge Failure,,"Under Regulation 19(2), all records must be maintained and preserved for a minimum period of five ye","5 years, and electronically maintained records requiring signatures must be digitally signed."
+REG_148,LLaMA-3.3-70B,regulatory_interpretation,medium,Domain Knowledge Failure,,"Under Regulation 24(1), the Board must give not less than ten days notice to the investment adviser ",10 days. SEBI can dispense with this notice if it is satisfied that giving notice is not in the inte
+NUM_114,LLaMA-3.3-70B,numerical_reasoning,medium,Numerical Reasoning Failure,,The 15-day prohibition window runs from April 1 to April 15 (inclusive). April 16 falls outside the ,"April 1 (original advice) + 15 days = April 16. 
+Since the revised assessment was given on April 14,"
+NUM_120,LLaMA-3.3-70B,numerical_reasoning,medium,Numerical Reasoning Failure,,"No. Under Regulation 2(1)(ab)(ii), a body corporate must have a net worth of at least Rs 50 crore to",50 crore rupees - 45 crore rupees = 5 crore rupees.
+REG_183,LLaMA-3.3-70B,regulatory_interpretation,medium,Domain Knowledge Failure,,"No. Under Regulation 28C, no person may act as an ESG rating provider without obtaining a certificat","No, an entity cannot provide ESG ratings without registration. A transitional period of 6 months was"
+NUM_125,LLaMA-3.3-70B,numerical_reasoning,medium,Numerical Reasoning Failure,,The CRA must take steps to rectify the deficiencies within two months from the date of the auditor's,"October 3, 2025 + 2 months = December 3, 2025 
+2 months = 60 days (approx.) 
+October has 31 days, so"
+NUM_127,LLaMA-3.3-70B,numerical_reasoning,medium,Numerical Reasoning Failure,,"The minimum liquid net worth at application time is the higher of: (A) Rs 10 crore, or (B) Rs 5 cror","Rupees five crores + Rupees six crores = Rupees eleven crores. 
+Since eleven crores is higher than t"
+TMP_073,LLaMA-3.3-70B,temporal_reasoning,medium,Temporal Reasoning Failure,,The minimum net worth requirement was raised by the SEBI (Credit Rating Agencies) (Amendment) Regula,"Raised on 30-05-2018, increased from 5 crores to 25 crores."
+REG_190,LLaMA-3.3-70B,regulatory_interpretation,medium,Domain Knowledge Failure,,Six months after completion of the open offer.,Six months.
+TMP_081,LLaMA-3.3-70B,temporal_reasoning,medium,Temporal Reasoning Failure,,The prohibition on wilful defaulters (Regulation 6A) was inserted by the Second Amendment Regulation,"Regulations 6A and 6B were introduced on 25-05-2016 and 11-09-2018, respectively, triggered by the S"
+TMP_088,LLaMA-3.3-70B,temporal_reasoning,medium,Temporal Reasoning Failure,,The regulatory sandbox provision (Regulation 31A) was inserted by the SEBI (Regulatory Sandbox) (Ame,"17-04-2020, up to twelve months."
 REG_002,LLaMA-3-8B,regulatory_interpretation,easy,Domain Knowledge Failure,"Under SEBI ICDR Regulations, 2018, what percentage of the net offer must an issuer that does not meet the standard eligi",At least seventy five per cent.,75%
 REG_005,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,"Under SEBI ICDR Regulations, 2018, for how long is the minimum promoters' contribution in an IPO locked-in where the maj",Three years from the date of allotment in the initial public offer,Three years.
 REG_008,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,"Under SEBI Takeover Regulations 2011, an acquirer holding 25% or more in a target company may acquire up to what percent",More than five per cent of the voting rights,5%
@@ -127,6 +219,98 @@ TMP_031,LLaMA-3-8B,temporal_reasoning,medium,Temporal Reasoning Failure,Describe
 TMP_032,LLaMA-3-8B,temporal_reasoning,medium,Temporal Reasoning Failure,Which set of RBI directions on Small Finance Bank dividend norms was in effect during FY 2025-26 — the 2025 Directions o,"The 2025 Directions (issued November 28, 2025) were in effect during FY 2025-26. The 2026 Directions",The 2025 Directions.
 TMP_035,LLaMA-3-8B,temporal_reasoning,medium,Temporal Reasoning Failure,"Under SEBI (Intermediaries) Regulations 2008, an intermediary holding a permanent certificate at the time of commencemen","Two years plus up to six months extension, for a maximum of two and a half years from the commenceme",Six months.
 TMP_040,LLaMA-3-8B,temporal_reasoning,hard,Domain Knowledge Failure,An intermediary's time-limited certificate expires in 18 months from the commencement of the SEBI (Intermediaries) Regul,The intermediary must apply at least three months before the earlier of: (a) expiry of the certifica,"Three months prior to the expiry of the period, i.e., 15 months from the commencement of the SEBI (I"
+REG_055,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,On a quarterly basis,Quarterly.
+REG_057,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,Not less than fifty one per cent of the equity share capital or interest,51%
+REG_058,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,Not less than ninety per cent,ninety percent
+REG_060,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,"Two per cent of its gross turnover or total income, or fifty lakh rupees, whichever is lower","Fifty lakh rupees or such higher amount as may be specified from time to time, whichever is lower."
+REG_064,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,Not more than four,Four.
+REG_066,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,The ninetieth day,Ninetieth.
+NUM_033,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,"Twenty lakh rupees (two per cent of ten crore rupees, being lower than fifty lakh rupees â€” the rul","Two percent of 10 crore rupees is:
+
+2% x 10,00,00,000 = 20,00,000
+
+This is lower than the 50 lakh ru"
+NUM_036,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,No. The threshold is more than five hundred crore rupees; four hundred and ninety nine crore rupees ,"499 crore rupees < 500 crore rupees
+
+No, it does not qualify."
+NUM_037,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,No. The minimum threshold for government ownership is at least seventy-five per cent; seventy per ce,"75% - 5% = 70%
+
+No, it does not qualify."
+NUM_038,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,"No. Eight lakh rupees out of ninety lakh rupees is approximately 8.9 per cent, which is below the te","8 lakh / 90 lakh = 0.089 or approximately 8.9%
+
+Since this is less than 10%, the answer is:
+
+No, the"
+NUM_039,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,"By 24 April (thirty days from 25 March, the date all required information was furnished, being the l","30 days after receipt of application = 31 March
+Later of two dates: 30 days after receipt of additio"
+REG_097,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,At least fifty per cent,50%
+REG_106,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,Three-fourths of the unitholders of any scheme,Three-fourths.
+NUM_090,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,Not less than rupees ten crore,Rupees 10 crore.
+NUM_093,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,PAT of the financial year minus 50 per cent of Net NPA as on March 31 of the financial year for whic,"Adjusted PAT = PAT - 0.5 * Net NPA
+
+Answer: ₹______ (Rupees)"
+NUM_096,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,"Rs625 crore (maximum eligible dividend of Rs1,125 crore minus interim dividend already paid of Rs500","G = Lower of E or F
+E = 75% of PAT = 0.75 x 1,500 crore = 1,125 crore
+F = Maximum payable as per Tab"
+NUM_097,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,"Rs19,000 crore (50% of Adjusted PAT of Rs38,000 crore, which is lower than 75% of PAT of Rs30,375 cr","Rs19,000 crore."
+TMP_050,LLaMA-3-8B,temporal_reasoning,medium,Temporal Reasoning Failure,,Replaced the enumeration of specific advertising media with a broader definition covering all forms ,"The SEBI (Mutual Funds) Amendment Regulations, 2012 substituted a broader definition for the origina"
+REG_116,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,Not more than ten per cent of any company's paid up capital carrying voting rights,Ten percent.
+REG_127,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,Within fifteen days of their appointment,Within 15 days.
+REG_130,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,Eighth Schedule; the AMC shall publish the valuations,Eighth Schedule. The asset management company shall compute and carry out valuation of investments a
+NUM_099,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,"Up to 12% of NAV, with prior approval of both the Board of Trustees and the Board of Directors of th","10% + 2% = 12%
+
+The single-issuer debt investment limit can be extended to a maximum of 12% of NAV. "
+NUM_103,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,"No. The combined holding would reach 10.5%, exceeding the 10 per cent cap on ownership of any compan","10% - 9.5% = 0.5%
+
+They can acquire up to 0.5% more.
+
+Answer: 0.5%"
+NUM_105,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,Rs80 crore (10% of Rs800 crore NAV),Rs 8 crore
+TMP_053,LLaMA-3-8B,temporal_reasoning,medium,Temporal Reasoning Failure,,"Replaced the limited allowance for unlisted equity (5% for open-ended, 10% for close-ended) with a c",The fundamental change is that investments in unlisted equity shares or equity related instruments a
+REG_134,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,A person providing investment advice exclusively to clients based outside India is exempt from regis,"Yes, the person needs to register as an investment adviser under SEBI IA Regulations, 2013. The answ"
+REG_138,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,A part-time investment adviser shall not have more than seventy-five clients in total at any point i,Seventy-five.
+REG_141,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,"No, not immediately. Under Regulation 15(7), an investment adviser is prohibited from entering trans",No.
+REG_146,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,"No on both counts. Under Regulation 22(1), an individual investment adviser is prohibited from provi",No.
+NUM_114,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,The 15-day prohibition window runs from April 1 to April 15 (inclusive). April 16 falls outside the ,"April 1: Advice given
+April 14: Revised assessment issued
+April 16: Transaction desired
+
+15 days fro"
+TMP_062,LLaMA-3-8B,temporal_reasoning,medium,Temporal Reasoning Failure,,"The SEBI (Investment Advisers) (Second Amendment) Regulations, 2025 (w.e.f. 25-11-2025) amended Regu","The procedural change made by the SEBI (Investment Advisers) (Second Amendment) Regulations, 2025 is"
+REG_153,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,"Under Regulation 10(b), each scheme of an AIF must have a corpus of at least Rs twenty crore. Howeve","Twenty crore rupees. Yes, it differs for social impact funds, which require a minimum corpus of five"
+REG_157,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,"Under Regulation 9(2), any material alteration to the fund strategy requires the consent of at least",Atleast two-thirds.
+REG_164,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,"Under Regulation 15(1)(e), an AIF requires the approval of 75% of investors by value of their invest",Seventy five percent.
+NUM_117,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,"Scheme A (private equity, Category II): minimum Rs 20 crore. Scheme B (social impact fund, Category ","20 crore + 5 crore = 25 crore
+
+For Schemes A and C (both private funds), the minimum corpus is 20 cr"
+NUM_118,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,External institutional investor (Rs 75 lakh): fails the minimum of Rs 1 crore. Director of the Manag,"Rs 20 lakh < 25 lakh (minimum for employees or directors of Manager)
+Rs 30 lakh < 1 crore (minimum f"
+TMP_065,LLaMA-3-8B,temporal_reasoning,medium,Temporal Reasoning Failure,,The minimum investment threshold for venture capital funds was raised from two-thirds (approximately,13-08-2021
+TMP_071,LLaMA-3-8B,temporal_reasoning,medium,Temporal Reasoning Failure,,"The SEBI (Alternative Investment Funds) (Third Amendment) Regulations, 2025 (w.e.f. 19-11-2025) amen",The amendment excluded accredited investors while computing the number of investors in a scheme of a
+REG_178,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,"Under Regulation 22, a credit rating agency must take steps to rectify any deficiencies identified i",Two months.
+REG_179,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,"Under Regulation 24(4), all rating decisions — including decisions on changes in rating — must be ta","The rating committee and the rating decisions regarding changes in rating. No, a CRA cannot rate its"
+NUM_124,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,"The foreign CRA began rating securities from July 2019. By December 2025, it has had 6 years and 5 m","January 2018 to July 2019 is approximately 1 year.
+July 2019 to December 2025 is approximately 6 yea"
+NUM_125,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,The CRA must take steps to rectify the deficiencies within two months from the date of the auditor's,"November 2, 2025"
+NUM_130,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,The requirement under Regulation 4(e) is a continuous net worth of at least Rs 100 crore per audited,"Rs 102 crore + Rs 110 crore + Rs 108 crore + Rs 115 crore = Rs 435 crore
+
+Since this is greater than"
+REG_185,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,25% or more of the voting rights in the target company (when combined with shares held by the acquir,Twenty-five per cent.
+REG_190,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,Six months after completion of the open offer.,Six months.
+REG_192,LLaMA-3-8B,regulatory_interpretation,medium,Domain Knowledge Failure,,At least 26% of the total shares of the target company (as of the tenth working day from the closure,Twenty-six per cent.
+NUM_132,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,5% of 10 crore = 50 lakh shares.,"5% of 10 crore shares = 0.05 x 10,000,000 = 500,000 shares
+
+Maximum additional shares that can be ac"
+NUM_134,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,"26 weeks from March 15, 2024 is approximately September 15, 2024. August 20, 2024 falls within this ","26 weeks = 182 days (approx.)
+
+Date of acquisition: August 20, 2024
+Time period from date of acquisi"
+NUM_136,LLaMA-3-8B,numerical_reasoning,medium,Numerical Reasoning Failure,,"Consideration is more than Rs 10 crore but less than or equal to Rs 1,000 crore: fee = 0.5% of offer","Rs 5,00,000 (up to ten crore rupees is not applicable)
+
+More than ten crore rupees but not more than"
+TMP_081,LLaMA-3-8B,temporal_reasoning,medium,Temporal Reasoning Failure,,The prohibition on wilful defaulters (Regulation 6A) was inserted by the Second Amendment Regulation,"Regulation 6A was introduced w.e.f. 25-05-2016, while Regulation 6B was introduced w.e.f. 11-09-2018"
+TMP_084,LLaMA-3-8B,temporal_reasoning,medium,Temporal Reasoning Failure,,"In 2013, a basic Regulation 5A was inserted allowing an acquirer making an open offer to also delist",The original Regulation 5A (inserted by the SEBI (Listing of Specified Securities on Institutional T
+TMP_088,LLaMA-3-8B,temporal_reasoning,medium,Temporal Reasoning Failure,,The regulatory sandbox provision (Regulation 31A) was inserted by the SEBI (Regulatory Sandbox) (Ame,"The Regulatory Sandbox exemption was introduced on April 17, 2020. The maximum duration for which SE"
 REG_002,Mistral-7B,regulatory_interpretation,easy,Domain Knowledge Failure,"Under SEBI ICDR Regulations, 2018, what percentage of the net offer must an issuer that does not meet the standard eligi",At least seventy five per cent.,75%
 REG_003,Mistral-7B,regulatory_interpretation,easy,Domain Knowledge Failure,"Under SEBI ICDR Regulations, 2018, what is the minimum percentage of post-issue capital that promoters must hold followi",At least twenty per cent.,The promoters must hold at least 20% of the post-issue capital.
 REG_004,Mistral-7B,regulatory_interpretation,medium,Domain Knowledge Failure,"Under SEBI ICDR Regulations, 2018, what fraction of the anchor investor portion in a book-built issue is reserved for do",One-third,1/3
@@ -168,3 +352,60 @@ TMP_035,Mistral-7B,temporal_reasoning,medium,Temporal Reasoning Failure,"Under S
 TMP_036,Mistral-7B,temporal_reasoning,medium,Temporal Reasoning Failure,"The SEBI (Research Analysts) Regulations 2014 were published on September 1, 2014. On approximately which date did they ","On the ninetieth day from September 1, 2014, which is approximately November 30, 2014.","September 9, 2014 (90 days from the publication date)"
 TMP_040,Mistral-7B,temporal_reasoning,hard,Domain Knowledge Failure,An intermediary's time-limited certificate expires in 18 months from the commencement of the SEBI (Intermediaries) Regul,The intermediary must apply at least three months before the earlier of: (a) expiry of the certifica,The intermediary must apply for renewal at least three months prior to the expiry of 18 months from 
 TMP_044,Mistral-7B,temporal_reasoning,medium,Temporal Reasoning Failure,"A company completed its buy-back (i.e., made the final payment to shareholders) on June 15, 2025. What is the earliest d","June 15, 2026 — one year from the expiry date (June 15, 2025) of the buyback period of the preceding","The earliest date for a company's next buy-back offer would be June 16, 2026."
+REG_058,Mistral-7B,regulatory_interpretation,medium,Domain Knowledge Failure,,Not less than ninety per cent,90%
+REG_062,Mistral-7B,regulatory_interpretation,medium,Domain Knowledge Failure,,Twenty one days,Within 21 days from the relevant trigger date.
+REG_064,Mistral-7B,regulatory_interpretation,medium,Domain Knowledge Failure,,Not more than four,4
+REG_065,Mistral-7B,regulatory_interpretation,medium,Domain Knowledge Failure,,The preceding three hundred and sixty five days,365 days
+REG_066,Mistral-7B,regulatory_interpretation,medium,Domain Knowledge Failure,,The ninetieth day,90th day after the date of publication in the Official Gazette.
+NUM_033,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,"Twenty lakh rupees (two per cent of ten crore rupees, being lower than fifty lakh rupees â€” the rul","The maximum permissible pecuniary relationship for an independent director candidate, given a gross "
+NUM_034,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,"No. The 45 qualified institutional buyers are excluded from the calculation, so only 170 persons are","Yes, it exceeds the private placement limit. The limit is 200 persons (200 identified persons - 45 Q"
+NUM_035,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,26 May 2025 (after expiry of the twenty one days notice period from 5 May),"The roll-over can take effect 21 days after the notice period, which started on 5th May 2025. So, th"
+NUM_036,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,No. The threshold is more than five hundred crore rupees; four hundred and ninety nine crore rupees ,"No, a family trust with a net worth of 499 crore rupees does not qualify as an institutional investo"
+NUM_037,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,No. The minimum threshold for government ownership is at least seventy-five per cent; seventy per ce,"Yes, the given context states that entities controlled or at least 75% directly or indirectly owned "
+NUM_038,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,"No. Eight lakh rupees out of ninety lakh rupees is approximately 8.9 per cent, which is below the te","Yes, the partner would be disqualified due to transactions amounting to more than 10% (8 lakh rupees"
+NUM_039,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,"By 24 April (thirty days from 25 March, the date all required information was furnished, being the l",The application must be disposed of by 30 April (30 days after 25 March).
+REG_097,Mistral-7B,regulatory_interpretation,medium,Domain Knowledge Failure,,At least fifty per cent,50%
+NUM_087,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,At least rupees ten crore,"The minimum average net annual profit after depreciation, interest, and tax that a sponsor must demo"
+NUM_088,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,Not less than rupees fifty crore,The standard minimum networth requirement for an Asset Management Company (AMC) under SEBI (Mutual F
+NUM_090,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,Not less than rupees ten crore,The minimum networth required for an Asset Management Company (AMC) that is only eligible to launch 
+CON_048,Mistral-7B,contradiction_detection,medium,Temporal Reasoning Failure,,No,"Yes, both passages define 'advertisement' in a similar manner, as they encompass various forms of co"
+TMP_046,Mistral-7B,temporal_reasoning,medium,Temporal Reasoning Failure,,At least 50 per cent,At least 50% was required before the 1998 amendment.
+TMP_047,Mistral-7B,temporal_reasoning,medium,Temporal Reasoning Failure,,Rupees fifty crore (replacing the original requirement of rupees ten crore),Rupees fifty crore (w.e.f. 06-05-2014)
+TMP_048,Mistral-7B,temporal_reasoning,medium,Temporal Reasoning Failure,,27-9-2002,"The regulations were omitted from September 27, 2002."
+TMP_050,Mistral-7B,temporal_reasoning,medium,Temporal Reasoning Failure,,Replaced the enumeration of specific advertising media with a broader definition covering all forms ,"The SEBI (Mutual Funds) Amendment Regulations, 2012 broadened the definition of 'advertisement' by i"
+REG_116,Mistral-7B,regulatory_interpretation,medium,Domain Knowledge Failure,,Not more than ten per cent of any company's paid up capital carrying voting rights,10%
+REG_121,Mistral-7B,regulatory_interpretation,medium,Domain Knowledge Failure,,No. A fund of funds scheme shall not invest in any other fund of funds scheme.,No
+REG_123,Mistral-7B,regulatory_interpretation,medium,Domain Knowledge Failure,,No. An AMC shall not act as a trustee of any mutual fund.,No
+NUM_100,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,Rs100 crore (20% of Rs500 crore net assets); maximum duration of six months,"The mutual fund may borrow up to 20% of its net asset value, which is Rs100 crore (500*0.2). The dur"
+NUM_103,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,"No. The combined holding would reach 10.5%, exceeding the 10 per cent cap on ownership of any compan","Based on the provided context, a mutual fund cannot own more than 10% of any company's paid-up capit"
+NUM_106,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,Six per cent of funds raised; the clause was omitted w.e.f. 16-4-2008,The maximum initial issue expense ratio for a mutual fund scheme under the original Seventh Schedule
+CON_051,Mistral-7B,contradiction_detection,medium,Temporal Reasoning Failure,,No,"Yes, both passages allow similar ranges of additional business activities for an AMC, including port"
+TMP_052,Mistral-7B,temporal_reasoning,medium,Temporal Reasoning Failure,,Six per cent of funds raised; omitted by the 2008 amendment w.e.f. 16-4-2008,The original cap on initial issue expenses for a mutual fund scheme under the Seventh Schedule was 6
+REG_131,Mistral-7B,regulatory_interpretation,medium,Domain Knowledge Failure,,No. Regulation 3(1) prohibits any person from acting as an investment adviser or holding itself out ,"No, according to the provided context, a person cannot provide investment advisory services without "
+REG_132,Mistral-7B,regulatory_interpretation,medium,Domain Knowledge Failure,,"No. Under Regulation 4(b), any insurance agent or insurance broker who offers investment advice sole","No, according to the provided context, an insurance broker who advises clients on insurance products"
+REG_138,Mistral-7B,regulatory_interpretation,medium,Domain Knowledge Failure,,A part-time investment adviser shall not have more than seventy-five clients in total at any point i,75
+REG_148,Mistral-7B,regulatory_interpretation,medium,Domain Knowledge Failure,,"Under Regulation 24(1), the Board must give not less than ten days notice to the investment adviser ","Ten days notice is required unless in the interest of investors, where no notice should be given, in"
+NUM_107,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,"Under Regulation 19(2), records must be preserved for a minimum of 5 years from the date of the advi","The records related to the investment advice provided on November 15, 2023 can be destroyed no earli"
+NUM_114,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,The 15-day prohibition window runs from April 1 to April 15 (inclusive). April 16 falls outside the ,"No, the April 16 transaction is not permissible according to Regulation 15(7) as it falls within the"
+REG_149,Mistral-7B,regulatory_interpretation,medium,Domain Knowledge Failure,,"No. Under Regulation 3(1), no entity or person shall act as an Alternative Investment Fund on and fr","No, according to the provided context, an entity cannot operate as an Alternative Investment Fund in"
+REG_153,Mistral-7B,regulatory_interpretation,medium,Domain Knowledge Failure,,"Under Regulation 10(b), each scheme of an AIF must have a corpus of at least Rs twenty crore. Howeve",The minimum corpus requirement for each scheme of an Alternative Investment Fund is twenty crore rup
+REG_162,Mistral-7B,regulatory_interpretation,medium,Domain Knowledge Failure,,"Under Regulation 15(1)(c), Category I and II AIFs may invest not more than 25% of their investable f",The single-investee concentration limit for Category I and II Alternative Investment Funds is 25%. F
+REG_163,Mistral-7B,regulatory_interpretation,medium,Domain Knowledge Failure,,"Under Regulation 15(1)(d), Category III AIFs may invest not more than 10% of their investable funds ",The single-investee concentration limit for Category III Alternative Investment Funds under SEBI AIF
+NUM_118,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,External institutional investor (Rs 75 lakh): fails the minimum of Rs 1 crore. Director of the Manag,The employee of the AIF (Rs 30 lakh) and the investor who is a director of the Manager (Rs 20 lakh) 
+REG_179,Mistral-7B,regulatory_interpretation,medium,Domain Knowledge Failure,,"Under Regulation 24(4), all rating decisions — including decisions on changes in rating — must be ta","The rating committee of a credit rating agency. No, a CRA cannot rate its own securities."
+NUM_124,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,"The foreign CRA began rating securities from July 2019. By December 2025, it has had 6 years and 5 m","No, it does not meet the 'minimum of five years' experience in rating securities' requirement as per"
+NUM_127,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,"The minimum liquid net worth at application time is the higher of: (A) Rs 10 crore, or (B) Rs 5 cror",The applicant must demonstrate a minimum liquid net worth of rupees 15 crores (10 + 5) at the time o
+NUM_129,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,"No, the proposed acquisition would not violate Regulation 24A(2). The restriction applies to a share","Yes, the acquisition would violate Regulation 24A(2) as Institution X would hold more than 10% in tw"
+REG_201,Mistral-7B,regulatory_interpretation,medium,Domain Knowledge Failure,,An acquirer whose aggregate acquisition reaches 5% or more must disclose their aggregate shareholdin,Disclosures should be made under Chapter V (Disclosure provisions) of SEBI Takeovers Regulations 201
+NUM_132,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,5% of 10 crore = 50 lakh shares.,The acquirer can acquire up to (10 crore * 25%) / 100 - (10 crore * 28%) = 7.5 crores - 2.8 crores =
+NUM_134,Mistral-7B,numerical_reasoning,medium,Numerical Reasoning Failure,,"26 weeks from March 15, 2024 is approximately September 15, 2024. August 20, 2024 falls within this ","Yes, Regulation 8(10) applies. The acquirer purchased shares at a price higher than the offer price "
+CON_072,Mistral-7B,contradiction_detection,medium,Temporal Reasoning Failure,,No,"Yes, they do. In the case of a listed entity on Innovators Growth Platform, the shareholding thresho"
+CON_074,Mistral-7B,contradiction_detection,medium,Temporal Reasoning Failure,,No,"Yes, there is a difference. Regulation 7(1) requires an open offer for at least 26% of total shares,"
+CON_075,Mistral-7B,contradiction_detection,medium,Temporal Reasoning Failure,,No,"Yes, they do not completely align. While Regulation 22(1) states that the acquisition cannot be comp"
+CON_076,Mistral-7B,contradiction_detection,medium,Temporal Reasoning Failure,,No,"Yes, there is a contradiction. While Regulation 23(1) does not allow a wilful defaulter to withdraw "
+TMP_081,Mistral-7B,temporal_reasoning,medium,Temporal Reasoning Failure,,The prohibition on wilful defaulters (Regulation 6A) was inserted by the Second Amendment Regulation,The SEBI introduced separate prohibitions on wilful defaulters and fugitive economic offenders makin
+TMP_084,Mistral-7B,temporal_reasoning,medium,Temporal Reasoning Failure,,"In 2013, a basic Regulation 5A was inserted allowing an acquirer making an open offer to also delist",The SEBI Takeovers Regulations provisions on combined open offer and delisting evolved by substituti
+TMP_085,Mistral-7B,temporal_reasoning,medium,Temporal Reasoning Failure,,The original exemption in Regulation 29(4) covered only scheduled commercial banks and public financ,The housing finance companies and systemically important NBFCs were added to the list of pledgees ex
+TMP_086,Mistral-7B,temporal_reasoning,medium,Temporal Reasoning Failure,,"Regulation 30, which required every person holding 25% or more of voting rights and all promoters to",The annual continual disclosure requirement for promoters and major shareholders under SEBI Takeover
+TMP_087,Mistral-7B,temporal_reasoning,medium,Temporal Reasoning Failure,,"The 2025 Amendment Regulations, effective January 3, 2026, replaced the requirement that valuations ","The SEBI Takeovers Amendment Regulations, 2025 introduced an independent registered valuer to conduc"
+TMP_088,Mistral-7B,temporal_reasoning,medium,Temporal Reasoning Failure,,The regulatory sandbox provision (Regulation 31A) was inserted by the SEBI (Regulatory Sandbox) (Ame,"The regulatory sandbox exemption was introduced on 17-04-2020, and the maximum duration for which SE"

@@ -24,7 +24,7 @@ except ImportError:
     raise ImportError("pip install rapidfuzz")
 
 BASE = Path(__file__).parent.parent
-QA_PATH = BASE / "annotation/raw_qa/indiafinbench_qa_combined_150.json"
+QA_PATH = BASE / "annotation/raw_qa/indiafinbench_qa_combined_406.json"
 RESULTS_DIR = BASE / "evaluation/results"
 
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")

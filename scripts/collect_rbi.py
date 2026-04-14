@@ -33,7 +33,7 @@ from tqdm import tqdm
 
 OUTPUT_DIR  = "data/raw/rbi"
 METADATA    = "data/metadata_rbi.csv"
-TARGET_DOCS = 100
+TARGET_DOCS = 150
 DELAY_SEC   = 2.5
 BASE_URL    = "https://rbi.org.in"
 

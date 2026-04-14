@@ -1,0 +1,46 @@
+model,threshold,overall
+Claude 3 Haiku,0.6,94.0
+Claude 3 Haiku,0.65,92.67
+Claude 3 Haiku,0.68,90.0
+Claude 3 Haiku,0.7,88.67
+Claude 3 Haiku,0.72,88.67
+Claude 3 Haiku,0.75,84.0
+Claude 3 Haiku,0.78,81.33
+Claude 3 Haiku,0.8,78.67
+Claude 3 Haiku,0.85,68.67
+Gemini 2.5 Flash,0.6,88.0
+Gemini 2.5 Flash,0.65,83.67
+Gemini 2.5 Flash,0.68,82.0
+Gemini 2.5 Flash,0.7,81.33
+Gemini 2.5 Flash,0.72,80.67
+Gemini 2.5 Flash,0.75,78.0
+Gemini 2.5 Flash,0.78,75.33
+Gemini 2.5 Flash,0.8,74.33
+Gemini 2.5 Flash,0.85,70.0
+LLaMA-3.3-70B,0.6,71.29
+LLaMA-3.3-70B,0.65,66.83
+LLaMA-3.3-70B,0.68,65.1
+LLaMA-3.3-70B,0.7,63.37
+LLaMA-3.3-70B,0.72,61.39
+LLaMA-3.3-70B,0.75,56.93
+LLaMA-3.3-70B,0.78,52.48
+LLaMA-3.3-70B,0.8,51.49
+LLaMA-3.3-70B,0.85,45.79
+LLaMA-3-8B,0.6,72.77
+LLaMA-3-8B,0.65,67.08
+LLaMA-3-8B,0.68,64.11
+LLaMA-3-8B,0.7,62.62
+LLaMA-3-8B,0.72,60.4
+LLaMA-3-8B,0.75,58.66
+LLaMA-3-8B,0.78,54.95
+LLaMA-3-8B,0.8,53.47
+LLaMA-3-8B,0.85,48.02
+Mistral-7B,0.6,73.83
+Mistral-7B,0.65,68.4
+Mistral-7B,0.68,66.42
+Mistral-7B,0.7,62.96
+Mistral-7B,0.72,61.23
+Mistral-7B,0.75,58.02
+Mistral-7B,0.78,55.06
+Mistral-7B,0.8,51.85
+Mistral-7B,0.85,45.93

@@ -7,47 +7,77 @@
 \toprule
 \textbf{Model} & \textbf{Task} & \textbf{n} & \textbf{Acc\%} & \textbf{CI lower} & \textbf{CI upper} \\
 \midrule
-Claude 3 Haiku & REG & 53 & 92.5 & 82.1 & 97.0 \\
-Claude 3 Haiku & NUM & 32 & 93.8 & 79.9 & 98.3 \\
+Qwen3-32B & REG & 174 & 85.1 & 79.0 & 89.6 \\
+Qwen3-32B & NUM & 92 & 77.2 & 67.6 & 84.6 \\
+Qwen3-32B & CON & 62 & 90.3 & 80.5 & 95.5 \\
+Qwen3-32B & TMP & 78 & 92.3 & 84.2 & 96.4 \\
+Qwen3-32B & ALL & 406 & 85.5 & 81.7 & 88.6 \\
+\midrule
+LLaMA-3.3-70B (Groq) & REG & 174 & 86.2 & 80.3 & 90.6 \\
+LLaMA-3.3-70B (Groq) & NUM & 92 & 75.0 & 65.3 & 82.7 \\
+LLaMA-3.3-70B (Groq) & CON & 62 & 95.2 & 86.7 & 98.3 \\
+LLaMA-3.3-70B (Groq) & TMP & 78 & 79.5 & 69.2 & 87.0 \\
+LLaMA-3.3-70B (Groq) & ALL & 406 & 83.7 & 79.8 & 87.0 \\
+\midrule
+Llama 4 Scout 17B & REG & 174 & 86.2 & 80.3 & 90.6 \\
+Llama 4 Scout 17B & NUM & 92 & 66.3 & 56.2 & 75.1 \\
+Llama 4 Scout 17B & CON & 62 & 98.4 & 91.4 & 99.7 \\
+Llama 4 Scout 17B & TMP & 78 & 84.6 & 75.0 & 91.0 \\
+Llama 4 Scout 17B & ALL & 406 & 83.3 & 79.3 & 86.6 \\
+\midrule
+Gemini 2.5 Flash & REG & 138 & 92.8 & 87.2 & 96.0 \\
+Gemini 2.5 Flash & NUM & 76 & 72.4 & 61.4 & 81.2 \\
+Gemini 2.5 Flash & CON & 50 & 78.0 & 64.8 & 87.2 \\
+Gemini 2.5 Flash & TMP & 61 & 77.0 & 65.1 & 85.8 \\
+Gemini 2.5 Flash & ALL & 325 & 82.8 & 78.3 & 86.5 \\
+\midrule
+kimi_k2_results & REG & 174 & 89.1 & 83.6 & 92.9 \\
+kimi_k2_results & NUM & 92 & 65.2 & 55.1 & 74.2 \\
+kimi_k2_results & CON & 62 & 91.9 & 82.5 & 96.5 \\
+kimi_k2_results & TMP & 78 & 75.6 & 65.1 & 83.8 \\
+kimi_k2_results & ALL & 406 & 81.5 & 77.5 & 85.0 \\
+\midrule
+Claude 3 Haiku & REG & 70 & 70.0 & 58.5 & 79.5 \\
+Claude 3 Haiku & NUM & 40 & 75.0 & 59.8 & 85.8 \\
 Claude 3 Haiku & CON & 30 & 86.7 & 70.3 & 94.7 \\
 Claude 3 Haiku & TMP & 35 & 91.4 & 77.6 & 97.0 \\
-Claude 3 Haiku & ALL & 150 & 91.3 & 85.7 & 94.9 \\
+Claude 3 Haiku & ALL & 175 & 78.3 & 71.6 & 83.8 \\
 \midrule
-Gemini 2.5 Flash & REG & 53 & 96.2 & 87.2 & 99.0 \\
-Gemini 2.5 Flash & NUM & 32 & 84.4 & 68.2 & 93.1 \\
-Gemini 2.5 Flash & CON & 30 & 83.3 & 66.4 & 92.7 \\
-Gemini 2.5 Flash & TMP & 35 & 80.0 & 64.1 & 90.0 \\
-Gemini 2.5 Flash & ALL & 150 & 87.3 & 81.1 & 91.7 \\
+LLaMA-3-8B & REG & 174 & 79.9 & 73.3 & 85.2 \\
+LLaMA-3-8B & NUM & 92 & 64.1 & 53.9 & 73.2 \\
+LLaMA-3-8B & CON & 62 & 93.5 & 84.6 & 97.5 \\
+LLaMA-3-8B & TMP & 78 & 78.2 & 67.8 & 85.9 \\
+LLaMA-3-8B & ALL & 406 & 78.1 & 73.8 & 81.8 \\
 \midrule
-Llama 4 Scout 17B & REG & 53 & 79.2 & 66.5 & 88.0 \\
-Llama 4 Scout 17B & NUM & 32 & 75.0 & 57.9 & 86.7 \\
-Llama 4 Scout 17B & CON & 30 & 100.0 & 88.6 & 100.0 \\
-Llama 4 Scout 17B & TMP & 35 & 80.0 & 64.1 & 90.0 \\
-Llama 4 Scout 17B & ALL & 150 & 82.7 & 75.8 & 87.9 \\
+gpt_oss_120b_results & REG & 174 & 79.9 & 73.3 & 85.2 \\
+gpt_oss_120b_results & NUM & 92 & 59.8 & 49.6 & 69.2 \\
+gpt_oss_120b_results & CON & 62 & 95.2 & 86.7 & 98.3 \\
+gpt_oss_120b_results & TMP & 78 & 76.9 & 66.4 & 84.9 \\
+gpt_oss_120b_results & ALL & 406 & 77.1 & 72.8 & 80.9 \\
 \midrule
-Qwen3-32B & REG & 53 & 77.4 & 64.5 & 86.5 \\
-Qwen3-32B & NUM & 32 & 75.0 & 57.9 & 86.7 \\
-Qwen3-32B & CON & 30 & 86.7 & 70.3 & 94.7 \\
-Qwen3-32B & TMP & 35 & 94.3 & 81.4 & 98.4 \\
-Qwen3-32B & ALL & 150 & 82.7 & 75.8 & 87.9 \\
+gpt_oss_20b_results & REG & 174 & 79.9 & 73.3 & 85.2 \\
+gpt_oss_20b_results & NUM & 92 & 58.7 & 48.5 & 68.2 \\
+gpt_oss_20b_results & CON & 62 & 95.2 & 86.7 & 98.3 \\
+gpt_oss_20b_results & TMP & 78 & 76.9 & 66.4 & 84.9 \\
+gpt_oss_20b_results & ALL & 406 & 76.8 & 72.5 & 80.7 \\
 \midrule
-LLaMA-3.3-70B (Groq) & REG & 53 & 77.4 & 64.5 & 86.5 \\
-LLaMA-3.3-70B (Groq) & NUM & 32 & 84.4 & 68.2 & 93.1 \\
-LLaMA-3.3-70B (Groq) & CON & 30 & 90.0 & 74.4 & 96.5 \\
-LLaMA-3.3-70B (Groq) & TMP & 35 & 77.1 & 61.0 & 87.9 \\
-LLaMA-3.3-70B (Groq) & ALL & 150 & 81.3 & 74.3 & 86.8 \\
+Mistral-7B & REG & 174 & 79.9 & 73.3 & 85.2 \\
+Mistral-7B & NUM & 92 & 66.3 & 56.2 & 75.1 \\
+Mistral-7B & CON & 62 & 80.6 & 69.1 & 88.6 \\
+Mistral-7B & TMP & 78 & 74.4 & 63.7 & 82.7 \\
+Mistral-7B & ALL & 406 & 75.9 & 71.5 & 79.8 \\
 \midrule
-LLaMA-3-8B & REG & 53 & 77.4 & 64.5 & 86.5 \\
-LLaMA-3-8B & NUM & 32 & 62.5 & 45.3 & 77.1 \\
-LLaMA-3-8B & CON & 30 & 86.7 & 70.3 & 94.7 \\
-LLaMA-3-8B & TMP & 35 & 74.3 & 57.9 & 85.8 \\
-LLaMA-3-8B & ALL & 150 & 75.3 & 67.9 & 81.5 \\
+DeepSeek R1 70B & REG & 174 & 72.4 & 65.3 & 78.5 \\
+DeepSeek R1 70B & NUM & 92 & 69.6 & 59.5 & 78.0 \\
+DeepSeek R1 70B & CON & 62 & 96.8 & 89.0 & 99.1 \\
+DeepSeek R1 70B & TMP & 78 & 70.5 & 59.6 & 79.5 \\
+DeepSeek R1 70B & ALL & 406 & 75.1 & 70.7 & 79.1 \\
 \midrule
-Mistral-7B & REG & 53 & 69.8 & 56.5 & 80.5 \\
-Mistral-7B & NUM & 32 & 68.8 & 51.4 & 82.0 \\
-Mistral-7B & CON & 30 & 80.0 & 62.7 & 90.5 \\
-Mistral-7B & TMP & 35 & 74.3 & 57.9 & 85.8 \\
-Mistral-7B & ALL & 150 & 72.7 & 65.0 & 79.2 \\
+Gemma 4 E4B & REG & 174 & 83.9 & 77.7 & 88.6 \\
+Gemma 4 E4B & NUM & 92 & 50.0 & 40.0 & 60.0 \\
+Gemma 4 E4B & CON & 62 & 72.6 & 60.4 & 82.1 \\
+Gemma 4 E4B & TMP & 78 & 62.8 & 51.7 & 72.7 \\
+Gemma 4 E4B & ALL & 406 & 70.4 & 65.8 & 74.7 \\
 \bottomrule
 \end{tabular}
 \end{table}

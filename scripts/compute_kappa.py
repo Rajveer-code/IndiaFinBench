@@ -22,9 +22,13 @@ import argparse
 import json
 import re
 import sys
+import io
 import csv
 import os
 from collections import defaultdict
+
+# Fix Windows cp1252 terminal encoding
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
 try:
     import pandas as pd
@@ -143,15 +147,20 @@ def main():
     print(f"\n  Reference answers  : {len(ref_map)} items")
     print(f"  Annotator answers  : {len(ann2_map)} items")
 
+    # Only compute on matched IDs (items the annotator actually answered)
+    matched_ids = sorted(set(ref_map.keys()) & set(ann2_map.keys()))
+    print(f"  Matched IDs        : {len(matched_ids)} items")
+
     # Grade each item
     rows = []
     task_ref_labels  = defaultdict(list)
     task_ann2_labels = defaultdict(list)
     task_agreements  = defaultdict(list)
 
-    for item_id, item in ref_map.items():
+    for item_id in matched_ids:
+        item     = ref_map[item_id]
         ref_ans  = item["answer"]
-        ann_ans  = ann2_map.get(item_id, "")
+        ann_ans  = ann2_map[item_id]
         task     = item["task_type"]
 
         ref_label, ann_label = compute_labels(ref_ans, ann_ans, task)

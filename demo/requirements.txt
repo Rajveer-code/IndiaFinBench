@@ -1,6 +1,6 @@
-gradio>=4.0
-matplotlib
+flask>=3.0
 pandas
+matplotlib
 numpy
 rapidfuzz
 transformers>=4.40

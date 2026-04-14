@@ -7,10 +7,10 @@ This report documents the error analysis for the IndiaFinBench evaluation benchm
 | Model | REG | NUM | CON | TMP | Overall |
 |---|---|---|---|---|---|
 | Claude 3 Haiku | 92.5% | 93.8% | 86.7% | 91.4% | **91.3%** |
-| Gemini 2.5 Flash | 96.2% | 84.4% | 83.3% | 82.4% | **87.9%** |
-| LLaMA-3.3-70B | 77.4% | 84.4% | 90.0% | 77.1% | **81.3%** |
-| LLaMA-3-8B | 77.4% | 62.5% | 86.7% | 74.3% | **75.3%** |
-| Mistral-7B | 69.8% | 68.8% | 80.0% | 74.3% | **72.7%** |
+| Gemini 2.5 Flash | 95.5% | 80.9% | 88.6% | 87.0% | **89.7%** |
+| LLaMA-3.3-70B | 86.2% | 75.0% | 95.2% | 79.5% | **83.7%** |
+| LLaMA-3-8B | 79.9% | 64.1% | 93.5% | 78.2% | **78.1%** |
+| Mistral-7B | 79.9% | 66.3% | 80.6% | 74.4% | **75.9%** |
 
 ## 2. Key Findings
 
@@ -18,29 +18,29 @@ This report documents the error analysis for the IndiaFinBench evaluation benchm
 
 Tasks ranked from hardest to easiest (by average model accuracy):
 
-1. **Numerical Reasoning** — 78.8% average
-2. **Temporal Reasoning** — 79.9% average
-3. **Regulatory Interpretation** — 82.6% average
-4. **Contradiction Detection** — 85.3% average
+1. **Numerical Reasoning** — 76.0% average
+2. **Temporal Reasoning** — 82.1% average
+3. **Regulatory Interpretation** — 86.8% average
+4. **Contradiction Detection** — 88.9% average
 
 ### 2.2 Numerical Reasoning is the Most Discriminative Task
 
-Numerical reasoning shows the widest performance spread across models (31.2 percentage points between best and worst). **Claude 3 Haiku** achieves 93.8% while **LLaMA-3-8B** achieves only 62.5%. This suggests that arithmetic reasoning over Indian regulatory figures (repo rates, percentage thresholds, capital ratios) is a genuine challenge that differentiates model capability.
+Numerical reasoning shows the widest performance spread across models (29.6 percentage points between best and worst). **Claude 3 Haiku** achieves 93.8% while **LLaMA-3-8B** achieves only 64.1%. This suggests that arithmetic reasoning over Indian regulatory figures (repo rates, percentage thresholds, capital ratios) is a genuine challenge that differentiates model capability.
 
 ### 2.3 Regulatory Interpretation Favours Larger Models
 
-On regulatory interpretation, the gap between the best model (Gemini 2.5 Flash: 96.2%) and the weakest (Mistral-7B: 69.8%) is 26.4 points. This task requires understanding SEBI/RBI-specific terminology (LODR, PMLA, SFB, AIF) and exact compliance thresholds — knowledge that smaller models demonstrably lack.
+On regulatory interpretation, the gap between the best model (Gemini 2.5 Flash: 95.5%) and the weakest (Mistral-7B: 79.9%) is 15.6 points. This task requires understanding SEBI/RBI-specific terminology (LODR, PMLA, SFB, AIF) and exact compliance thresholds — knowledge that smaller models demonstrably lack.
 
 ### 2.4 Contradiction Detection is the Most Uniform Task
 
-Contradiction detection shows the narrowest spread (10.0 points) suggesting that binary Yes/No reasoning over two passages is a relatively tractable task even for smaller models. However, this masks failures on hard items where the contradiction is subtle (e.g., a provision that appears consistent but is superseded by an amendment).
+Contradiction detection shows the narrowest spread (14.5 points) suggesting that binary Yes/No reasoning over two passages is a relatively tractable task even for smaller models. However, this masks failures on hard items where the contradiction is subtle (e.g., a provision that appears consistent but is superseded by an amendment).
 
 ## 3. Difficulty Analysis
 
 | Model | Easy | Medium | Hard |
 |---|---|---|---|
 | Claude 3 Haiku | 90.8% | 92.3% | 90.0% |
-| Gemini 2.5 Flash | 95.4% | 84.6% | 73.7% |
+| Gemini 2.5 Flash | 95.4% | 84.6% | 75.0% |
 | LLaMA-3.3-70B | 81.5% | 78.5% | 90.0% |
 | LLaMA-3-8B | 81.5% | 69.2% | 75.0% |
 | Mistral-7B | 72.3% | 70.8% | 80.0% |
@@ -63,10 +63,10 @@ We classify each model failure into one of four error types based on task type a
 | Model | Domain | Numerical | Temporal | Context Grounding |
 |---|---|---|---|---|
 | Claude 3 Haiku | 4 (31%) | 2 (15%) | 7 (54%) | 0 (0%) |
-| Gemini 2.5 Flash | 3 (17%) | 5 (28%) | 9 (50%) | 1 (6%) |
-| LLaMA-3.3-70B | 12 (43%) | 5 (18%) | 10 (36%) | 1 (4%) |
-| LLaMA-3-8B | 13 (35%) | 12 (32%) | 11 (30%) | 1 (3%) |
-| Mistral-7B | 17 (41%) | 10 (24%) | 13 (32%) | 1 (2%) |
+| Gemini 2.5 Flash | 7 (23%) | 13 (42%) | 10 (32%) | 1 (3%) |
+| LLaMA-3.3-70B | 24 (36%) | 23 (35%) | 18 (27%) | 1 (2%) |
+| LLaMA-3-8B | 36 (40%) | 33 (37%) | 19 (21%) | 1 (1%) |
+| Mistral-7B | 36 (37%) | 31 (32%) | 30 (31%) | 1 (1%) |
 
 ## 5. Representative Failure Examples
 

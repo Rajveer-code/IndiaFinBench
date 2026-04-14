@@ -21,7 +21,11 @@ import json
 import csv
 import os
 import re
+import sys
+import io
 from collections import defaultdict
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
 try:
     import matplotlib

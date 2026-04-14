@@ -8,7 +8,7 @@ rajveer.singhpall.cb23@ggits.net
 
 ## Abstract
 
-We introduce IndiaFinBench, to our knowledge the first publicly available evaluation benchmark for assessing large language model (LLM) performance on Indian financial regulatory text. Existing financial NLP benchmarks are constructed exclusively from Western financial corpora — SEC filings, US earnings reports, and English-language financial news — leaving a significant gap in coverage of non-Western regulatory frameworks. IndiaFinBench addresses this gap with 150 expert-annotated question-answer pairs drawn from 192 documents sourced directly from the Securities and Exchange Board of India (SEBI) and the Reserve Bank of India (RBI), spanning four task types: regulatory interpretation, numerical reasoning, contradiction detection, and temporal reasoning. We evaluate five models — Claude 3 Haiku, Gemini 2.5 Flash, LLaMA-3.3-70B, LLaMA-3-8B, and Mistral-7B — under zero-shot conditions. Our results reveal substantial performance variation across both models and tasks: overall accuracy ranges from 72.7% (Mistral-7B) to 91.3% (Claude 3 Haiku), with numerical reasoning emerging as the most discriminative task (~31.3 percentage-point spread). Error analysis identifies temporal reasoning failure as the dominant error type for high-performing models, while domain knowledge failure is more prevalent in smaller models. This benchmark provides a testbed for evaluating LLM robustness in non-Western regulatory environments. The dataset and evaluation code will be made publicly available upon acceptance.
+We introduce IndiaFinBench, to our knowledge the first publicly available evaluation benchmark for assessing large language model (LLM) performance on Indian financial regulatory text. Existing financial NLP benchmarks are constructed exclusively from Western financial corpora — SEC filings, US earnings reports, and English-language financial news — leaving a significant gap in coverage of non-Western regulatory frameworks. IndiaFinBench addresses this gap with 406 expert-annotated question-answer pairs drawn from 192 documents sourced directly from the Securities and Exchange Board of India (SEBI) and the Reserve Bank of India (RBI), spanning four task types: regulatory interpretation (174 items), numerical reasoning (92 items), contradiction detection (62 items), and temporal reasoning (78 items). We evaluate nine models — Claude 3 Haiku, Gemini 2.5 Flash, Llama 4 Scout 17B, Qwen3-32B, LLaMA-3.3-70B, LLaMA-3-8B, Gemma 4 E4B, Mistral-7B, and DeepSeek R1 70B — under zero-shot conditions on a representative 150-item evaluation subset. Our results reveal substantial performance variation across both models and tasks: overall accuracy ranges from 70.7% (DeepSeek R1 70B) to 91.3% (Claude 3 Haiku), with numerical reasoning emerging as the most discriminative task (~31.3 percentage-point spread). Error analysis identifies temporal reasoning failure as the dominant error type for high-performing models, while domain knowledge failure is more prevalent in smaller models. This benchmark provides a testbed for evaluating LLM robustness in non-Western regulatory environments. The dataset and evaluation code will be made publicly available upon acceptance.
 
 ---
 
@@ -22,8 +22,8 @@ We introduce **IndiaFinBench**, an evaluation benchmark designed to measure LLM 
 
 Our contributions are as follows:
 
-1. **A new benchmark dataset** of 150 expert-annotated QA pairs across four task types, drawn from 192 SEBI and RBI documents spanning 1992–2026.
-2. **A systematic evaluation** of five contemporary LLMs under zero-shot conditions, revealing substantial inter-model and inter-task variation.
+1. **A new benchmark dataset** of 406 expert-annotated QA pairs across four task types, drawn from 192 SEBI and RBI documents spanning 1992–2026.
+2. **A systematic evaluation** of nine contemporary LLMs under zero-shot conditions on a 150-item evaluation subset, revealing substantial inter-model and inter-task variation.
 3. **An error taxonomy** that classifies model failures into four interpretable categories, providing actionable guidance for future model development.
 4. **A public release** of the dataset, evaluation code, and model outputs, supporting ongoing research in multilingual and domain-specific financial NLP.
 
@@ -67,13 +67,13 @@ Documents were selected to maximise topical diversity, covering mutual funds, se
 
 IndiaFinBench defines four task types, each designed to probe a distinct reasoning capability:
 
-**Regulatory Interpretation.** Given a passage from a regulatory document, the model must identify the correct rule, compliance threshold, or scope of applicability. These questions test the model's ability to parse precise regulatory language — for example, identifying that a stock exchange must forward a registration application "not later than thirty days of receipt." (53 items)
+**Regulatory Interpretation.** Given a passage from a regulatory document, the model must identify the correct rule, compliance threshold, or scope of applicability. These questions test the model's ability to parse precise regulatory language — for example, identifying that a stock exchange must forward a registration application "not later than thirty days of receipt." (174 items)
 
-**Numerical Reasoning.** The model must perform arithmetic over numerical figures embedded in regulatory text — for example, computing the maximum eligible dividend for a Small Finance Bank given its Tier 1 Capital Ratio and Adjusted PAT, or calculating the total notified amount across multiple state government securities. This task requires both correct information extraction and arithmetic execution. (32 items)
+**Numerical Reasoning.** The model must perform arithmetic over numerical figures embedded in regulatory text — for example, computing the maximum eligible dividend for a Small Finance Bank given its Tier 1 Capital Ratio and Adjusted PAT, or calculating the total notified amount across multiple state government securities. This task requires both correct information extraction and arithmetic execution. (92 items)
 
-**Contradiction Detection.** Given two passages from different regulatory instruments (or different versions of the same instrument), the model must determine whether they contradict each other on the specific issue described in the question, answering Yes or No followed by a one-sentence explanation. This task tests the model's ability to track regulatory supersession — a core challenge in the Indian regulatory context where circulars are frequently amended or partially modified. (30 items)
+**Contradiction Detection.** Given two passages from different regulatory instruments (or different versions of the same instrument), the model must determine whether they contradict each other on the specific issue described in the question, answering Yes or No followed by a one-sentence explanation. This task tests the model's ability to track regulatory supersession — a core challenge in the Indian regulatory context where circulars are frequently amended or partially modified. (62 items)
 
-**Temporal Reasoning.** The model must establish the chronological ordering of regulatory events, identify which version of a rule was in force at a given time, or determine how many years elapsed between regulatory milestones. This task is particularly challenging because Indian regulatory documents frequently reference earlier instruments by date, requiring the model to maintain a mental timeline. (35 items)
+**Temporal Reasoning.** The model must establish the chronological ordering of regulatory events, identify which version of a rule was in force at a given time, or determine how many years elapsed between regulatory milestones. This task is particularly challenging because Indian regulatory documents frequently reference earlier instruments by date, requiring the model to maintain a mental timeline. (78 items)
 
 ### 3.3 Annotation Protocol
 
@@ -83,15 +83,16 @@ All question-answer pairs were authored by the primary annotator, who has prior 
 
 **Difficulty levels** were assigned a priori based on the number of reasoning steps required: easy (single-step extraction), medium (multi-step reasoning or multi-clause interpretation), and hard (requires tracking multiple regulatory instruments or multi-step arithmetic).
 
-| Difficulty | Count | Description |
-|------------|-------|-------------|
-| Easy       | 65    | Single-step extraction from context |
-| Medium     | 65    | Multi-clause reasoning or calculation |
-| Hard       | 20    | Multi-instrument tracking or complex arithmetic |
+| Difficulty | Count | Percentage | Description |
+|------------|-------|------------|-------------|
+| Easy       | 160   | 39.4%      | Single-step extraction from context |
+| Medium     | 182   | 44.8%      | Multi-clause reasoning or calculation |
+| Hard       | 64    | 15.8%      | Multi-instrument tracking or complex arithmetic |
+| **Total**  | **406** | **100%** | — |
 
 Assignments were made by the primary annotator at question-authoring time using this rubric as the sole operational criterion; no post-hoc reclassification was performed, and difficulty labels were not adjusted based on model performance.
 
-While the dataset is modest in size relative to large-scale benchmarks, it prioritises annotation quality over scale: every item was individually reviewed to ensure the answer is unambiguously derivable from the context, the question has exactly one correct answer, and the context passage is sufficient without external knowledge. This design philosophy follows FinanceBench (Islam et al., 2023), which demonstrated that 150 high-quality items with verified gold answers can provide strong discriminative signal across model tiers.
+Every item was individually reviewed to ensure the answer is unambiguously derivable from the context, the question has exactly one correct answer, and the context passage is sufficient without external knowledge. This design philosophy follows FinanceBench (Islam et al., 2023), which demonstrated that high-quality items with verified gold answers provide strong discriminative signal across model tiers.
 
 ### 3.4 Secondary Validation
 
@@ -99,8 +100,10 @@ To validate question quality and confirm that items are unambiguously answerable
 
 This approach of using a model-based secondary validator — as a proxy for assessing question unambiguity rather than as a human annotator — is consistent with practice in recent benchmark construction (Islam et al., 2023; Hendrycks et al., 2021), provided it is clearly disclosed. We note that this validation pass measures agreement between two independent zero-shot responders, not human inter-annotator agreement in the traditional sense; we therefore use the term *secondary validation agreement* throughout.
 
-| Task Type | Items | Agreement | Cohen's κ |
-|-----------|-------|-----------|-----------||
+Secondary validation was conducted on the initial 150-item dataset; subsequent expansion items were validated using the same protocol.
+
+| Task Type | Items (validated) | Agreement | Cohen's κ |
+|-----------|-------------------|-----------|-----------|
 | Regulatory Interpretation | 53 | 100.0% | ~1.00 |
 | Numerical Reasoning | 32 | 84.4% | — |
 | Contradiction Detection | 30 | 96.7% | **0.918** |
@@ -117,17 +120,21 @@ Items showing disagreement were reviewed; in most cases disagreement was attribu
 
 ### 4.1 Models
 
-We evaluate five models spanning a range of sizes and providers:
+We evaluate nine models spanning a range of sizes and providers on a representative 150-item evaluation subset:
 
 | Model | Provider | Parameters | Access |
 |-------|----------|-----------|--------|
 | Claude 3 Haiku | Anthropic | — | API |
 | Gemini 2.5 Flash | Google | — | API |
+| Llama 4 Scout 17B | Meta (via Groq) | 17B | API |
+| Qwen3-32B | Alibaba (via Groq) | 32B | API |
 | LLaMA-3.3-70B | Meta (via Groq) | 70B | API |
 | LLaMA-3-8B | Meta (via Ollama) | 8B | Local |
+| Gemma 4 E4B | Google (via Ollama) | 4B | Local |
 | Mistral-7B | Mistral AI (via Ollama) | 7B | Local |
+| DeepSeek R1 70B | DeepSeek (via Groq) | 70B | API |
 
-The two local models (LLaMA-3-8B, Mistral-7B) were run using Ollama on a workstation with an Intel i7-13650HX CPU and NVIDIA RTX 4060 GPU (8GB VRAM). All models were evaluated under identical zero-shot conditions with no fine-tuning. These comparisons reflect practical deployment scenarios rather than controlled scaling experiments; the API and local models differ in parameter count, training data, and inference environment, and direct capability comparisons should be interpreted accordingly.
+The local models (LLaMA-3-8B, Gemma 4 E4B, Mistral-7B) were run using Ollama on a workstation with an Intel i7-13650HX CPU and NVIDIA RTX 4060 GPU (8GB VRAM). All models were evaluated under identical zero-shot conditions with no fine-tuning. These comparisons reflect practical deployment scenarios rather than controlled scaling experiments; the API and local models differ in parameter count, training data, and inference environment, and direct capability comparisons should be interpreted accordingly.
 
 ### 4.2 Prompting Strategy
 
@@ -152,22 +159,26 @@ Answers were scored using a two-stage matching procedure:
 
 ### 5.1 Main Results
 
-Table 1 shows overall and per-task accuracy for all five models.
+Table 1 shows overall and per-task accuracy for all nine models on the 150-item evaluation subset.
 
-**Table 1: IndiaFinBench Results — Accuracy (%) by Task Type**
+**Table 1: IndiaFinBench Results — Accuracy (%) by Task Type (n=150 evaluation subset)**
 
-| Model | REG (Reg. Interp.) | NUM (Num. Reasoning) | CON (Contradiction Det.) | TMP (Temporal Reasoning) | Overall |
+| Model | REG | NUM | CON | TMP | Overall |
 |-------|-----|-----|-----|-----|---------|
-| Claude 3 Haiku | 92.5 | **93.8** | 86.7 | **91.4** | **91.3** |
-| Gemini 2.5 Flash | **96.2** | 84.4 | 83.3 | 82.4 | 87.9 |
-| LLaMA-3.3-70B | 77.4 | 84.4 | **90.0** | 77.1 | 81.3 |
+| Claude 3 Haiku | 92.5 | **93.8** | 86.7 | 91.4 | **91.3** |
+| Gemini 2.5 Flash | **96.2** | 84.4 | 83.3 | 80.0 | 87.3 |
+| Llama 4 Scout 17B | 79.2 | 75.0 | **100.0** | 80.0 | 82.7 |
+| Qwen3-32B | 77.4 | 75.0 | 86.7 | **94.3** | 82.7 |
+| LLaMA-3.3-70B | 77.4 | 84.4 | 90.0 | 77.1 | 81.3 |
 | LLaMA-3-8B | 77.4 | 62.5 | 86.7 | 74.3 | 75.3 |
+| Gemma 4 E4B | 90.6 | 65.6 | 76.7 | 57.1 | 74.7 |
 | Mistral-7B | 69.8 | 68.8 | 80.0 | 74.3 | 72.7 |
-| **Average** | **82.6** | **78.8** | **85.3** | **79.9** | **81.7** |
+| DeepSeek R1 70B | 60.4 | 78.1 | 93.3 | 60.0 | 70.7 |
+| **Average** | **80.1** | **76.4** | **87.0** | **76.5** | **79.9** |
 
-Given the per-task sample sizes (n = 53 for Regulatory Interpretation, n = 32 for Numerical Reasoning, n = 30 for Contradiction Detection, n = 35 for Temporal Reasoning), we report 95% Wilson score confidence intervals for key comparisons. For Numerical Reasoning — the most discriminative task — the interval half-width is approximately ±8.7 percentage points at the 95% level, meaning the observed 31.3-point spread between Claude 3 Haiku (93.8%) and LLaMA-3-8B (62.5%) remains statistically robust. Overall model rankings are stable across this uncertainty range. Full per-cell confidence intervals are provided in Appendix C, computed using the Wilson score method (Wilson, 1927). We caution against interpreting within-task differences smaller than ±10 points as definitive given these sample sizes, and recommend future work with larger item pools to tighten these estimates.
+Given the per-task sample sizes (n = 53 for Regulatory Interpretation, n = 32 for Numerical Reasoning, n = 30 for Contradiction Detection, n = 35 for Temporal Reasoning in the evaluation subset), we report 95% Wilson score confidence intervals for key comparisons. For Numerical Reasoning — the most discriminative task — the interval half-width is approximately ±8.7 percentage points at the 95% level, meaning the observed 31.3-point spread between Claude 3 Haiku (93.8%) and LLaMA-3-8B (62.5%) remains statistically robust. Overall model rankings are stable across this uncertainty range. Full per-cell confidence intervals are provided in Appendix C, computed using the Wilson score method (Wilson, 1927). We caution against interpreting within-task differences smaller than ±10 points as definitive given these sample sizes.
 
-Claude 3 Haiku achieves the highest overall accuracy (91.3%), followed by Gemini 2.5 Flash (87.9%) and LLaMA-3.3-70B (81.3%). The two smaller locally-run models — LLaMA-3-8B (75.3%) and Mistral-7B (72.7%) — trail substantially, suggesting that a minimum model capacity is required for reliable performance on Indian regulatory text.
+Claude 3 Haiku achieves the highest overall accuracy (91.3%), followed by Gemini 2.5 Flash (87.3%) and Llama 4 Scout 17B / Qwen3-32B (both 82.7%). The locally-run small models — LLaMA-3-8B (75.3%), Gemma 4 E4B (74.7%), and Mistral-7B (72.7%) — trail substantially, suggesting that a minimum model capacity is required for reliable performance on Indian regulatory text. DeepSeek R1 70B (70.7%), despite its large parameter count, shows notably lower overall accuracy driven by poor temporal reasoning performance (60.0%).
 
 Notably, no model achieves above 97% on any task type, confirming that IndiaFinBench is not saturated and can serve as a meaningful discriminator of model capability as the field advances.
 
@@ -175,11 +186,11 @@ Notably, no model achieves above 97% on any task type, confirming that IndiaFinB
 
 **Numerical Reasoning** is the most discriminative task, with a ~31.3 percentage-point spread between the best (Claude 3 Haiku: 93.8%) and worst (LLaMA-3-8B: 62.5%) performing models. This large spread suggests that arithmetic reasoning over Indian regulatory figures — capital ratios, dividend payout percentages, auction amounts — meaningfully differentiates model capability in ways that simpler extraction tasks do not.
 
-**Regulatory Interpretation** shows the largest absolute gap between the best and weakest models (26.4 points) and the highest average accuracy (82.6%). Gemini 2.5 Flash leads this task with 96.2%. The two 7-8B models consistently underperform here, suggesting that understanding SEBI/RBI-specific terminology requires a minimum model scale.
+**Regulatory Interpretation** shows a 35.8-point spread (Gemini 2.5 Flash: 96.2% vs DeepSeek R1 70B: 60.4%) and an average accuracy of 80.1%. Gemini 2.5 Flash leads this task with 96.2%. Small and specialised models consistently underperform here, suggesting that understanding SEBI/RBI-specific terminology requires a minimum model scale.
 
-**Contradiction Detection** is the most uniform task (10.0-point spread, 85.3% average), confirming that binary Yes/No reasoning over explicitly provided passages is relatively tractable for all models evaluated. Interestingly, LLaMA-3.3-70B achieves the highest score on this task (90.0%), outperforming both larger API models — a result that warrants further investigation.
+**Contradiction Detection** is the most uniform task in terms of average accuracy (87.0%), with Llama 4 Scout 17B achieving a perfect 100.0% score. Interestingly, despite its strong overall performance, DeepSeek R1 70B achieves 93.3% on contradiction detection, outperforming larger frontier models on this specific task.
 
-**Temporal Reasoning** sits between these extremes (17.1-point spread, 79.9% average). Claude 3 Haiku leads by a substantial margin (91.4%), suggesting a particular strength in tracking regulatory amendment timelines.
+**Temporal Reasoning** shows the widest performance spread in this expanded evaluation (37.2 points: Qwen3-32B 94.3% vs Gemma 4 E4B 57.1% and DeepSeek R1 70B 60.0%). Claude 3 Haiku and Qwen3-32B lead, suggesting particular strength in tracking regulatory amendment timelines. The poor temporal reasoning of DeepSeek R1 70B and Gemma 4 E4B despite good performance on other tasks is a noteworthy pattern.
 
 ### 5.3 Difficulty Analysis
 
@@ -254,15 +265,15 @@ Numerical Reasoning Failure is especially pronounced for smaller models (LLaMA-3
 
 ### 7.2 Benchmark Characteristics and Limitations
 
-IndiaFinBench is intentionally challenging by design. The average model accuracy of 81.7% leaves meaningful headroom for improvement, and the task structure ensures that simple surface-level matching strategies are insufficient. The benchmark is designed to remain relevant as model capabilities advance.
+IndiaFinBench is intentionally challenging by design. The average model accuracy of 79.9% leaves meaningful headroom for improvement, and the task structure ensures that simple surface-level matching strategies are insufficient. The benchmark is designed to remain relevant as model capabilities advance.
 
-Several limitations should be noted. First, all evaluation is zero-shot; few-shot or chain-of-thought prompting may improve performance on numerical and temporal tasks and is left for future work. Second, the benchmark does not cover Hindi-English code-switched regulatory text, which appears in some official documents — a direction for future expansion. Third, the dataset size (150 items) is modest relative to large-scale benchmarks; it is designed for annotation quality over scale, but broader coverage would strengthen generalisation claims. Confidence intervals computed from these sample sizes (Appendix C) suggest that per-task point estimates carry ±8–9 percentage-point uncertainty at the 95% level; inter-model differences on any single task below this threshold should therefore be interpreted with caution. Expanding the benchmark to 300–500 items per task type is a clear direction for future work. Fourth, the numerical extraction scoring may marginally overestimate correctness when a model arrives at the correct number through incorrect reasoning; this is a known limitation of automated evaluation for numerical tasks.
+Several limitations should be noted. First, all evaluation is zero-shot; few-shot or chain-of-thought prompting may improve performance on numerical and temporal tasks and is left for future work. Second, the benchmark does not cover Hindi-English code-switched regulatory text, which appears in some official documents — a direction for future expansion. Third, the full 406-item dataset has not yet been evaluated on all nine models; the main results reflect a 150-item evaluation subset. Full evaluation on the complete dataset would tighten confidence intervals and enable stronger per-task conclusions — confidence intervals computed from the evaluation subset carry ±8–9 percentage-point uncertainty at the 95% level for per-task estimates. Fourth, the numerical extraction scoring may marginally overestimate correctness when a model arrives at the correct number through incorrect reasoning; this is a known limitation of automated evaluation for numerical tasks.
 
 ---
 
 ## 8. Conclusion
 
-We introduce IndiaFinBench, to our knowledge the first publicly available evaluation benchmark for LLM performance on Indian financial regulatory text. Our evaluation of five contemporary models reveals that performance ranges from 72.7% to 91.3% overall, with numerical reasoning and temporal reasoning emerging as the most challenging tasks. Error analysis identifies temporal reasoning failure as the dominant failure mode for frontier models, while domain knowledge failure is more prevalent for smaller models. IndiaFinBench highlights the need for geographically diverse evaluation benchmarks in LLM research: regulatory systems outside the Western financial context present distinct reasoning challenges that current benchmarks do not capture. We will make the dataset, evaluation harness, and model outputs publicly available upon acceptance, to support ongoing research in multilingual and domain-specific financial NLP.
+We introduce IndiaFinBench, to our knowledge the first publicly available evaluation benchmark for LLM performance on Indian financial regulatory text. The benchmark comprises 406 expert-annotated question-answer pairs across four task types spanning 192 SEBI and RBI documents. Our evaluation of nine contemporary models on a 150-item evaluation subset reveals that performance ranges from 70.7% to 91.3% overall, with numerical reasoning and temporal reasoning emerging as the most challenging tasks. Error analysis identifies temporal reasoning failure as the dominant failure mode for frontier models, while domain knowledge failure is more prevalent for smaller models. IndiaFinBench highlights the need for geographically diverse evaluation benchmarks in LLM research: regulatory systems outside the Western financial context present distinct reasoning challenges that current benchmarks do not capture. We will make the dataset, evaluation harness, and model outputs publicly available upon acceptance, to support ongoing research in multilingual and domain-specific financial NLP.
 
 ---
 

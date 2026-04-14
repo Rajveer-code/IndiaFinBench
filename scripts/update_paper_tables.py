@@ -34,8 +34,8 @@ MODEL_LABELS = {
     "mistral_results": "Mistral-7B",
     "llama4scout_results": "Llama 4 Scout 17B",
     "qwen3_32b_results": "Qwen3-32B",
-    "deepseek_r1_results": "DeepSeek-R1",
-    "gemma3_12b_results": "Gemma 3 12B",
+    "deepseek_r1_70b_results": "DeepSeek R1 70B",
+    "gemma4_e4b_results": "Gemma 4 E4B",
     "phi4_results": "Phi-4",
 }
 

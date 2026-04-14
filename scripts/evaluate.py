@@ -31,13 +31,28 @@ except ImportError:
 
 GROQ_KEY = ""  # Set via: export GROQ_API_KEY=your_key
 
-GEMINI_KEYS = []  # Set via: export GOOGLE_API_KEY=your_key
+GEMINI_KEYS = [
+    "AIzaSyA0I-TJ2eld-jQd-Iz6uSYKU4E1wQBHlI4",
+    "AIzaSyAxo-BFqIzSboxg0uTi-pixF9DP0N-T598",
+    "AIzaSyDhMe7dHlIW5yTPGd3YVHzUXzKLMnF1DtY",
+    "AIzaSyBdKXmc5L7aZJ4sn9X7HxvdS0oXT5ifUsQ",
+    "AIzaSyDD83w7r6Wp50ts1MdoPqe5UlcmwpzFh-c",
+    "AIzaSyAavSZgWlUbEuq-6cZes0YW43TkbdNbTBU",
+    "AIzaSyDZNSEecGb_vPcLz27WG7XFgoZei95ZjcA",
+    "AIzaSyAHkIYNTn3W60FdxbA31ptfCB1Zs60jKaw",
+    "AIzaSyBDBfOedBSwUJrYv6F4TQptCovMkWhnjus",
+    "AIzaSyAzXMwSchMdf9tOqj70Dht5X1iGZ-ydsLU",
+    "AIzaSyA9QT1Uz2Y6S5yBSqVbtypsa1xV6sBsskU",
+    "AIzaSyDn3iL0ik72Q1BYq_gmU-YXGEEq75akpRI",
+    "AIzaSyBEoiLrYy8gO1Ritcz8m7XzfRCynSlaVNQ",
+    "AIzaSyDtwpaWH2Ln3WfXFwPdml4KLTuQuOBBODs",
+] # Set via: export GOOGLE_API_KEY=your_key
 
-ANTHROPIC_KEY = ""  # Set via: export ANTHROPIC_API_KEY=your_key
+ANTHROPIC_KEY = "sk-ujDLSs9lSNqNdvlymDjaj3CTQfAFS1uFNm1981tY81Ni7D7c"  # Set via: export ANTHROPIC_API_KEY=your_key
 
 # ══════════════════════════════════════════════════════════════════
 
-QA_PATH     = "annotation/raw_qa/indiafinbench_qa_combined_150.json"
+QA_PATH     = "annotation/raw_qa/indiafinbench_qa_combined_406.json"
 RESULTS_DIR = "evaluation/results"
 
 MODELS = {

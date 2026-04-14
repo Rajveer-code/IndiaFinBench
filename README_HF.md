@@ -195,20 +195,37 @@ All 406 question-answer pairs were authored by the primary researcher (Rajveer S
 ### Annotation Process
 
 1. **Item authoring**: Context passages were selected from source documents; questions were authored to test specific regulatory reasoning capabilities; reference answers were written to be extractive or calculable from the context.
-2. **Secondary validation**: LLaMA-3.3-70B-Versatile (Groq API) served as an independent quality-checker, validating that items are unambiguously answerable from context alone.
+2. **Model-based secondary validation**: LLaMA-3.3-70B-Versatile (Groq API) served as an independent quality-checker on a 150-item subset, validating that items are unambiguously answerable from context alone.
 3. **Quality filtering**: Items with genuine disagreement (~1.3% of the initial set) were removed.
+4. **Human inter-annotator agreement**: A second human annotator independently answered 60 items across all four task types to establish human-human agreement rates.
 
 ### Inter-Annotator Agreement
 
-| Task | Agreement | Cohen's κ |
-|------|-----------|-----------|
-| Regulatory Interpretation | 100.0% | ~1.00 |
-| Numerical Reasoning | 84.4% | — |
-| Contradiction Detection | 96.7% | **0.918** |
-| Temporal Reasoning | 77.1% | — |
-| Overall | 90.7% | — |
+IndiaFinBench provides two layers of annotation validation:
 
-Cohen's κ is reported for contradiction detection (binary Yes/No labels). Agreement rates are reported for extractive tasks, consistent with FinanceBench and DROP benchmarks.
+**Model-based secondary validation (150 items)**
+
+| Task | Items | Agreement | Cohen's κ |
+|------|-------|-----------|-----------|
+| Regulatory Interpretation | 53 | 100.0% | ~1.00 |
+| Numerical Reasoning | 32 | 84.4% | — |
+| Contradiction Detection | 30 | 96.7% | **0.918** |
+| Temporal Reasoning | 35 | 77.1% | — |
+| **Overall** | **150** | **90.7%** | — |
+
+**Human inter-annotator agreement (60 items)**
+
+A second human annotator independently answered 60 items without access to the primary reference answers.
+
+| Task | Items | Agreement | Cohen's κ |
+|------|-------|-----------|-----------|
+| Regulatory Interpretation | 11 | 100.0% | — |
+| Temporal Reasoning | 16 | 87.5% | — |
+| Contradiction Detection | 17 | 82.4% | **0.611** |
+| Numerical Reasoning | 16 | 43.8% | — |
+| **Overall** | **60** | **76.7%** | — |
+
+Cohen's κ = 0.611 for contradiction detection falls in the "substantial agreement" range (Landis & Koch, 1977). The lower numerical reasoning agreement reflects differences in unit formatting and rounding conventions rather than substantive answer disagreement. Agreement rates for extractive tasks are consistent with FinanceBench and DROP benchmark reporting conventions.
 
 ---
 

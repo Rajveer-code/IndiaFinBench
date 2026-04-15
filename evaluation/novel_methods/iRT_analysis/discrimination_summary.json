@@ -1,0 +1,7 @@
+{
+  "highly_discriminative": 116,
+  "ceiling_items": 215,
+  "floor_items": 7,
+  "mean_discrimination": 0.427,
+  "median_accuracy": 0.909
+}

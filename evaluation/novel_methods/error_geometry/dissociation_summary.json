@@ -1,0 +1,7 @@
+{
+  "max_dissociation_model": "DeepSeek R1 70B",
+  "max_DI": 0.157,
+  "min_dissociation_model": "Qwen3-32B",
+  "min_DI": -0.0109,
+  "mean_DI": 0.0749
+}

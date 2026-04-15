@@ -1,0 +1,7 @@
+model,pearson_r,p_value
+Gemini 2.5 Flash,0.032,0.5156
+Qwen3-32B,0.023,0.6462
+LLaMA-3.3-70B,-0.058,0.2433
+Llama 4 Scout 17B,-0.068,0.1684
+Kimi K2,-0.087,0.0809
+LLaMA-3-8B,-0.051,0.3086

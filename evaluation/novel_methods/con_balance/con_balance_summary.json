@@ -1,0 +1,21 @@
+{
+  "yes_count": 9,
+  "no_count": 53,
+  "total": 62,
+  "majority_class": "No",
+  "majority_baseline": 0.8548,
+  "random_baseline": 0.5,
+  "model_accuracies": {
+    "Gemini 2.5 Flash": 0.8871,
+    "Qwen3-32B": 0.9032,
+    "LLaMA-3.3-70B": 0.9516,
+    "Llama 4 Scout 17B": 0.9839,
+    "Kimi K2": 0.9194,
+    "LLaMA-3-8B": 0.9355,
+    "GPT-OSS 120B": 0.9516,
+    "GPT-OSS 20B": 0.9516,
+    "Mistral-7B": 0.8065,
+    "DeepSeek R1 70B": 0.9677,
+    "Gemma 4 E4B": 0.7258
+  }
+}

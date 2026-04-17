@@ -1,0 +1,6 @@
+task_type,n_items,agreement_pct,cohens_kappa
+regulatory_interpretation,11,100.0,
+numerical_reasoning,16,75.0,
+contradiction_detection,17,82.4,0.611
+temporal_reasoning,16,87.5,
+OVERALL,60,85.0,

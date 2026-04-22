@@ -56,7 +56,11 @@ Output ONLY the JSON object, no other text."""
 
 
 def compute_rsts_scores(dataset, all_results, sample_size=60):
-    """Compute RSTS for a sample of TMP items using LLM-as-judge."""
+    """Compute RSTS for a sample of TMP items using LLM-as-judge.
+
+    Saves after every item and resumes from partial CSV on restart —
+    no API calls are wasted if the script is interrupted.
+    """
     tmp_mask = dataset['task_type'].str.contains('temporal', case=False, na=False)
     tmp_items = dataset[tmp_mask].copy().reset_index(drop=True)
 
@@ -78,10 +82,20 @@ def compute_rsts_scores(dataset, all_results, sample_size=60):
     else:
         tmp_sample = tmp_items
 
+    # ── Resume from partial results ───────────────────────────────────────
+    partial_path = OUTPUT / "rsts_scores_partial.csv"
+    if partial_path.exists():
+        existing = pd.read_csv(partial_path)
+        all_rsts = existing.to_dict('records')
+        done_keys = set(zip(existing['model'], existing['item_idx']))
+        print(f"Resuming — {len(all_rsts)} items already scored, skipping those.")
+    else:
+        all_rsts = []
+        done_keys = set()
+
     print(f"Computing RSTS for {len(tmp_sample)} TMP items...")
 
     models_to_eval = ["Gemini 2.5 Flash", "DeepSeek R1 70B", "LLaMA-3.3-70B"]
-    all_rsts = []
 
     for model_name in models_to_eval:
         if model_name not in all_results:
@@ -94,14 +108,19 @@ def compute_rsts_scores(dataset, all_results, sample_size=60):
         pred_c = _prediction_col(res_df)
         corr_c = _correctness_col(res_df)
 
-        print(f"\n  Processing {model_name} ({len(tmp_sample)} items)...")
+        already_done = sum(1 for k in done_keys if k[0] == model_name)
+        remaining = len(tmp_sample) - already_done
+        print(f"\n  Processing {model_name} ({remaining} items remaining, {already_done} already done)...")
 
-        for i, (_, item) in enumerate(tmp_sample.iterrows()):
-            if i >= len(tmp_res):
+        for i, (item_pos, item) in enumerate(tmp_sample.iterrows()):
+            # item_pos = original index in tmp_items (aligns with tmp_res row order).
+            # i       = enumeration counter (used only for done_keys bookkeeping).
+            if (model_name, i) in done_keys:
                 continue
-            prediction = str(tmp_res.iloc[i][pred_c]) if pred_c else "N/A"
+            if item_pos >= len(tmp_res):
+                continue
 
-            # Use 'answer' field (verified dataset field name)
+            prediction = str(tmp_res.iloc[item_pos][pred_c]) if pred_c else "N/A"
             reference = str(item.get('answer', ''))
 
             prompt = RSTS_JUDGE_PROMPT.format(
@@ -112,33 +131,45 @@ def compute_rsts_scores(dataset, all_results, sample_size=60):
             )
 
             response = call_gemini(prompt)
+            if not response:
+                print(f"    Empty response for item {i}, skipping")
+                continue
 
             try:
                 json_match = re.search(r'\{.*\}', response, re.DOTALL)
                 if json_match:
                     scores = json.loads(json_match.group())
+                    # Cast to int — Gemini sometimes returns "1" as a string
+                    event_score  = int(scores.get('event_identification', {}).get('score', 0))
+                    order_score  = int(scores.get('temporal_ordering', {}).get('score', 0))
+                    final_score  = int(scores.get('final_state_answer', {}).get('score', 0))
+                    std_correct  = int(tmp_res.iloc[item_pos][corr_c]) if item_pos < len(tmp_res) else 0
+
                     rsts_entry = {
                         'item_idx': i,
                         'model': model_name,
                         'difficulty': item.get('difficulty', 'unknown'),
-                        'event_score': scores.get('event_identification', {}).get('score', 0),
-                        'ordering_score': scores.get('temporal_ordering', {}).get('score', 0),
-                        'final_score': scores.get('final_state_answer', {}).get('score', 0),
-                        'standard_correct': int(tmp_res.iloc[i][corr_c]) if i < len(tmp_res) else 0
+                        'event_score': event_score,
+                        'ordering_score': order_score,
+                        'final_score': final_score,
+                        'standard_correct': std_correct,
+                        'rsts': round(
+                            0.25 * event_score +
+                            0.25 * order_score +
+                            0.50 * final_score,
+                            3
+                        )
                     }
-                    rsts_entry['rsts'] = round(
-                        0.25 * rsts_entry['event_score'] +
-                        0.25 * rsts_entry['ordering_score'] +
-                        0.50 * rsts_entry['final_score'],
-                        3
-                    )
                     all_rsts.append(rsts_entry)
-            except (json.JSONDecodeError, KeyError) as e:
-                print(f"    Parse error for item {i}: {e}")
-                continue
+                    done_keys.add((model_name, i))
 
-        if all_rsts:
-            pd.DataFrame(all_rsts).to_csv(OUTPUT / "rsts_scores_partial.csv", index=False)
+                    # Save after every single item — no calls wasted on restart
+                    pd.DataFrame(all_rsts).to_csv(partial_path, index=False)
+                else:
+                    print(f"    No JSON found in response for item {i}")
+            except (json.JSONDecodeError, KeyError, ValueError) as e:
+                print(f"    Parse error for item {i}: {e}  |  response[:200]: {response[:200]}")
+                continue
 
     if not all_rsts:
         print("ERROR: No RSTS scores computed")
@@ -146,6 +177,9 @@ def compute_rsts_scores(dataset, all_results, sample_size=60):
 
     rsts_df = pd.DataFrame(all_rsts)
     rsts_df.to_csv(OUTPUT / "rsts_scores_full.csv", index=False)
+    # Clean up partial file now that we have the full one
+    if partial_path.exists():
+        partial_path.unlink()
     return rsts_df
 
 

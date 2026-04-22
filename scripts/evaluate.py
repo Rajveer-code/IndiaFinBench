@@ -17,6 +17,7 @@ Usage:
 """
 
 import json, csv, os, time, re, argparse
+from pathlib import Path
 
 # BUG 4 FIX: Hard import — rapidfuzz is required; silent fallback would silently
 # change all accuracy numbers if the package were missing.
@@ -25,32 +26,22 @@ try:
 except ImportError:
     raise ImportError("rapidfuzz required: pip install rapidfuzz")
 
-# ══════════════════════════════════════════════════════════════════
-#  EDIT THIS SECTION — paste your keys here
-# ══════════════════════════════════════════════════════════════════
+# Load .env from repo root
+_env_path = Path(__file__).parent.parent / ".env"
+if _env_path.exists():
+    for _line in _env_path.read_text(encoding="utf-8").splitlines():
+        _line = _line.strip()
+        if _line and "=" in _line and not _line.startswith("#"):
+            _k, _v = _line.split("=", 1)
+            os.environ.setdefault(_k.strip(), _v.strip().strip('"'))
 
-GROQ_KEY = ""  # Set via: export GROQ_API_KEY=your_key
-
-GEMINI_KEYS = [
-    "AIzaSyA0I-TJ2eld-jQd-Iz6uSYKU4E1wQBHlI4",
-    "AIzaSyAxo-BFqIzSboxg0uTi-pixF9DP0N-T598",
-    "AIzaSyDhMe7dHlIW5yTPGd3YVHzUXzKLMnF1DtY",
-    "AIzaSyBdKXmc5L7aZJ4sn9X7HxvdS0oXT5ifUsQ",
-    "AIzaSyDD83w7r6Wp50ts1MdoPqe5UlcmwpzFh-c",
-    "AIzaSyAavSZgWlUbEuq-6cZes0YW43TkbdNbTBU",
-    "AIzaSyDZNSEecGb_vPcLz27WG7XFgoZei95ZjcA",
-    "AIzaSyAHkIYNTn3W60FdxbA31ptfCB1Zs60jKaw",
-    "AIzaSyBDBfOedBSwUJrYv6F4TQptCovMkWhnjus",
-    "AIzaSyAzXMwSchMdf9tOqj70Dht5X1iGZ-ydsLU",
-    "AIzaSyA9QT1Uz2Y6S5yBSqVbtypsa1xV6sBsskU",
-    "AIzaSyDn3iL0ik72Q1BYq_gmU-YXGEEq75akpRI",
-    "AIzaSyBEoiLrYy8gO1Ritcz8m7XzfRCynSlaVNQ",
-    "AIzaSyDtwpaWH2Ln3WfXFwPdml4KLTuQuOBBODs",
-] # Set via: export GOOGLE_API_KEY=your_key
-
-ANTHROPIC_KEY = "sk-ujDLSs9lSNqNdvlymDjaj3CTQfAFS1uFNm1981tY81Ni7D7c"  # Set via: export ANTHROPIC_API_KEY=your_key
-
-# ══════════════════════════════════════════════════════════════════
+GROQ_KEY     = os.environ.get("GROQ_API_KEY", "")
+ANTHROPIC_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
+GEMINI_KEYS  = [
+    k.strip()
+    for k in os.environ.get("GEMINI_API_KEYS", os.environ.get("GOOGLE_API_KEY", "")).split(",")
+    if k.strip()
+]
 
 QA_PATH     = "annotation/raw_qa/indiafinbench_qa_combined_406.json"
 RESULTS_DIR = "evaluation/results"

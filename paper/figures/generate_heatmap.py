@@ -1,40 +1,48 @@
-"""
-generate_heatmap.py — IndiaFinBench v7 (9 models)
-Run: python generate_heatmap.py
-Output: figures/inter_task_correlation.png
-"""
-import matplotlib
-matplotlib.use('Agg')
-import numpy as np
-import seaborn as sns
 import matplotlib.pyplot as plt
-from scipy.stats import spearmanr
+import matplotlib.colors as mcolors
+import numpy as np
 
-model_accuracies = {
-    'REG': [92.5, 96.2, 79.2, 77.4, 77.4, 77.4, 90.6, 69.8, 60.4],
-    'NUM': [93.8, 84.4, 75.0, 75.0, 84.4, 62.5, 65.6, 68.8, 78.1],
-    'CON': [86.7, 83.3,100.0, 86.7, 90.0, 86.7, 76.7, 80.0, 93.3],
-    'TMP': [91.4, 80.0, 80.0, 94.3, 77.1, 74.3, 57.1, 74.3, 60.0],
+models = [
+    'Gemini 2.5 Flash', 'Qwen3-32B', 'LLaMA-3.3-70B', 'Llama 4 Scout 17B',
+    'Kimi K2', 'LLaMA-3-8B', 'GPT-OSS 120B', 'GPT-OSS 20B',
+    'Gemini 2.5 Pro', 'Mistral-7B', 'DeepSeek R1 70B', 'Gemma 4 E4B'
+]
+
+data = {
+    'REG': [93.1, 85.1, 86.2, 86.2, 89.1, 79.9, 79.9, 79.9, 89.7, 79.9, 72.4, 83.9],
+    'NUM': [84.8, 77.2, 75.0, 66.3, 65.2, 64.1, 59.8, 58.7, 48.9, 66.3, 69.6, 50.0],
+    'CON': [88.7, 90.3, 95.2, 98.4, 91.9, 93.5, 95.2, 95.2, 93.5, 80.6, 96.8, 72.6],
+    'TMP': [88.5, 92.3, 79.5, 84.6, 75.6, 78.2, 76.9, 76.9, 64.1, 74.4, 70.5, 62.8],
 }
+
 tasks = ['REG', 'NUM', 'CON', 'TMP']
-corr_matrix = np.zeros((4, 4))
-for i, t1 in enumerate(tasks):
-    for j, t2 in enumerate(tasks):
-        r, _ = spearmanr(model_accuracies[t1], model_accuracies[t2])
-        corr_matrix[i, j] = r
+matrix = np.array([[data[t][i] for t in tasks] for i in range(len(models))])
 
-fig, ax = plt.subplots(figsize=(6, 5.5))
-fig.patch.set_facecolor('white')
-sns.heatmap(corr_matrix, annot=True, fmt='.2f', xticklabels=tasks, yticklabels=tasks,
-            cmap='RdYlGn', vmin=-1, vmax=1, ax=ax, linewidths=0.5,
-            cbar_kws={'label': 'Spearman ρ', 'shrink': 0.85},
-            annot_kws={'fontsize': 12, 'fontweight': 'bold'})
-ax.set_xticklabels(tasks, fontsize=12, fontweight='bold')
-ax.set_yticklabels(tasks, fontsize=12, fontweight='bold', rotation=0)
-ax.set_title('Inter-Task Spearman Correlation\n(Model Accuracy Vectors, n=9 models)',
-             fontsize=11, fontweight='bold', pad=10)
+fig, ax = plt.subplots(figsize=(7, 8))
+im = ax.imshow(matrix, cmap='YlGn', vmin=45, vmax=100, aspect='auto')
 
-import os; os.makedirs('figures', exist_ok=True)
+ax.set_xticks(range(len(tasks)))
+ax.set_xticklabels(['Regulatory\nInterpretation', 'Numerical\nReasoning',
+                    'Contradiction\nDetection', 'Temporal\nReasoning'],
+                   fontsize=10, fontweight='bold')
+ax.set_yticks(range(len(models)))
+ax.set_yticklabels(models, fontsize=9)
+ax.xaxis.set_label_position('top')
+ax.xaxis.tick_top()
+
+for i in range(len(models)):
+    for j in range(len(tasks)):
+        val = matrix[i, j]
+        color = 'white' if val > 85 else 'black'
+        ax.text(j, i, f'{val:.1f}', ha='center', va='center',
+                fontsize=8.5, color=color, fontweight='bold')
+
+cbar = plt.colorbar(im, ax=ax, fraction=0.03, pad=0.04)
+cbar.set_label('Accuracy (%)', fontsize=9)
+
+plt.title('IndiaFinBench — Model × Task Accuracy Heatmap', fontsize=11,
+          fontweight='bold', pad=18)
 plt.tight_layout()
-plt.savefig('figures/inter_task_correlation.png', dpi=300, bbox_inches='tight', facecolor='white')
-print("Saved figures/inter_task_correlation.png")
+plt.savefig('paper/figures/figure1_heatmap.pdf', dpi=300, bbox_inches='tight')
+plt.savefig('paper/figures/figure1_heatmap.png', dpi=300, bbox_inches='tight')
+print("Figure 1 saved.")

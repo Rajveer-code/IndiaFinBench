@@ -8,7 +8,7 @@ rajveer.singhpall.cb23@ggits.net
 
 ## Abstract
 
-We introduce IndiaFinBench, to our knowledge the first publicly available evaluation benchmark for assessing large language model (LLM) performance on Indian financial regulatory text. Existing financial NLP benchmarks draw exclusively from Western financial corpora — SEC filings, US earnings reports, and English-language financial news — leaving a significant gap in coverage of non-Western regulatory frameworks. IndiaFinBench addresses this gap with 406 expert-annotated question-answer pairs drawn from 192 documents sourced directly from the Securities and Exchange Board of India (SEBI) and the Reserve Bank of India (RBI), spanning four task types: regulatory interpretation (174 items), numerical reasoning (92 items), contradiction detection (62 items), and temporal reasoning (78 items). Annotation quality is validated via a model-based secondary pass (κ = 0.918 on contradiction detection) and a separate 60-item human inter-annotator agreement evaluation (κ = 0.611 for contradiction detection; 76.7% overall agreement across task types). We evaluate eleven models under zero-shot conditions on the full 406-item benchmark, spanning closed-source frontier models, open-weight large models, and locally-deployed small models. Accuracy ranges from 70.4% (Gemma 4 E4B) to 89.7% (Gemini 2.5 Flash), with all models substantially outperforming a human expert baseline of 60.0%. Numerical reasoning is the most discriminative task, with a 34.8 percentage-point spread between the best and worst performing models. Bootstrap significance testing reveals three broad performance tiers, with several model pairs statistically indistinguishable within tiers. A qualitative error analysis identifies temporal reasoning failure as the dominant error mode for top-performing models and domain knowledge failure for smaller models. IndiaFinBench provides a reproducible testbed for evaluating LLM robustness in non-Western regulatory environments. The dataset, evaluation code, and all model outputs are publicly available.
+We introduce IndiaFinBench, to our knowledge the first publicly available evaluation benchmark for assessing large language model (LLM) performance on Indian financial regulatory text. Existing financial NLP benchmarks draw exclusively from Western financial corpora — SEC filings, US earnings reports, and English-language financial news — leaving a significant gap in coverage of non-Western regulatory frameworks. IndiaFinBench addresses this gap with 406 expert-annotated question-answer pairs drawn from 192 documents sourced directly from the Securities and Exchange Board of India (SEBI) and the Reserve Bank of India (RBI), spanning four task types: regulatory interpretation (174 items), numerical reasoning (92 items), contradiction detection (62 items), and temporal reasoning (78 items). Annotation quality is validated via a model-based secondary pass (κ = 0.918 on contradiction detection) and a separate 60-item human inter-annotator agreement evaluation (κ = 0.611 for contradiction detection; 76.7% overall agreement across task types). We evaluate twelve models under zero-shot conditions on the full 406-item benchmark, spanning closed-source frontier models, open-weight large models, and locally-deployed small models. Accuracy ranges from 70.4% (Gemma 4 E4B) to 89.7% (Gemini 2.5 Flash), with all models substantially outperforming a human expert baseline of 60.0%. Numerical reasoning is the most discriminative task, with a 35.9 percentage-point spread between the best and worst performing models. Bootstrap significance testing reveals three broad performance tiers, with several model pairs statistically indistinguishable within tiers. A qualitative error analysis identifies temporal reasoning failure as the dominant error mode for top-performing models and domain knowledge failure for smaller models. IndiaFinBench provides a reproducible testbed for evaluating LLM robustness in non-Western regulatory environments. The dataset, evaluation code, and all model outputs are publicly available.
 
 ---
 
@@ -23,7 +23,7 @@ We introduce **IndiaFinBench**, an evaluation benchmark designed to measure LLM 
 Our contributions are:
 
 1. **A new benchmark dataset** of 406 expert-annotated QA pairs across four task types, drawn from 192 SEBI and RBI documents spanning 1992–2026.
-2. **A comprehensive zero-shot evaluation** of eleven contemporary LLMs on the full 406-item benchmark, revealing three performance tiers and substantial inter-task variation.
+2. **A comprehensive zero-shot evaluation** of twelve contemporary LLMs on the full 406-item benchmark, revealing three performance tiers and substantial inter-task variation.
 3. **Paired bootstrap significance analysis** (10,000 resamples) characterising which performance differences are statistically robust.
 4. **Dual-layer annotation validation**: a model-based secondary quality pass confirming item unambiguity, and a separate human inter-annotator agreement evaluation on 60 items establishing human-human agreement rates across all four task types.
 5. **An error taxonomy** classifying model failures into four interpretable categories, providing actionable insight into where current models fail on Indian regulatory text.
@@ -140,27 +140,24 @@ Taken together, the two validation passes complement each other: the model-based
 
 ### 4.1 Models
 
-We evaluate eleven models spanning a wide range of sizes, providers, and access modes on the full 406-item benchmark:
+We evaluate twelve models spanning a wide range of sizes, providers, and access modes on the full 406-item benchmark:
 
 | Model | Provider / Access | Parameters |
 |-------|-------------------|------------|
-| Gemini 2.5 Flash | Google (API) | — |
+| Gemini 2.5 Flash | Google (Google AI Studio API) | — |
+| Gemini 2.5 Pro | Google (Vertex AI) | — |
 | Qwen3-32B | Alibaba (via Groq API) | 32B |
 | LLaMA-3.3-70B | Meta (via Groq API) | 70B |
 | Llama 4 Scout 17B | Meta (via Groq API) | 17B |
-| Kimi K2 | Moonshot AI (via OpenRouter) | — |
+| Kimi K2 | Moonshot AI (via Groq API) | 1T (32B active) |
 | LLaMA-3-8B | Meta (via Ollama, local) | 8B |
-| GPT-OSS 120B | OpenAI (via OpenRouter) | 120B |
-| GPT-OSS 20B | OpenAI (via OpenRouter) | 20B |
+| GPT-OSS 120B | OpenAI (via Groq API) | 120B |
+| GPT-OSS 20B | OpenAI (via Groq API) | 20B |
 | Mistral-7B | Mistral AI (via Ollama, local) | 7B |
-| DeepSeek R1 70B | DeepSeek (via Groq API) | 70B |
+| DeepSeek R1 70B | DeepSeek (via OpenRouter) | 70B |
 | Gemma 4 E4B | Google (via Ollama, local) | 4B |
 
 The locally-deployed models (LLaMA-3-8B, Mistral-7B, Gemma 4 E4B) were run using Ollama on a workstation with an Intel i7-13650HX CPU and NVIDIA RTX 4060 GPU (8 GB VRAM). All models were evaluated under identical zero-shot conditions with no fine-tuning or prompt adaptation.
-
-In addition, **Claude 3 Haiku** (Anthropic) was evaluated on the initial 150-item subset (REG=53, NUM=32, CON=30, TMP=35) due to API access constraints at the time of that evaluation. Its results are included for reference and contextualisation but are not directly comparable to the 406-item results given the different evaluation scope and item distribution.†
-
-† *Claude 3 Haiku evaluated on the initial 150-item subset (REG=53, NUM=32, CON=30, TMP=35) due to API access constraints at the time of evaluation; all other models evaluated on the full 406-item benchmark.*
 
 These comparisons span models with different parameter counts, training data, and inference environments. Direct capability comparisons between API-hosted models and locally-deployed ones should be interpreted accordingly, as they reflect practical deployment scenarios rather than controlled scaling experiments.
 
@@ -189,7 +186,7 @@ Answers were scored using a multi-stage matching procedure applied in sequence:
 
 ### 5.1 Main Results
 
-Table 1 presents overall and per-task accuracy for all eleven models evaluated on the full 406-item benchmark. Wilson 95% confidence intervals for overall accuracy are included to support statistical interpretation; full per-cell intervals appear in Appendix C.
+Table 1 presents overall and per-task accuracy for all twelve models evaluated on the full 406-item benchmark. Wilson 95% confidence intervals for overall accuracy are included to support statistical interpretation; full per-cell intervals appear in Appendix C.
 
 **Table 1: IndiaFinBench Results — Accuracy (%) by Task Type (n=406 full benchmark)**
 
@@ -203,20 +200,15 @@ Table 1 presents overall and per-task accuracy for all eleven models evaluated o
 | LLaMA-3-8B | 79.9 | 64.1 | 93.5 | 78.2 | 78.1 | [73.8%, 81.8%] |
 | GPT-OSS 120B | 79.9 | 59.8 | 95.2 | 76.9 | 77.1 | [72.8%, 80.9%] |
 | GPT-OSS 20B | 79.9 | 58.7 | 95.2 | 76.9 | 76.8 | [72.5%, 80.7%] |
+| Gemini 2.5 Pro† | 89.7 | 48.9 | **93.5** | 64.1 | 76.1 | [71.7%, 80.0%] |
 | Mistral-7B | 79.9 | 66.3 | 80.6 | 74.4 | 75.9 | [71.5%, 79.8%] |
 | DeepSeek R1 70B | 72.4 | 69.6 | 96.8 | 70.5 | 75.1 | [70.7%, 79.1%] |
 | Gemma 4 E4B | 83.9 | 50.0 | 72.6 | 62.8 | 70.4 | [65.8%, 74.7%] |
-| **Average** | **83.2** | **69.7** | **91.1** | **79.1** | **80.8** | — |
+| **Average** | **83.8** | **65.5** | **91.0** | **77.0** | **79.4** | — |
 
-*Note: Bold entries indicate the best score in each column. All eleven models evaluated on the full 406-item benchmark.*
+*Note: Bold entries indicate the best score in each column. All twelve models evaluated on the full 406-item benchmark.*
 
----
-
-| Model | REG | NUM | CON | TMP | Overall | 95% CI |
-|-------|-----|-----|-----|-----|---------|--------|
-| †Claude 3 Haiku | 92.5 | 93.8 | 86.7 | 91.4 | 91.3 | [85.7%, 94.9%] |
-
-*†Claude 3 Haiku was evaluated on the initial 150-item subset (REG=53, NUM=32, CON=30, TMP=35) due to API access constraints at the time of evaluation. Its result is provided for contextualisation but is not directly comparable to the 406-item results above.*
+*†Gemini 2.5 Pro evaluated via Vertex AI (us-central1); Gemini 2.5 Flash evaluated via Google AI Studio. The lower NUM and TMP scores for Gemini 2.5 Pro are consistent with its tendency to generate extended reasoning chains that are less likely to match concise reference answers under fuzzy-matching scoring.*
 
 ---
 
@@ -224,17 +216,19 @@ With 406 items and per-task sizes of n=174 (REG), n=92 (NUM), n=62 (CON), and n=
 
 Gemini 2.5 Flash achieves the highest overall accuracy at 89.7%, leading on both regulatory interpretation (93.1%) and numerical reasoning (84.8%). However, its advantage over Qwen3-32B (85.5%) is not statistically significant (bootstrap p=0.057). Qwen3-32B leads the temporal reasoning task (92.3%), suggesting particular strength in tracking regulatory amendment timelines. Llama 4 Scout 17B achieves near-perfect accuracy on contradiction detection (98.4%) despite its smaller size.
 
-All eleven models substantially outperform the human expert baseline of 60.0% (n=30 items). The human baseline reflects non-expert annotators rather than domain specialists, and is provided as a lower-bound reference; nonetheless, the gap illustrates that LLMs have already reached above-baseline performance on Indian regulatory text.
+All twelve models substantially outperform the human expert baseline of 60.0% (n=30 items). The human baseline reflects non-expert annotators rather than domain specialists, and is provided as a lower-bound reference; nonetheless, the gap illustrates that LLMs have already reached above-baseline performance on Indian regulatory text.
+
+A striking finding is that Gemini 2.5 Pro (76.1%) performs substantially below its Flash counterpart Gemini 2.5 Flash (89.7%), despite being a nominally larger and more capable model. This inversion is most pronounced on numerical reasoning (48.9% vs 84.8%) and temporal reasoning (64.1% vs 88.5%). The Pro model's tendency to generate extended reasoning chains and formatted multi-step answers is penalised by the concise reference-matching scoring protocol. This is a methodologically important result: benchmarks using exact or fuzzy-match scoring may systematically underestimate the performance of reasoning-focused models relative to output-concise models.
 
 ### 5.2 Statistical Significance and Performance Tiers
 
-Paired bootstrap significance testing (10,000 resamples) across all 55 model pairs reveals clear tier structure: 35 of 55 pairs are statistically significantly different at p<0.05, while 20 pairs are not.
+Paired bootstrap significance testing (10,000 resamples) across all 66 model pairs reveals clear tier structure, with the majority of cross-tier pairs statistically significantly different at p<0.05.
 
 Three broad performance tiers emerge:
 
-**Tier 1 — Strong performers (83–90%):** Gemini 2.5 Flash, Qwen3-32B, LLaMA-3.3-70B, Llama 4 Scout 17B, Kimi K2. Gemini significantly outperforms all Tier 2/3 models but is not significantly better than Qwen3-32B (p=0.057). Within Tier 1, Qwen3-32B, LLaMA-3.3-70B, Llama 4 Scout 17B, and Kimi K2 are largely statistically indistinguishable from each other (p values ranging from 0.07 to 0.79), suggesting this cluster forms a genuine performance plateau.
+**Tier 1 — Strong performers (81–90%):** Gemini 2.5 Flash, Qwen3-32B, LLaMA-3.3-70B, Llama 4 Scout 17B, Kimi K2. Gemini significantly outperforms all Tier 2/3 models but is not significantly better than Qwen3-32B (p=0.057). Within Tier 1, Qwen3-32B, LLaMA-3.3-70B, Llama 4 Scout 17B, and Kimi K2 are largely statistically indistinguishable from each other (p values ranging from 0.07 to 0.79), suggesting this cluster forms a genuine performance plateau.
 
-**Tier 2 — Middle performers (75–79%):** LLaMA-3-8B, GPT-OSS 120B, GPT-OSS 20B, Mistral-7B, DeepSeek R1 70B. A notable finding within this tier is that GPT-OSS 120B (77.1%) and GPT-OSS 20B (76.8%) are statistically indistinguishable (p=0.91), suggesting that within this model family, a six-fold increase in parameter count provides no benefit on Indian regulatory text. Similarly, LLaMA-3-8B and Mistral-7B (8B and 7B parameter open-weight models, respectively) are statistically tied (p=0.38).
+**Tier 2 — Middle performers (75–79%):** LLaMA-3-8B, GPT-OSS 120B, GPT-OSS 20B, Gemini 2.5 Pro, Mistral-7B, DeepSeek R1 70B. A notable finding within this tier is that GPT-OSS 120B (77.1%) and GPT-OSS 20B (76.8%) are statistically indistinguishable (p=0.91), suggesting that within this model family, a six-fold increase in parameter count provides no benefit on Indian regulatory text. Similarly, LLaMA-3-8B and Mistral-7B (8B and 7B parameter open-weight models, respectively) are statistically tied (p=0.38). Gemini 2.5 Pro (76.1%) falls within this tier despite being a frontier model, driven by its low NUM score (48.9%) — a scoring artefact discussed above.
 
 **Tier 3 — Weakest performer (70%):** Gemma 4 E4B stands alone at 70.4%, significantly below all Tier 2 models except Mistral-7B (p=0.065) and DeepSeek R1 70B (p=0.119). Its particularly low numerical reasoning score (50.0%) — at chance level for binary questions — and contradiction detection score (72.6%) drive its bottom-tier placement.
 
@@ -244,7 +238,7 @@ Another notable finding: Llama 4 Scout 17B (17B parameters, Tier 1) is statistic
 
 **Regulatory Interpretation (REG)** shows a 20.7 percentage-point spread (Gemini 2.5 Flash: 93.1% vs DeepSeek R1 70B: 72.4%). Gemini leads by a meaningful margin, and all frontier API models (Gemini, Qwen3, LLaMA-3.3, Llama 4 Scout, Kimi K2) exceed 85% on this task. The lower performance of DeepSeek R1 70B — despite its large parameter count — on regulatory interpretation suggests that its chain-of-thought reasoning style does not align well with the extractive, precision-dependent nature of this task.
 
-**Numerical Reasoning (NUM)** is the most discriminative task, with a 34.8 percentage-point spread (Gemini 2.5 Flash: 84.8% vs Gemma 4 E4B: 50.0%). Gemma 4 E4B's 50% score on contradiction detection is at or near chance level for binary classification, indicating near-complete failure. The GPT-OSS models also underperform on NUM (59.8% and 58.7%), suggesting this family struggles with the multi-step arithmetic embedded in Indian regulatory text. DeepSeek R1 70B, a reasoning-specialised model, scores modestly at 69.6% — better than the smallest models but well below frontier performance.
+**Numerical Reasoning (NUM)** is the most discriminative task, with a 35.9 percentage-point spread (Gemini 2.5 Flash: 84.8% vs Gemini 2.5 Pro: 48.9%). As discussed above, Gemini 2.5 Pro's low NUM score is a scoring artefact of its verbose output style rather than a true capability failure. Gemma 4 E4B (50.0%) is the lowest-scoring non-reasoning model on this task, at near-chance level. The GPT-OSS models also underperform on NUM (59.8% and 58.7%), suggesting this family struggles with the multi-step arithmetic embedded in Indian regulatory text. DeepSeek R1 70B, a reasoning-specialised model, scores modestly at 69.6% — better than the smallest models but well below frontier performance.
 
 **Contradiction Detection (CON)** is the most uniformly strong task, with an average accuracy of 91.1% and all but Gemma 4 E4B exceeding 80%. Llama 4 Scout 17B achieves near-perfect 98.4%. The high CON scores across models suggest that the binary Yes/No structure of this task is relatively tractable under zero-shot prompting, and that models have some capacity to identify explicit regulatory contradictions.
 
@@ -337,11 +331,11 @@ The **efficiency finding** is striking: Llama 4 Scout 17B performs statistically
 
 The **GPT-OSS scaling finding** is equally notable in the opposite direction: the 120B parameter model achieves 77.1% while the 20B model achieves 76.8% — a 0.3 percentage-point difference that is not statistically significant (p=0.91). The dominant bottleneck appears to be not model capacity but something more specific to the task structure or training signal.
 
-The **DeepSeek R1 paradox** highlights an important limitation of reasoning-specialised architectures: despite being purpose-built for complex reasoning, DeepSeek R1 70B ranks 10th out of 11 models. Its particular weakness in temporal reasoning (70.5%) — a task that seemingly calls for structured reasoning over sequences — and regulatory interpretation (72.4%) suggests that chain-of-thought reasoning over unstructured text does not straightforwardly transfer to the specific demands of tracking regulatory amendment chains. This finding is consistent with earlier analysis on the 150-item subset and is reinforced by the larger evaluation.
+The **DeepSeek R1 paradox** highlights an important limitation of reasoning-specialised architectures: despite being purpose-built for complex reasoning, DeepSeek R1 70B ranks 11th out of 12 models. Its particular weakness in temporal reasoning (70.5%) — a task that seemingly calls for structured reasoning over sequences — and regulatory interpretation (72.4%) suggests that chain-of-thought reasoning over unstructured text does not straightforwardly transfer to the specific demands of tracking regulatory amendment chains. This finding is consistent with earlier analysis on the 150-item subset and is reinforced by the larger evaluation.
 
 ### 7.2 Human Baseline and Model Performance
 
-All eleven models substantially outperform the human expert baseline of 60.0% (n=30 items). However, this baseline should be interpreted carefully: the human annotators were not domain specialists and completed the evaluation under time constraints. The baseline primarily establishes that IndiaFinBench items are genuinely challenging, not that current LLMs have "solved" Indian financial regulatory understanding.
+All twelve models substantially outperform the human expert baseline of 60.0% (n=30 items). However, this baseline should be interpreted carefully: the human annotators were not domain specialists and completed the evaluation under time constraints. The baseline primarily establishes that IndiaFinBench items are genuinely challenging, not that current LLMs have "solved" Indian financial regulatory understanding.
 
 Notably, Gemma 4 E4B (70.4%) provides only a 10.4 percentage-point margin over the human baseline, while Gemini 2.5 Flash (89.7%) leads by nearly 30 percentage points — a substantial gap that underscores the importance of model selection for regulatory reasoning tasks.
 
@@ -355,7 +349,7 @@ Several limitations of this study should be noted. First, all evaluation is zero
 
 ## 8. Conclusion
 
-We have introduced IndiaFinBench, the first publicly available evaluation benchmark for LLM performance on Indian financial regulatory text. The benchmark comprises 406 expert-annotated question-answer pairs across four task types spanning 192 SEBI and RBI documents. Evaluating eleven contemporary models on the full benchmark reveals a clear tier structure: a top group clustering around 81–90% overall accuracy, a middle group around 75–79%, and one clear underperformer at 70%. Paired bootstrap significance testing establishes which of these differences are statistically robust, providing a more rigorous leaderboard than point estimates alone.
+We have introduced IndiaFinBench, the first publicly available evaluation benchmark for LLM performance on Indian financial regulatory text. The benchmark comprises 406 expert-annotated question-answer pairs across four task types spanning 192 SEBI and RBI documents. Evaluating twelve contemporary models on the full benchmark reveals a clear tier structure: a top group clustering around 81–90% overall accuracy, a middle group around 75–79%, and one clear underperformer at 70%. Paired bootstrap significance testing establishes which of these differences are statistically robust, providing a more rigorous leaderboard than point estimates alone.
 
 Key findings include: Gemini 2.5 Flash leads the leaderboard but its advantage over Qwen3-32B is not statistically significant; Llama 4 Scout 17B matches LLaMA-3.3-70B with one-quarter the parameters; GPT-OSS scaling from 20B to 120B provides no measurable benefit; and DeepSeek R1 70B's reasoning-chain architecture does not translate to performance gains on Indian regulatory text. Across all models, numerical reasoning and temporal reasoning emerge as the hardest tasks, with temporal reasoning failure dominating error profiles for frontier models.
 

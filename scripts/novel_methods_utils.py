@@ -25,6 +25,7 @@ TASK_MAP = {
 
 MODEL_FILES = {
     "Gemini 2.5 Flash":    "gemini_results.csv",
+    "Gemini 2.5 Pro":      "gemini25_pro_results.csv",
     "Qwen3-32B":           "qwen3_32b_results.csv",
     "LLaMA-3.3-70B":       "groq70b_results.csv",
     "Llama 4 Scout 17B":   "llama4scout_results.csv",
@@ -155,23 +156,65 @@ GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "")
 GROQ_KEY = os.environ.get("GROQ_API_KEY", "")
 
 
-def call_gemini(prompt: str, max_retries: int = 3, sleep: int = 4) -> str:
-    """Call Gemini 2.5 Flash with rate limiting (15 req/min free tier)."""
-    if not GEMINI_KEY:
-        raise ValueError("Set GEMINI_API_KEY environment variable")
-    import google.generativeai as genai
-    genai.configure(api_key=GEMINI_KEY)
-    model = genai.GenerativeModel("gemini-2.5-flash-latest")
+from google import genai
+import os, time
+
+GEMINI_KEYS = [
+    k.strip()
+    for k in os.environ.get("GEMINI_API_KEYS", os.environ.get("GEMINI_API_KEY", "")).split(",")
+    if k.strip()
+]
+_gemini_idx = 0
+_last_call_time = 0.0
+# Per-key backoff: key_idx -> timestamp after which the key can be retried.
+# Gemini quota is per Google Cloud PROJECT (not per API key). If all keys share
+# one project, they all hit 429 simultaneously and rotating is pointless —
+# the script must wait for the RPM window to reset (~60s).
+_key_backoff_until: dict = {}
+
+
+def call_gemini(prompt: str, max_retries: int = 5) -> str:
+    """Call Gemini via Vertex AI using service account credentials.
+    Uses $300 free trial credits. No key rotation needed — single project,
+    Tier 1 limits: 2000 RPM / 10,000 RPD.
+    """
+    import google.auth
+    from google import genai as _genai
+    from google.genai.types import HttpOptions
+
+    project = os.environ.get("GOOGLE_CLOUD_PROJECT", "")
+    location = os.environ.get("GOOGLE_CLOUD_LOCATION", "us-central1")
+
+    # Use service account credentials (GOOGLE_APPLICATION_CREDENTIALS auto-picked up)
+    client = _genai.Client(
+        vertexai=True,
+        project=project,
+        location=location,
+        http_options=HttpOptions(api_version="v1")
+    )
+
     for attempt in range(max_retries):
         try:
-            response = model.generate_content(prompt)
-            time.sleep(sleep)
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt
+            )
+            time.sleep(0.05)  # 50ms gap — at 2000 RPM you can go much faster
             return response.text
         except Exception as e:
-            print(f"Gemini error (attempt {attempt+1}): {e}")
-            time.sleep(10)
+            err = str(e)
+            if "429" in err or "quota" in err.lower():
+                wait = 60 * (attempt + 1)
+                print(f"  Rate limit (429). Waiting {wait}s...")
+                time.sleep(wait)
+            elif "503" in err or "UNAVAILABLE" in err:
+                wait = 30 * (attempt + 1)
+                print(f"  Server overload (503). Waiting {wait}s then retrying...")
+                time.sleep(wait)
+            else:
+                print(f"  Vertex AI error attempt {attempt}: {e}")
+                time.sleep(5)
     return ""
-
 
 def call_groq(prompt: str, model: str = "llama-3.3-70b-versatile",
               max_retries: int = 3) -> str:

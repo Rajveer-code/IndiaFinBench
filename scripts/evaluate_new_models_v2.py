@@ -1,21 +1,36 @@
 """
 evaluate_new_models_v2.py
 --------------------------
-IndiaFinBench — 3 additional free models
+IndiaFinBench — Extended model evaluations
 
-  gpt_oss_120b  — GPT-OSS 120B     (Cerebras, FREE, no credit card)
-  qwen3_235b    — Qwen3-235B       (Cerebras, FREE, no credit card)
-  kimi_k2       — Kimi K2          (Groq, FREE, you already have key)
+  gpt_oss_120b      — GPT-OSS 120B          (Groq, FREE)
+  gpt_oss_20b       — GPT-OSS 20B           (Groq, FREE)
+  kimi_k2           — Kimi K2               (Groq, FREE)  [DEPRECATED on Groq — use only if re-running existing results]
+  qwen3_235b        — Qwen3-235B-2507       (Cerebras, FREE, 1M tokens/day)
+  nemotron_120b     — NVIDIA Nemotron 3 Super 120B  (Vertex AI MaaS — uses ₹30K credits)
+  hermes_405b       — Hermes-3 LLaMA-3.1 405B       (OpenRouter free — slow daily cap)
+  claude_haiku_45   — Claude Haiku 4.5               (Vertex AI MaaS — uses ₹30K credits)
 
 Usage:
   python scripts/evaluate_new_models_v2.py --models gpt_oss_120b
   python scripts/evaluate_new_models_v2.py --models qwen3_235b
-  python scripts/evaluate_new_models_v2.py --models kimi_k2
-  python scripts/evaluate_new_models_v2.py --models gpt_oss_120b qwen3_235b kimi_k2
+  python scripts/evaluate_new_models_v2.py --models nemotron_120b
+  python scripts/evaluate_new_models_v2.py --models claude_haiku_45
+  python scripts/evaluate_new_models_v2.py --models gpt_oss_120b qwen3_235b nemotron_120b claude_haiku_45
 
 Setup:
-  pip install cerebras-cloud-sdk groq rapidfuzz
-  Set CEREBRAS_API_KEY and GROQ_API_KEY in your .env file
+  pip install cerebras-cloud-sdk groq rapidfuzz anthropic openai google-auth requests
+
+  .env file must contain:
+    CEREBRAS_API_KEY=...
+    GROQ_API_KEY=...
+    OPENROUTER_API_KEY=...       (optional, for hermes_405b)
+    VERTEX_PROJECT_ID=finindiabench
+    VERTEX_REGION=us-east5
+
+  For Vertex AI models (nemotron_120b, claude_haiku_45):
+    Run: gcloud auth application-default login
+    This sets up Application Default Credentials used by the Vertex AI SDK.
 """
 
 import json, csv, os, re, time, sys, io, argparse
@@ -43,9 +58,12 @@ if _env_path.exists():
             _k, _v = _line.split("=", 1)
             os.environ.setdefault(_k.strip(), _v.strip().strip('"'))
 
-CEREBRAS_API_KEY = os.environ.get("CEREBRAS_API_KEY", "")
-GROQ_API_KEY     = os.environ.get("GROQ_API_KEY", "")
+CEREBRAS_API_KEY   = os.environ.get("CEREBRAS_API_KEY", "")
+GROQ_API_KEY       = os.environ.get("GROQ_API_KEY", "")
 OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "")
+VERTEX_PROJECT_ID  = os.environ.get("VERTEX_PROJECT_ID", "finindiabench")
+VERTEX_REGION      = os.environ.get("VERTEX_REGION", "us-east5")
+
 # ── Model registry ─────────────────────────────────────────────────────────────
 MODELS = {
     "gpt_oss_120b": {
@@ -69,6 +87,9 @@ MODELS = {
     "kimi_k2": {
         "label":    "Kimi K2",
         "provider": "groq",
+        # NOTE: moonshotai/kimi-k2-instruct was deprecated on Groq on March 23 2026.
+        # This entry is kept for re-running existing partial results only.
+        # New runs will fail. Use this key only if you have existing checkpoint CSVs.
         "model_id": "moonshotai/kimi-k2-instruct",
         "out_csv":  "kimi_k2_results.csv",
         "hf_id":    "moonshotai/Kimi-K2-Instruct",
@@ -76,21 +97,41 @@ MODELS = {
         "type":     "API",
     },
     "nemotron_120b": {
-        "label":    "NVIDIA Nemotron 120B",
-        "provider": "openrouter",
-        "model_id": "nvidia/nemotron-3-super-120b-a12b:free",
+        "label":    "NVIDIA Nemotron 3 Super 120B",
+        "provider": "vertex_maas",
+        # Vertex AI MaaS model ID for Nemotron 3 Super 120B
+        "model_id": "nvidia/nemotron-3-super-120b-a12b",
         "out_csv":  "nemotron_120b_results.csv",
         "hf_id":    "nvidia/Nemotron-3-Super-120B-A12B",
-        "params":   "120B",
+        "params":   "120B (12B active MoE)",
         "type":     "API",
     },
     "qwen3_235b": {
-        "label":    "Qwen3-235B",
+        "label":    "Qwen3-235B-2507",
         "provider": "cerebras",
         "model_id": "qwen-3-235b-a22b-instruct-2507",
         "out_csv":  "qwen3_235b_results.csv",
-        "hf_id":    "Qwen/Qwen3-235B-A22B",
+        "hf_id":    "Qwen/Qwen3-235B-A22B-Instruct-2507",
         "params":   "235B (22B active)",
+        "type":     "API",
+    },
+    "hermes_405b": {
+        "label":    "Hermes-3 LLaMA-3.1 405B",
+        "provider": "openrouter",
+        "model_id": "nousresearch/hermes-3-llama-3.1-405b:free",
+        "out_csv":  "hermes_405b_results.csv",
+        "hf_id":    "NousResearch/Hermes-3-Llama-3.1-405B",
+        "params":   "405B",
+        "type":     "API",
+    },
+    "claude_haiku_45": {
+        "label":    "Claude Haiku 4.5",
+        "provider": "vertex_claude",
+        # Must be enabled in your Vertex AI project via Model Garden first.
+        "model_id": "claude-haiku-4-5@20251001",
+        "out_csv":  "claude_haiku_45_results.csv",
+        "hf_id":    "anthropic/claude-haiku-4-5",
+        "params":   "~10B (estimated)",
         "type":     "API",
     },
 }
@@ -172,7 +213,7 @@ def score_answer(ref: str, pred: str, task_type: str) -> int:
 # ── API callers ────────────────────────────────────────────────────────────────
 
 def call_cerebras(model_id: str, prompt: str) -> str:
-    """Call Cerebras API — OpenAI-compatible, free tier."""
+    """Call Cerebras API — free tier, 1M tokens/day."""
     try:
         from cerebras.cloud.sdk import Cerebras
     except ImportError:
@@ -244,9 +285,11 @@ def call_groq(model_id: str, prompt: str) -> str:
             return f"FAIL: {err[:200]}"
     return "FAIL: Groq retries exhausted"
 
+
 def call_openrouter(model_id: str, prompt: str) -> str:
+    """Call OpenRouter API — free tier (slow daily cap ~50 req/day)."""
     import requests
-    key = os.environ.get("OPENROUTER_API_KEY", "")
+    key = OPENROUTER_API_KEY
     if not key:
         return "FAIL: OPENROUTER_API_KEY not set"
     for attempt in range(6):
@@ -261,12 +304,145 @@ def call_openrouter(model_id: str, prompt: str) -> str:
             )
             data = resp.json()
             if "error" in data:
-                return f"FAIL: {str(data['error'])[:200]}"
+                err_msg = str(data["error"])
+                # Daily cap hit — stop immediately, don't waste retries
+                if "free-models-per-day" in err_msg or "free-models-per-min" in err_msg:
+                    print(f"\n  ⚠️  OpenRouter daily free limit reached.")
+                    print(f"      Run again tomorrow to continue from checkpoint.\n")
+                    return f"FAIL: {err_msg[:200]}"
+                return f"FAIL: {err_msg[:200]}"
             return data["choices"][0]["message"]["content"].strip()
         except Exception as e:
             wait = min(2 ** attempt * 10, 120)
             time.sleep(wait)
     return "FAIL: OpenRouter retries exhausted"
+
+
+def call_vertex_claude(model_id: str, prompt: str) -> str:
+    """
+    Call Claude via Vertex AI MaaS — uses GCP Application Default Credentials.
+    Billed to your Vertex AI project (₹30K credits).
+
+    Prerequisites:
+      pip install anthropic
+      gcloud auth application-default login
+      Claude Haiku 4.5 must be enabled in your project via Model Garden.
+    """
+    try:
+        import anthropic
+    except ImportError:
+        return "FAIL: pip install anthropic"
+
+    for attempt in range(6):
+        try:
+            client = anthropic.AnthropicVertex(
+                region="global",
+                project_id=VERTEX_PROJECT_ID,
+            )
+            response = client.messages.create(
+                model=model_id,
+                max_tokens=512,
+                temperature=0.0,
+                system=SYSTEM_PROMPT,
+                messages=[{"role": "user", "content": prompt}],
+            )
+            return response.content[0].text.strip()
+        except Exception as e:
+            err = str(e)
+            if "429" in err or "quota" in err.lower() or "rate" in err.lower():
+                wait = min(2 ** attempt * 15, 120)
+                print(f"  ⏳ Vertex Claude rate limit → wait {wait}s  [raw: {err[:300]}]")
+                time.sleep(wait)
+                continue
+            if "403" in err or "permission" in err.lower():
+                return (
+                    "FAIL: Vertex AI permission denied. "
+                    "Run: gcloud auth application-default login "
+                    "and ensure Claude Haiku 4.5 is enabled in Model Garden."
+                )
+            return f"FAIL: {err[:200]}"
+    return "FAIL: Vertex Claude retries exhausted"
+
+
+def call_vertex_maas(model_id: str, prompt: str) -> str:
+    """
+    Call NVIDIA partner models (e.g., Nemotron 3 Super) via Vertex AI MaaS.
+
+    Uses the Vertex AI OpenAI-compatible REST endpoint — the ONLY correct path
+    for NVIDIA partner models in Model Garden. The google-genai generate_content()
+    SDK does NOT support these partner models and will return 404.
+
+    Region MUST be us-central1 for NVIDIA models (separate from us-east5 used
+    for Claude). This function overrides VERTEX_REGION for MaaS calls.
+
+    Prerequisites:
+      pip install openai google-auth
+      gcloud auth application-default login
+      Model must be enabled in Model Garden:
+        https://console.cloud.google.com/vertex-ai/model-garden?project=finindiabench
+      Search "Nemotron 3 Super" → Enable → accept NVIDIA terms.
+    """
+    try:
+        import google.auth
+        import google.auth.transport.requests
+        from openai import OpenAI
+    except ImportError:
+        return "FAIL: pip install openai google-auth"
+
+    # NVIDIA models on Vertex AI are only available in us-central1
+    # (Claude models use us-east5 — these are different endpoints)
+    MAAS_REGION = "us-central1"
+
+    for attempt in range(6):
+        try:
+            # Refresh Application Default Credentials to get a short-lived token
+            creds, _ = google.auth.default(
+                scopes=["https://www.googleapis.com/auth/cloud-platform"]
+            )
+            auth_req = google.auth.transport.requests.Request()
+            creds.refresh(auth_req)
+
+            client = OpenAI(
+                base_url=(
+                    f"https://{MAAS_REGION}-aiplatform.googleapis.com/v1/projects/"
+                    f"{VERTEX_PROJECT_ID}/locations/{MAAS_REGION}/endpoints/openapi"
+                ),
+                api_key=creds.token,
+            )
+
+            response = client.chat.completions.create(
+                model=model_id,
+                messages=[
+                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "user",   "content": prompt},
+                ],
+                max_tokens=512,
+                temperature=0.0,
+            )
+            return response.choices[0].message.content.strip()
+
+        except Exception as e:
+            err = str(e)
+            if "429" in err or "quota" in err.lower() or "rate" in err.lower():
+                wait = min(2 ** attempt * 15, 120)
+                print(f"  ⏳ Vertex MaaS rate limit → wait {wait}s")
+                time.sleep(wait)
+                continue
+            if "401" in err or "403" in err or "permission" in err.lower() or "credential" in err.lower():
+                return (
+                    "FAIL: Vertex AI auth error. "
+                    "Run: gcloud auth application-default login && "
+                    f"gcloud auth application-default set-quota-project {VERTEX_PROJECT_ID}"
+                )
+            if "404" in err or "not found" in err.lower():
+                return (
+                    f"FAIL: Model {model_id} not found in us-central1. "
+                    "Go to console.cloud.google.com/vertex-ai/model-garden, "
+                    "search 'Nemotron 3 Super', click Enable, accept NVIDIA terms."
+                )
+            return f"FAIL: {err[:200]}"
+    return "FAIL: Vertex MaaS retries exhausted"
+
 
 # ── CSV helpers ────────────────────────────────────────────────────────────────
 
@@ -294,19 +470,23 @@ def evaluate_model(model_key: str, data: list):
     print(f"  Output   : {cfg['out_csv']}")
     print(f"{'━'*68}")
 
-    # Check keys
+    # Key/config checks
     if provider == "cerebras" and not CEREBRAS_API_KEY:
         print("  ✗  CEREBRAS_API_KEY not set in .env")
         print("     Get free key at: https://cloud.cerebras.ai")
         return None
     elif provider == "openrouter" and not OPENROUTER_API_KEY:
         print("  ✗  OPENROUTER_API_KEY not set in .env")
+        print("     Get free key at: https://openrouter.ai")
         return None
-    if provider == "groq" and not GROQ_API_KEY:
+    elif provider == "groq" and not GROQ_API_KEY:
         print("  ✗  GROQ_API_KEY not set in .env")
         return None
+    elif provider in ("vertex_claude", "vertex_maas"):
+        print(f"  ℹ️  Using Vertex AI project: {VERTEX_PROJECT_ID} / region: {VERTEX_REGION}")
+        print(f"     Billed to your GCP credits. Ensure gcloud ADC is set.")
 
-    # Load checkpoint
+    # Load checkpoint — skip items already done (non-FAIL results only)
     done = {}
     if out_path.exists():
         with open(out_path, encoding="utf-8") as f:
@@ -321,8 +501,15 @@ def evaluate_model(model_key: str, data: list):
         print("  ✓  Already complete — skipping.\n")
         return _compute_accuracy(done)
 
-    # Delays — Cerebras is very fast, Groq is fast
-    delay = 1.0 if provider == "cerebras" else 2.0
+    # Per-provider delays to stay within rate limits
+    delay_map = {
+        "cerebras":     1.0,
+        "groq":         2.0,
+        "openrouter":   3.0,
+        "vertex_claude": 1.5,
+        "vertex_maas":   1.5,
+    }
+    delay = delay_map.get(provider, 2.0)
 
     results = list(done.values())
 
@@ -342,6 +529,10 @@ def evaluate_model(model_key: str, data: list):
                 pred = call_groq(model_id, prompt)
             elif provider == "openrouter":
                 pred = call_openrouter(model_id, prompt)
+            elif provider == "vertex_claude":
+                pred = call_vertex_claude(model_id, prompt)
+            elif provider == "vertex_maas":
+                pred = call_vertex_maas(model_id, prompt)
             else:
                 pred = f"FAIL: unknown provider {provider}"
         except Exception as e:
@@ -365,6 +556,7 @@ def evaluate_model(model_key: str, data: list):
 
         print(f"  [{i:03d}/{len(data)}] {status}  {item_id:<14}  {pred[:60]}")
 
+        # Save checkpoint every 20 items
         if len(results) % 20 == 0:
             write_csv(results, out_path)
 
@@ -402,8 +594,7 @@ def _print_summary(acc: dict, label: str):
 
 def print_leaderboard(new_results: dict):
     existing = [
-        {"label": "Claude 3 Haiku",    "REG": 92.5, "NUM": 93.8, "CON": 86.7, "TMP": 91.4, "Overall": 91.3, "note": "(150-item)"},
-        {"label": "Gemini 2.5 Flash",  "REG": 95.5, "NUM": 80.9, "CON": 88.6, "TMP": 87.0, "Overall": 89.7, "note": "(406-item, partial)"},
+        {"label": "Gemini 2.5 Flash",  "REG": 95.5, "NUM": 80.9, "CON": 88.6, "TMP": 87.0, "Overall": 89.7, "note": "(406-item)"},
         {"label": "Qwen3-32B",         "REG": 85.1, "NUM": 77.2, "CON": 90.3, "TMP": 92.3, "Overall": 85.5, "note": ""},
         {"label": "LLaMA-3.3-70B",     "REG": 86.2, "NUM": 75.0, "CON": 95.2, "TMP": 79.5, "Overall": 83.7, "note": ""},
         {"label": "Llama 4 Scout 17B", "REG": 86.2, "NUM": 66.3, "CON": 98.4, "TMP": 84.6, "Overall": 83.3, "note": ""},
@@ -429,13 +620,13 @@ def print_leaderboard(new_results: dict):
     print(f"\n{'━'*90}")
     print(f"  INDIAFINBENCH — FULL LEADERBOARD ({len(existing)} models, 406 items)")
     print(f"{'━'*90}")
-    print(f"  {'#':<3} {'Model':<26} {'REG':>6} {'NUM':>6} {'CON':>6} {'TMP':>6} {'Overall':>8}")
-    print(f"  {'─'*3} {'─'*26} {'─'*6} {'─'*6} {'─'*6} {'─'*6} {'─'*8}")
+    print(f"  {'#':<3} {'Model':<32} {'REG':>6} {'NUM':>6} {'CON':>6} {'TMP':>6} {'Overall':>8}")
+    print(f"  {'─'*3} {'─'*32} {'─'*6} {'─'*6} {'─'*6} {'─'*6} {'─'*8}")
 
     for rank, m in enumerate(existing, 1):
         note = m.get("note", "")
         print(
-            f"  {rank:<3} {m['label']:<26} "
+            f"  {rank:<3} {m['label']:<32} "
             f"{m['REG']:>5.1f}% {m['NUM']:>5.1f}% "
             f"{m['CON']:>5.1f}% {m['TMP']:>5.1f}% "
             f"{m['Overall']:>7.1f}% {note}"
@@ -464,6 +655,8 @@ def main():
     print(f"  Models   : {', '.join(args.models)}")
     print(f"  Cerebras : {'✓ key set' if CEREBRAS_API_KEY else '✗ CEREBRAS_API_KEY missing'}")
     print(f"  Groq     : {'✓ key set' if GROQ_API_KEY else '✗ GROQ_API_KEY missing'}")
+    print(f"  OpenRtr  : {'✓ key set' if OPENROUTER_API_KEY else '✗ OPENROUTER_API_KEY missing (needed for hermes_405b)'}")
+    print(f"  Vertex   : project={VERTEX_PROJECT_ID}, region={VERTEX_REGION}")
     print(f"{'━'*68}")
 
     with open(QA_PATH, encoding="utf-8") as f:

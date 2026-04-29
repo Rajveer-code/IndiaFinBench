@@ -14,8 +14,13 @@ data/parsed/
 
 # API keys / secrets
 secrets.py
+secrets.json
 .env
 *.env
+.env.*
+*.key
+*.pem
+gcp-key.json
 
 # OS
 .DS_Store
@@ -57,6 +62,9 @@ paper/unpacked_*/
 # Claude Code local settings
 .claude/
 
+# Nested repo clone (local dev only)
+IndiaFinBench/
+
 # SQLite databases (generated at runtime)
 demo/leaderboard.db
 
@@ -65,3 +73,10 @@ demo/__pycache__/
 demo/database/__pycache__/
 demo/evaluation/__pycache__/
 demo/ui/__pycache__/
+
+# ML experiment tracking
+wandb/
+mlruns/
+
+# paper/docx_unpacked is a scratch unpack folder
+paper/docx_unpacked/

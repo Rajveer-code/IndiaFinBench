@@ -1,0 +1,824 @@
+id,task_type,difficulty,question,ref_answer,prediction,correct,model_version
+REG_001,regulatory_interpretation,easy,What is the minimum average operating profit an issuer must have over the preced,At least fifteen crore rupees,Fifteen crore rupees,1,moonshotai/kimi-k2-instruct
+REG_002,regulatory_interpretation,easy,"Under SEBI ICDR Regulations, 2018, what percentage of the net offer must an issu",At least seventy five per cent.,75 per cent.,1,moonshotai/kimi-k2-instruct
+REG_003,regulatory_interpretation,easy,"Under SEBI ICDR Regulations, 2018, what is the minimum percentage of post-issue ",At least twenty per cent.,20 per cent,0,moonshotai/kimi-k2-instruct
+REG_004,regulatory_interpretation,medium,"Under SEBI ICDR Regulations, 2018, what fraction of the anchor investor portion ",One-third,One-third,1,moonshotai/kimi-k2-instruct
+REG_005,regulatory_interpretation,medium,"Under SEBI ICDR Regulations, 2018, for how long is the minimum promoters' contri",Three years from the date of allotment in the initial public offer,3 years,1,moonshotai/kimi-k2-instruct
+REG_006,regulatory_interpretation,easy,What is the minimum application value for an entity to qualify as an anchor inve,At least ten crore rupees,₹10 crore,1,moonshotai/kimi-k2-instruct
+REG_007,regulatory_interpretation,easy,"Under SEBI Takeover Regulations 2011, at what threshold of voting rights does an",Twenty-five per cent or more of the voting rights,25 per cent of the voting rights,1,moonshotai/kimi-k2-instruct
+REG_008,regulatory_interpretation,medium,"Under SEBI Takeover Regulations 2011, an acquirer holding 25% or more in a targe",More than five per cent of the voting rights,5%,0,moonshotai/kimi-k2-instruct
+REG_009,regulatory_interpretation,medium,What is the minimum investment amount an employee or director of the Manager of ,Twenty five lakh rupees,₹25 lakh,1,moonshotai/kimi-k2-instruct
+REG_010,regulatory_interpretation,medium,"Under SEBI AIF Regulations, 2012, what is the minimum continuing interest that t","Not less than five percent of the corpus or ten crore rupees, whichever is lower","Not less than 5% of the corpus or ₹10 crore, whichever is lower.",1,moonshotai/kimi-k2-instruct
+REG_011,regulatory_interpretation,easy,"Under SEBI LODR Regulations 2015, what is the maximum permissible gap between tw",One hundred and twenty days,120 days,0,moonshotai/kimi-k2-instruct
+REG_012,regulatory_interpretation,medium,"Under SEBI LODR Regulations 2015, a related party transaction is considered mate","Rupees one thousand crore or ten per cent of the annual consolidated turnover of the listed entity as per the last audited financial statements, which","Rupees one thousand crore or ten per cent of the annual consolidated turnover, whichever is lower.",1,moonshotai/kimi-k2-instruct
+REG_013,regulatory_interpretation,easy,"Under SEBI PIT Regulations 2015, within how many trading days must a company not",Within two trading days,Two trading days,1,moonshotai/kimi-k2-instruct
+REG_014,regulatory_interpretation,easy,"Under SEBI PIT Regulations 2015, what is the mandatory cooling-off period that m",At least sixty days,At least sixty days.,1,moonshotai/kimi-k2-instruct
+REG_015,regulatory_interpretation,hard,"Under SEBI Settlement Proceedings Regulations 2018, what is the absolute latest ","One hundred and twenty calendar days from the expiry of the sixty-day period, or after the first hearing, whichever is earlier",120 calendar days from the expiry of the sixty-day window.,1,moonshotai/kimi-k2-instruct
+REG_016,regulatory_interpretation,medium,"Under SEBI Settlement Proceedings Regulations 2018, by what minimum percentage m",At least fifty percent,At least fifty percent.,1,moonshotai/kimi-k2-instruct
+REG_017,regulatory_interpretation,easy,"Under SEBI Mutual Funds Regulations, what is the maximum exit load that an open-",Three per cent of the applicable net asset value,3% of the applicable net asset value,1,moonshotai/kimi-k2-instruct
+REG_018,regulatory_interpretation,easy,"Under SEBI Mutual Funds Regulations, what percentage of unit holders must pass a",Seventy-five per cent of the unit holders,75 per cent,1,moonshotai/kimi-k2-instruct
+REG_019,regulatory_interpretation,easy,"Under SEBI Stock Brokers Regulations 2026, what is the minimum net worth require",50 crore,50 crore,1,moonshotai/kimi-k2-instruct
+REG_020,regulatory_interpretation,easy,"Under SEBI NCS Regulations 2021, what is the minimum notice period that an issue",At least twenty-one days,21 days,1,moonshotai/kimi-k2-instruct
+REG_021,regulatory_interpretation,easy,"Under SEBI REIT Regulations 2014, what is the minimum asset size required for a ",Five hundred crore rupees or more,Five hundred crore rupees,1,moonshotai/kimi-k2-instruct
+REG_022,regulatory_interpretation,medium,"Under SEBI RTI & STA Regulations 2025, for how long must a registrar to an issue",A minimum period of eight years,Eight years after completion of the issue.,0,moonshotai/kimi-k2-instruct
+REG_023,regulatory_interpretation,medium,"Under SEBI Stock Exchanges and Clearing Corporations Regulations 2018, what is t",Five per cent of the paid-up equity share capital,15%,0,moonshotai/kimi-k2-instruct
+REG_024,regulatory_interpretation,medium,"Under SEBI Credit Rating Agencies Regulations 1999, above what percentage shareh",More than ten per cent of the paid-up share capital,>10 per cent,1,moonshotai/kimi-k2-instruct
+REG_025,regulatory_interpretation,medium,"Under SEBI Depositories and Participants Regulations 2018, what is the threshold",More than five per cent of the paid-up equity share capital,Five per cent of the paid-up equity share capital.,1,moonshotai/kimi-k2-instruct
+NUM_001,numerical_reasoning,medium,"Under SEBI ICDR Regulations 2018, what is the minimum total net tangible assets ",Nine crore rupees (three crore rupees per year × three years),3 crore rupees per year × 3 years = 9 crore rupees,1,moonshotai/kimi-k2-instruct
+NUM_002,numerical_reasoning,medium,If the total portion available for allocation to qualified institutional buyers ,180 crore rupees (60% of 900 = 540 crore for anchor investors; one-third of 540 = 180 crore for domestic mutual funds),"Anchor investor quota = 60% of 900 crore = 0.60 × 900 = 540 crore  
+Domestic-mutual-fund share = ⅓ of 540 crore = 180 crore  
+
+**Final answer:** 180 crore rupees",1,moonshotai/kimi-k2-instruct
+NUM_003,numerical_reasoning,medium,"Under SEBI Stock Brokers Regulations 2026, what is the maximum underwriting obli",100 crore rupees (5 crore net worth × 20 = 100 crore),"Self-Clearing Member minimum net worth = ₹5 crore  
+Maximum underwriting obligation = 20 × net worth  
+20 × ₹5 crore = ₹100 crore  
+
+Answer: ₹100 crore",1,moonshotai/kimi-k2-instruct
+NUM_004,numerical_reasoning,hard,"For a Category I AIF with a scheme corpus of exactly twenty crore rupees, what i","0.50 crore rupees (2.5% of 20 crore = 0.50 crore, which is lower than 5 crore)","Calculation  
+- General rule: continuing interest = 2.5 % of corpus or ₹5 crore, whichever is lower  
+- 2.5 % of ₹20 crore = 0.025 × 20 = ₹0.5 crore  
+- 0.5 crore < 5 crore, so the lower amount applies  
+
+Answer: 0.5 crore",0,moonshotai/kimi-k2-instruct
+NUM_005,numerical_reasoning,hard,If a mutual fund scheme with net assets of 500 crore rupees borrows the maximum ,7.5 crore rupees (20% of 500 = 100 crore borrowed; 15% per annum for 6 months = 7.5% of 100 = 7.5 crore),"Maximum borrowing = 20% of 500 crore = 100 crore  
+Penalty rate = 15% per annum  
+Duration = 6 months = 0.5 year  
+
+Interest liability = 100 crore × 15% × 0.5 = 7.5 crore  
+
+**Answer: 7.5 crore rupees**",1,moonshotai/kimi-k2-instruct
+NUM_006,numerical_reasoning,medium,For a listed entity whose audit committee has the minimum permissible number of ,"Two independent directors (two-thirds of minimum 3 members = 2, since two-thirds of 3 = 2)","Minimum members = 3  
+Required independent directors = ⅔ × 3 = 2  
+
+Answer: 2",1,moonshotai/kimi-k2-instruct
+NUM_007,numerical_reasoning,hard,"Under SEBI Settlement Proceedings Regulations 2018, what is the total maximum nu",180 calendar days (60 days initial window + 120 days additional delayed period = 180 days total),"Initial 60 days + delayed window up to 120 calendar days  
+60 + 120 = 180 calendar days",1,moonshotai/kimi-k2-instruct
+NUM_008,numerical_reasoning,medium,"Under SEBI Takeover Regulations 2011, if an acquirer pays Rs. 250 per share in a",Rs. 50 per share (Rs. 300 highest price minus Rs. 250 offer price = Rs. 50 difference),"Highest price paid in the post-offer 26 weeks: Rs 300  
+Offer price in open offer: Rs 250  
+
+Difference = Rs 300 − Rs 250 = Rs 50
+
+Additional amount to be paid to accepting shareholders: Rs 50 per share  
+Rs 50 per share",1,moonshotai/kimi-k2-instruct
+NUM_009,numerical_reasoning,hard,"Under SEBI ICDR Regulations 2018, if a warrant is allotted on 1 January 2024, wh",1 October 2025 (warrant tenure ends 18 months from allotment = 1 July 2025; exercise option within 3 months from payment = 1 October 2025),"The tenure of the warrant is eighteen months from 1 January 2024 → 30 June 2025.  
+The warrant exercise price can be paid on the last day of this tenure → 30 June 2025.  
+Once the exercise price is paid, the holder has three months to exercise the option → 30 September 2025.  
+
+Answer: 30 September ",0,moonshotai/kimi-k2-instruct
+NUM_010,numerical_reasoning,medium,"Under SEBI LODR Regulations 2015, if a listed entity holds its first board meeti",By 29 July of the same year (1 April + 120 days = 29 July),"Calculation:  
+1 April + 120 days = 30 July (April 30 days, May 31 days, June 30 days, July 29 days).
+
+30 July",0,moonshotai/kimi-k2-instruct
+NUM_011,numerical_reasoning,easy,"Under SEBI AIF Regulations 2012, if a Category III AIF scheme has investable fun",50 crore rupees (10% of 500 crore = 50 crore),"10% of 500 crore rupees = 0.10 × 500 crore rupees = 50 crore rupees
+
+50 crore rupees",1,moonshotai/kimi-k2-instruct
+NUM_012,numerical_reasoning,easy,"Under SEBI Mutual Funds Regulations, an AMC's board has 8 directors. What is the",Four independent directors (at least 50% of 8 = 4),"Calculation:
+50% of 8 = 0.50 × 8 = 4
+
+Final answer: 4",0,moonshotai/kimi-k2-instruct
+CON_001,contradiction_detection,medium,Do the two passages prescribe different lock-in periods for minimum promoters' c,Yes,"Yes. Passage A prescribes three years from the later of two events, while Passage B prescribes eighteen months from allotment.",1,moonshotai/kimi-k2-instruct
+CON_002,contradiction_detection,medium,Do the two passages prescribe different lock-in durations for excess promoters' ,No,No. Both passages require a six-month lock-in from the date of allotment.,1,moonshotai/kimi-k2-instruct
+CON_003,contradiction_detection,easy,Do the two passages prescribe different minimum continuing interest thresholds f,Yes,"Yes. Passage A sets a lower threshold (2.5% of corpus or ₹5 crore) for Category I/II AIFs, while Passage B imposes a higher threshold (5% of corpus or ₹10 crore) for Category III AIFs.",1,moonshotai/kimi-k2-instruct
+CON_004,contradiction_detection,easy,Do the two passages prescribe different maximum permissible gaps between consecu,No,"Yes  
+Both passages set the same maximum gap of one hundred and twenty days between consecutive meetings.",0,moonshotai/kimi-k2-instruct
+CON_005,contradiction_detection,hard,Do the two passages impose different shareholding thresholds triggering mandator,No,"Yes. Both passages initially set the threshold at 5% paid-up equity share capital that triggers mandatory Board approval, but the 5% ceiling for a recognised stock exchange is relaxed to 15% for specified financial institutions, whereas for a depository such relaxation does not apply.",0,moonshotai/kimi-k2-instruct
+CON_006,contradiction_detection,medium,Do the two passages prescribe different disclosure timelines for companies versu,No,No. Both passages require notification within two trading days of receipt of the disclosure.,1,moonshotai/kimi-k2-instruct
+CON_007,contradiction_detection,hard,Do the two passages contradict each other regarding whether a second settlement ,No,"No – Passage A bars a fresh application if the first was withdrawn, while Passage B only allows a second application if the earlier one was rejected for non-payment, so they address different scenarios.",1,moonshotai/kimi-k2-instruct
+CON_008,contradiction_detection,hard,Do the two passages prescribe different tests for disqualifying a custodian from,Yes,"Yes
+Passage A bars a custodian when the sponsor/associates hold ≥50 % of the custodian’s voting rights, while Passage B disqualifies if any associate of the sponsor (including shareholders of the AMC) is merely a director of the custodian.",1,moonshotai/kimi-k2-instruct
+CON_009,contradiction_detection,medium,Do the two passages collectively indicate that the 50% monetary asset limit alwa,No,"No
+The second passage explicitly states the 50% monetary asset limit does not apply if the IPO is made entirely through an offer for sale.",1,moonshotai/kimi-k2-instruct
+CON_010,contradiction_detection,hard,Do the two passages impose the same advance notice period for different types of,No,"No.
+Passage A requires 21 days advance notice, while Passage B sets a one-month timeframe for redemption without specifying when notice must be given.",1,moonshotai/kimi-k2-instruct
+CON_011,contradiction_detection,easy,Do the two passages prescribe different minimum corpus requirements for social i,Yes,"Yes. Passage A sets a minimum corpus of ₹5 crore for social impact funds, while Passage B sets a higher minimum of ₹20 crore for other AIF schemes.",1,moonshotai/kimi-k2-instruct
+CON_012,contradiction_detection,medium,Do the two passages indicate that the same open offer trigger threshold applies ,No,"No
+Because companies on the Innovators Growth Platform trigger open offer at 49% voting rights, which differs from the 25% for others.",1,moonshotai/kimi-k2-instruct
+TMP_001,temporal_reasoning,medium,"Under SEBI ICDR Regulations, which definition of 'key managerial personnel' is c","The definition aligning with Companies Act 2013 sub-section (51) of section 2, effective from 31.01.2023","The definition as substituted by the 31.01.2023 amendment (i.e. the Companies Act 2013, section 2 sub-section (51) formulation) is now in force.",1,moonshotai/kimi-k2-instruct
+TMP_002,temporal_reasoning,easy,Which lock-in regime for minimum promoters' contribution applied before 13 Augus,"Three years from the date of commencement of commercial production or date of allotment, whichever is later","Three-year lock-in (from the date of commencement of commercial production or allotment, whichever is later) applied until 13.08.2021; the shorter eighteen-month lock-in took effect only from 13.08.2021.",1,moonshotai/kimi-k2-instruct
+TMP_003,temporal_reasoning,hard,"Under SEBI LODR Regulations 2015, which provisions came into force on the date o",Sub-regulation (4) of regulation 23 and regulation 31A,"Sub-regulation (4) of regulation 23 and regulation 31A – these came into force on 2 September 2015 itself, the day the regulations were notified.",1,moonshotai/kimi-k2-instruct
+TMP_004,temporal_reasoning,medium,Was the term 'Delisting Regulations' a defined term in the SEBI Takeover Regulat,"No — the definition of 'Delisting Regulations' was only inserted by the Third Amendment Regulations, 2021, effective from 6 December 2021",No. The term 'Delisting Regulations' was inserted as a defined term only on 6 December 2021; it did not exist in the 2011 regulations when they came into force in October 2011.,0,moonshotai/kimi-k2-instruct
+TMP_005,temporal_reasoning,easy,What was the name of the trading platform for emerging issuers under SEBI ICDR R,Institutional trading platform,"""institutional trading platform""",1,moonshotai/kimi-k2-instruct
+TMP_006,temporal_reasoning,medium,Which amendment to SEBI ICDR Regulations broadened the definition of 'associate',"The SEBI (ICDR) (Amendment) Regulations, 2025, effective from 08.03.2025","SEBI (ICDR) (Amendment) Regulations, 2025, effective 08.03.2025.",1,moonshotai/kimi-k2-instruct
+TMP_007,temporal_reasoning,medium,"Before 7 September 2021, which SEBI regulations were cross-referenced in SEBI LO","The SEBI (Issue and Listing of Debt Securities) Regulations, 2008","SEBI (Issue and Listing of Debt Securities) Regulations, 2008.",1,moonshotai/kimi-k2-instruct
+TMP_008,temporal_reasoning,medium,"Under SEBI AIF Regulations 2012, how long could funds registered under the earli","Five years from the commencement of the SEBI (AIF) Regulations, 2012","Five years from the commencement of the SEBI (AIF) Regulations, 2012.",1,moonshotai/kimi-k2-instruct
+TMP_009,temporal_reasoning,medium,"Under SEBI ICDR Regulations, where was the draft letter of offer filed before th",With the Board (SEBI),"Before 08.03.2025, it was filed with the Board.",0,moonshotai/kimi-k2-instruct
+TMP_010,temporal_reasoning,hard,"After May 2021, which regulation number in which SEBI regulations defines the te","Regulation 2(ee) of the SEBI (Issue of Capital and Disclosure Requirements) Regulations, 2018","Regulation 2(ee) of the SEBI (Issue of Capital and Disclosure Requirements) Regulations, 2018, as effective from 5 May 2021, defines the term ""main board"" for SEBI LODR Regulations 2015.",1,moonshotai/kimi-k2-instruct
+TMP_011,temporal_reasoning,hard,"Before September 2018, what phrase was used in the SEBI Takeover Regulations 201",Is made,is made,1,moonshotai/kimi-k2-instruct
+TMP_012,temporal_reasoning,easy,The SEBI (Merchant Bankers) Regulations 1992 were enacted under which SEBI Act a,"The Securities and Exchange Board of India Act, 1992","The regulations were enacted under the SEBI Act, 1992.",0,moonshotai/kimi-k2-instruct
+TMP_013,temporal_reasoning,easy,Which set of SEBI regulations originally established the regulatory framework fo,"The SEBI (Mutual Funds) Regulations, 1996","SEBI (Mutual Funds) Regulations, 1996",1,moonshotai/kimi-k2-instruct
+TMP_014,temporal_reasoning,medium,What term was used in SEBI REIT Regulations 2014 before the 2016 amendment repla,Sponsor(s),‘sponsor(s)’,1,moonshotai/kimi-k2-instruct
+TMP_015,temporal_reasoning,easy,Which was enacted earlier — the SEBI (ICDR) Regulations 2009 or the SEBI (ICDR) ,"The SEBI (ICDR) Regulations, 2009 was enacted earlier",SEBI (ICDR) Regulations 2009 was enacted earlier; SEBI (ICDR) Regulations 2018 superseded it.,1,moonshotai/kimi-k2-instruct
+TMP_016,temporal_reasoning,medium,In which year was the concept of 'fugitive economic offender' first incorporated,"2018, effective from 16 November 2018","The concept of 'fugitive economic offender' was incorporated into the SEBI LODR Regulations 2015 with effect from 16 November 2018 through the SEBI (LODR) (Sixth Amendment) Regulations, 2018.",1,moonshotai/kimi-k2-instruct
+TMP_017,temporal_reasoning,medium,"Under SEBI AIF Regulations, from which date could social impact funds start issu","25 July 2022, following the Third Amendment Regulations, 2022",25 July 2022,1,moonshotai/kimi-k2-instruct
+REG_067,regulatory_interpretation,easy,Within how many days must a stock exchange forward a completed registration appl,Thirty days,30 days,1,moonshotai/kimi-k2-instruct
+REG_068,regulatory_interpretation,easy,Within how many days must an intermediary update material changes to the informa,Fifteen days,15 days,1,moonshotai/kimi-k2-instruct
+REG_069,regulatory_interpretation,easy,What is the maximum time within which an intermediary must redress investor grie,Forty-five days of receipt of the grievance,Forty-five days,1,moonshotai/kimi-k2-instruct
+REG_070,regulatory_interpretation,easy,For how long is an applicant barred from making a fresh registration application,One year from the date of rejection,One year,1,moonshotai/kimi-k2-instruct
+REG_071,regulatory_interpretation,medium,"Under SEBI (Intermediaries) Regulations 2008, within how many days must SEBI dis","Sixty days. If SEBI fails to communicate within sixty days, prior approval shall be deemed to have been granted.",60 days; prior approval is deemed granted.,1,moonshotai/kimi-k2-instruct
+REG_072,regulatory_interpretation,easy,What two things must a SEBI-registered intermediary prominently display at all i,"A photocopy of the certificate of registration, and the name and contact details of the compliance officer.","1. A photocopy of the certificate  
+2. The name and contact details of the compliance officer",1,moonshotai/kimi-k2-instruct
+REG_073,regulatory_interpretation,medium,Under what three circumstances can a permanent certificate granted to an interme,"If the certificate is surrendered by the intermediary, or suspended, or cancelled in accordance with the regulations.",Surrendered by the intermediary; suspended in accordance with these regulations; cancelled in accordance with these regulations.,1,moonshotai/kimi-k2-instruct
+REG_074,regulatory_interpretation,easy,What minimum investment amount must an accredited investor commit to a portfolio,Ten crore rupees,Ten crore rupees,1,moonshotai/kimi-k2-instruct
+REG_075,regulatory_interpretation,easy,What is the maximum permissible limit for any buy-back as a percentage of the ag,"Twenty-five per cent, based on standalone or consolidated financial statements, whichever sets out a lower amount.","25% of the aggregate of paid-up capital and free reserves, based on whichever is lower between standalone or consolidated financial statements.",1,moonshotai/kimi-k2-instruct
+REG_076,regulatory_interpretation,easy,What is the maximum debt-to-capital ratio (secured plus unsecured debts to paid-,2:1,2:1,1,moonshotai/kimi-k2-instruct
+REG_077,regulatory_interpretation,easy,"Under SEBI (Buy-Back of Securities) Regulations 2018, how long must a company wa",One year from the date of expiry of the buyback period of the preceding offer.,One year,1,moonshotai/kimi-k2-instruct
+REG_078,regulatory_interpretation,medium,From which three sources may a company fund a buy-back of its shares under SEBI ,"Free reserves, securities premium account, or proceeds of issue of shares or specified securities. A company cannot use proceeds of an earlier issue o","A company may fund a buy-back from:
+1. Free reserves
+2. Securities premium account  
+3. Proceeds of issues of shares/other specified securities
+
+It cannot use proceeds from an earlier issue of the same kind of shares or specified securities.",1,moonshotai/kimi-k2-instruct
+REG_079,regulatory_interpretation,medium,A company defaulted on repayment of a term loan. The default was remedied. After,After three years have lapsed since the default ceased to subsist.,Three years after the default ceased to subsist.,1,moonshotai/kimi-k2-instruct
+REG_080,regulatory_interpretation,easy,"How does SEBI (Delisting of Equity Shares) Regulations, 2021 define 'compulsory ",Delisting of equity shares of a company by a recognised stock exchange under Chapter V of these regulations.,"Compulsory delisting is the delisting of equity shares of a company by a recognised stock exchange under Chapter V of the SEBI (Delisting of Equity Shares) Regulations, 2021.",1,moonshotai/kimi-k2-instruct
+REG_081,regulatory_interpretation,easy,What is the 'bidding period' as defined in SEBI (Delisting of Equity Shares) Reg,The period within which shareholders may tender their shares in acceptance of the offer for delisting of equity shares of the company.,The period within which shareholders may tender their shares in acceptance of the offer for delisting of equity shares of the company made under these regulations.,1,moonshotai/kimi-k2-instruct
+REG_082,regulatory_interpretation,easy,"When did the SEBI (Research Analysts) Regulations, 2014 come into force relative",On the ninetieth day from the date of publication in the Official Gazette.,Ninetieth day after the date of their publication in the Official Gazette.,1,moonshotai/kimi-k2-instruct
+REG_083,regulatory_interpretation,easy,"Under SEBI (Research Analysts) Regulations 2014, who qualifies as an 'independen",A person whose only business activity is research analysis or preparation and/or publication of research report.,A person whose only business activity is research analysis or preparation and/or publication of research report.,1,moonshotai/kimi-k2-instruct
+REG_084,regulatory_interpretation,easy,From which financial year do the Reserve Bank of India (Small Finance Banks - Pr,Financial Year 2026-27,FY 2026-27,1,moonshotai/kimi-k2-instruct
+REG_085,regulatory_interpretation,easy,To which category of banks do the RBI (Small Finance Banks - Prudential Norms on,Small Finance Banks (SFBs),Small Finance Banks (SFBs),1,moonshotai/kimi-k2-instruct
+REG_086,regulatory_interpretation,easy,"Under the RBI SFB Dividend Directions 2026, what is the maximum aggregate divide",Not exceeding 75% of the PAT for the period for which the dividend is proposed.,75% of PAT,1,moonshotai/kimi-k2-instruct
+REG_087,regulatory_interpretation,medium,What four factors must the Board of Directors of a Small Finance Bank consider w,1. Divergence in NPA classification and provisioning as observed in RBI supervisory findings; 2. Auditors' Report including modified opinion or Emphas,"1. Divergence in asset classification and provisioning for NPAs, including its trend, as observed under RBI supervisory findings
+2. Auditors' Report to the financial statements, including modified opinion or Emphasis of Matter, for the relevant financial year
+3. Current and projected capital positio",1,moonshotai/kimi-k2-instruct
+REG_088,regulatory_interpretation,easy,"After declaring a dividend, within what time period must a Small Finance Bank su",Within a fortnight (two weeks) of the declaration of dividend.,within a fortnight,1,moonshotai/kimi-k2-instruct
+REG_089,regulatory_interpretation,easy,"Under the RBI SFB Dividend Directions 2026, is a bank eligible to declare divide",No. A bank that is under any explicit restrictions for declaration of dividends from the Reserve Bank or any other authority is not eligible to declar,No,0,moonshotai/kimi-k2-instruct
+REG_090,regulatory_interpretation,medium,How is 'Adjusted Profit After Tax (PAT)' defined under the RBI SFB Dividend Dire,PAT of the financial year for which the dividend is proposed minus 50% of Net NPA as on March 31 of that financial year.,Adjusted PAT = PAT for the dividend year – 50% of Net NPA as on 31 March of that year.,1,moonshotai/kimi-k2-instruct
+REG_091,regulatory_interpretation,easy,"Under the RBI Master Direction on Unique Identifiers in Financial Markets 2026, ","January 01, 2027","January 01, 2027",1,moonshotai/kimi-k2-instruct
+REG_092,regulatory_interpretation,easy,"Under the RBI Master Direction on Unique Identifiers 2026, are entities without ",No. Entities without an LEI code are not eligible to undertake transactions in the financial markets regulated by the Reserve Bank.,No.,1,moonshotai/kimi-k2-instruct
+REG_093,regulatory_interpretation,medium,"For non-derivative foreign exchange transactions, at what minimum transaction am",USD one million or equivalent thereof in other currencies.,USD 1 million or equivalent,1,moonshotai/kimi-k2-instruct
+REG_094,regulatory_interpretation,easy,What is the minimum nominal amount for which Government of India dated securitie,"Minimum ₹10,000 (nominal), in multiples of ₹10,000 thereafter.","Rs. 10,000/-; Rs. 10,000/-",1,moonshotai/kimi-k2-instruct
+NUM_067,numerical_reasoning,easy,"Using the formula for Adjusted PAT, calculate the Adjusted PAT for a Small Finan","₹13,750 crore. Calculation: ₹17,000 - (50% × ₹6,500) = ₹17,000 - ₹3,250 = ₹13,750 crore.","Adjusted PAT = ₹17,000 crore − 0.5 × ₹6,500 crore  
+= ₹17,000 crore − ₹3,250 crore  
+= ₹13,750 crore",1,moonshotai/kimi-k2-instruct
+NUM_068,numerical_reasoning,medium,A Small Finance Bank has a Tier 1 Capital Ratio of 11.72% and an Adjusted PAT of,"₹5,500 crore. Calculation: Bank falls in Bucket B4 (above 11.5% and up to 13.5%), which allows 40% of Adjusted PAT. 40% × ₹13,750 = ₹5,500 crore.","11.72 % places the bank in B4, where 40 % of Adjusted PAT is allowed.  
+40 % × ₹13,750 crore = ₹5,500 crore.
+
+₹5,500 crore",0,moonshotai/kimi-k2-instruct
+NUM_069,numerical_reasoning,medium,"Under RBI SFB Dividend Directions 2026, the Maximum Eligible Dividend is the low","₹5,500 crore. This is the lower of 75% of PAT (₹12,750 crore) and the Table 1 limit (₹5,500 crore).","Calculation  
+75% of PAT = 0.75 × 17,000 crore = 12,750 crore  
+Table 1 limit = 5,500 crore  
+Maximum Eligible Dividend = lower of 12,750 crore or 5,500 crore = 5,500 crore  
+
+Final answer: ₹5,500 crore",1,moonshotai/kimi-k2-instruct
+NUM_070,numerical_reasoning,medium,"In Illustration 1 of the RBI SFB Dividend Directions 2026, the Maximum Eligible ","32.35%. Calculation: (₹5,500 ÷ ₹17,000) × 100 = 32.35%.","Calculation:  
+(₹5,500 crore ÷ ₹17,000 crore) × 100 = 32.35 %
+
+Final answer:  
+32.35 %",1,moonshotai/kimi-k2-instruct
+NUM_071,numerical_reasoning,medium,"In Illustration 3, a Small Finance Bank has Maximum Eligible Dividend of ₹1,125 ","₹625 crore. Calculation: Maximum Eligible Dividend (₹1,125 crore) minus interim dividend already paid (₹500 crore) = ₹625 crore.","Maximum permissible final dividend  
+= Maximum Eligible Dividend − Interim dividend paid  
+= ₹1,125 cr − ₹500 cr  
+= ₹625 crore",1,moonshotai/kimi-k2-instruct
+NUM_072,numerical_reasoning,easy,"A Small Finance Bank has a PAT of ₹40,500 crore and Net NPA of ₹5,000 crore. Wha","₹38,000 crore. Calculation: ₹40,500 - (50% × ₹5,000) = ₹40,500 - ₹2,500 = ₹38,000 crore.","Adjusted PAT  
+= PAT − 50% of Net NPA  
+= ₹40,500 crore − 0.5 × ₹5,000 crore  
+= ₹40,500 crore − ₹2,500 crore  
+= ₹38,000 crore",0,moonshotai/kimi-k2-instruct
+NUM_073,numerical_reasoning,hard,"In Illustration 2, with Adjusted PAT of ₹38,000 crore and Bucket B5 (50% limit),","Maximum per Table 1: ₹19,000 crore (50% × ₹38,000). 75% of PAT: ₹30,375 crore (75% × ₹40,500). The Maximum Eligible Dividend is ₹19,000 crore, being t","75% of PAT (₹40,500 crore) is not applicable; 75% of ₹38,000 crore = ₹30,375 crore.  
+Maximum dividend per Table 1 = ₹19,000 crore.  
+
+Answer: ₹19,000 crore",1,moonshotai/kimi-k2-instruct
+NUM_074,numerical_reasoning,medium,"In the GoI dated securities auction announced on March 28, 2026, what is the max","₹33,000 crore. Calculation: Notified amount ₹29,000 crore + greenshoe of ₹2,000 crore per security × 2 securities = ₹29,000 + ₹4,000 = ₹33,000 crore.","Additional subscription per security: ₹2,000 crore  
+Number of securities: 2  
+Extra greenshoe amount: 2,000 × 2 = ₹4,000 crore  
+
+Base notified amount: ₹29,000 crore  
+Maximum if greenshoe exercised: 29,000 + 4,000 = ₹33,000 crore",1,moonshotai/kimi-k2-instruct
+NUM_075,numerical_reasoning,medium,"In the GoI dated securities auction announced on March 28, 2026, what is the tot","₹12,000 crore. It represents approximately 41.4% of the total notified amount (₹12,000 ÷ ₹29,000 × 100 ≈ 41.4%).","Notified amount for 7.43% GS 2076: ₹12,000 crore  
+Total auction amount: ₹17,000 cr + ₹12,000 cr = ₹29,000 cr  
+Fraction: 12,000 / 29,000 = 12/29",0,moonshotai/kimi-k2-instruct
+NUM_076,numerical_reasoning,easy,What is the total aggregate face value amount offered by all State Governments i,"₹57,408 crore","The passage gives ₹57,408 crore as the aggregate face-value amount. No additional calculation is required.
+
+Answer: ₹57,408 crore",1,moonshotai/kimi-k2-instruct
+NUM_077,numerical_reasoning,easy,How much in total is Andhra Pradesh seeking to raise across all three of its sec,"₹3,900 crore. Calculation: ₹1,500 + ₹1,500 + ₹900 = ₹3,900 crore.","1500 + 1500 + 900 = 3900 crore
+Final answer: 3900 crore",0,moonshotai/kimi-k2-instruct
+NUM_078,numerical_reasoning,easy,What is the total amount Karnataka is raising across all its five securities in ,"₹10,000 crore. Calculation: ₹2,000 × 5 securities = ₹10,000 crore.","2,000 crore",0,moonshotai/kimi-k2-instruct
+NUM_079,numerical_reasoning,easy,What is the total amount of Government of India dated securities to be issued du,"₹8,20,000 crore","8,20,000 crore",1,moonshotai/kimi-k2-instruct
+NUM_080,numerical_reasoning,easy,"In the GoI securities issuance calendar for H1 FY2026-27, what is the combined a","₹63,000 crore. Calculation: ₹29,000 (Week 1) + ₹34,000 (Week 2) = ₹63,000 crore.","Combined amount = ₹29,000 crore + ₹34,000 crore = ₹63,000 crore",0,moonshotai/kimi-k2-instruct
+NUM_081,numerical_reasoning,easy,"In auction week 4 (April 20-24, 2026) of the GoI issuance calendar, what is the ","₹10,000 crore. Calculation: ₹5,000 crore (30-year regular) + ₹5,000 crore (30-year SGrB) = ₹10,000 crore.","₹5,000 crore + ₹5,000 crore = ₹10,000 crore",1,moonshotai/kimi-k2-instruct
+NUM_082,numerical_reasoning,easy,"As on March 13, 2026, what was India's total foreign exchange reserve in US doll","Total reserves: US$ 709,759 million. Weekly variation: a decrease of US$ 7,052 million.","US$ 709,759 million; it fell US$ 7,052 million during the week.",1,moonshotai/kimi-k2-instruct
+NUM_083,numerical_reasoning,easy,What was the year-on-year growth rate of aggregate deposits of Scheduled Commerc,11.9%,11.9%,1,moonshotai/kimi-k2-instruct
+NUM_084,numerical_reasoning,medium,"As of February 28, 2026, what was the year-on-year growth rate of M3 (broad mone",11.5%,"Calculation:
+Year-on-year growth rate is given as 11.5 %.
+
+Final answer: 11.5 %",1,moonshotai/kimi-k2-instruct
+NUM_085,numerical_reasoning,medium,"What was the value of India's gold reserves as on March 13, 2026 in US dollar te","Gold reserves as on March 13, 2026: US$ 130,681 million. Increase over the year: US$ 56,289 million.","Value as on Mar 13 2026: US$130,681 million  
+Increase over the year: US$56,289 million",1,moonshotai/kimi-k2-instruct
+NUM_086,numerical_reasoning,hard,A company has paid-up capital and free reserves of ₹500 crore before a buy-back.,Maximum buy-back amount: ₹125 crore (25% × ₹500 crore). Maximum debt after buy-back: ₹750 crore assuming free reserves after buyback are ₹375 crore (2,"Maximum buy-back: 25% of ₹500 crore = ₹125 crore  
+Maximum total debt after buy-back: 2 × (₹500 crore – ₹125 crore) = 2 × ₹375 crore = ₹750 crore",1,moonshotai/kimi-k2-instruct
+CON_028,contradiction_detection,easy,Do the two press releases state the same aggregate amount for the State Governme,No,"No.
+The first release quotes ₹55,688 crore and the second ₹57,408 crore, so the amounts differ.",1,moonshotai/kimi-k2-instruct
+CON_029,contradiction_detection,easy,Do Bucket B1 and Bucket B10 permit the same dividend payout as a percentage of A,No,"No
+B1 allows 0% of adjusted PAT as dividend while B10 allows 100%.",1,moonshotai/kimi-k2-instruct
+CON_030,contradiction_detection,easy,Do Section A and Section B of the RBI Master Direction on Unique Identifiers in ,No,"No  
+Section A comes into force immediately, while Section B takes effect only on January 01, 2027.",1,moonshotai/kimi-k2-instruct
+CON_031,contradiction_detection,medium,Do the two passages prescribe the same maximum limit for all buy-back transactio,No,"No.
+Passage A gives a 25 % cap for any buy-back, while Passage B imposes a lower 15 % limit for open-market buy-backs through 31 March 2023.",1,moonshotai/kimi-k2-instruct
+CON_032,contradiction_detection,medium,Are the two passages contradictory regarding RBI's authority over Small Finance ,No,"No  
+Passage A applies when no non-compliance exists, while Passage B explicitly applies when non-compliance is found, so together they regulate different situations without contradicting.",1,moonshotai/kimi-k2-instruct
+CON_033,contradiction_detection,medium,Do both passages describe intermediaries who hold permanent certificates under S,No,"No; Passage B expressly refers to a certificate that is valid for a specified period, which is contrary to the permanent certificate discussed in Passage A.",1,moonshotai/kimi-k2-instruct
+CON_034,contradiction_detection,medium,"Does the GoI dated securities auction announced on March 28, 2026 use a uniform ",No,"No. Passage A states the auction uses the multiple price method, meaning successful bidders pay their actual bid prices rather than a single uniform cut-off price.",1,moonshotai/kimi-k2-instruct
+CON_035,contradiction_detection,easy,Do both passages state the same percentage of the notified amount reserved for n,Yes,Yes. Both passages specify that 5% of the notified amount is reserved for non-competitive bidding.,1,moonshotai/kimi-k2-instruct
+CON_036,contradiction_detection,medium,Do both passages identify different categories of profits ineligible for dividen,Yes,Yes; Passage A bars generic exceptional/extra-ordinary income while Passage B specifically bars unrealised Level 3 valuation gains.,1,moonshotai/kimi-k2-instruct
+CON_037,contradiction_detection,medium,Do the two passages together suggest that a company can use buy-back as a mechan,No,"No  
+Passage B explicitly prohibits buy-backs done with the intent to delist, so buy-back cannot be used as a mechanism for delisting.",1,moonshotai/kimi-k2-instruct
+CON_038,contradiction_detection,medium,Does the repeal of the 2025 SFB Dividend Directions mean that all actions previo,No,"No
+Any action taken under the repealed 2025 Directions continues to be governed by those provisions.",1,moonshotai/kimi-k2-instruct
+CON_039,contradiction_detection,medium,Do the original and revised press releases state the same borrowing amount for U,No,"No
+The original release lists ₹1,280 crore for 18-year securities while the revised release lists ₹1,500 crore.",1,moonshotai/kimi-k2-instruct
+CON_040,contradiction_detection,hard,Does Passage B create an exception to the general rule in Passage A that every e,Yes,Yes. Passage B allows non-resident non-legal entities to transact using their parent/management company’s LEI instead of obtaining their own.,1,moonshotai/kimi-k2-instruct
+CON_041,contradiction_detection,hard,Do Chapters V and VI of the SEBI (Intermediaries) Regulations 2008 come into for,No,"No.  
+Passage A states Chapters V and VI take effect on the publication date, while Passage B specifies other intermediary provisions take effect on assorted dates notified later.",1,moonshotai/kimi-k2-instruct
+CON_042,contradiction_detection,easy,"Under the RBI SFB Dividend Directions 2026, do Bucket B2 and Bucket B3 allow the",No,No. Bucket B2 allows 20% while Bucket B3 allows 30% of adjusted PAT.,1,moonshotai/kimi-k2-instruct
+CON_043,contradiction_detection,easy,Do the definitions of 'independent research analyst' and 'part-time research ana,No,"No
+Independent analysts only conduct research; part-time analysts also run another business or hold employment.",1,moonshotai/kimi-k2-instruct
+CON_044,contradiction_detection,medium,Do auction weeks 2 and 6 of the GoI issuance calendar for H1 FY2026-27 have the ,Yes,"Yes; both weeks offer a single 10-year security for the identical ₹34,000 crore amount.",1,moonshotai/kimi-k2-instruct
+CON_045,contradiction_detection,hard,Do the two passages together indicate that open-market buy-back through stock ex,No,"No  
+Passage A explicitly bars open-market stock-exchange buy-backs from 1 April 2025, so they will no longer be permitted.",1,moonshotai/kimi-k2-instruct
+TMP_028,temporal_reasoning,easy,Which was implemented first under the RBI Master Direction on Unique Identifiers,"The LEI framework (Section A) was implemented first, coming into force with immediate effect from March 27, 2026. The UTI framework (Section B) comes ",LEI framework.,0,moonshotai/kimi-k2-instruct
+TMP_029,temporal_reasoning,medium,Among the five circulars superseded by the RBI Master Direction on Unique Identi,"CO.FMRD.MIOD.No.8/11.01.057/2025-26 dated February 18, 2026, which is the most recent of the five superseded circulars.","CO.FMRD.MIOD.No.8/11.01.057/2025-26 dated February 18, 2026",1,moonshotai/kimi-k2-instruct
+TMP_030,temporal_reasoning,medium,"How many years elapsed between the issuance of the first LEI circular (June 01, ","Approximately 8 years and 10 months elapsed between June 1, 2017 and March 27, 2026.","From June 1, 2017 to March 27, 2026 is 8 years, 9 months, 26 days.",1,moonshotai/kimi-k2-instruct
+TMP_031,temporal_reasoning,medium,Describe the step-by-step reduction in the maximum open-market buy-back limit th,"15% (until March 31, 2023) → 10% (until March 31, 2024) → 5% (until March 31, 2025) → Complete prohibition from April 1, 2025.","- Till 31 Mar 2023: buy-back capped at 15% of paid-up capital + free reserves  
+- Till 31 Mar 2024: ceiling drops to 10%  
+- Till 31 Mar 2025: ceiling falls to 5%  
+- From 1 Apr 2025: open-market buy-backs through stock exchanges prohibited",0,moonshotai/kimi-k2-instruct
+TMP_032,temporal_reasoning,medium,Which set of RBI directions on Small Finance Bank dividend norms was in effect d,"The 2025 Directions (issued November 28, 2025) were in effect during FY 2025-26. The 2026 Directions come into effect only from FY 2026-27 (i.e., from",The 2025 Directions were in effect during FY 2025-26.,1,moonshotai/kimi-k2-instruct
+TMP_033,temporal_reasoning,medium,"In chronological order, what are the key dates in the lifecycle of the GoI dated","March 28 (announcement), March 30 – April 02 ('When Issued' trading period), April 02 (auction day, bids submitted), April 06 (settlement, payment by ","March 28, 2026 – GoI announcement  
+March 30 – April 2, 2026 – When-issued trading window  
+April 2, 2026 – auction date  
+April 6, 2026 – settlement date",1,moonshotai/kimi-k2-instruct
+TMP_034,temporal_reasoning,easy,For the State Government securities auction covered in this revised press releas,"March 21, 2026 (revised press release issued) → March 24, 2026 (auction conducted on E-Kuber) → March 25, 2026 (payment by successful bidders).","Revised press release issued: March 21, 2026 (Friday) → Auction on E-Kuber: March 24, 2026 (Tuesday) → Settlement/payment: March 25, 2026 (Wednesday).",1,moonshotai/kimi-k2-instruct
+TMP_035,temporal_reasoning,medium,"Under SEBI (Intermediaries) Regulations 2008, an intermediary holding a permanen","Two years plus up to six months extension, for a maximum of two and a half years from the commencement of these regulations.",2.5 years from the commencement of the regulations in relation to such intermediary.,0,moonshotai/kimi-k2-instruct
+TMP_036,temporal_reasoning,medium,"The SEBI (Research Analysts) Regulations 2014 were published on September 1, 201","On the ninetieth day from September 1, 2014, which is approximately November 30, 2014.",30 November 2014,1,moonshotai/kimi-k2-instruct
+TMP_037,temporal_reasoning,medium,"In the GoI securities issuance calendar for H1 FY2026-27, which is the first auc","Auction Week 4 (April 20-24, 2026) is the first week to include Sovereign Green Bonds, with ₹5,000 crore allocated for the 30-year SGrB.","Week 4 (April 20-24, 2026); ₹5,000 crore.",1,moonshotai/kimi-k2-instruct
+TMP_038,temporal_reasoning,easy,"The RBI SFB Dividend Directions 2026 were issued on March 10, 2026 but take effe","The 2025 Directions were issued before the 2026 Directions — on November 28, 2025, compared to March 10, 2026 for the 2026 Directions.","The 2025 Directions (repealed circular dated November 28, 2025) were issued before the 2026 Directions were issued on March 10, 2026.",1,moonshotai/kimi-k2-instruct
+TMP_039,temporal_reasoning,hard,"A counterparty entered into an OTC derivative transaction on December 15, 2026. ","No. The UTI requirements (Section B) come into effect from January 01, 2027, and apply only to transactions entered into on or after that date. A tran","No. The transaction of December 15, 2026, predates January 1, 2027, so UTI reporting under Section B of the RBI Master Direction does not apply to it.",0,moonshotai/kimi-k2-instruct
+TMP_040,temporal_reasoning,hard,An intermediary's time-limited certificate expires in 18 months from the commenc,"The intermediary must apply at least three months before the earlier of: (a) expiry of the certificate (15 months from commencement), or (b) three mon",At least three months prior to the expiry of the 18-month period.,1,moonshotai/kimi-k2-instruct
+TMP_041,temporal_reasoning,medium,For how long was the Al-Nusrah Front listed on the ISIL (Da'esh) and Al-Qaida Sa,"Approximately 11 years and 9 months — from May 14, 2014 to February 27, 2026.",Listed 14 May 2014; removed by 27 Feb 2026 → 11 years 9 months 13 days.,0,moonshotai/kimi-k2-instruct
+TMP_042,temporal_reasoning,easy,"Under the RBI GoI issuance calendar for H1 FY2026-27, if the third Monday of a m",On the fourth Monday of that month.,On the fourth Monday of that month.,1,moonshotai/kimi-k2-instruct
+TMP_043,temporal_reasoning,easy,"Under the RBI Master Direction on UTI 2026, if a market participant cannot obtai",Within five Mumbai business days from the date of the transaction.,Within five Mumbai business days from the transaction date.,1,moonshotai/kimi-k2-instruct
+TMP_044,temporal_reasoning,medium,"A company completed its buy-back (i.e., made the final payment to shareholders) ","June 15, 2026 — one year from the expiry date (June 15, 2025) of the buyback period of the preceding offer.",15 June 2026 (one year after the date of completion of the preceding buy-back).,1,moonshotai/kimi-k2-instruct
+TMP_045,temporal_reasoning,hard,"In Illustration 3 of the RBI SFB Dividend Directions 2026, the bank paid interim","The constraint applies cumulatively across both payments. The Maximum Eligible Dividend (₹1,125 crore) is the total permitted across the full financia","The Maximum Eligible Dividend constraint applies cumulatively across both payments; the final dividend must be no more than ₹1,125 crore minus the ₹500 crore interim dividend already paid.",1,moonshotai/kimi-k2-instruct
+REG_054,regulatory_interpretation,easy,"Under SEBI (Infrastructure Investment Trusts) Regulations 2014, what is the maxi",Fifteen months,Fifteen months,1,moonshotai/kimi-k2-instruct
+REG_055,regulatory_interpretation,easy,"Under SEBI (InvIT) Regulations 2014, how frequently must the trustee obtain a co",On a quarterly basis,Quarterly,1,moonshotai/kimi-k2-instruct
+REG_056,regulatory_interpretation,easy,"Under SEBI (InvIT) Regulations 2014, within how many days must SEBI communicate ",Within thirty days,Thirty days,1,moonshotai/kimi-k2-instruct
+REG_057,regulatory_interpretation,easy,"Under SEBI (InvIT) Regulations 2014, what minimum equity interest must an InvIT ",Not less than fifty one per cent of the equity share capital or interest,Not less than 51% of the equity share capital or interest.,1,moonshotai/kimi-k2-instruct
+REG_058,regulatory_interpretation,easy,"Under SEBI (InvIT) Regulations 2014, what minimum percentage of its assets must ",Not less than ninety per cent,Not less than ninety per cent,1,moonshotai/kimi-k2-instruct
+REG_059,regulatory_interpretation,medium,"Under SEBI (InvIT) Regulations 2014 (as currently in force), what minimum net wo","More than five hundred crore rupees, as per the latest audited financial statements",More than five hundred crore rupees,1,moonshotai/kimi-k2-instruct
+REG_060,regulatory_interpretation,medium,"Under SEBI (InvIT) Regulations 2014, what is the combined monetary cap on permis","Two per cent of its gross turnover or total income, or fifty lakh rupees, whichever is lower",₹50 lakh,1,moonshotai/kimi-k2-instruct
+REG_061,regulatory_interpretation,medium,"Under SEBI (InvIT) Regulations 2014, when a conflict of interest is flagged in a","A practising chartered accountant or valuer, as applicable",A practising chartered accountant or valuer,1,moonshotai/kimi-k2-instruct
+REG_062,regulatory_interpretation,easy,"Under SEBI (Issue and Listing of Municipal Debt Securities) Regulations 2015, wi",Twenty one days,21 days,1,moonshotai/kimi-k2-instruct
+REG_063,regulatory_interpretation,easy,"Under SEBI (Issue and Listing of Municipal Debt Securities) Regulations 2015, fo",Fifteen days,15 days,1,moonshotai/kimi-k2-instruct
+REG_064,regulatory_interpretation,easy,"Under SEBI (Issue and Listing of Municipal Debt Securities) Regulations 2015, wh",Not more than four,Four,1,moonshotai/kimi-k2-instruct
+REG_065,regulatory_interpretation,easy,"Under SEBI (Issue and Listing of Municipal Debt Securities) Regulations 2015, fo",The preceding three hundred and sixty five days,365 days,0,moonshotai/kimi-k2-instruct
+REG_066,regulatory_interpretation,easy,"Under SEBI (Investment Advisers) Regulations 2013, on which day from the date of",The ninetieth day,90th day,0,moonshotai/kimi-k2-instruct
+NUM_033,numerical_reasoning,medium,"Under SEBI (InvIT) Regulations 2014, if an entity associated with the InvIT has ","Twenty lakh rupees (two per cent of ten crore rupees, being lower than fifty lakh rupees â€” the rule applies whichever is lower)","2% of ₹10 crore = ₹20 lakh  
+Lower of ₹20 lakh and ₹50 lakh  
+
+₹20 lakh",0,moonshotai/kimi-k2-instruct
+NUM_034,numerical_reasoning,medium,"Under SEBI (Issue and Listing of Municipal Debt Securities) Regulations 2015, if","No. The 45 qualified institutional buyers are excluded from the calculation, so only 170 persons are counted, which is within the two hundred person l","Calculation:  
+200 (limit) – 170 (non-QIB investors) = 30  
+45 QIBs are excluded from the count.  
+
+Final answer:  
+No, the offer does not exceed the 200-person limit.",0,moonshotai/kimi-k2-instruct
+NUM_035,numerical_reasoning,medium,"Under SEBI (Issue and Listing of Municipal Debt Securities) Regulations 2015, if",26 May 2025 (after expiry of the twenty one days notice period from 5 May),"21 days after 5 May 2025 = 26 May 2025  
+
+Earliest date roll-over can take effect: 26 May 2025",0,moonshotai/kimi-k2-instruct
+NUM_036,numerical_reasoning,easy,"Under SEBI (InvIT) Regulations 2014, does a family trust with a net worth of fou",No. The threshold is more than five hundred crore rupees; four hundred and ninety nine crore rupees falls below this threshold,"Required net worth: ₹500 crore  
+Actual net worth: ₹499 crore (=< ₹500 crore)  
+
+No",0,moonshotai/kimi-k2-instruct
+NUM_037,numerical_reasoning,easy,"Under SEBI (FPI) Regulations 2019, if a government-linked entity is 70% directly",No. The minimum threshold for government ownership is at least seventy-five per cent; seventy per cent is below this threshold,"Calculation:  
+70% direct ownership < 75% required threshold  
+
+Final answer:  
+No",0,moonshotai/kimi-k2-instruct
+NUM_038,numerical_reasoning,medium,"Under SEBI (InvIT) Regulations 2014, a consulting firm had transactions worth ei","No. Eight lakh rupees out of ninety lakh rupees is approximately 8.9 per cent, which is below the ten per cent threshold; the disqualification criteri","Calculation:  
+Transaction with InvIT = 8 lakh ₹  
+Gross turnover of consulting firm = 90 lakh ₹  
+Proportion = (8 / 90) × 100 ≈ 8.89%  
+
+Since 8.89% < 10%, the disqualification threshold is not breached.  
+
+Final answer: Partner would not be disqualified for FY2026.",0,moonshotai/kimi-k2-instruct
+NUM_039,numerical_reasoning,medium,"Under SEBI (FPI) Regulations 2019, if a designated depository participant applic","By 24 April (thirty days from 25 March, the date all required information was furnished, being the later of the two trigger dates)","1 March + 30 days → 31 March  
+25 March (last information) + 30 days → 24 April  
+
+The later of the two is 24 April.  
+SEBI must dispose of the application by 24 April.",0,moonshotai/kimi-k2-instruct
+NUM_040,numerical_reasoning,easy,Under the original SEBI (Issue and Listing of Debt Securities by Municipalities),By 1 April 2018 (three months from the closure of the issue on 1 January 2018),"The trust deed had to be executed within three months of the closure of the issue.
+
+Issue closed on: 1 January 2018  
+Add three months → 1 April 2018
+
+Latest date of execution: 1 April 2018",1,moonshotai/kimi-k2-instruct
+REG_095,regulatory_interpretation,easy,What is the minimum percentage of an AMC's net worth that a sponsor must contrib,At least 40 per cent,40%,1,moonshotai/kimi-k2-instruct
+REG_096,regulatory_interpretation,easy,"Under SEBI (Mutual Funds) Regulations, 1996, who has the authority to terminate ",Majority of the trustees or by seventy-five per cent of the unitholders of the scheme,The majority of the trustees or seventy-five per cent of the unitholders of the scheme.,1,moonshotai/kimi-k2-instruct
+REG_097,regulatory_interpretation,easy,What minimum proportion of the board of directors of an AMC must comprise direct,At least fifty per cent,At least fifty per cent.,1,moonshotai/kimi-k2-instruct
+REG_098,regulatory_interpretation,easy,"What restriction does SEBI (Mutual Funds) Regulations, 1996 impose on the Chairm",The Chairman of the asset management company is not a trustee of any mutual fund,The Chairman of the asset management company cannot be a trustee of any mutual fund.,1,moonshotai/kimi-k2-instruct
+REG_099,regulatory_interpretation,easy,What is the minimum proportion of independent persons required among the trustee,Two-thirds,Two-thirds,1,moonshotai/kimi-k2-instruct
+REG_100,regulatory_interpretation,medium,What three personal qualifications must every trustee of a mutual fund possess o,"Be a person of ability, integrity and standing; not have been found guilty of moral turpitude; and not have been convicted of any economic offence or ","- Person of ability, integrity and standing  
+- Not found guilty of moral turpitude  
+- Not convicted of any economic offence or violation of securities laws",1,moonshotai/kimi-k2-instruct
+REG_101,regulatory_interpretation,easy,"Under SEBI (Mutual Funds) Regulations, 1996, are directors, officers or employee","No. No asset management company and no director (including independent director), officer or employee of an asset management company shall be eligible","No, they are not eligible.",0,moonshotai/kimi-k2-instruct
+REG_102,regulatory_interpretation,medium,"By what date must a mutual fund pay its annual service fee, and what is the maxi",Before the 15th April each year; the Board may allow payment up to two months from commencement of the financial year,Before 15th April; SEBI may grant a grace period up to two months after the start of the financial year.,1,moonshotai/kimi-k2-instruct
+REG_103,regulatory_interpretation,easy,What requirement applies to the Chairperson of a trustee company appointed as tr,The Chairperson of the board of directors of the trustee company shall be an independent director,The Chairperson must be an independent director.,1,moonshotai/kimi-k2-instruct
+REG_104,regulatory_interpretation,medium,What board composition requirement must an AMC meet after its sponsor disassocia,The board of directors shall have at least two third independent directors,The board of directors of the asset management company must have at least two-thirds independent directors.,1,moonshotai/kimi-k2-instruct
+REG_105,regulatory_interpretation,easy,"Under which Act must the trust deed of a mutual fund be registered, and who exec","The Indian Registration Act, 1908; executed by the sponsor in favour of the trustees named in such an instrument","Under the Indian Registration Act, 1908, executed by the sponsor in favour of the trustees named in the instrument.",1,moonshotai/kimi-k2-instruct
+REG_106,regulatory_interpretation,easy,What proportion of unitholders of a scheme may requisition the trustees to obtai,Three-fourths of the unitholders of any scheme,Three-fourths of the unitholders of the scheme.,1,moonshotai/kimi-k2-instruct
+REG_107,regulatory_interpretation,medium,What capital compliance conditions must an SFB satisfy at the end of both the pr,The bank must be in compliance with the applicable regulatory capital requirement as at the end of the previous financial year and shall continue to b,The SFB must have been and continue to be in compliance with the applicable regulatory capital requirement at the end of the previous and the current financial year.,1,moonshotai/kimi-k2-instruct
+REG_108,regulatory_interpretation,easy,What profitability condition must an SFB satisfy to be eligible to declare divid,The bank shall have positive adjusted Profit After Tax (PAT) for the financial year for which the dividend is proposed,It must have positive adjusted Profit After Tax (PAT) for the financial year for which the dividend is proposed.,1,moonshotai/kimi-k2-instruct
+REG_109,regulatory_interpretation,medium,What four factors must an SFB's Board of Directors consider when evaluating a pr,Divergence in NPA asset classification and provisioning including its trend; Auditors' Report including modified opinion or Emphasis of Matter; Curren,"1. Divergence in asset classification and provisioning for NPAs
+2. Auditors' Report to the financial statements
+3. Current and projected capital position
+4. Long term growth plans",1,moonshotai/kimi-k2-instruct
+REG_110,regulatory_interpretation,easy,Within what period must an SFB submit its dividend declaration report to the RBI,Within a fortnight of declaration of dividend,Within a fortnight of declaration of dividend.,1,moonshotai/kimi-k2-instruct
+REG_111,regulatory_interpretation,easy,What is the consequence for an SFB that fails to meet the dividend eligibility c,No special dispensation will be given for declaration of dividend for that period,The SFB will not be granted any special dispensation to declare a dividend for that period.,1,moonshotai/kimi-k2-instruct
+REG_112,regulatory_interpretation,medium,What categories of profit are excluded from dividend payment eligibility under t,"Any exceptional and/or extra-ordinary profits/income; and any overstatement of PAT identified in a modified audit opinion, to the extent included in P","Exceptional and/or extraordinary profits/income, and any part of PAT that is overstated according to a modified statutory auditor opinion.",1,moonshotai/kimi-k2-instruct
+NUM_087,numerical_reasoning,easy,"What is the minimum average net annual profit (after depreciation, interest and ",At least rupees ten crore,"As per the context passage, the sponsor must have an average net annual profit (after depreciation, interest and tax) of ₹10 crore over the immediately preceding five years to satisfy the sound track record requirement under the SEBI (Mutual Funds) Regulations, 1996.",0,moonshotai/kimi-k2-instruct
+NUM_088,numerical_reasoning,easy,What is the standard minimum networth requirement for an AMC under SEBI (Mutual ,Not less than rupees fifty crore,"Standard minimum networth = ₹50 crore  
+Units: ₹50 crore",0,moonshotai/kimi-k2-instruct
+NUM_089,numerical_reasoning,medium,If a sponsor fails to fulfil all eligibility criteria at the time of application,"Not less than rupees one hundred crore, maintained until the AMC has profits for five consecutive years","Enhanced networth required: ₹100 crore  
+Duration: Until the AMC records profits for five consecutive years.",1,moonshotai/kimi-k2-instruct
+NUM_090,numerical_reasoning,easy,What is the minimum networth required for an AMC that is only eligible to launch,Not less than rupees ten crore,"Not applicable – the Rules already state the minimum absolute amount.  
+Minimum net-worth = ₹ 10 crore.",0,moonshotai/kimi-k2-instruct
+NUM_091,numerical_reasoning,hard,"Under the 2023 amendment to Regulation 7, if a sponsor fails all eligibility req","AMC net worth not less than rupees one hundred fifty crore; locked-in for five years; total combined experience of CEO, COO, CRO, CCO and CIO of at le","• AMC capitalization threshold: rupees one hundred fifty crore  
+• Lock-in period: five years  
+• Minimum combined experience of the five senior officers: thirty years",1,moonshotai/kimi-k2-instruct
+NUM_092,numerical_reasoning,medium,"Under SEBI (Mutual Funds) Regulations, 1996, what is the maximum percentage of t","5 per cent of aggregate purchases and sales, measured for a block of any three months","Maximum: 5 % of aggregate securities purchases + sales (excluding unit distribution).
+
+Measured over: any consecutive 3-month block.",0,moonshotai/kimi-k2-instruct
+NUM_093,numerical_reasoning,easy,How is 'Adjusted Profit After Tax (PAT)' defined under the RBI SFB Dividend Dire,PAT of the financial year minus 50 per cent of Net NPA as on March 31 of the financial year for which the dividend is to be paid,"Calculation:  
+Adjusted PAT = PAT for the financial year – (0.5 × Net NPA as on 31 March of that year)
+
+Final answer:  
+Adjusted PAT is stated in rupees.",0,moonshotai/kimi-k2-instruct
+NUM_094,numerical_reasoning,easy,"Under the RBI SFB Dividend Directions, 2026, what percentage of Adjusted PAT may",40 per cent of Adjusted PAT,40% of Adjusted PAT,1,moonshotai/kimi-k2-instruct
+NUM_095,numerical_reasoning,hard,"In Illustration 1 of the RBI SFB Dividend Directions, 2026, a bank has PAT of Rs","Rs5,500 crore (40% of Adjusted PAT of Rs13,750 crore, which is lower than 75% of PAT of Rs12,750 crore)","Adjusted PAT = 17,000 – 0.5×6,500 = 13,750 crore  
+75 % of PAT = 0.75×17,000 = 12,750 crore  
+Table 1 cap (40 % of 13,750) = 5,500 crore  
+
+Lower of 12,750 crore or 5,500 crore = Rs 5,500 crore",0,moonshotai/kimi-k2-instruct
+NUM_096,numerical_reasoning,hard,"In Illustration 3, a bank has PAT of Rs1,500 crore, Net NPA of Rs300 crore, Tier","Rs625 crore (maximum eligible dividend of Rs1,125 crore minus interim dividend already paid of Rs500 crore)","Adjusted PAT = 1,500 – 0.5×300 = Rs1,350 crore  
+Eligible dividend = min(75 % × 1,500; 100 % × 1,350) = Rs1,125 crore  
+Maximum final dividend = 1,125 – 500 = Rs625 crore",0,moonshotai/kimi-k2-instruct
+NUM_097,numerical_reasoning,hard,"In Illustration 2 of the RBI SFB Dividend Directions, 2026, a bank has PAT of Rs","Rs19,000 crore (50% of Adjusted PAT of Rs38,000 crore, which is lower than 75% of PAT of Rs30,375 crore)","Step 1: Adjusted PAT = PAT – 50 % of Net NPA  
+= Rs 40,500 cr – 0.5 × Rs 5,000 cr  
+= Rs 40,500 cr – Rs 2,500 cr  
+= Rs 38,000 cr  
+
+Step 2: 75 % of PAT = 0.75 × Rs 40,500 cr = Rs 30,375 cr  
+
+Step 3: Table-1 cap for Tier 1 ratio 15 % (Bucket B5) = 50 % of Adjusted PAT  
+= 0.5 × Rs 38,000 cr = Rs 19",0,moonshotai/kimi-k2-instruct
+NUM_098,numerical_reasoning,medium,"Under the RBI SFB Dividend Directions, 2026, what are the permitted dividend per",Bucket B1: 0 per cent of Adjusted PAT; Bucket B10: 100 per cent of Adjusted PAT,"Bucket B1: 0% of Adjusted PAT  
+Bucket B10: 100% of Adjusted PAT",1,moonshotai/kimi-k2-instruct
+CON_046,contradiction_detection,medium,Do Passage A and Passage B specify the same minimum proportion of independent tr,No,"No  
+Passage A requires at least 50% while Passage B requires two-thirds, so the minimum proportions differ.",1,moonshotai/kimi-k2-instruct
+CON_047,contradiction_detection,easy,Do Passage A and Passage B set the same minimum networth requirement for an asse,No,"No  
+Passage A specifies ₹10 crore while Passage B requires ₹50 crore in Board-specified assets.",1,moonshotai/kimi-k2-instruct
+CON_048,contradiction_detection,medium,Do Passage A and Passage B define the term 'advertisement' in the same way?,No,"No  
+Passage A lists specific media and formats, whereas Passage B covers any communication influencing investment decisions.",1,moonshotai/kimi-k2-instruct
+CON_049,contradiction_detection,hard,Do Passage A and Passage B apply the same shareholding threshold for cross-owner,Yes,Yes. Both passages set an identical 10% threshold for the shareholding or voting rights that triggers the cross-ownership restriction.,1,moonshotai/kimi-k2-instruct
+TMP_046,temporal_reasoning,easy,What minimum proportion of independent trustees did SEBI (Mutual Funds) Regulati,At least 50 per cent,At least 50% of the trustees had to be independent before the 12-1-1998 amendment.,0,moonshotai/kimi-k2-instruct
+TMP_047,temporal_reasoning,medium,What minimum AMC networth was introduced by the SEBI (Mutual Funds) Amendment Re,Rupees fifty crore (replacing the original requirement of rupees ten crore),"Rupees fifty crore, effective 06-05-2014",0,moonshotai/kimi-k2-instruct
+TMP_048,temporal_reasoning,hard,"From what date were Regulations 69 to 74 of SEBI (Mutual Funds) Regulations, 199",27-9-2002,27-9-2002,1,moonshotai/kimi-k2-instruct
+TMP_049,temporal_reasoning,medium,From which financial year do the RBI (Small Finance Banks - Prudential Norms on ,"From Financial Year (FY) 2026-27; they repeal the circular dated November 28, 2025 (DO R.ACC.REC.118/21-02-067/2025-26)",The Directions take effect from FY 2026-27 and repeal DO R.ACC.REC.118/21-02-067/2025-26 dated 28 Nov 2025.,1,moonshotai/kimi-k2-instruct
+TMP_050,temporal_reasoning,medium,"What key change did the SEBI (Mutual Funds) Amendment Regulations, 2012 make to ",Replaced the enumeration of specific advertising media with a broader definition covering all forms of communication that may influence investment dec,"Substituted the 1996 media-specific list with an all-encompassing definition: any form of communication issued by (or on behalf of) the AMC/mutual fund that could influence an investor’s investment decision, effective 21-2-2012.",0,moonshotai/kimi-k2-instruct
+TMP_051,temporal_reasoning,medium,What new asset class was added to the permissible investment universe in the 'mu,Silver or silver related instruments,Silver or silver-related instruments,1,moonshotai/kimi-k2-instruct
+REG_113,regulatory_interpretation,medium,"Under the Seventh Schedule of SEBI (Mutual Funds) Regulations, what is the stand",10% of NAV; may be extended to 12% with prior approval of both the Board of Trustees and the Board of Directors of the AMC,"Standard limit: 10% of NAV.  
+Extension to 12% of NAV: prior approval of the Board of Trustees and Board of Directors of the asset management company.",1,moonshotai/kimi-k2-instruct
+REG_114,regulatory_interpretation,medium,What two categories of securities of associate or group companies of the sponsor,Unlisted securities of an associate or group company of the sponsor; and securities issued by private placement by an associate or group company of th,Unlisted securities and securities issued by way of private placement.,1,moonshotai/kimi-k2-instruct
+REG_115,regulatory_interpretation,easy,What is the maximum investment a mutual fund scheme may make in listed securitie,25 per cent of the net assets (with exceptions for equity oriented ETFs and index funds),25 per cent of the net assets,1,moonshotai/kimi-k2-instruct
+REG_116,regulatory_interpretation,easy,What is the maximum combined ownership stake that all schemes of a mutual fund m,Not more than ten per cent of any company's paid up capital carrying voting rights,10 per cent of the company's paid-up capital carrying voting rights.,1,moonshotai/kimi-k2-instruct
+REG_117,regulatory_interpretation,easy,On what price basis must inter-scheme transfers of quoted securities between sch,At the prevailing market price for quoted instruments on spot basis,At the prevailing market price on spot basis.,1,moonshotai/kimi-k2-instruct
+REG_118,regulatory_interpretation,medium,What is the maximum aggregate inter-scheme investment that all schemes under one,5 per cent of the net asset value of the mutual fund (this restriction does not apply to fund of funds schemes),5% of the net asset value of the mutual fund.,1,moonshotai/kimi-k2-instruct
+REG_119,regulatory_interpretation,medium,"Under the Seventh Schedule, what is the maximum investment a mutual fund scheme ","10 per cent of NAV; index funds, exchange traded funds, and sector or industry specific schemes are exempt","Maximum 10% of NAV in equity shares/equity-related instruments of any single entity. Exempt: index funds, exchange-traded funds, sector or industry-specific schemes.",1,moonshotai/kimi-k2-instruct
+REG_120,regulatory_interpretation,medium,"For what purpose may a mutual fund borrow under SEBI (Mutual Funds) Regulations,","To meet temporary liquidity needs for repurchase, redemption or payment of interest or dividend; borrowing shall not exceed 20 per cent of the net ass","Purpose: To meet temporary liquidity needs for repurchase/redemption of units or payment of interest/dividend.
+
+Limits: Not more than 20% of the scheme’s net assets; borrowing duration not exceeding six months.",1,moonshotai/kimi-k2-instruct
+REG_121,regulatory_interpretation,easy,May a fund of funds scheme invest in another fund of funds scheme under SEBI (Mu,No. A fund of funds scheme shall not invest in any other fund of funds scheme.,No.,1,moonshotai/kimi-k2-instruct
+REG_122,regulatory_interpretation,medium,What are the NAV-based investment limits for a mutual fund scheme in InvIT units,Not more than 10% of NAV overall; not more than 5% of NAV in units of a single InvIT issuer,"Overall cap: 10% of NAV  
+Single-issuer cap: 5% of NAV",1,moonshotai/kimi-k2-instruct
+REG_123,regulatory_interpretation,easy,"Under Regulation 24 of SEBI (Mutual Funds) Regulations, may an AMC act as truste",No. An AMC shall not act as a trustee of any mutual fund.,No.,1,moonshotai/kimi-k2-instruct
+REG_124,regulatory_interpretation,medium,What is the primary restriction on additional business activities an AMC may eng,"The AMC shall not undertake any business activities other than management and advisory services provided to pooled assets (including offshore funds, i","An AMC is restricted to only undertaking business in the nature of management and advisory services to pooled assets (offshore, insurance, pension, provident funds, or certain foreign portfolio investors), subject to Board conditions and no conflict with the mutual fund’s activities.",1,moonshotai/kimi-k2-instruct
+REG_125,regulatory_interpretation,easy,"Under SEBI (Mutual Funds) Regulations, 1996, whose prior approval is required be",Prior approval of the trustees,Trustees,1,moonshotai/kimi-k2-instruct
+REG_126,regulatory_interpretation,easy,"Under Regulation 25(18), may an AMC conduct its operations — including trading, ","No. The AMC shall not carry out its operations including trading desk, unit holder servicing and investment operations outside the territory of India.",No.,1,moonshotai/kimi-k2-instruct
+REG_127,regulatory_interpretation,easy,Within what period must an AMC file detailed bio-data of a newly appointed direc,Within fifteen days of their appointment,Within fifteen days of their appointment.,1,moonshotai/kimi-k2-instruct
+REG_128,regulatory_interpretation,medium,What two conditions must an AMC satisfy before making any change to the fundamen,Send written communication to each unit holder and issue an advertisement in a nationwide English daily and a regional language newspaper; and provide,"(i) Send written communication to each unit holder and issue an advertisement in one English daily newspaper with nationwide circulation and in a regional-language newspaper where the mutual fund's Head Office is located;  
+(ii) Give unit holders an option to exit at the prevailing Net Asset Value w",1,moonshotai/kimi-k2-instruct
+REG_129,regulatory_interpretation,easy,Where may a mutual fund temporarily invest the funds of a scheme pending their d,In short term deposits of scheduled commercial banks,In short-term deposits of scheduled commercial banks.,1,moonshotai/kimi-k2-instruct
+REG_130,regulatory_interpretation,easy,Which Schedule of SEBI (Mutual Funds) Regulations specifies the norms for valuat,Eighth Schedule; the AMC shall publish the valuations,Eighth Schedule; the AMC must publish the valuation.,1,moonshotai/kimi-k2-instruct
+NUM_099,numerical_reasoning,medium,To what maximum percentage of NAV can the single-issuer debt investment limit be,"Up to 12% of NAV, with prior approval of both the Board of Trustees and the Board of Directors of the AMC","Calculation  
+Base limit = 10% of NAV  
+Permitted extension = 12% of NAV  
+
+Final answer with units  
+12% of the scheme’s NAV, with prior approval from the Board of Trustees and the Board of Directors of the asset management company.",1,moonshotai/kimi-k2-instruct
+NUM_100,numerical_reasoning,medium,A mutual fund scheme with net assets of Rs500 crore needs to borrow for redempti,Rs100 crore (20% of Rs500 crore net assets); maximum duration of six months,"20 % of Rs500 crore = 0.20 × 500 = 100 crore.  
+Maximum period: 6 months.  
+
+Rs100 crore for 6 months.",0,moonshotai/kimi-k2-instruct
+NUM_101,numerical_reasoning,easy,"Under the Seventh Schedule, what are the NAV-based caps for a scheme investing i",Overall cap: 10% of NAV; single-issuer cap: 5% of NAV,"Overall cap: 10% of NAV  
+Single-issuer cap: 5% of NAV",1,moonshotai/kimi-k2-instruct
+NUM_102,numerical_reasoning,easy,What maximum percentage of a mutual fund scheme's net assets may be invested in ,25 per cent of the net assets,Maximum permitted investment = 25% of the net assets.,1,moonshotai/kimi-k2-instruct
+NUM_103,numerical_reasoning,medium,All schemes of a mutual fund together hold 9.5% of ABC Limited's paid-up capital,"No. The combined holding would reach 10.5%, exceeding the 10 per cent cap on ownership of any company's paid up capital carrying voting rights.","Calculation:
+Current holding = 9.5%
+Proposed acquisition = 1%
+Total after acquisition = 9.5% + 1% = 10.5%
+
+Regulatory limit = 10%
+
+10.5% exceeds the 10% ceiling.
+
+Final answer: No",0,moonshotai/kimi-k2-instruct
+NUM_104,numerical_reasoning,medium,"The total NAV of all schemes managed by an AMC is Rs2,000 crore. What is the max","Rs100 crore (5% of Rs2,000 crore)","Calculation  
+5% of Rs 2,000 crore = 0.05 × 2,000 = Rs 100 crore  
+
+Answer: Rs 100 crore",1,moonshotai/kimi-k2-instruct
+NUM_105,numerical_reasoning,medium,"A mutual fund scheme (non-index, non-ETF) has NAV of Rs800 crore. What is the ma",Rs80 crore (10% of Rs800 crore NAV),Maximum investment = 10% of Rs800 crore = Rs80 crore,1,moonshotai/kimi-k2-instruct
+NUM_106,numerical_reasoning,hard,What was the maximum initial issue expense ratio for a mutual fund scheme under ,Six per cent of funds raised; the clause was omitted w.e.f. 16-4-2008,"Initial expense ratio = 6%  
+Omission date = 16 April 2008
+
+Calculation  
+Clause 5 (original text): “may not exceed six per-cent of the funds raised”  
+
+6% = 0.06, so for every 100 units raised, expense ≤ 6 units.  
+ No quantitative steps beyond recognising 6% as the cap.
+
+Answer  
+6% of funds raise",1,moonshotai/kimi-k2-instruct
+CON_050,contradiction_detection,hard,Do Passage A and Passage B impose the same percentage limit on transactions thro,No,"No.  
+Passage A caps single-day gross business at 5%, while Passage B caps the three-month average of aggregate purchases and sales at 5%.",1,moonshotai/kimi-k2-instruct
+CON_051,contradiction_detection,hard,Do Passage A and Passage B permit the same range of additional business activiti,No,"No  
+Passage A allows portfolio management services and financial consultancy which Passage B does not mention.",1,moonshotai/kimi-k2-instruct
+CON_052,contradiction_detection,medium,Do Passage A and Passage B permit mutual fund schemes to hold any unlisted equit,No,"Yes. Passage A explicitly allows open-ended schemes to invest up to 5% and close-ended schemes up to 10% of NAV in unlisted equity, while Passage B permits holdings “to be listed,” which includes unlisted instruments.",0,moonshotai/kimi-k2-instruct
+CON_053,contradiction_detection,hard,Do Passage A and Passage B impose the same restriction on investments in unrated,No,"No  
+Passage A limits unrated debt investments by NAV, while Passage B restricts unlisted non-convertible debentures to 10% of the debt portfolio.",1,moonshotai/kimi-k2-instruct
+TMP_052,temporal_reasoning,hard,What was the original cap on initial issue expenses for a mutual fund scheme und,Six per cent of funds raised; omitted by the 2008 amendment w.e.f. 16-4-2008,The cap was 6% of funds raised; the provision was omitted on 16-4-2008.,1,moonshotai/kimi-k2-instruct
+TMP_053,temporal_reasoning,medium,What fundamental change did the SEBI (Mutual Funds) Second Amendment Regulations,"Replaced the limited allowance for unlisted equity (5% for open-ended, 10% for close-ended) with a complete requirement that all equity investments be","With effect from 23-09-2019, the 2019 Amendment deleted the 5%/10%-of-NAV allowance and barred mutual funds from holding any unlisted equity shares or equity-related instruments, restricting them solely to listed or to-be-listed securities.",0,moonshotai/kimi-k2-instruct
+TMP_054,temporal_reasoning,hard,"Under the original SEBI (Mutual Funds) Regulations, which regulation required mu",Regulation 47,Regulation 47,1,moonshotai/kimi-k2-instruct
+TMP_055,temporal_reasoning,medium,"Under the original SEBI (Mutual Funds) Regulations, 1996, were mutual fund schem","No. The original Regulation 45 absolutely prohibited the use of scheme funds in option trading, short selling, or carry forward transactions.","No. As per the original Regulation 45 (effective before the 31-10-2007 amendment), scheme funds were absolutely barred from being used in option trading, short selling, or carry forward transactions.",1,moonshotai/kimi-k2-instruct
+TMP_056,temporal_reasoning,hard,From what date were mutual funds with securities worth Rs.10 crore or more requi,"Transactions entered on or after January 15, 1998","January 15, 1998",1,moonshotai/kimi-k2-instruct
+REG_131,regulatory_interpretation,easy,"Under the SEBI (Investment Advisers) Regulations, 2013, can a person provide inv",No. Regulation 3(1) prohibits any person from acting as an investment adviser or holding itself out as an investment adviser unless it has obtained a ,No,0,moonshotai/kimi-k2-instruct
+REG_132,regulatory_interpretation,easy,Is an insurance broker who advises clients on insurance products required to reg,"No. Under Regulation 4(b), any insurance agent or insurance broker who offers investment advice solely in insurance products and is registered with th",No.,1,moonshotai/kimi-k2-instruct
+REG_133,regulatory_interpretation,easy,Does a Chartered Accountant who incidentally provides investment advice to clien,"No. Under Regulation 4(f), any member of the Institute of Chartered Accountants of India (or other specified professional bodies such as ICSI, ICMAI, ",No,0,moonshotai/kimi-k2-instruct
+REG_134,regulatory_interpretation,medium,A person based in India provides investment advice exclusively to foreign client,"A person providing investment advice exclusively to clients based outside India is exempt from registration under Regulation 4(i). However, if any of ","Yes, registration is required because the proviso states that providing advice to Non-Resident Indians brings the person within the regulations.",0,moonshotai/kimi-k2-instruct
+REG_135,regulatory_interpretation,medium,What are the minimum qualification requirements for an individual investment adv,"Under Regulation 7(1), an individual investment adviser must, at all times, hold either: (a) a graduate degree (or equivalent) from a recognized unive",A graduate degree (or equivalent) plus relevant NISM certification; or successful completion of a specified NISM Post Graduate Program.,1,moonshotai/kimi-k2-instruct
+REG_136,regulatory_interpretation,easy,For how long is a certificate of registration granted to an investment adviser u,"The certificate of registration is valid till it is suspended or cancelled by the Board — it does not have a fixed expiry date. Under Regulation 10, t",Valid until suspended or cancelled by the Board.,1,moonshotai/kimi-k2-instruct
+REG_137,regulatory_interpretation,medium,"Under SEBI IA Regulations, 2013, what dual threshold triggers the mandatory tran","An individual investment adviser must transition to non-individual status when either: (i) the number of clients exceeds 300 at any point of time, OR ","Dual threshold: (i) number of clients exceeding 300 at any point, or (ii) fee collected during the financial year exceeding ₹3 crore, whichever occurs first.
+
+Required actions: (i) immediately intimate the Administration and Supervisory Body and start transition process to non-individual status; (ii",1,moonshotai/kimi-k2-instruct
+REG_138,regulatory_interpretation,easy,What is the maximum number of clients that a part-time investment adviser regist,"A part-time investment adviser shall not have more than seventy-five clients in total at any point in time, as provided under Regulation 13(h).",75,0,moonshotai/kimi-k2-instruct
+REG_139,regulatory_interpretation,easy,What is the general responsibility of an investment adviser towards its clients ,"Under Regulation 15(1), an investment adviser shall act in a fiduciary capacity towards its clients and shall disclose all conflicts of interests as a",Act in a fiduciary capacity towards its clients.,1,moonshotai/kimi-k2-instruct
+REG_140,regulatory_interpretation,medium,"Can an investment adviser registered under SEBI IA Regulations, 2013 accept a co","No. Regulation 15(2) prohibits an investment adviser from receiving any consideration — whether by way of remuneration, compensation, or in any other ",No.,1,moonshotai/kimi-k2-instruct
+REG_141,regulatory_interpretation,hard,"Under SEBI IA Regulations, 2013, if an investment adviser advised clients to buy","No, not immediately. Under Regulation 15(7), an investment adviser is prohibited from entering transactions on its own account contrary to client advi","No, the adviser must first give the client a revised assessment at least 24 hours before entering into the transaction on its own account.",1,moonshotai/kimi-k2-instruct
+REG_142,regulatory_interpretation,medium,What six categories of client information must an investment adviser obtain from,"Under Regulation 16(a), an investment adviser must obtain: (i) age; (ii) investment objectives including the time horizon and purpose of investment; (","(i) age; (ii) investment objectives including time for which they wish to stay invested, the purposes of the investment; (iii) income details; (iv) existing investments/assets; (v) risk appetite/tolerance; (vi) liability/borrowing details.",1,moonshotai/kimi-k2-instruct
+REG_143,regulatory_interpretation,easy,For how long must an investment adviser preserve its records under SEBI IA Regul,"Under Regulation 19(2), all records must be maintained and preserved for a minimum period of five years. If records that are required to be duly signe",Five years; such electronic records must be digitally signed.,1,moonshotai/kimi-k2-instruct
+REG_144,regulatory_interpretation,medium,What type of audit is required of an investment adviser under SEBI IA Regulation,"Under Regulation 19(3), an investment adviser must conduct a yearly compliance audit in respect of compliance with these regulations. The audit must b","Yearly compliance audit; to be conducted by a member of ICAI, ICSI or ICMAI.",1,moonshotai/kimi-k2-instruct
+REG_145,regulatory_interpretation,easy,What is the maximum time limit within which an investment adviser must redress i,"Under Regulation 21(1), an investment adviser must redress investor grievances promptly and not later than twenty-one calendar days from the date of r",Twenty-one calendar days,1,moonshotai/kimi-k2-instruct
+REG_146,regulatory_interpretation,medium,"Can an individual investment adviser registered under SEBI IA Regulations, 2013 ","No on both counts. Under Regulation 22(1), an individual investment adviser is prohibited from providing distribution services. Under Regulation 22(2)","No; the individual investment adviser cannot provide distribution services, and the spouse (being part of the “family”) also cannot provide distribution services to those same clients.",1,moonshotai/kimi-k2-instruct
+REG_147,regulatory_interpretation,hard,"Under SEBI IA Regulations, 2013, what are the four key conditions governing an i","Under Regulation 22A, implementation services may be provided subject to four conditions: (1) No consideration (commission, referral fees, or any indi","1. No consideration (commission, referral fees, etc.) received directly or indirectly at group/family level  
+2. Implementation only through direct schemes/products  
+3. No implementation fees charged to the client  
+4. Client not obligated to avail the implementation services",1,moonshotai/kimi-k2-instruct
+REG_148,regulatory_interpretation,medium,How much advance notice must SEBI give to an investment adviser before ordering ,"Under Regulation 24(1), the Board must give not less than ten days notice to the investment adviser before ordering an inspection. However, under Regu","Not less than ten days’ notice is required.  
+SEBI may dispense with notice if it is satisfied, in writing, that doing so is in the interest of investors.",1,moonshotai/kimi-k2-instruct
+NUM_107,numerical_reasoning,medium,"An investment adviser provides investment advice to a client on November 15, 202","Under Regulation 19(2), records must be preserved for a minimum of 5 years from the date of the advice. From November 15, 2023, adding 5 years gives N","Preservation period: 5 years from November 15, 2023  
+Earliest lawful destruction date: November 15, 2028",1,moonshotai/kimi-k2-instruct
+NUM_108,numerical_reasoning,easy,"An individual investment adviser currently has 287 clients. Over the next month,",Total clients after onboarding: 287 + 18 = 305. The regulatory threshold under Regulation 13(e) is 300 clients. Excess above threshold: 305 − 300 = 5 ,"287 + 18 = 305 clients  
+Threshold = 300 clients  
+Excess = 305 − 300 = 5 clients",1,moonshotai/kimi-k2-instruct
+NUM_109,numerical_reasoning,medium,A part-time investment adviser currently serves 68 clients. They plan to onboard,Proposed total: 68 + 8 = 76 clients. The regulatory limit under Regulation 13(h) is 75 clients. Excess: 76 − 75 = 1 client. The adviser would exceed t,"Current clients: 68  
+New clients to onboard: 8  
+
+Total after onboarding: 68 + 8 = 76 clients  
+
+Regulatory limit: 75 clients  
+
+Exceeds limit by: 76 − 75 = 1 client  
+
+Maximum new clients that can be legitimately onboarded: 7  
+
+Final answer: 76 clients, exceeds by 1 client, 7 clients",0,moonshotai/kimi-k2-instruct
+NUM_110,numerical_reasoning,hard,An investment adviser issues a buy recommendation on Stock A to clients on Janua,"The 15-day prohibition runs from January 10 through January 24 (inclusive; day 1 = January 10, day 15 = January 24). January 22 falls within the prohi","January 22 is the 13th day after January 10, so it is within the 15-day prohibition window.
+
+Earliest allowed time: January 23, 3:00 PM.",1,moonshotai/kimi-k2-instruct
+NUM_111,numerical_reasoning,easy,"An investor lodges a grievance with an investment adviser on March 5, 2025. What","Under Regulation 21(1), the investment adviser must redress the grievance not later than 21 calendar days from the date of receipt. March 5, 2025 + 21","Calculation: March 5, 2025 + 21 calendar days = March 26, 2025
+
+March 26, 2025",1,moonshotai/kimi-k2-instruct
+NUM_112,numerical_reasoning,easy,A fintech company seeks a regulatory sandbox exemption from SEBI under the SEBI ,"Under Regulation 28A(1), a regulatory sandbox exemption may be granted for a period not exceeding twelve months. Regardless of extensions, the total e","Per Regulation 28A(1), the Board may specify a period not exceeding twelve months.
+
+Maximum total duration inclusive of any extension = 12 months.",1,moonshotai/kimi-k2-instruct
+NUM_113,numerical_reasoning,medium,An individual investment adviser collected fees of Rs 2.65 crore in the first ei,Cumulative fees: After 8 months = Rs 2.65 crore. After month 9: 2.65 + 0.22 = Rs 2.87 crore (threshold of Rs 3 crore not yet breached). After month 10,"End of ninth month  
+Total fees collected at that point: Rs 2.87 crore",1,moonshotai/kimi-k2-instruct
+NUM_114,numerical_reasoning,hard,An investment adviser gave clients a sell recommendation on Bond X on April 1. O,"The 15-day prohibition window runs from April 1 to April 15 (inclusive). April 16 falls outside the 15-day prohibition window, so the adviser may free","**Calculation:**  
+- The original advice to sell was given on April 1.  
+- The 15-day restriction period under Regulation 15(7) ends on April 16.  
+- The revised assessment was sent on April 14, giving clients at least 24 hours’ notice before the proposed April 16 transaction.  
+- Therefore, the Apr",0,moonshotai/kimi-k2-instruct
+CON_054,contradiction_detection,easy,Do these two versions of Regulation 10 impose the same validity period for an in,No,"No  
+The 2013 version limits validity to five years, whereas the 2016 amendment makes it valid until suspended or cancelled.",1,moonshotai/kimi-k2-instruct
+CON_055,contradiction_detection,medium,Do the original Regulation 8 and the 2024-amended Regulation 8 impose the same f,No,"No
+The original version mandated a fixed net worth of fifty lakh rupees, whereas the 2024 amendment replaces that with a variable deposit requirement set by SEBI.",1,moonshotai/kimi-k2-instruct
+CON_056,contradiction_detection,medium,Do the original Regulation 21(1) and the 2023-amended Regulation 21(1) impose th,No,"No: The original rule did not set a 21-day maximum, while the amended rule caps it at that.",1,moonshotai/kimi-k2-instruct
+CON_057,contradiction_detection,hard,Do the pre-2025 and post-2025 versions of Regulation 7(1)(a) impose the same edu,No,"No.
+The pre-2025 rule requires a specialised postgraduate or professional qualification in specified finance areas or a 1-year NISM program, whereas the 2025 rule needs only any graduate degree plus a NISM certificate.",1,moonshotai/kimi-k2-instruct
+CON_058,contradiction_detection,hard,Does the original Regulation 22 (2013) and the 2020-amended Regulation 22 permit,No,"No  
+The 2013 version imposed segregation but permitted both services, whereas the 2020-amended Regulation 22 bars individual investment advisers from providing any distribution services.",1,moonshotai/kimi-k2-instruct
+CON_059,contradiction_detection,medium,Do the original definition of 'representative' and the 2020-amended definition o,No,"No.  
+The original definition covers only employees or agents who actually give advice, while the 2020 definition sweeps in every client-facing person plus a broader group such as officers and directors even if they do not personally give advice.",1,moonshotai/kimi-k2-instruct
+TMP_057,temporal_reasoning,easy,What was the validity period of an investment adviser's certificate of registrat,"Under the original 2013 regulations, a certificate of registration was valid for a period of five years from the date of its issue and required renewa","Original 2013 validity: five years from date of issue.  
+Changed to perpetual validity with effect from 8 December 2016 by the SEBI (Change in Conditions of Registration of Certain Intermediaries) (Amendment) Regulations, 2016.",1,moonshotai/kimi-k2-instruct
+TMP_058,temporal_reasoning,easy,What was the networth requirement for non-individual investment advisers under t,"Before the substitution by the SEBI (Investment Advisers) (Second Amendment) Regulations, 2024 (w.e.f. 16-12-2024), Regulation 8 required non-individu",Fifty lakh rupees.,1,moonshotai/kimi-k2-instruct
+TMP_059,temporal_reasoning,medium,How did the minimum qualification requirement for individual investment advisers,"Under the original 2013 regulations, Regulation 7(1)(a) required a professional qualification or PG degree/diploma of minimum two years duration speci","- 30-9-2020: Replaced the pre-2020 list (degree/diploma of ≥2 years, NISM 1-year PGP, CFA Charter) with requirement of a graduate degree (or equivalent) plus NISM certification; CFA Charter alone still suffices.
+- 25-11-2025: Same graduate requirement retained but now allows certification from NISM ",0,moonshotai/kimi-k2-instruct
+TMP_060,temporal_reasoning,medium,What was the original scope of Regulation 22 in the SEBI (Investment Advisers) R,"The original Regulation 22 (2013) was titled 'Segregation of execution services' and applied only to investment advisers that are banks, NBFCs, and bo","- Original 2013 scope – Regulation 22 applied only to bank, NBFC and body-corporate investment advisers; it required them to keep investment advice segregated from distribution/execution business and meet the three client-protection conditions.
+
+- 30-09-2020 amendment – SEBI substituted Regulation 2",1,moonshotai/kimi-k2-instruct
+TMP_061,temporal_reasoning,easy,When was the specific 21-calendar-day deadline for redressing investor grievance,The 21-calendar-day deadline for redressing investor grievances was introduced by the Securities and Exchange Board of India (Facilitation of Grievanc,"The 21-calendar-day deadline was introduced on 18-08-2023. Previously, Regulation 21(1) only required investment advisers to redress client grievances “promptly,” without any fixed period.",1,moonshotai/kimi-k2-instruct
+TMP_062,temporal_reasoning,hard,What procedural change did the SEBI (Investment Advisers) (Second Amendment) Reg,"The SEBI (Investment Advisers) (Second Amendment) Regulations, 2025 (w.e.f. 25-11-2025) amended Regulation 13(e) to add a new intermediate step: upon ","1. Immediate obligation: upon crossing the threshold the individual must (a) at once intimate the Administration and Supervisory Body and (b) start the transition process.  
+2. Within three months from crossing the threshold, obtain in-principle approval for non-individual registration.",1,moonshotai/kimi-k2-instruct
+TMP_063,temporal_reasoning,medium,When was the category of 'part-time investment adviser' and the 75-client limit ,The concept of 'part-time investment adviser' and the 75-client limit were both introduced by the Securities and Exchange Board of India (Investment A,"The category of ""part-time investment adviser"" and the 75-client limit were introduced under the SEBI (Investment Advisers) Regulations 2013 on 16 December 2024.  
+""Part-time investment adviser"" is defined as an individual or firm that, for consideration, provides investment advice and also carries ",1,moonshotai/kimi-k2-instruct
+TMP_064,temporal_reasoning,medium,When was the regulatory obligation regarding the use of Artificial Intelligence ,The obligation regarding the use of Artificial Intelligence tools was first introduced by the Securities and Exchange Board of India (Investment Advis,"The obligation was introduced on 16-12-2024 by the SEBI (Investment Advisers) (Second Amendment) Regulations, 2024. It requires the investment adviser to be solely responsible for security, confidentiality, integrity of client data, use of any information to arrive at advice, advice based on AI outp",1,moonshotai/kimi-k2-instruct
+REG_149,regulatory_interpretation,easy,Can an entity in India operate as an Alternative Investment Fund without obtaini,"No. Under Regulation 3(1), no entity or person shall act as an Alternative Investment Fund on and from the commencement of these regulations unless it",No.,1,moonshotai/kimi-k2-instruct
+REG_150,regulatory_interpretation,easy,For how long is a certificate of registration granted to an Alternative Investme,"Under Regulation 3(7), the certificate of registration is valid until the Alternative Investment Fund is wound up. The certificate does not have a fix",Till the Alternative Investment Fund is wound up.,1,moonshotai/kimi-k2-instruct
+REG_151,regulatory_interpretation,medium,"Under SEBI AIF Regulations 2012, what can an AIF that has received in-principle ","Under Regulation 6(5), an AIF that has been granted in-principle approval may accept commitments from investors. However, it shall not accept any moni",It may accept commitments from investors but cannot accept any monies.,0,moonshotai/kimi-k2-instruct
+REG_152,regulatory_interpretation,medium,What are the three categories of Alternative Investment Funds under SEBI (AIF) R,"Under Regulation 3(4): Category I AIFs invest in start-ups, early stage ventures, social ventures, SMEs, infrastructure, or sectors considered sociall","Category I AIF – invests in start-up/early-stage, social, SME, infrastructure or other government-desirable sectors.  
+Category II AIF – neither Category I nor III, and no leverage except as permitted.  
+Category III AIF – employs complex trading strategies and may use leverage through derivatives.",0,moonshotai/kimi-k2-instruct
+REG_153,regulatory_interpretation,easy,What is the minimum corpus requirement for each scheme of an Alternative Investm,"Under Regulation 10(b), each scheme of an AIF must have a corpus of at least Rs twenty crore. However, for social impact funds, each scheme must have ","Minimum corpus: ₹20 crore per scheme.  
+For social-impact funds: ₹5 crore per scheme.",1,moonshotai/kimi-k2-instruct
+REG_154,regulatory_interpretation,medium,What is the minimum investment that an investor must make in an Alternative Inve,"Under Regulation 10(c), the minimum investment by any investor in an AIF scheme is Rs one crore. Two exceptions apply: (1) employees or directors of t","One crore rupees.  
+Exceptions: employees/directors of the AIF or Manager may invest a minimum of twenty-five lakh rupees, and accredited investors are wholly exempt from any minimum.",0,moonshotai/kimi-k2-instruct
+REG_155,regulatory_interpretation,medium,What continuing interest is the Manager or Sponsor of an Alternative Investment ,"Under Regulation 10(d), the Manager or Sponsor must maintain a continuing interest of not less than 2.5% of the corpus or Rs 5 crore, whichever is low","For Category I and II AIFs: not less than 2.5% of the corpus or ₹5 crore, whichever is lower.
+
+For Category III AIFs: not less than 5% of the corpus or ₹10 crore, whichever is lower.",1,moonshotai/kimi-k2-instruct
+REG_156,regulatory_interpretation,easy,What is the maximum number of investors permitted in a single scheme of an Alter,"Under Regulation 10(f), no scheme of an AIF shall have more than one thousand investors. Accredited investors are explicitly excluded from the computa","Maximum 1,000 investors; accredited investors are excluded from this count.",1,moonshotai/kimi-k2-instruct
+REG_157,regulatory_interpretation,easy,What level of investor consent is required to make a material alteration to an A,"Under Regulation 9(2), any material alteration to the fund strategy requires the consent of at least two-thirds of unit holders by value of their inve",Consent of at least two-thirds of unit holders by value of their investment.,1,moonshotai/kimi-k2-instruct
+REG_158,regulatory_interpretation,medium,What are the requirements for filing a placement memorandum before launching a n,"Under Regulation 12(2), a placement memorandum must be filed with the Board through a merchant banker at least thirty days prior to the launch of the ","The placement memorandum must be filed with SEBI through a merchant banker at least thirty days before the scheme launch, along with the fees in the Second Schedule. The first scheme launched by an AIF is exempt from payment of scheme fees.",1,moonshotai/kimi-k2-instruct
+REG_159,regulatory_interpretation,medium,What are the structural and tenure requirements applicable to Category I and II ,"Under Regulations 13(1) and (2), Category I and II AIFs must be close-ended and the tenure of the fund or scheme must be determined at the time of app",Category I and II AIFs must be close-ended with a minimum three-year tenure. Category III AIFs may be open- or close-ended; no minimum tenure is prescribed.,1,moonshotai/kimi-k2-instruct
+REG_160,regulatory_interpretation,medium,"Under SEBI AIF Regulations, 2012, by how many years can the tenure of a close-en","Under Regulation 13(5), the tenure of a close-ended AIF may be extended by up to two years, subject to the approval of two-thirds of unit holders by v","Close-ended AIF: up to 2 years extension with approval of two-thirds of unit holders by investment value.  
+Accredited Investors only fund: up to 5 years extension with same two-thirds approval.",1,moonshotai/kimi-k2-instruct
+REG_161,regulatory_interpretation,easy,What are the conditions under which the units of a close-ended AIF may be listed,"Under Regulation 14, units of a close-ended AIF may be listed on a stock exchange subject to two conditions: (1) the minimum tradable lot must be Rs o","- Minimum tradable lot of ₹1 crore
+- Listing allowed only after final close of the fund/scheme",1,moonshotai/kimi-k2-instruct
+REG_162,regulatory_interpretation,medium,What is the single-investee concentration limit for Category I and II Alternativ,"Under Regulation 15(1)(c), Category I and II AIFs may invest not more than 25% of their investable funds in any single investee company (directly or t",25% of investable funds in a single investee company; for large value funds for accredited investors the limit is 50%.,1,moonshotai/kimi-k2-instruct
+REG_163,regulatory_interpretation,medium,What is the single-investee concentration limit for Category III Alternative Inv,"Under Regulation 15(1)(d), Category III AIFs may invest not more than 10% of their investable funds in any single investee company (directly or throug",10 per cent (or 20 per cent for the large value funds for accredited investors).,1,moonshotai/kimi-k2-instruct
+REG_164,regulatory_interpretation,medium,"Under SEBI AIF Regulations, 2012, what investor approval is required before an A","Under Regulation 15(1)(e), an AIF requires the approval of 75% of investors by value of their investment before investing in: (a) its associates, or (",Seventy-five percent of investors by value of their investment in the Alternative Investment Fund.,0,moonshotai/kimi-k2-instruct
+REG_165,regulatory_interpretation,hard,Under what conditions may a Category I Alternative Investment Fund borrow funds ,"Under Regulation 16(1)(c), Category I AIFs shall not borrow funds or engage in leverage for investment purposes. The only permitted borrowing is for t","A Category I Alternative Investment Fund may borrow only to meet temporary/day-to-day operational requirements, restricted to: maximum 30 days per borrowing, not more than 4 times a year, and total borrowings not exceeding 10% of the investable funds.",1,moonshotai/kimi-k2-instruct
+REG_166,regulatory_interpretation,medium,What minimum percentage of investable funds must a venture capital fund (which i,"Under Regulation 16(2)(a), at least 75% of the investable funds of a venture capital fund must be invested in unlisted equity shares or equity-linked ",75%,1,moonshotai/kimi-k2-instruct
+NUM_115,numerical_reasoning,medium,A Category I AIF has a total corpus of Rs 300 crore. What is the minimum continu,"The continuing interest requirement is the lower of: (a) 2.5% of corpus = 2.5% × Rs 300 crore = Rs 7.5 crore, or (b) Rs 5 crore. Since Rs 5 crore < Rs","Calculation:
+- 2.5% of corpus = 0.025 × 300 crore = Rs 7.5 crore
+- Lower of Rs 7.5 crore and Rs 5 crore = Rs 5 crore
+
+Answer: Rs 5 crore",1,moonshotai/kimi-k2-instruct
+NUM_116,numerical_reasoning,medium,A Category III AIF (hedge fund) has a corpus of Rs 150 crore. What is the minimu,"For Category III AIFs, the continuing interest must be the lower of: (a) 5% of corpus = 5% × Rs 150 crore = Rs 7.5 crore, or (b) Rs 10 crore. Since Rs","Calculation:  
+5% of ₹150 crore = 0.05 × 150 = ₹7.5 crore  
+Lower of ₹7.5 crore and ₹10 crore = ₹7.5 crore  
+
+Answer: Rs 7.5 crore",0,moonshotai/kimi-k2-instruct
+NUM_117,numerical_reasoning,medium,An AIF Manager is planning to launch three schemes: Scheme A (private equity fun,"Scheme A (private equity, Category II): minimum Rs 20 crore. Scheme B (social impact fund, Category I): minimum Rs 5 crore. Scheme C (infrastructure f","Scheme A: INR 20 crore  
+Scheme B: INR 5 crore  
+Scheme C: INR 20 crore  
+
+Minimum total corpus = 20 + 5 + 20 = INR 45 crore",1,moonshotai/kimi-k2-instruct
+NUM_118,numerical_reasoning,hard,"A Category II AIF has 4 investors: an external institutional investor, a directo",External institutional investor (Rs 75 lakh): fails the minimum of Rs 1 crore. Director of the Manager (Rs 20 lakh): fails the reduced minimum of Rs 2,"External institutional investor: Rs 75 lakh vs Rs 1 crore requirement → fails  
+Director of the Manager: Rs 20 lakh vs Rs 25 lakh requirement → fails  
+Employee of the AIF: Rs 30 lakh vs Rs 25 lakh requirement → passes  
+Accredited investor: Rs 50 lakh vs Rs 1 crore requirement → fails  
+
+Failing in",1,moonshotai/kimi-k2-instruct
+NUM_119,numerical_reasoning,easy,"An AIF Manager plans to launch a new scheme on October 15, 2025. By what date mu","The placement memorandum must be filed at least 30 days prior to the launch. Launch date: October 15, 2025. Subtracting 30 days: October 15 − 30 days ","30 days prior to 15 Oct 2025  
+15 Oct 2025 – 30 days = 15 Sep 2025  
+
+15 September 2025",1,moonshotai/kimi-k2-instruct
+NUM_120,numerical_reasoning,easy,A body corporate has a net worth of Rs 45 crore. Can it qualify as an accredited,"No. Under Regulation 2(1)(ab)(ii), a body corporate must have a net worth of at least Rs 50 crore to qualify as an accredited investor. With a net wor","Net-worth Rs 45 crore < Rs 50 crore; deficit = Rs 50-45 = Rs 5 crore  
+
+No, it cannot qualify; falls short by Rs 5 crore.",1,moonshotai/kimi-k2-instruct
+NUM_121,numerical_reasoning,medium,A Category II AIF has investable funds of Rs 400 crore. The Manager wants to inv,Maximum permitted investment in any single investee company = 25% of investable funds = 25% × Rs 400 crore = Rs 100 crore. The proposed investment of ,"25 % of 400 = 0.25 × 400 = 100
+
+Investment sought (Rs 120 crore) > Rs 100 crore → Not permissible
+
+Maximum amount: Rs 100 crore",1,moonshotai/kimi-k2-instruct
+NUM_122,numerical_reasoning,hard,A Category II AIF was registered with a scheme tenure of 5 years. The tenure has,(a) Regular Category II AIF: Original tenure = 5 years + maximum extension = 2 years (subject to 2/3 unit holder approval). Maximum total tenure = 7 y,"(a) 7 years (5 + 2 years extension)
+(b) 10 years (5 + 5 years extension)",1,moonshotai/kimi-k2-instruct
+CON_060,contradiction_detection,medium,Do the original and the 2021-amended versions of Regulation 16(2)(a) impose the ,No,"No  
+The original version required at least two-thirds (≈66.7%), while the 2021 amendment raised the minimum to 75%.",1,moonshotai/kimi-k2-instruct
+CON_061,contradiction_detection,medium,Do the pre-2024 and post-2024 versions of Regulation 16(1)(c) permit the same sc,No,"No, the later version additionally allows borrowing for “day-to-day operational requirements,” whereas the earlier one allowed it solely for “temporary funding requirements.”",1,moonshotai/kimi-k2-instruct
+CON_062,contradiction_detection,medium,Does the original definition of 'large value fund for accredited investors' and ,No,"No  
+The original threshold is seventy crore rupees while the November 2025 amendment lowers it to twenty-five crore rupees.",1,moonshotai/kimi-k2-instruct
+CON_063,contradiction_detection,hard,Do the original and 2021-amended versions of Regulation 15(1)(e) cover the same ,No,"No  
+The original rule applied only to associates, while the amended rule additionally requires 75% approval for investments in AIF units managed/sponsored by the Manager, Sponsor or their associates.",1,moonshotai/kimi-k2-instruct
+CON_064,contradiction_detection,medium,Do these two versions of Regulation 13(5) prescribe the same maximum tenure exte,No,"No.  
+The pre-2021 text caps extension at two years for all close-ended AIFs, whereas the amended version allows Accredited Investors only funds up to five years.",1,moonshotai/kimi-k2-instruct
+CON_065,contradiction_detection,hard,Do the original and 2020-amended versions of Regulation 4(g) impose the same eli,No,"No.
+The pre-2020 rule required five years of experience, whereas the 2020 amendment replaced experience with a mandatory certification and a finance-related professional qualification (both can be held by the same person).",1,moonshotai/kimi-k2-instruct
+TMP_065,temporal_reasoning,easy,When was the minimum investment threshold for venture capital funds (in qualifyi,The minimum investment threshold for venture capital funds was raised from two-thirds (approximately 66.67%) to seventy-five percent of investable fun,13-08-2021,0,moonshotai/kimi-k2-instruct
+TMP_066,temporal_reasoning,medium,When was the concept of 'large value fund for accredited investors' first introd,The concept of 'large value fund for accredited investors' was first introduced by the Securities and Exchange Board of India (Alternative Investment ,Introduced on 03-08-2021; minimum investment threshold ₹70 crore.,1,moonshotai/kimi-k2-instruct
+TMP_067,temporal_reasoning,medium,"What change did the SEBI (AIF) (Second Amendment) Regulations, 2021 make to the ","The SEBI (Alternative Investment Funds) (Second Amendment) Regulations, 2021 (w.e.f. 05-05-2021) expanded the scope of Regulation 15(1)(e). Before the","With effect from 05-05-2021, the restriction expanded: prior version applied only to investment in associates; amended version adds a second prohibited category—investment in units of AIFs managed or sponsored by the investing AIF’s Manager/Sponsor or their associates—both now requiring 75% investor",0,moonshotai/kimi-k2-instruct
+TMP_068,temporal_reasoning,hard,"How did the SEBI (AIF) (Amendment) Regulations, 2020 change the eligibility requ","The SEBI (Alternative Investment Funds) (Amendment) Regulations, 2020 (w.e.f. 19-10-2020) substituted Regulation 4(g) to replace the experience-based ","Before 19-10-2020: at least one key person needed 5 years’ experience in fund/asset/wealth/portfolio management or securities dealing plus a relevant professional qualification.
+
+From 19-10-2020: the same person must separately hold a relevant NISM certification and, in addition, at least one other ",1,moonshotai/kimi-k2-instruct
+TMP_069,temporal_reasoning,easy,When was the Corporate Debt Market Development Fund (CDMDF) category introduced ,The Corporate Debt Market Development Fund was introduced by the Securities and Exchange Board of India (Alternative Investment Funds) (Second Amendme,"It was introduced by the SEBI (AIF) (Second Amendment) Regulations, 2023, effective 15-06-2023.",1,moonshotai/kimi-k2-instruct
+TMP_070,temporal_reasoning,medium,What was the name of the social-purpose AIF sub-category under Category I before,"Before 25 July 2022, the sub-category was called 'social venture funds' — a term under Regulation 3(4)(a) for Category I AIFs investing primarily in s","""Social venture funds"" was the sub-category name before 25-07-2022; it was changed to ""social impact funds"" by the SEBI (AIF) (Third Amendment) Regulations, 2022, effective 25-07-2022.",1,moonshotai/kimi-k2-instruct
+TMP_071,temporal_reasoning,medium,"What change did the SEBI (AIF) (Third Amendment) Regulations, 2025 make to how t","The SEBI (Alternative Investment Funds) (Third Amendment) Regulations, 2025 (w.e.f. 19-11-2025) amended Regulation 10(f) to exclude accredited investo","Effective 19-11-2025, accredited investors are excluded when counting toward the 1,000-investor cap, reversing the prior rule that included all investors.",0,moonshotai/kimi-k2-instruct
+TMP_072,temporal_reasoning,medium,When was the requirement for AIFs to hold investments in dematerialised form int,The requirement for AIFs to hold investments in dematerialised form was introduced by the Securities and Exchange Board of India (Alternative Investme,"Requirement introduced on 05-01-2024 by the SEBI (AIF) (Amendment) Regulations, 2024.  
+Exceptions: (a) investments not eligible for dematerialisation, (b) investments held by a liquidation scheme not available in dematerialised form, (c) any other investments as may be specified by SEBI.",1,moonshotai/kimi-k2-instruct
+REG_167,regulatory_interpretation,medium,Who are the eligible categories of promoters for a credit rating agency under SE,"Under Regulation 4, a credit rating agency must be promoted by one of the following: (a) a public financial institution; (b) a scheduled commercial ba","To be promotable under SEBI (CRA) Regulations, 1999 an applicant must be promoted by: (a) a public financial institution; (b) a scheduled commercial bank; (c) a foreign bank operating in India with RBI approval; (d) a FATF-member incorporated foreign credit rating agency with ≥5 years’ rating experi",1,moonshotai/kimi-k2-instruct
+REG_168,regulatory_interpretation,easy,"What are the minimum eligibility criteria relating to corporate form, business o","Under Regulation 5, a CRA applicant must satisfy three minimum requirements: (a) it must be set up and registered as a company under the Companies Act","(a) Registered as a company under the Companies Act, 2013  
+(b) Rating activity specified as a main object in the Memorandum of Association  
+(c) Minimum net worth of ₹25 crore",1,moonshotai/kimi-k2-instruct
+REG_169,regulatory_interpretation,easy,How long is a certificate of registration granted to a credit rating agency unde,"Under Regulation 8(2), the certificate of registration is valid unless it is suspended or cancelled by the Board — it has no fixed expiry date.",Unless it is suspended or cancelled by the Board.,1,moonshotai/kimi-k2-instruct
+REG_170,regulatory_interpretation,medium,What ongoing net worth requirement must a credit rating agency maintain at all t,"Under Regulation 9(d), a credit rating agency must at all times maintain a minimum net worth of Rs twenty-five crore. Existing CRAs that were already ","Ongoing requirement: ₹25 crore net worth at all times.
+
+Transitional relief: Existing CRAs below ₹25 crore had three years from the 2018 amendment notification to reach the threshold.",1,moonshotai/kimi-k2-instruct
+REG_171,regulatory_interpretation,easy,What shareholding requirement must the promoter of a credit rating agency mainta,"Under Regulation 9(e), the promoter of a credit rating agency must maintain a minimum shareholding of 26% in the credit rating agency for a minimum pe",26% for a minimum period of three years from the date of grant of registration.,1,moonshotai/kimi-k2-instruct
+REG_172,regulatory_interpretation,medium,What restrictions apply to the activities a credit rating agency may undertake u,"Under Regulation 9(f), a CRA shall not carry out any activity other than the rating of securities that are listed or proposed to be listed on a stock ","A credit rating agency cannot carry out any activity other than rating securities that are listed or proposed to be listed on a SEBI-recognized stock exchange, unless the activity is specifically permitted by SEBI or involves rating financial instruments under another financial sector regulator spec",1,moonshotai/kimi-k2-instruct
+REG_173,regulatory_interpretation,medium,What must a written agreement between a credit rating agency and its client cont,"Under Regulation 14, the written agreement must include: (a) the rights and liabilities of each party; (b) the fee to be charged; (c) an obligation on","(a) the rights and liabilities of each party; (b) the fee to be charged; (c) the client shall co-operate for periodic review; (d) the client shall provide true, adequate and timely information; (e) the CRA shall disclose the rating assigned to the client's securities irrespective of whether the rati",1,moonshotai/kimi-k2-instruct
+REG_174,regulatory_interpretation,medium,How must a credit rating agency disseminate information about newly assigned rat,"Under Regulation 15(2), a CRA must promptly disseminate information about newly assigned ratings and changes in earlier ratings through press releases",Promptly through press releases and websites; for listed-company securities simultaneously also supply the information to the concerned regional stock exchange and every stock exchange where the securities are listed.,1,moonshotai/kimi-k2-instruct
+REG_175,regulatory_interpretation,hard,What must a credit rating agency do if a client fails to cooperate during the ra,"Under Regulation 16(2), if a client fails to cooperate, the CRA must still carry out the review on the basis of best available information (or as spec","Carry out the review using the best available information and disclose to investors that the rating is based on such information.  
+A CRA cannot withdraw a rating while the security's obligations are outstanding unless the rated company is wound up or merged/amalgamated.",1,moonshotai/kimi-k2-instruct
+REG_176,regulatory_interpretation,easy,What disclosure obligations about rating definitions and rationale must a credit,"Under Regulation 18, a CRA must: (1) make public the definitions of the concerned rating with the symbol, and must state that ratings do not constitut","It must publicly disclose: (i) the definition of each rating along with its symbol, and state that ratings are not buy/hold/sell recommendations, and (ii) make available to the public the rating rationale, including analysis of favourable factors and risk factors.",1,moonshotai/kimi-k2-instruct
+REG_177,regulatory_interpretation,medium,For how long and what types of records must a credit rating agency maintain unde,"Under Regulation 21(1), a CRA must maintain all records for a minimum period of five years. The required records include: balance sheets, profit and l","For a minimum of five years: balance sheet, profit and loss account, auditor’s report, client agreements, client-supplied information, client correspondence, ratings and their changes, rating committee notes and decisions, rating assignment letters, and fee details.",1,moonshotai/kimi-k2-instruct
+REG_178,regulatory_interpretation,easy,Within what time period must a credit rating agency rectify deficiencies identif,"Under Regulation 22, a credit rating agency must take steps to rectify any deficiencies identified in the auditor's report (insofar as they relate to ",Within two months from the date of the auditor’s report.,1,moonshotai/kimi-k2-instruct
+REG_179,regulatory_interpretation,easy,Who has the authority to take rating decisions (including rating changes) under ,"Under Regulation 24(4), all rating decisions — including decisions on changes in rating — must be taken by the rating committee. Individual analysts o",The rating committee takes all rating decisions (including changes). A credit rating agency cannot rate its own securities.,0,moonshotai/kimi-k2-instruct
+REG_180,regulatory_interpretation,hard,What shareholding restrictions apply between credit rating agencies under SEBI (,"Under Regulation 24A, a CRA may not directly or indirectly hold 10% or more shareholding or voting rights in any other CRA, and may not have board rep","- A credit rating agency cannot hold 10% or more shares/voting rights in another CRA, nor have board representation in it.  
+- Any 10%-plus shareholder of one CRA cannot hold 10%-plus in another CRA.  
+Pension Funds, Insurance Schemes and Mutual Fund Schemes are exempted.",1,moonshotai/kimi-k2-instruct
+REG_181,regulatory_interpretation,medium,"Under SEBI (CRA) Regulations, 1999, can a credit rating agency rate the securiti","No. Under Regulation 26(1), a CRA is prohibited from rating any security issued by its promoter. Under Regulation 26(2), if the promoter is a lending ","No, a credit rating agency cannot rate the securities of its own promoter.  
+If the promoter is a lending institution, its Chairman, director or employee cannot serve as Chairman, director or employee of the CRA or its rating committee.",1,moonshotai/kimi-k2-instruct
+REG_182,regulatory_interpretation,hard,What conflict-of-interest restrictions apply to the rating of securities of prom,"Under Regulation 27(1), a CRA shall not rate securities of: (a) a borrower of its promoter; (b) a subsidiary of its promoter; or (c) an associate of i","A credit rating agency is prohibited from rating a security issued by:
+
+- a borrower of its promoter
+- a subsidiary of its promoter
+- an associate of its promoter
+
+if there are common Chairman, Directors, or employees between the CRA and the entity, or if such persons are on the CRA’s rating committ",1,moonshotai/kimi-k2-instruct
+REG_183,regulatory_interpretation,medium,"Under SEBI (CRA) Regulations, 1999 (as amended), can an entity provide ESG ratin","No. Under Regulation 28C, no person may act as an ESG rating provider without obtaining a certificate from the Board. Existing ESG rating providers op",No ESG ratings without registration. Existing providers get a six-month transition period (or as extended by the Board) while their registration application is pending.,1,moonshotai/kimi-k2-instruct
+REG_184,regulatory_interpretation,hard,What are the ongoing and application-time liquid net worth requirements for a Ca,"Under Regulation 28E(m)(iv), a Category I ESG rating provider must maintain a minimum liquid net worth of Rs 5 crore at all times on an ongoing basis.","**Ongoing requirement:** Rupees five crores minimum liquid net worth at all times.
+
+**Application-time requirement:** The higher of:
+
+- Rupees ten crores, or  
+- Rupees five crores plus projected cumulative cash losses until breakeven.",1,moonshotai/kimi-k2-instruct
+NUM_123,numerical_reasoning,easy,A credit rating agency registered with SEBI had a net worth of Rs 18 crore at th,The minimum required net worth is Rs 25 crore. The CRA's current net worth is Rs 18 crore. Required increase = Rs 25 crore − Rs 18 crore = Rs 7 crore.,"Calculation:  
+Required net-worth = 25 crore  
+Current net-worth = 18 crore  
+Increase needed = 25 – 18 = 7 crore  
+Time limit = 3 years from the date of the notification of the Securities and Exchange Board of India (Credit Rating Agencies) (Amendment) Regulations, 2018.
+
+Answer: Rs 7 crore within ",1,moonshotai/kimi-k2-instruct
+NUM_124,numerical_reasoning,medium,A foreign credit rating agency was incorporated in its home country in January 2,"The foreign CRA began rating securities from July 2019. By December 2025, it has had 6 years and 5 months of rating experience (July 2019 to December ","Experience counted only from July 2019 (when it began rating) to December 2025 = 6 years 5 months ≥ 5 years.  
+Yes – it meets the requirement.",1,moonshotai/kimi-k2-instruct
+NUM_125,numerical_reasoning,easy,"An auditor submits a report to a CRA on October 3, 2025, identifying deficiencie","The CRA must take steps to rectify the deficiencies within two months from the date of the auditor's report. Date of report: October 3, 2025. Adding t","Date of auditor’s report: 3 October 2025  
+Add 2 months → 3 December 2025
+
+Deadline: 3 December 2025",1,moonshotai/kimi-k2-instruct
+NUM_126,numerical_reasoning,hard,A CRA's promoter holds 35% of the CRA's shares at the time of registration. The ,"The promoter must maintain at least 26% shareholding for a minimum of three years from the date of grant of registration. Three years from April 1, 20","April 1, 2023 + 3 years = April 1, 2026  
+June 15, 2026 > April 1, 2026; three-year lock-in has expired.  
+
+Regulation 9(e) requires only that the promoter keep at least 26% during those three years. After that period, reduction below 26% is permitted.
+
+Answer: Yes.",1,moonshotai/kimi-k2-instruct
+NUM_127,numerical_reasoning,medium,A Category I ESG rating provider applicant projects cumulative cash losses of Rs,"The minimum liquid net worth at application time is the higher of: (A) Rs 10 crore, or (B) Rs 5 crore + projected cumulative cash losses until breakev","As per the rule we take the higher of:
+
+A. Fixed floor: Rs 10 crore  
+B. Addition of base Rs 5 crore plus projected losses: 5 + 6 = Rs 11 crore  
+
+Higher value is Rs 11 crore.
+
+11 crore rupees",1,moonshotai/kimi-k2-instruct
+NUM_128,numerical_reasoning,medium,A Category II ESG rating provider applicant projects cumulative cash losses of R,"At application time, the minimum is the higher of: (A) Rs 20 lakh, or (B) Rs 10 lakh + Rs 8 lakh (projected losses) = Rs 18 lakh. Since Rs 20 lakh > R","Calculation:  
+Higher of:  
+A. Rs 20 lakh  
+B. Rs 10 lakh + Rs 8 lakh = Rs 18 lakh  
+Minimum at application = Rs 20 lakh  
+
+Ongoing maintenance = Rs 10 lakh  
+
+Answer: Rs 20 lakh at application vs Rs 10 lakh ongoing",1,moonshotai/kimi-k2-instruct
+NUM_129,numerical_reasoning,medium,Institution X holds 12% of the shares of CRA-1. It proposes to acquire a 9% stak,"No, the proposed acquisition would not violate Regulation 24A(2). The restriction applies to a shareholder holding 10% or more in one CRA acquiring 10","Calculation:
+- Existing holding in CRA-1: 12% (≥10%)
+- Proposed holding in CRA-2: 9% (<10%)
+
+Regulation 24A(2) prohibits holding ≥10% in two CRAs.
+
+Since 9% is below the 10% threshold, the acquisition would not violate the regulation.
+
+Final answer: No",1,moonshotai/kimi-k2-instruct
+NUM_130,numerical_reasoning,hard,A body corporate files an application to promote a credit rating agency in Decem,The requirement under Regulation 4(e) is a continuous net worth of at least Rs 100 crore per audited annual accounts for the previous five years. The ,"Calculation:
+2020-21: Rs 95 crore — below Rs 100 crore → fails for that year  
+
+Regulation 5(e) requires every one of the five preceding years to show net worth ≥ Rs 100 crore.  
+
+Year 2020-21 fails this requirement.  
+
+Final answer: No",0,moonshotai/kimi-k2-instruct
+CON_066,contradiction_detection,easy,Do these two versions of Regulation 8(2) impose the same validity period for a c,No,"No
+The pre-2016 version limits validity to five years while the 2016 version grants indefinite validity unless suspended or cancelled.",1,moonshotai/kimi-k2-instruct
+CON_067,contradiction_detection,easy,Do the original and 2018-amended versions of Regulation 5(c) prescribe the same ,No,No. The original version requires ₹5 crore while the 2018 amendment raises the minimum net worth to ₹25 crore.,1,moonshotai/kimi-k2-instruct
+CON_068,contradiction_detection,hard,Do the original Regulation 14(g) and the 2011-amended version impose the same ma,No,"No  
+The original rule required two ratings for ₹100+ crore issues, while the 2011 version removes that dual-rating mandate.",1,moonshotai/kimi-k2-instruct
+CON_069,contradiction_detection,hard,Do the original and 2018-amended versions of Regulation 9(f) define the same per,No,"No  
+The amendment shifts the focus from “securities offered by public or rights issue” to “securities listed or proposed to be listed,” thereby re-defining the permissible scope of rating activities.",1,moonshotai/kimi-k2-instruct
+CON_070,contradiction_detection,medium,Do the original and 2018-amended versions of Regulation 16(3) provide the same g,No,No. The 2018 amendment adds an extra ground: the rating may also be withdrawn when specified by the Board.,1,moonshotai/kimi-k2-instruct
+CON_071,contradiction_detection,medium,Do the original and 2021-amended definitions of 'credit rating agency' under Reg,No,"No  
+The original definition covers all securities offered by public or rights issue, while the amended one only covers securities that are listed or proposed to be listed.",1,moonshotai/kimi-k2-instruct
+TMP_073,temporal_reasoning,easy,When was the minimum net worth requirement for credit rating agency applicants u,"The minimum net worth requirement was raised by the SEBI (Credit Rating Agencies) (Amendment) Regulations, 2018, with effect from 30 May 2018. The ori","Raised with effect from 30-05-2018 by the SEBI (CRA) (Amendment) Regulations, 2018; the minimum net worth was increased from ₹5 crore to ₹25 crore.",1,moonshotai/kimi-k2-instruct
+TMP_074,temporal_reasoning,medium,"Under the original SEBI (CRA) Regulations, 1999, what was the mandatory dual-rat","Under the original Regulation 14(g), a client was required to obtain ratings from at least two different credit rating agencies for any debt securitie","For original issues ≥ ₹100 crore, two different agency ratings were mandatory; this was removed on 27-12-2011 by the SEBI (CRA) (Second Amendment) Regulations, 2011.",1,moonshotai/kimi-k2-instruct
+TMP_075,temporal_reasoning,hard,Describe the evolution of the certificate validity regime for credit rating agen,"The evolution of certificate validity for CRAs under SEBI (CRA) Regulations, 1999 went through three stages: (1) Original (1999): The original regulat","- Original regime: no fixed validity period.  
+- 2011 amendment: initial certificate valid 5 years; application for permanent registration required 3 months before expiry (Reg. 8(2) & 8A).  
+- 8 Dec 2016: Reg. 8A deleted; new Reg. 8(2) substitutes validity with “valid unless suspended or cancelled” ",1,moonshotai/kimi-k2-instruct
+TMP_076,temporal_reasoning,medium,"What change did the SEBI (CRA) (Amendment) Regulations, 2021 make to the definit","The SEBI (Credit Rating Agencies) (Amendment) Regulations, 2021 (w.e.f. 03-08-2021) substituted the definition of 'credit rating agency' under Regulat","The 2021 amendment expanded the definition: instead of restricting CRA activity to rating securities offered by public or rights issues, it now covers rating any securities that are listed or proposed for listing on a SEBI-recognised stock exchange. (Effective 3 Aug 2021)",0,moonshotai/kimi-k2-instruct
+TMP_077,temporal_reasoning,easy,When was the regulatory framework for ESG rating providers introduced under SEBI,The regulatory framework for ESG rating providers was introduced through the insertion of Chapter IVA (comprising Regulations 28A to 28I) by the Secur,4 July 2023,1,moonshotai/kimi-k2-instruct
+TMP_078,temporal_reasoning,easy,When was the 26% minimum promoter shareholding requirement for credit rating age,The requirement for a minimum promoter shareholding of 26% in a credit rating agency was introduced by the SEBI (Credit Rating Agencies) (Amendment) R,30-05-2018,1,moonshotai/kimi-k2-instruct
+TMP_079,temporal_reasoning,easy,When were the cross-shareholding restrictions between credit rating agencies fir,The cross-shareholding restrictions between credit rating agencies (Regulation 24A) were first introduced by the SEBI (Credit Rating Agencies) (Amendm,Regulation 24A came into force on 30-05-2018.,1,moonshotai/kimi-k2-instruct
+TMP_080,temporal_reasoning,medium,"What change did the SEBI (CRA) (Amendment) Regulations, 2018 make to the continu","The SEBI (Credit Rating Agencies) (Amendment) Regulations, 2018 (w.e.f. 30-05-2018) added a qualifying carveout to the continuous monitoring obligatio","Inserted the clause “unless the rating is withdrawn, subject to the provisions of regulation 16(3)” with effect from 30-05-2018.",1,moonshotai/kimi-k2-instruct
+REG_185,regulatory_interpretation,easy,Under Regulation 3(1) of SEBI (Substantial Acquisition of Shares and Takeovers) ,25% or more of the voting rights in the target company (when combined with shares held by the acquirer and persons acting in concert).,25%,1,moonshotai/kimi-k2-instruct
+REG_186,regulatory_interpretation,easy,An acquirer holds 30% voting rights in a target company. What is the maximum add,5% of voting rights per financial year.,5%,1,moonshotai/kimi-k2-instruct
+REG_187,regulatory_interpretation,easy,Can an acquirer acquire control over a target company without making a public an,"No. Regulation 4 states that irrespective of acquisition or holding of shares or voting rights, no acquirer shall acquire control over a target compan","No. Under Regulation 4, irrespective of any share acquisition, an acquirer cannot obtain control without making a public announcement of an open offer.",1,moonshotai/kimi-k2-instruct
+REG_188,regulatory_interpretation,medium,"Under Regulation 5(2) of SEBI Takeovers Regulations 2011, under what condition i","When the proportionate NAV, proportionate sales turnover, or proportionate market capitalisation of the target company exceeds 80% of the consolidated","When the proportionate net asset value, sales turnover or market capitalisation of the target company exceeds 80% of the corresponding consolidated figure of the acquired entity.",1,moonshotai/kimi-k2-instruct
+REG_189,regulatory_interpretation,easy,What shareholding range qualifies an acquirer to voluntarily make a public annou,"The acquirer must hold shares or voting rights of 25% or more but less than the maximum permissible non-public shareholding, and the aggregate shareho",Twenty-five per cent or more but less than the maximum permissible non-public shareholding.,1,moonshotai/kimi-k2-instruct
+REG_190,regulatory_interpretation,easy,"Under Regulation 6(2), after completing a voluntary open offer, for how long is ",Six months after completion of the open offer.,Six months.,0,moonshotai/kimi-k2-instruct
+REG_191,regulatory_interpretation,medium,"What does Regulation 6A of SEBI Takeovers Regulations 2011 prohibit, and what ex",Regulation 6A prohibits wilful defaulters from making a public announcement of an open offer or entering into any transaction triggering an open offer,"It prohibits a wilful defaulter from making a public announcement of an open offer or entering into any transaction triggering such an obligation.  
+Exception: a wilful defaulter may still make a competing offer if another person first makes an open offer for the target company.",1,moonshotai/kimi-k2-instruct
+REG_192,regulatory_interpretation,easy,"Under Regulation 7(1) of SEBI Takeovers Regulations 2011, what is the minimum op",At least 26% of the total shares of the target company (as of the tenth working day from the closure of the tendering period).,26% of the total shares of the target company as of the tenth working day from the closure of the tendering period.,1,moonshotai/kimi-k2-instruct
+REG_193,regulatory_interpretation,medium,What happens to the offer price if an acquirer purchases shares of the target co,"The offer price automatically stands revised to the highest price paid or payable for such acquisition. However, no such acquisition is permitted afte",The offer price shall stand revised to the highest price paid or payable for any such acquisition.,1,moonshotai/kimi-k2-instruct
+REG_194,regulatory_interpretation,medium,"Under Regulation 8(10), if an acquirer buys shares of the target company within ",The acquirer must pay the difference between the highest acquisition price and the open offer price to all shareholders whose shares were accepted in ,"The acquirer and persons acting in concert must pay the difference between the highest acquisition price and the offer price to all shareholders whose shares were accepted in the open offer, within 60 days from the date of such acquisition.",1,moonshotai/kimi-k2-instruct
+REG_195,regulatory_interpretation,hard,What conditions must listed shares offered as non-cash consideration in an open ,The shares must: (a) be listed and frequently traded; (b) have been listed for at least 2 years before the date of public announcement; (c) the issuer,"- The shares must be listed and frequently traded.
+- They must have been listed for at least two years before the public announcement date.
+- The issuer must have redressed at least 95% of investor complaints received in the preceding calendar quarter.
+- The issuer must have been in material complia",1,moonshotai/kimi-k2-instruct
+REG_196,regulatory_interpretation,medium,"Under Regulation 10(3), what must a shareholder do to claim exemption from makin",The shareholder must reduce their shareholding such that voting rights fall below the 25% threshold within 90 days from the date of closure of the buy,The shareholder must reduce his shareholding so that his voting rights fall below the threshold within ninety days from the date of closure of the buy-back offer.,1,moonshotai/kimi-k2-instruct
+REG_197,regulatory_interpretation,easy,What is the key independence requirement for the manager to the open offer under,The manager to the open offer must be a SEBI-registered merchant banker who is not an associate of the acquirer.,The manager to the open offer must be a merchant banker who is not an associate of the acquirer.,1,moonshotai/kimi-k2-instruct
+REG_198,regulatory_interpretation,easy,"Under Regulation 16(4) of SEBI Takeovers Regulations 2011, within how many worki","SEBI must give its comments within 15 working days of receipt of the draft letter of offer. If no comments are issued within this period, it is deemed","Fifteen working days; if no comments are issued within that period, it is deemed that SEBI does not have comments to offer.",1,moonshotai/kimi-k2-instruct
+REG_199,regulatory_interpretation,medium,"Under Regulation 17(10)(e), if an acquirer's escrow account is forfeited for non",After deduction of expenses of registered market intermediaries: one-third to the target company; one-third to the Investor Protection and Education F,"One-third to the target company, one-third to the Investor Protection and Education Fund, and one-third pro-rata among shareholders who accepted the open offer (after deducting expenses of registered market intermediaries).",1,moonshotai/kimi-k2-instruct
+REG_200,regulatory_interpretation,medium,Under what condition and after what period may an acquirer complete the underlyi,"The acquirer may complete the acquisition after expiry of 21 working days from the date of the detailed public statement, provided they have deposited","After 21 working days from the date of the detailed public statement, provided the acquirer deposits cash equal to the entire open-offer consideration into the escrow account.",1,moonshotai/kimi-k2-instruct
+REG_201,regulatory_interpretation,medium,"Under Chapter V (Disclosure provisions) of SEBI Takeovers Regulations 2011, when","An acquirer whose aggregate acquisition reaches 5% or more must disclose their aggregate shareholding and voting rights. Additionally, any person alre",Within two working days of the acquisition.,1,moonshotai/kimi-k2-instruct
+REG_202,regulatory_interpretation,hard,"Under Regulation 26(2) of SEBI Takeovers Regulations 2011, what actions is the t",The board is prohibited from: (a) alienating material assets outside ordinary course of business; (b) effecting material borrowings outside ordinary c,"Alienate material assets outside ordinary course of business; effect material borrowings outside ordinary course; issue or allot authorised but unissued voting securities; implement buy-back or capital structure changes; enter into, amend or terminate material contracts outside ordinary course; acce",1,moonshotai/kimi-k2-instruct
+NUM_131,numerical_reasoning,medium,An acquirer makes a mandatory open offer where the total consideration payable i,Rs 125 crore (25% of first Rs 500 crore) + Rs 70 crore (10% of balance Rs 700 crore) = Rs 195 crore.,"For the first ₹500 crore: 25% of ₹500 crore = ₹125 crore  
+For the balance ₹700 crore: 10% of ₹700 crore = ₹70 crore  
+
+Total escrow: ₹125 crore + ₹70 crore = ₹195 crore",1,moonshotai/kimi-k2-instruct
+NUM_132,numerical_reasoning,easy,An acquirer holds 28% voting rights in a listed company with 10 crore total shar,5% of 10 crore = 50 lakh shares.,"10,00,00,000 shares × 5% = 1,00,00,000 shares
+
+1,00,00,000 shares",0,moonshotai/kimi-k2-instruct
+NUM_133,numerical_reasoning,easy,A listed company has 50 crore shares outstanding. An acquirer acquires shares tr,26% of 50 crore = 13 crore shares.,"Calculation:
+26% of 50 crore shares = 0.26 × 50 crore
+
+Answer:
+13 crore shares",1,moonshotai/kimi-k2-instruct
+NUM_134,numerical_reasoning,hard,"An open offer at Rs 100 per share completed payment to shareholders on March 15,","26 weeks from March 15, 2024 is approximately September 15, 2024. August 20, 2024 falls within this window, so Regulation 8(10) applies. The acquirer ","Yes, Regulation 8(10) applies.
+
+Calculation:
+- March 15, 2024 + 26 weeks = September 13, 2024
+- August 20, 2024 falls within this 26-week window
+- Difference per share = Rs 130 - Rs 100 = Rs 30
+
+Payment deadline:
+August 20, 2024 + 60 days = October 19, 2024
+
+Final answer: Rs 30 per share must be pai",1,moonshotai/kimi-k2-instruct
+NUM_135,numerical_reasoning,medium,An acquirer's total consideration payable under an open offer is Rs 600 crore. U,At least 1% of total consideration payable = 1% of Rs 600 crore = Rs 6 crore must be deposited in cash.,"Total consideration payable = Rs 600 crore  
+Required minimum cash deposit = 1% of Rs 600 crore = Rs 6 crore  
+
+Rs 6 crore",1,moonshotai/kimi-k2-instruct
+NUM_136,numerical_reasoning,medium,An acquirer makes a mandatory open offer where the total consideration payable i,"Consideration is more than Rs 10 crore but less than or equal to Rs 1,000 crore: fee = 0.5% of offer size = 0.5% × Rs 400 crore = Rs 2 crore.","Offer size = Rs 400 crore  
+0.5 % of 400 crore = 0.005 × 400,00,00,000 = Rs 2,00,00,000  
+
+Rs 2,00,00,000",1,moonshotai/kimi-k2-instruct
+NUM_137,numerical_reasoning,medium,"SEBI issued its comments on the draft letter of offer on April 7, 2025. Assuming","The tendering period must commence no later than 12 working days from April 7, 2025 = approximately April 23, 2025 (adding 12 working days). The tende","Counting 12 working days from SEBI’s 7 April 2025 comments:  
+7 Apr 2025-21 Apr 2025 = 12 working days, so 21 Apr  is the 12th day.  
+Last permissible commencement: 21 Apr 2025.
+
+Tendering period opens on 21 Apr 2025 and remains open for 10 × working days:  
+21 Apr 2024- 30 Ap ˙= 10 business days, s",1,moonshotai/kimi-k2-instruct
+NUM_138,numerical_reasoning,easy,An acquirer holds 40% voting rights in a target company with 200 crore total sha,At least 10% additional voting rights = 10% of 200 crore total shares = 20 crore shares.,"40% of 200 crore = 80 crore shares already held.
+
+Regulation 7(2) requires an additional 10% of total voting rights.
+
+10% of 200 crore = 20 crore shares.
+
+Minimum offer size: 20 crore shares.",1,moonshotai/kimi-k2-instruct
+CON_072,contradiction_detection,medium,Do Regulation 3(1) and Regulation 3(5) of SEBI Takeovers Regulations 2011 contra,No,"No.  
+Regulation 3(5) sets the threshold at 49% only for specified companies on the Innovators Growth Platform, so it does not clash with the standard 25% threshold in Regulation 3(1).",1,moonshotai/kimi-k2-instruct
+CON_073,contradiction_detection,hard,Do the main provision and the 2020 proviso of Regulation 3(2) of SEBI Takeovers ,No,"Yes
+The 2020 prov permits a promoter to buy 5%-10% via a preferential issue in 2020-21, whereas the main rule limits them to 5% unless an open offer is made, so the limit higher than five per cent stands relaxed only for that year, making the two texts contradictory.",0,moonshotai/kimi-k2-instruct
+CON_074,contradiction_detection,medium,Is there a contradiction between Regulation 7(1) and Regulation 7(2) about the m,No,"Yes.  
+Regulation 7(1) fixes a uniform 26% threshold for mandatory offers while Regulation 7(2) prescribes a lower 10% threshold for voluntary offers, so they apply in different contexts.",0,moonshotai/kimi-k2-instruct
+CON_075,contradiction_detection,medium,Do Regulation 22(1) and Regulation 22(2) contradict each other about when an acq,No,"No  
+Sub-regulation (2) creates a conditional early completion exception to the blanket prohibition in (1).",1,moonshotai/kimi-k2-instruct
+CON_076,contradiction_detection,hard,Is there a contradiction between Regulation 23(1) and Regulation 6A regarding th,No,"No  
+Regulation 23(1) sets the grounds on which any open offer can be withdrawn, whereas Regulation 6A merely bars a wil­ful defaulter from making the initial open-offer announcement, so their scopes don’t overlap or clash.",1,moonshotai/kimi-k2-instruct
+CON_077,contradiction_detection,hard,Do Regulation 29(1) and Regulation 29(2) impose contradictory or duplicative dis,No,"No  
+Regulation 29(1) triggers disclosure at crossing 5% while 29(2) triggers only on subsequent changes exceeding two percent, so both apply to the same transaction at the first acquisition but thereafter 29(2) alone governs.",1,moonshotai/kimi-k2-instruct
+TMP_081,temporal_reasoning,medium,When did SEBI introduce separate prohibitions on wilful defaulters and fugitive ,"The prohibition on wilful defaulters (Regulation 6A) was inserted by the Second Amendment Regulations, 2016, effective May 25, 2016, following Reserve",Regulation 6A (wilful defaulters) – 25-05-2016; Regulation 6B (fugitive economic offenders) – 11-09-2018.,1,moonshotai/kimi-k2-instruct
+TMP_082,temporal_reasoning,medium,How was the deadline for making upward revisions to the offer price changed unde,"Prior to the 2018 amendment, an acquirer could make upward revisions to the offer price up to three working days before the commencement of the tender","The deadline for upward revisions was shortened from ""three working days"" to ""the last one working day before the commencement of the tendering period""; effective 11-09-2018.",1,moonshotai/kimi-k2-instruct
+TMP_083,temporal_reasoning,medium,When did SEBI introduce the higher 49% open offer threshold for entities listed ,"The Amendment Regulations, 2021, effective May 5, 2021, inserted Regulations 3(5) and 6(4) providing that the 25% mandatory open offer threshold reads","SEBI introduced the higher 49% open offer threshold for Innovators Growth Platform-listed entities on 05-05-2021 through the SEBI (Substantial Acquisition of Shares and Takeovers) (Amendment) Regulations, 2021. Simultaneously, the term 'institutional trading platform' was changed to 'Innovators Grow",1,moonshotai/kimi-k2-instruct
+TMP_084,temporal_reasoning,hard,How did the SEBI Takeovers Regulations provisions on combined open offer and del,"In 2013, a basic Regulation 5A was inserted allowing an acquirer making an open offer to also delist under the Delisting Regulations, 2009, with speci","- 2013: SEBI (Listing of Specified Securities on IT Platform) Regulations inserted Regulation 5A – “The acquirer may delist the company in accordance with the SEBI (Delisting of Equity Shares) Regulations, 2009.”  
+- 6-12-2021: SEBI (SAST) (Third Amendment) Regulations, 2021 substituted that Regulat",0,moonshotai/kimi-k2-instruct
+TMP_085,temporal_reasoning,hard,When were housing finance companies and systemically important NBFCs added to th,The original exemption in Regulation 29(4) covered only scheduled commercial banks and public financial institutions acting as pledgees in ordinary bu,"Housing finance companies and systemically important NBFCs were added to the exemption from disclosure on encumbrance by the Third Amendment Regulations, 2018, effective 31-12-2018. Before this amendment, only scheduled commercial banks and public financial institutions were exempt.",1,moonshotai/kimi-k2-instruct
+TMP_086,temporal_reasoning,hard,What happened to the annual continual disclosure requirement for promoters and m,"Regulation 30, which required every person holding 25% or more of voting rights and all promoters to disclose their aggregate shareholding as of March","The requirement was removed by the SEBI (SAST) (Second Amendment) Regulations, 2021 with effect from 1 April 2022.",1,moonshotai/kimi-k2-instruct
+TMP_087,temporal_reasoning,medium,"What significant change did the SEBI Takeovers Amendment Regulations, 2025 make ","The 2025 Amendment Regulations, effective January 3, 2026, replaced the requirement that valuations for infrequently traded shares (Regulation 8(2)(e)","With effect from 03-01-2026, all references in Regulations 8(2)(e), 8(4) and 9(5) changed the valuation authority from “the acquirer and the manager to the open offer” to “an independent registered valuer”; ongoing valuation assignments are protected by a nine-month transition window.",1,moonshotai/kimi-k2-instruct
+TMP_088,temporal_reasoning,easy,When was the regulatory sandbox exemption introduced into SEBI Takeovers Regulat,"The regulatory sandbox provision (Regulation 31A) was inserted by the SEBI (Regulatory Sandbox) (Amendment) Regulations, 2020, effective April 17, 202","Regulation 31A, inserted w.e.f. 17-04-2020, permits SEBI to grant an exemption for up to twelve months.",0,moonshotai/kimi-k2-instruct

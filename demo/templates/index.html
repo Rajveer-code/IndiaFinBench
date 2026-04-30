@@ -479,7 +479,7 @@ footer{padding:40px 20px;border-top:1px solid var(--border);text-align:center}
           <div style="font-size:17px;font-weight:700;font-family:var(--serif);margin-bottom:12px">Citation</div>
           <div class="cite-wrap">
             <button class="copy-btn" onclick="copyCite()" id="copyBtn">Copy</button>
-            <pre class="cite-pre" id="citeText">@article{pall2026indiafinbench,
+            <pre class="cite-pre" id="citeText">{% raw %}@article{pall2026indiafinbench,
   title   = {{IndiaFinBench}: An Evaluation Benchmark
              for LLM Performance on Indian Financial
              Regulatory Text},
@@ -487,7 +487,7 @@ footer{padding:40px 20px;border-top:1px solid var(--border);text-align:center}
   journal = {Proceedings of EMNLP},
   year    = {2026},
   url     = {https://github.com/Rajveer-code/IndiaFinBench}
-}</pre>
+}{% endraw %}</pre>
           </div>
           <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px">
             <a href="https://huggingface.co/datasets/Rajveer-code/IndiaFinBench" class="link-btn" target="_blank">🤗 HuggingFace</a>
@@ -525,7 +525,7 @@ footer{padding:40px 20px;border-top:1px solid var(--border);text-align:center}
 <script>
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "heroBg": "#060917",
-  "accent": "#4285F4",
+  "accent": "#F59E0B",
   "barStyle": "rounded"
 }/*EDITMODE-END*/;
 </script>

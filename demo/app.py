@@ -1,16 +1,20 @@
 """
 demo/app.py
 -----------
-Purpose:  Flask-based IndiaFinBench leaderboard with polished, custom HTML/CSS/JS UI.
-          GET  /              — Main leaderboard page
-          GET  /api/leaderboard  — JSON leaderboard data
-          POST /api/submit    — Kick off async HF model evaluation
-          GET  /api/job/<id>  — Poll job status
-          GET  /api/example   — Random dataset example (for dataset explorer)
-Inputs:   demo/data/questions.json, demo/data/baselines.json, demo/leaderboard.db
-Outputs:  Flask web app served on 0.0.0.0:7860
-Usage:
-    python demo/app.py
+Flask leaderboard + RAG demo for IndiaFinBench.
+
+Routes:
+  GET  /                  Main page
+  GET  /api/leaderboard   JSON leaderboard (12 models + human)
+  GET  /api/example       Random benchmark item
+  POST /api/rag           Hybrid RAG query (rate-limited 20/min per IP)
+  POST /api/submit        Returns pre-filled GitHub issue URL
+
+Run locally:
+  python demo/app.py
+
+On HuggingFace Spaces:
+  gunicorn --bind 0.0.0.0:7860 --workers 1 --threads 4 --timeout 120 demo.app:app
 """
 
 import json
@@ -19,33 +23,46 @@ import random
 import sys
 import threading
 import time
-import uuid
+import urllib.parse
+from collections import defaultdict, deque
 from pathlib import Path
 
 from flask import Flask, jsonify, render_template, request
 
-# Ensure demo/ is on the Python path when running from repo root
+# ── Python path ────────────────────────────────────────────────────────────────
+# Root must come FIRST so `import rag` resolves to /app/rag/ (the real pipeline)
+# not /app/demo/rag/ (old shim, now deleted).
+# Demo comes second for database/ imports.
 _DEMO_DIR = Path(__file__).parent
+_ROOT_DIR  = _DEMO_DIR.parent
+
+if str(_ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(_ROOT_DIR))
 if str(_DEMO_DIR) not in sys.path:
-    sys.path.insert(0, str(_DEMO_DIR))
+    sys.path.insert(1, str(_DEMO_DIR))
 
-from database.db import get_leaderboard, init_db, save_result
-from evaluation.scorer import score_submission
+from database.db import get_leaderboard, init_db  # noqa: E402
 
-# ── Globals ────────────────────────────────────────────────────────────────────
+# ── Data ───────────────────────────────────────────────────────────────────────
 
-QUESTIONS_PATH = _DEMO_DIR / "data/questions.json"
+QUESTIONS_PATH = _DEMO_DIR / "data" / "questions.json"
 with QUESTIONS_PATH.open(encoding="utf-8") as _f:
     QUESTIONS: list[dict] = json.load(_f)
 
 init_db()
 
-app = Flask(__name__, template_folder=str(_DEMO_DIR / "templates"))
-app.config["TEMPLATES_AUTO_RELOAD"] = True
-app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0  # no browser caching of static files
+# ── Flask app ──────────────────────────────────────────────────────────────────
 
-# Unique stamp per process start — forces browser to re-fetch all JS on every restart
+app = Flask(
+    __name__,
+    template_folder=str(_DEMO_DIR / "templates"),
+    static_folder=str(_DEMO_DIR / "static"),
+)
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
+
 _JS_VER = str(int(time.time()))
+
 
 @app.after_request
 def _no_cache(response):
@@ -53,8 +70,8 @@ def _no_cache(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
-_eval_lock = threading.Lock()
-_eval_jobs: dict[str, dict] = {}   # job_id → status dict
+
+# ── Constants ──────────────────────────────────────────────────────────────────
 
 TASK_FULL = {
     "regulatory_interpretation": "Regulatory Interpretation",
@@ -79,9 +96,63 @@ HUMAN_BASELINE = {
     "is_human":  True,
 }
 
+# ── RAG pipeline (lazy, thread-safe) ──────────────────────────────────────────
+
+_INDEX_DIR    = _ROOT_DIR / "rag" / "index"
+_rag_pipeline = None
+_rag_lock     = threading.Lock()
+
+
+def _get_rag_pipeline():
+    """Lazy-init the RAG pipeline with double-checked locking."""
+    global _rag_pipeline
+    if _rag_pipeline is not None:
+        return _rag_pipeline
+    with _rag_lock:
+        if _rag_pipeline is not None:
+            return _rag_pipeline
+        from rag.config import RAGConfig        # noqa: PLC0415
+        from rag.pipeline import RAGPipeline    # noqa: PLC0415
+        cfg = RAGConfig(index_dir=_INDEX_DIR)
+        p = RAGPipeline(config=cfg)
+        p.load_index()
+        _rag_pipeline = p
+    return _rag_pipeline
+
+
+def _warmup_rag() -> None:
+    """Pre-load the pipeline at startup so the first user request is fast."""
+    try:
+        _get_rag_pipeline()
+        app.logger.info("RAG pipeline ready (FAISS + BM25 loaded)")
+    except Exception as exc:                   # noqa: BLE001
+        app.logger.warning("RAG warmup failed: %s", exc)
+
+
+threading.Thread(target=_warmup_rag, daemon=True).start()
+
+# ── Rate limiter ───────────────────────────────────────────────────────────────
+
+_rag_rate: dict = defaultdict(deque)
+_RL_N = 20      # requests
+_RL_W = 60.0    # seconds window
+
+
+def _rl_check(ip: str) -> bool:
+    """Return True if the IP is within the rate limit, False if exceeded."""
+    now = time.time()
+    q   = _rag_rate[ip]
+    while q and now - q[0] > _RL_W:
+        q.popleft()
+    if len(q) >= _RL_N:
+        return False
+    q.append(now)
+    return True
+
+
+# ── Helpers ────────────────────────────────────────────────────────────────────
 
 def _normalize_models(df) -> list[dict]:
-    """Convert get_leaderboard() DataFrame to JSON-serialisable list."""
     result = []
     for _, row in df.iterrows():
         result.append({
@@ -127,74 +198,39 @@ def api_leaderboard():
 
 @app.route("/api/submit", methods=["POST"])
 def api_submit():
-    data  = request.get_json() or {}
-    hf_id = data.get("hf_id", "").strip()
-    label = data.get("label", "").strip() or (hf_id.split("/")[-1] if hf_id else "")
-    params     = data.get("params", "").strip() or "Unknown"
-    model_type = data.get("model_type", "Open").strip() or "Open"
-    smoke      = bool(data.get("smoke", False))
+    data       = request.get_json() or {}
+    hf_id      = (data.get("hf_id") or "").strip()
+    label      = (data.get("label") or (hf_id.split("/")[-1] if hf_id else "")).strip()
+    params     = (data.get("params") or "Unknown").strip() or "Unknown"
+    model_type = (data.get("model_type") or "Open").strip() or "Open"
 
     if not hf_id:
-        return jsonify({"error": "Missing hf_id"}), 400
+        return jsonify({"error": "hf_id is required"}), 400
 
-    job_id = str(uuid.uuid4())
-    _eval_jobs[job_id] = {
-        "status":   "queued",
-        "progress": 0,
-        "result":   None,
-        "error":    None,
-    }
-
-    def _run():
-        if not _eval_lock.acquire(blocking=False):
-            _eval_jobs[job_id].update(
-                status="error",
-                error="Another evaluation is running. Please try again shortly.",
-            )
-            return
-        try:
-            _eval_jobs[job_id]["status"] = "running"
-            from evaluation.evaluator import IndiaFinBenchEvaluator
-
-            items     = QUESTIONS[:10] if smoke else QUESTIONS
-            evaluator = IndiaFinBenchEvaluator(hf_id)
-            preds     = evaluator.run(items)
-            result    = score_submission(preds, items)
-
-            save_result(
-                hf_id=hf_id,
-                label=label,
-                overall=result["overall"],
-                per_task=result["per_task"],
-                params=params,
-                model_type=model_type,
-                n_items=len(items),
-                notes="smoke_test" if smoke else "",
-            )
-            _eval_jobs[job_id].update(
-                status="done",
-                result={
-                    "label":    label,
-                    "overall":  round(result["overall"] * 100, 1),
-                    "per_task": {k: round(v * 100, 1) for k, v in result["per_task"].items()},
-                    "n_items":  len(items),
-                },
-            )
-        except Exception as exc:                          # noqa: BLE001
-            _eval_jobs[job_id].update(status="error", error=str(exc)[:400])
-        finally:
-            _eval_lock.release()
-
-    threading.Thread(target=_run, daemon=True).start()
-    return jsonify({"job_id": job_id})
-
-
-@app.route("/api/job/<job_id>")
-def api_job(job_id: str):
-    job = _eval_jobs.get(job_id)
-    if not job:
-        return jsonify({"error": "Job not found"}), 404
-    return jsonify(job)
+    safe = hf_id.replace("/", "_")
+    body = (
+        "**Model Submission for IndiaFinBench**\n\n"
+        "| Field | Value |\n|---|---|\n"
+        f"| Model Name | {label} |\n"
+        f"| HuggingFace ID | `{hf_id}` |\n"
+        f"| Parameters | {params} |\n"
+        f"| Type | {model_type} |\n\n"
+        "**Evaluation command:**\n"
+        "```bash\n"
+        "python evaluation/evaluate.py \\\n"
+        "    --dataset data/benchmark/indiafinbench_v1.csv \\\n"
+        f"    --model {hf_id} \\\n"
+        "    --provider huggingface \\\n"
+        f"    --output results/predictions/{safe}.csv\n"
+        "```\n"
+    )
+    issue_url = (
+        "https://github.com/Rajveer-code/IndiaFinBench/issues/new"
+        f"?title={urllib.parse.quote(f'[Submission] {label}')}"
+        f"&body={urllib.parse.quote(body)}"
+        "&labels=model-submission"
+    )
+    return jsonify({"issue_url": issue_url})
 
 
 @app.route("/api/rag", methods=["POST"])
@@ -203,11 +239,15 @@ def api_rag():
     query = (data.get("query") or "").strip()
     if not query:
         return jsonify({"error": "Missing query"}), 400
+
+    ip = request.remote_addr or "unknown"
+    if not _rl_check(ip):
+        return jsonify({"error": "Rate limit reached (20 req/min). Please wait."}), 429
+
     try:
-        from rag.rag import ask
-        result = ask(query)
-    except Exception as exc:          # noqa: BLE001
-        result = {"error": f"RAG unavailable: {exc!s}"[:300]}
+        result = _get_rag_pipeline().ask(query)
+    except Exception as exc:               # noqa: BLE001
+        result = {"error": f"RAG unavailable: {str(exc)[:300]}"}
     return jsonify(result)
 
 

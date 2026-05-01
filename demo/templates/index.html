@@ -13,7 +13,7 @@
   --bg:#F7F7F5;--bg2:#EFEEEC;--bg3:#E6E4E1;
   --text:#111;--text2:#3A3A3A;--text3:#777;--text4:#AAA;
   --border:rgba(0,0,0,0.07);--border2:rgba(0,0,0,0.12);
-  --accent:#F59E0B;
+  --accent:#4285F4;
   --hero-bg:#060917;
   --r:16px;--r-sm:10px;
   --shadow:0 1px 3px rgba(0,0,0,0.04),0 4px 16px rgba(0,0,0,0.06);
@@ -52,11 +52,11 @@ nav{background:rgba(6,9,23,0.75);backdrop-filter:blur(28px) saturate(200%);borde
 .orb4{width:180px;height:180px;bottom:10%;right:15%;background:radial-gradient(circle,rgba(74,144,255,0.08),transparent 70%)}
 
 .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:100px;padding:6px 18px;font-size:11px;font-weight:600;letter-spacing:0.1em;color:rgba(255,255,255,0.6);text-transform:uppercase;margin-bottom:32px}
-.badge-dot{width:7px;height:7px;border-radius:50%;background:#FF9933;box-shadow:0 0 12px rgba(255,153,51,0.6);animation:glow-pulse 2s ease infinite}
-@keyframes glow-pulse{0%,100%{box-shadow:0 0 12px rgba(255,153,51,0.6)}50%{box-shadow:0 0 24px rgba(255,153,51,0.9)}}
+.badge-dot{width:7px;height:7px;border-radius:50%;background:#4285F4;box-shadow:0 0 12px rgba(66,133,244,0.6);animation:glow-pulse 2s ease infinite}
+@keyframes glow-pulse{0%,100%{box-shadow:0 0 12px rgba(66,133,244,0.6)}50%{box-shadow:0 0 24px rgba(66,133,244,0.9)}}
 
 .hero h1{font-family:var(--serif);font-size:clamp(48px,7vw,86px);font-weight:800;line-height:1;letter-spacing:-0.03em;color:#fff;margin-bottom:10px}
-.hero-gradient{background:linear-gradient(135deg,#FF9933 0%,#FF3CAC 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-gradient{background:linear-gradient(135deg,#FF9933 0%,#F7B731 50%,#FF6B35 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
 .hero-sub{font-size:clamp(15px,1.8vw,18px);color:rgba(255,255,255,0.45);max-width:580px;margin:20px auto 50px;line-height:1.75;font-weight:300}
 
@@ -112,7 +112,7 @@ nav{background:rgba(6,9,23,0.75);backdrop-filter:blur(28px) saturate(200%);borde
 .bar-pct{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:14px;font-weight:700;color:#fff;font-family:var(--mono);opacity:0;transition:opacity 0.35s;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,0.2)}
 .bar-fill.shown .bar-pct{opacity:1}
 
-.bar-icon-wrap{position:absolute;right:-22px;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:800;font-family:var(--sans);box-shadow:0 2px 8px rgba(0,0,0,0.15);opacity:0;transition:opacity 0.4s 0.8s}
+.bar-icon-wrap{position:absolute;right:-22px;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid #e5e5e5;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.1);opacity:0;transition:opacity 0.4s 0.8s;overflow:hidden;padding:4px}
 .bar-fill.shown ~ .bar-icon-wrap{opacity:1}
 
 .bar-tooltip{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%);background:#111;color:#fff;border-radius:12px;padding:14px 16px;font-size:12px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity 0.2s;z-index:99;box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,0.08)}
@@ -231,6 +231,33 @@ td.c{text-align:center}
 .step-text{font-size:13px;color:var(--text2);line-height:1.55}
 code{background:var(--bg3);padding:1px 5px;border-radius:4px;font-size:11px;font-family:var(--mono);color:var(--text2)}
 
+/* ── RAG DEMO ── */
+.rag-search-row{display:flex;gap:10px;align-items:center;margin-bottom:14px}
+.rag-input{flex:1;height:48px;border:1.5px solid var(--border2);border-radius:12px;padding:0 16px;font-family:var(--sans);font-size:14px;background:#fff;color:var(--text);outline:none;transition:border-color 0.2s,box-shadow 0.2s}
+.rag-input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(66,133,244,0.1)}
+.rag-input::placeholder{color:var(--text4)}
+.rag-btn{height:48px;padding:0 26px;background:linear-gradient(135deg,var(--accent),#6366F1);color:#fff;border:none;border-radius:12px;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:opacity 0.15s,transform 0.1s;white-space:nowrap;flex-shrink:0}
+.rag-btn:hover{opacity:0.88;transform:translateY(-1px)}
+.rag-btn:active{transform:scale(0.97)}
+.rag-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none!important}
+.rag-examples{display:flex;flex-wrap:wrap;align-items:center;gap:7px}
+.rag-ex-lbl{font-size:12px;color:var(--text4);font-weight:600;text-transform:uppercase;letter-spacing:0.08em}
+.rag-ex{background:#fff;border:1px solid var(--border);border-radius:100px;padding:5px 13px;font-size:12px;color:var(--text3);cursor:pointer;font-family:var(--sans);transition:all 0.15s}
+.rag-ex:hover{background:#EFF6FF;color:var(--accent);border-color:rgba(66,133,244,0.4)}
+.rag-result{margin-top:20px;display:flex;flex-direction:column;gap:14px}
+.rag-answer-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.rag-answer-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent)}
+.rag-loading{display:none;align-items:center;gap:8px;font-size:12px;color:var(--text3)}
+.rag-spinner{width:15px;height:15px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.75s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.rag-answer-text{font-size:14.5px;line-height:1.8;color:var(--text2);white-space:pre-wrap;min-height:24px}
+.rag-sources-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.rag-source-card{background:rgba(255,255,255,0.75);border:1px solid rgba(255,255,255,0.6);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
+.rag-source-num{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:5px}
+.rag-source-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.35}
+.rag-source-text{font-size:12px;color:var(--text3);line-height:1.6;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.rag-empty{font-size:13px;color:var(--text4);text-align:center;padding:20px 0;display:none}
+
 /* ── FOOTER ── */
 footer{padding:40px 20px;border-top:1px solid var(--border);text-align:center}
 .footer-main{font-size:14px;font-weight:500;color:var(--text2)}
@@ -251,8 +278,6 @@ footer{padding:40px 20px;border-top:1px solid var(--border);text-align:center}
 .anim.visible{opacity:1;transform:translateY(0)}
 .anim.d1{transition-delay:0.08s}.anim.d2{transition-delay:0.16s}.anim.d3{transition-delay:0.24s}.anim.d4{transition-delay:0.32s}
 
-
-
 @media(max-width:700px){.nav-links{display:none}.bar-label{width:110px;min-width:110px}.bar-name{max-width:86px}.section{padding:52px 16px}.hero{padding:120px 16px 60px}.bar-icon-wrap{display:none}}
 </style>
 </head>
@@ -267,6 +292,7 @@ footer{padding:40px 20px;border-top:1px solid var(--border);text-align:center}
       <a href="#tasks" class="nav-link">Tasks</a>
       <a href="#difficulty" class="nav-link">Analysis</a>
       <a href="#submit" class="nav-link">Submit</a>
+      <a href="#rag" class="nav-link">RAG Demo</a>
       <a href="#about" class="nav-link">About</a>
     </div>
     <a href="#about" class="nav-pill">Read Paper ↗</a>
@@ -286,12 +312,12 @@ footer{padding:40px 20px;border-top:1px solid var(--border);text-align:center}
     <h1 class="anim d1">India<span class="hero-gradient">FinBench</span></h1>
     <p class="hero-sub anim d2">The first expert-annotated benchmark for evaluating large language models on Indian financial regulatory text — 192 documents spanning 1992–2026.</p>
     <div class="stats-row anim d3">
-      <div class="stat-chip c-amber"><div class="stat-num" data-count="406">0</div><div class="stat-lbl">QA Pairs</div></div>
-      <div class="stat-chip c-blue"><div class="stat-num" data-count="11">0</div><div class="stat-lbl">Models</div></div>
-      <div class="stat-chip c-white"><div class="stat-num" data-count="4">0</div><div class="stat-lbl">Task Types</div></div>
-      <div class="stat-chip c-purple"><div class="stat-num" data-count="192">0</div><div class="stat-lbl">Documents</div></div>
+      <div class="stat-chip c-amber"><div class="stat-num" data-count="406">406</div><div class="stat-lbl">QA Pairs</div></div>
+      <div class="stat-chip c-blue"><div class="stat-num" id="modelCount" data-count="12">12</div><div class="stat-lbl">Models</div></div>
+      <div class="stat-chip c-white"><div class="stat-num" data-count="4">4</div><div class="stat-lbl">Task Types</div></div>
+      <div class="stat-chip c-purple"><div class="stat-num" data-count="192">192</div><div class="stat-lbl">Documents</div></div>
       <div class="stat-chip c-green"><div class="stat-num">89.7%</div><div class="stat-lbl">Best Score</div></div>
-      <div class="stat-chip c-pink"><div class="stat-num">60.0%</div><div class="stat-lbl">Human Baseline</div></div>
+      <div class="stat-chip c-pink"><div class="stat-num" id="humanBaseline">69.0%</div><div class="stat-lbl">Human Baseline</div></div>
     </div>
   </div>
   <div class="hero-wave"><svg viewBox="0 0 1440 64" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0 64C240 0 480 20 720 32C960 44 1200 0 1440 64V64H0Z" fill="#F7F7F5"/></svg></div>
@@ -388,7 +414,7 @@ footer{padding:40px 20px;border-top:1px solid var(--border);text-align:center}
       <div class="card-shine"></div>
       <div class="card-pad" style="padding-bottom:0">
         <div style="font-size:17px;font-weight:700;font-family:var(--serif);margin-bottom:4px">Accuracy by Difficulty Level</div>
-        <div style="font-size:13px;color:var(--text3);margin-bottom:20px">LLaMA-3.3-70B <em>improves</em> on hard items (79.4% → 90.6%); Gemma 4 E4B collapses (82.5% → 56.2%).</div>
+        <div style="font-size:13px;color:var(--text3);margin-bottom:20px">LLaMA-3.3-70B <em>improves</em> on hard items (79.4% → 90.6%). Gemma 4 E4B collapses (82.5% → 56.2%). †Gemini 2.5 Pro's hard drop reflects verbose-output scoring artifact.</div>
       </div>
       <div class="table-wrap">
         <table><thead><tr><th>Model</th><th class="c">Easy (n=160)</th><th class="c">Medium (n=182)</th><th class="c">Hard (n=64)</th></tr></thead><tbody id="diffBody"></tbody></table>
@@ -403,7 +429,7 @@ footer{padding:40px 20px;border-top:1px solid var(--border);text-align:center}
     <div class="section-hd anim">
       <div class="section-eyebrow">Open Evaluation</div>
       <div class="section-title">Submit a Model</div>
-      <div class="section-sub">Evaluate any public HuggingFace model zero-shot on all 406 IndiaFinBench items.</div>
+      <div class="section-sub">Evaluate any public HuggingFace model zero-shot on all 406 IndiaFinBench items and add it to the leaderboard. Kimi K2 and GPT-OSS models are accessed via Groq API.</div>
     </div>
     <div class="submit-grid anim d1">
       <div class="glass-card"><div class="card-shine"></div><div class="card-pad" style="display:flex;flex-direction:column;gap:18px">
@@ -433,6 +459,46 @@ footer{padding:40px 20px;border-top:1px solid var(--border);text-align:center}
   </div>
 </section>
 
+<!-- RAG DEMO -->
+<section id="rag" class="section">
+  <div class="container">
+    <div class="section-hd anim">
+      <div class="section-eyebrow">Live Retrieval</div>
+      <div class="section-title">RAG Demo</div>
+      <div class="section-sub">Ask questions grounded in all 192 SEBI &amp; RBI regulatory documents (1992–2026). Answers are retrieved and generated in real-time — no hallucination, every claim is sourced.</div>
+    </div>
+    <div class="glass-card anim d1"><div class="card-shine"></div><div class="card-pad">
+      <div class="rag-search-row">
+        <input class="rag-input" id="ragQ" type="text" placeholder="e.g. What is the SEBI margin requirement for equity derivatives?" onkeydown="if(event.key==='Enter')doRag()">
+        <button class="rag-btn" id="ragBtn" onclick="doRag()">Ask ↗</button>
+      </div>
+      <div class="rag-examples">
+        <span class="rag-ex-lbl">Try:</span>
+        <button class="rag-ex" onclick="setRagQ(this)">What is the circuit breaker limit for NSE stocks?</button>
+        <button class="rag-ex" onclick="setRagQ(this)">RBI repo rate changes in 2024</button>
+        <button class="rag-ex" onclick="setRagQ(this)">SEBI definition of insider trading</button>
+        <button class="rag-ex" onclick="setRagQ(this)">Minimum capital adequacy ratio for banks</button>
+      </div>
+    </div></div>
+
+    <div id="ragResult" class="rag-result" style="display:none">
+      <div class="glass-card anim"><div class="card-shine"></div><div class="card-pad">
+        <div class="rag-answer-hd">
+          <div class="rag-answer-label">Answer</div>
+          <div class="rag-loading" id="ragLoading"><div class="rag-spinner"></div>Retrieving from corpus…</div>
+        </div>
+        <div class="rag-answer-text" id="ragAnswer"></div>
+      </div></div>
+      <div class="rag-sources-grid" id="ragSources"></div>
+      <div class="rag-empty" id="ragEmpty">No relevant passages found. Try a different query.</div>
+    </div>
+
+    <div style="margin-top:16px;font-size:12px;color:var(--text4);text-align:center" class="anim d2">
+      Powered by <strong>Vertex AI Search</strong> · <strong>Gemini Flash</strong> · 192 SEBI &amp; RBI documents
+    </div>
+  </div>
+</section>
+
 <!-- ABOUT -->
 <section id="about" class="section">
   <div class="container">
@@ -454,7 +520,7 @@ footer{padding:40px 20px;border-top:1px solid var(--border);text-align:center}
         </div></div>
         <div class="finding-box anim d2">
           <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px">Key Findings</div>
-          <p>All 11 models surpass the <strong>60.0%</strong> human baseline. Gemini 2.5 Flash leads at <strong>89.7%</strong> — nearly 30 pp above humans. Numerical reasoning is the most discriminative task (<strong>34.8 pp</strong> spread). Llama 4 Scout 17B statistically matches LLaMA-3.3-70B with ¼ the parameters (p=0.79). GPT-OSS 20B→120B yields no measurable benefit (p=0.91).</p>
+          <p>All 12 models surpass the <strong>69.0%</strong> human baseline (n=100). Gemini 2.5 Flash leads at <strong>89.7%</strong>. Numerical reasoning is the most discriminative task (<strong>35.9 pp</strong> spread). Llama 4 Scout 17B matches LLaMA-3.3-70B with ¼ the parameters (p=0.79). GPT-OSS 20B→120B yields no benefit (p=0.91). Gemini 2.5 Pro falls to Tier 2 due to verbose-output scoring artifact (corrected: 84.5%). Human IAA confirmed stable across 120 items (κ=0.611 CON).</p>
         </div>
       </div>
       <div style="display:flex;flex-direction:column;gap:20px" class="anim d2">
@@ -472,7 +538,7 @@ footer{padding:40px 20px;border-top:1px solid var(--border);text-align:center}
             <tr><td>Cohen's κ (CON, model)</td><td>0.918</td></tr>
             <tr><td>Human IAA overall</td><td>76.7%</td></tr>
             <tr><td>Cohen's κ (CON, human)</td><td>0.611</td></tr>
-            <tr><td>Human expert baseline</td><td>60.0%</td></tr>
+            <tr><td>Human expert baseline</td><td>69.0% (n=100)</td></tr>
           </tbody></table>
         </div></div>
         <div class="glass-card"><div class="card-shine"></div><div class="card-pad">
@@ -505,7 +571,7 @@ footer{padding:40px 20px;border-top:1px solid var(--border);text-align:center}
 <!-- FOOTER -->
 <footer>
   <div class="footer-main">IndiaFinBench 2026 · EMNLP 2026 · <strong>Rajveer Singh Pall</strong> · Gyan Ganga Institute of Technology and Sciences</div>
-  <div class="footer-sub">192 SEBI &amp; RBI documents · 406 expert-annotated QA pairs · 11 models · Zero-shot evaluation · CC BY 4.0 Dataset · MIT Code</div>
+  <div class="footer-sub">192 SEBI &amp; RBI documents · 406 expert-annotated QA pairs · 12 models · Zero-shot evaluation · CC BY 4.0 Dataset · MIT Code</div>
 </footer>
 
 <!-- TWEAKS -->
@@ -525,18 +591,75 @@ footer{padding:40px 20px;border-top:1px solid var(--border);text-align:center}
 <script>
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "heroBg": "#060917",
-  "accent": "#F59E0B",
+  "accent": "#4285F4",
   "barStyle": "rounded"
 }/*EDITMODE-END*/;
 </script>
-<script src="{{ url_for('static', filename='js/data.js') }}"></script>
-<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
-<script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+<script src="/static/js/data.js?v={{ js_ver }}"></script>
+<script src="/static/js/charts.js?v={{ js_ver }}"></script>
+<script src="/static/js/animations.js?v={{ js_ver }}"></script>
 <script>
 buildBarChart('overall');
 buildTable('overall',-1);
 buildBreakdown();
 buildDiffTable();
+
+/* RAG Demo */
+window.doRag = async function(){
+  const q = document.getElementById('ragQ').value.trim();
+  if(!q) return;
+  const btn = document.getElementById('ragBtn');
+  btn.disabled = true;
+  const result = document.getElementById('ragResult');
+  result.style.display = 'flex';
+  document.getElementById('ragLoading').style.display = 'flex';
+  document.getElementById('ragAnswer').textContent = '';
+  document.getElementById('ragSources').innerHTML = '';
+  document.getElementById('ragEmpty').style.display = 'none';
+  try {
+    const res = await fetch('/api/rag', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({query: q})
+    });
+    const data = await res.json();
+    document.getElementById('ragLoading').style.display = 'none';
+    if(data.error){
+      document.getElementById('ragAnswer').textContent = '⚠ ' + data.error;
+    } else {
+      document.getElementById('ragAnswer').textContent = data.answer || '';
+      const sources = data.sources || [];
+      if(sources.length){
+        const grid = document.getElementById('ragSources');
+        sources.forEach((s,i)=>{
+          const card = document.createElement('div');
+          card.className = 'rag-source-card';
+          card.innerHTML = `<div class="rag-source-num">Source ${i+1}</div>`
+            + `<div class="rag-source-title">${s.title||s.doc_id||'Document'}</div>`
+            + `<div class="rag-source-text">${s.text||''}</div>`;
+          grid.appendChild(card);
+        });
+      } else {
+        document.getElementById('ragEmpty').style.display = 'block';
+      }
+    }
+  } catch(e) {
+    document.getElementById('ragLoading').style.display = 'none';
+    document.getElementById('ragAnswer').textContent = '⚠ Network error: ' + e.message;
+  }
+  btn.disabled = false;
+};
+window.setRagQ = function(btn){
+  document.getElementById('ragQ').value = btn.textContent.trim();
+  doRag();
+};
+// Sync hero chips from live JS data in case browser had old HTML cached
+(function(){
+  var mc = document.getElementById('modelCount');
+  var hc = document.getElementById('humanBaseline');
+  if(mc && window.IFB_MODELS){ mc.dataset.count = String(window.IFB_MODELS.length); mc.textContent = String(window.IFB_MODELS.length); }
+  if(hc && window.IFB_HUMAN){ hc.textContent = window.IFB_HUMAN.overall.toFixed(1)+'%'; }
+})();
 </script>
 </body>
 </html>

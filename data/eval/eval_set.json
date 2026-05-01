@@ -1,0 +1,335 @@
+[
+  {
+    "qid": "syn_001",
+    "question": "Where was the 622nd meeting of the Central Board of Directors of the Reserve Bank of India held, and who chaired it?",
+    "reference_answer": "The 622nd meeting was held in Patna on March 20, 2026, under the chairmanship of Shri Sanjay Malhotra, Governor.",
+    "relevant_chunk_ids": [
+      "RBI_622ndMeeti_622ndmeeting_of_central_board_of_the_reserve_bank_of_in_079__0000"
+    ],
+    "tier": "synthetic",
+    "source_doc": "RBI_622ndMeeti_622ndmeeting_of_central_board_of_the_reserve_bank_of_in_079"
+  },
+  {
+    "qid": "syn_002",
+    "question": "What is the period covered by the Reserve Bank of India's Medium Term Strategy Framework Utkarsh 3.0, approved at the 622nd Central Board meeting?",
+    "reference_answer": "Utkarsh 3.0 covers the period 2026-29.",
+    "relevant_chunk_ids": [
+      "RBI_622ndMeeti_622ndmeeting_of_central_board_of_the_reserve_bank_of_in_079__0000"
+    ],
+    "tier": "synthetic",
+    "source_doc": "RBI_622ndMeeti_622ndmeeting_of_central_board_of_the_reserve_bank_of_in_079"
+  },
+  {
+    "qid": "syn_003",
+    "question": "What NOP-INR position limit did RBI impose on Authorised Dealers via A.P. (DIR Series) Circular No. 24 dated March 27, 2026?",
+    "reference_answer": "Authorised Dealers must maintain their NOP-INR positions in the onshore deliverable market within US$ 100 million at the end of each business day.",
+    "relevant_chunk_ids": [
+      "RBI_NOP-INR po_nop-inr_position_of_authorised_dealers_083__0000"
+    ],
+    "tier": "synthetic",
+    "source_doc": "RBI_NOP-INR po_nop-inr_position_of_authorised_dealers_083"
+  },
+  {
+    "qid": "syn_004",
+    "question": "By what date must Authorised Dealers comply with the new NOP-INR position limits set by RBI circular dated March 27, 2026?",
+    "reference_answer": "Authorised Dealers must comply at the earliest, but no later than April 10, 2026.",
+    "relevant_chunk_ids": [
+      "RBI_NOP-INR po_nop-inr_position_of_authorised_dealers_083__0000"
+    ],
+    "tier": "synthetic",
+    "source_doc": "RBI_NOP-INR po_nop-inr_position_of_authorised_dealers_083"
+  },
+  {
+    "qid": "syn_005",
+    "question": "What instruction did the RBI give Currency Chest holding banks regarding operations on March 31, 2026?",
+    "reference_answer": "RBI directed Currency Chest holding banks to keep their Currency Chests open on March 31, 2026 (a public holiday) akin to a normal working day, to account for FY 2025-26 government transactions.",
+    "relevant_chunk_ids": [
+      "RBI_Currency C_currency_chest_operations_on_march_31_2026_086__0000",
+      "RBI_RBI-2025-2_rbi2025-2026250dcmccnos47810351012025-26_002__0000"
+    ],
+    "tier": "synthetic",
+    "source_doc": "RBI_Currency C_currency_chest_operations_on_march_31_2026_086"
+  },
+  {
+    "qid": "syn_006",
+    "question": "What regulatory amendment did RBI notification FEMA 6(R)/(5)/2026-RB dated February 23, 2026 introduce?",
+    "reference_answer": "The notification amended the Foreign Exchange Management (Export and Import of Currency) Regulations, exercising powers under clause (ga) of sub-section (2) of Section 47 of the Foreign Exchange Management Act, 1999 (42 of 1999).",
+    "relevant_chunk_ids": [
+      "RBI_Foreign Ex_foreign_exchange_management_export_and_import_of_curren_094__0000"
+    ],
+    "tier": "synthetic",
+    "source_doc": "RBI_Foreign Ex_foreign_exchange_management_export_and_import_of_curren_094"
+  },
+  {
+    "qid": "syn_007",
+    "question": "What are passengers required to do with the currency declaration form under the FEMA (Export and Import of Currency) Amendment Regulations, 2026?",
+    "reference_answer": "Passengers are advised to produce this form to a bank authorised to deal in foreign exchange or money changer at the time of conversion of foreign exchange into Indian rupees or reconversion of rupees into foreign exchange. Visitors who do not encash all declared foreign exchange should retain the form to present to Customs at departure.",
+    "relevant_chunk_ids": [
+      "RBI_Foreign Ex_foreign_exchange_management_export_and_import_of_curren_094__0001"
+    ],
+    "tier": "synthetic",
+    "source_doc": "RBI_Foreign Ex_foreign_exchange_management_export_and_import_of_curren_094"
+  },
+  {
+    "qid": "syn_008",
+    "question": "What is the stated purpose of Legal Entity Identifier (LEI) and Unique Transaction Identifier (UTI) according to the RBI Master Direction on Unique Identifiers in Financial Markets, 2026?",
+    "reference_answer": "LEI and UTI are key global standards for promoting transparency in the financial markets.",
+    "relevant_chunk_ids": [
+      "RBI_Master Dir_master_direction_-_reserve_bank_of_india_unique_identif_084__0000"
+    ],
+    "tier": "synthetic",
+    "source_doc": "RBI_Master Dir_master_direction_-_reserve_bank_of_india_unique_identif_084"
+  },
+  {
+    "qid": "syn_009",
+    "question": "What organisation must accredit a Local Operating Unit (LOU) from which market participants obtain LEI codes under the RBI Master Direction on Unique Identifiers in Financial Markets, 2026?",
+    "reference_answer": "The LOU must be accredited by the Global Legal Entity Identifier Foundation (GLEIF). In India, the LOU shall be an entity recognised by the Reserve Bank as an issuer of LEI under the Payment and Settlement Systems Act, 2007.",
+    "relevant_chunk_ids": [
+      "RBI_Master Dir_master_direction_-_reserve_bank_of_india_unique_identif_084__0003"
+    ],
+    "tier": "synthetic",
+    "source_doc": "RBI_Master Dir_master_direction_-_reserve_bank_of_india_unique_identif_084"
+  },
+  {
+    "qid": "syn_010",
+    "question": "What is the maximum number of characters in a Unique Transaction Identifier (UTI) under the RBI Directions on Unique Identifiers in Financial Markets, 2026, and how is it structured?",
+    "reference_answer": "A UTI shall have a maximum of 52 characters comprising the LEI of the generating entity followed by other information, generated in accordance with UTI Technical Guidance issued by CPMI-IOSCO in February 2017.",
+    "relevant_chunk_ids": [
+      "RBI_Master Dir_master_direction_-_reserve_bank_of_india_unique_identif_084__0005"
+    ],
+    "tier": "synthetic",
+    "source_doc": "RBI_Master Dir_master_direction_-_reserve_bank_of_india_unique_identif_084"
+  },
+  {
+    "qid": "syn_011",
+    "question": "To which categories of financial institutions was the RBI circular DOR.AML.REC.445/14.06.001/2025-26 dated March 27, 2026 on Section 51A of UAPA addressed?",
+    "reference_answer": "The circular was addressed to the Chairpersons/CEOs of Commercial Banks, Small Finance Banks, Payment Banks, Urban Co-operative Banks, Rural Co-operative Banks, Regional Rural Banks, Local Area Banks, Non-Banking Financial Companies, Asset Reconstruction Companies, and All India Financial Institutions.",
+    "relevant_chunk_ids": [
+      "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0000"
+    ],
+    "tier": "synthetic",
+    "source_doc": "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085"
+  },
+  {
+    "qid": "syn_012",
+    "question": "What role did OMAR AL SARRAF play in ISIL (Da'esh) according to the UNSC listing referenced in the RBI circular dated March 27, 2026?",
+    "reference_answer": "OMAR AL SARRAF served as a senior leader in ISIL (Da'esh), listed as Al-Qaida in Iraq (QDe.115), acting as its financial management officer.",
+    "relevant_chunk_ids": [
+      "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0003"
+    ],
+    "tier": "synthetic",
+    "source_doc": "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085"
+  },
+  {
+    "qid": "syn_013",
+    "question": "What formula is given for calculating eligible quarterly profits (EP) for inclusion in NBFC capital computation under the RBI Second Amendment Directions (DOR.CAP.REC.No.416/2025-26)?",
+    "reference_answer": "EP_t = NP_t - 0.25 * D * t, where EP is Eligible Profits, NP is Net Profits, D is the average dividend paid in the last three years, and t is the number of quarters.",
+    "relevant_chunk_ids": [
+      "RBI_RBI-2025-2_rbi2025-2026226dorcaprecno41621010022025-26_026__0001"
+    ],
+    "tier": "synthetic",
+    "source_doc": "RBI_RBI-2025-2_rbi2025-2026226dorcaprecno41621010022025-26_026"
+  },
+  {
+    "qid": "syn_014",
+    "question": "What risk weight must a clearing member bank apply to its trade exposure to a Qualifying Central Counterparty (QCCP) for OTC derivatives, per RBI's Third Amendment Directions on Capital Adequacy for Commercial Banks (DOR.MRG.REC.No.433)?",
+    "reference_answer": "A risk weight of 2 per cent shall be applied to the bank's trade exposure to the QCCP in respect of OTC derivatives transactions, exchange traded derivatives transactions, and SFTs. The same 2 per cent weight also applies when the clearing member offers clearing services to clients.",
+    "relevant_chunk_ids": [
+      "RBI_RBI-2025-2_rbi2025-2026238dormrgrecno43321-01-0022025-26_014__0003"
+    ],
+    "tier": "synthetic",
+    "source_doc": "RBI_RBI-2025-2_rbi2025-2026238dormrgrecno43321-01-0022025-26_014"
+  },
+  {
+    "qid": "syn_015",
+    "question": "What was the total face value notified and accepted for the 91-Day Treasury Bill in the auction result announced by RBI on March 25, 2026?",
+    "reference_answer": "The total face value notified for the 91-Day Treasury Bill was Rs 15,000 Crore. However, the total face value accepted was NIL and no cut-off price was established (shown as NA).",
+    "relevant_chunk_ids": [
+      "RBI_91-Day, 18_91-day_182-day_and_364-day_t-bill_auction_result_cut-of_048__0000"
+    ],
+    "tier": "synthetic",
+    "source_doc": "RBI_91-Day, 18_91-day_182-day_and_364-day_t-bill_auction_result_cut-of_048"
+  },
+  {
+    "qid": "syn_016",
+    "question": "Under which section of the Securities and Exchange Board of India Act, 1992 were the SEBI KYC (Know Your Client) Registration Agency Regulations, 2011 made?",
+    "reference_answer": "The SEBI KYC Registration Agency Regulations, 2011 were made under section 30 of the Securities and Exchange Board of India Act, 1992 (15 of 1992).",
+    "relevant_chunk_ids": [
+      "SEBI_2011_securities_and_exchange_board_of_india_kyc_know_your_cl_074__0000"
+    ],
+    "tier": "synthetic",
+    "source_doc": "SEBI_2011_securities_and_exchange_board_of_india_kyc_know_your_cl_074"
+  },
+  {
+    "qid": "syn_017",
+    "question": "What activities constitute the role of a 'banker to an issue' as defined in the SEBI (Bankers to an Issue) Regulations, 1994?",
+    "reference_answer": "A banker to an issue carries out the following activities: (i) acceptance of application and application monies; (ii) acceptance of allotment or call monies; (iii) refund of application monies; (iv) payment of dividend or interest warrants.",
+    "relevant_chunk_ids": [
+      "SEBI_1994_securities_and_exchange_board_of_india_bankers_to_an_is_088__0002"
+    ],
+    "tier": "synthetic",
+    "source_doc": "SEBI_1994_securities_and_exchange_board_of_india_bankers_to_an_is_088"
+  },
+  {
+    "qid": "syn_018",
+    "question": "How do the SEBI (Prohibition of Fraudulent and Unfair Trade Practices) Regulations, 2003 define 'fraud' in relation to dealing in securities?",
+    "reference_answer": "Fraud includes any act, expression, omission or concealment committed whether in a deceitful manner or not by a person or by any other person with his connivance or by his agent while dealing in securities in order to induce another person or his agent to deal in securities, whether or not there is any wrongful gain or avoidance of loss.",
+    "relevant_chunk_ids": [
+      "SEBI_2003_sebi_prohibition_of_fraudulent_and_unfair_trade_practic_080__0001"
+    ],
+    "tier": "synthetic",
+    "source_doc": "SEBI_2003_sebi_prohibition_of_fraudulent_and_unfair_trade_practic_080"
+  },
+  {
+    "qid": "syn_019",
+    "question": "When were the Securities and Exchange Board of India (Mutual Funds) Regulations, 1996 notified in the Gazette of India?",
+    "reference_answer": "The SEBI (Mutual Funds) Regulations, 1996 were published in the Gazette of India Extraordinary on December 9, 1996 (S.O. 856).",
+    "relevant_chunk_ids": [
+      "SEBI_1996_securities_and_exchange_board_of_india_mutual_funds_reg_087__0005"
+    ],
+    "tier": "synthetic",
+    "source_doc": "SEBI_1996_securities_and_exchange_board_of_india_mutual_funds_reg_087"
+  },
+  {
+    "qid": "syn_020",
+    "question": "What action did the UNSC Security Council Committee take regarding Hayat Tahrir al-Sham as communicated in RBI circular DOR.AML.REC.415/14.06.001/2025-26 dated March 2, 2026?",
+    "reference_answer": "The Security Council Committee decided to remove the entry for Hayat Tahrir al-Sham (also known as Jabhat al-Nusrah, Jabhat Fath al-Sham, and related aliases) from the ISIL (Da'esh) and Al-Qaida Sanctions List, thereby lifting the assets freeze, travel ban, and arms embargo against the entity.",
+    "relevant_chunk_ids": [
+      "RBI_RBI-2025-2_rbi2025-2026225doramlrec41514060012025-26_027__0001",
+      "RBI_RBI-2025-2_rbi2025-2026225doramlrec41514060012025-26_027__0002"
+    ],
+    "tier": "synthetic",
+    "source_doc": "RBI_RBI-2025-2_rbi2025-2026225doramlrec41514060012025-26_027"
+  },
+  {
+    "qid": "adv_001",
+    "question": "What KYC verification obligations apply to both SEBI-registered portfolio managers and RBI-regulated commercial banks?",
+    "reference_answer": "ANNOTATION REQUIRED",
+    "relevant_chunk_ids": [],
+    "tier": "adversarial",
+    "source_doc": ""
+  },
+  {
+    "qid": "adv_002",
+    "question": "How do SEBI's anti-money laundering requirements for FPIs compare with RBI's AML obligations for NBFCs?",
+    "reference_answer": "ANNOTATION REQUIRED",
+    "relevant_chunk_ids": [],
+    "tier": "adversarial",
+    "source_doc": ""
+  },
+  {
+    "qid": "adv_003",
+    "question": "Which SEBI and RBI circulars jointly govern the treatment of beneficial ownership disclosures?",
+    "reference_answer": "ANNOTATION REQUIRED",
+    "relevant_chunk_ids": [],
+    "tier": "adversarial",
+    "source_doc": ""
+  },
+  {
+    "qid": "adv_004",
+    "question": "What reporting obligations exist under both SEBI and RBI frameworks for entities on UAPA designated lists?",
+    "reference_answer": "ANNOTATION REQUIRED",
+    "relevant_chunk_ids": [],
+    "tier": "adversarial",
+    "source_doc": ""
+  },
+  {
+    "qid": "adv_005",
+    "question": "What does Section 51A of UAPA 1967 specifically require financial institutions to do regarding UNSC-designated entities?",
+    "reference_answer": "Under Section 51A of UAPA 1967, financial institutions must implement assets freeze, travel ban, and arms embargo against individuals and entities listed on the UNSC's ISIL (Da'esh) and Al-Qaida Sanctions List pursuant to Security Council resolution 2734 (2024). Regulated entities must take appropriate action under Chapter IX of AML/CFT Directions and follow the procedure in the UAPA Order dated February 02, 2021.",
+    "relevant_chunk_ids": [
+      "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0000",
+      "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0001",
+      "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0004"
+    ],
+    "tier": "adversarial",
+    "source_doc": "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085"
+  },
+  {
+    "qid": "adv_006",
+    "question": "What are the conditions specified under Regulation 4(2)(b) of the FPI Regulations 2019?",
+    "reference_answer": "ANNOTATION REQUIRED",
+    "relevant_chunk_ids": [],
+    "tier": "adversarial",
+    "source_doc": ""
+  },
+  {
+    "qid": "adv_007",
+    "question": "Under which master direction does RBI mandate unique identifiers for financial market participants?",
+    "reference_answer": "The RBI Master Direction - Reserve Bank of India (Unique Identifiers in Financial Markets) Directions, 2026, issued via Notification No. FMRD.MIOD.10/11.01.057/2025-26 dated March 27, 2026, mandates the use of Legal Entity Identifier (LEI) and Unique Transaction Identifier (UTI) for eligible market participants.",
+    "relevant_chunk_ids": [
+      "RBI_Master Dir_master_direction_-_reserve_bank_of_india_unique_identif_084__0000",
+      "RBI_Master Dir_master_direction_-_reserve_bank_of_india_unique_identif_084__0001"
+    ],
+    "tier": "adversarial",
+    "source_doc": "RBI_Master Dir_master_direction_-_reserve_bank_of_india_unique_identif_084"
+  },
+  {
+    "qid": "adv_008",
+    "question": "What was the cut-off rate announced for the 91-day Treasury Bill auction result published by RBI in March 2026?",
+    "reference_answer": "For the 91-Day Treasury Bill auction result announced on March 25, 2026, no cut-off rate was established (shown as NA) and the total face value accepted was NIL, meaning the auction did not result in any allotment. The notified amount was Rs 15,000 Crore.",
+    "relevant_chunk_ids": [
+      "RBI_91-Day, 18_91-day_182-day_and_364-day_t-bill_auction_result_cut-of_048__0000"
+    ],
+    "tier": "adversarial",
+    "source_doc": "RBI_91-Day, 18_91-day_182-day_and_364-day_t-bill_auction_result_cut-of_048"
+  },
+  {
+    "qid": "adv_009",
+    "question": "What is SEBI's regulatory framework for cryptocurrency derivative instruments?",
+    "reference_answer": "The provided context does not contain sufficient information to answer this question.",
+    "relevant_chunk_ids": [],
+    "tier": "adversarial",
+    "source_doc": ""
+  },
+  {
+    "qid": "adv_010",
+    "question": "What are RBI's guidelines on digital lending apps for fintech startups?",
+    "reference_answer": "The provided context does not contain sufficient information to answer this question.",
+    "relevant_chunk_ids": [],
+    "tier": "adversarial",
+    "source_doc": ""
+  },
+  {
+    "qid": "adv_011",
+    "question": "What is the minimum net worth requirement for a crypto exchange seeking SEBI registration?",
+    "reference_answer": "The provided context does not contain sufficient information to answer this question.",
+    "relevant_chunk_ids": [],
+    "tier": "adversarial",
+    "source_doc": ""
+  },
+  {
+    "qid": "adv_012",
+    "question": "What is RBI's position on issuing a retail Central Bank Digital Currency in India?",
+    "reference_answer": "The provided context does not contain sufficient information to answer this question.",
+    "relevant_chunk_ids": [],
+    "tier": "adversarial",
+    "source_doc": ""
+  },
+  {
+    "qid": "adv_013",
+    "question": "When is the next Monetary Policy Committee meeting scheduled after April 2026?",
+    "reference_answer": "ANNOTATION REQUIRED",
+    "relevant_chunk_ids": [],
+    "tier": "adversarial",
+    "source_doc": ""
+  },
+  {
+    "qid": "adv_014",
+    "question": "What was the outcome of the 622nd meeting of the RBI Central Board?",
+    "reference_answer": "The 622nd meeting of the Central Board of Directors of the Reserve Bank of India was held on March 20, 2026 in Patna under the Chairmanship of Governor Shri Sanjay Malhotra. The Board approved the Bank's budget for the accounting year 2026-27 and also the Bank's Medium Term Strategy Framework (Utkarsh 3.0) for the period 2026-29.",
+    "relevant_chunk_ids": [
+      "RBI_622ndMeeti_622ndmeeting_of_central_board_of_the_reserve_bank_of_in_079__0000"
+    ],
+    "tier": "adversarial",
+    "source_doc": "RBI_622ndMeeti_622ndmeeting_of_central_board_of_the_reserve_bank_of_in_079"
+  },
+  {
+    "qid": "adv_015",
+    "question": "What SEBI circular superseded or amended the most recent FPI KYC guidelines?",
+    "reference_answer": "ANNOTATION REQUIRED",
+    "relevant_chunk_ids": [],
+    "tier": "adversarial",
+    "source_doc": ""
+  }
+]

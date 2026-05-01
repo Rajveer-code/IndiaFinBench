@@ -160,7 +160,7 @@ document.querySelectorAll('.glass-card').forEach(card=>{
 });
 
 /* ═════ NAV SCROLL ACTIVE ═════ */
-const _ns=['leaderboard','tasks','difficulty','submit','about'];
+const _ns=['leaderboard','tasks','difficulty','submit','rag','about'];
 window.addEventListener('scroll',()=>{
   let cur='';_ns.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-120)cur=id});
   document.querySelectorAll('.nav-link').forEach(a=>{

@@ -1,0 +1,581 @@
+{
+  "system_config": {
+    "embedding_model": "BAAI/bge-base-en-v1.5",
+    "target_chunk_chars": 1600,
+    "overlap_chars": 200,
+    "top_k": 5,
+    "candidates": 20,
+    "rrf_k": 60,
+    "max_per_source": 3,
+    "llm_backend": "groq",
+    "temperature": 0.0,
+    "index_dir": "rag\\index",
+    "eval_items": 35,
+    "items_with_gt": 24,
+    "judge_model": "gemini-1.5-flash",
+    "judge_prompt_ver": "v1.0",
+    "timestamp": "20260501_083151"
+  },
+  "judge_meta": {
+    "model": "gemini-1.5-flash",
+    "prompt_version": "v1.0",
+    "bias_note": "LLM judge scores approximate; compare only within same version."
+  },
+  "ablation_results": [
+    {
+      "config_id": "B0_dense_only",
+      "config_snapshot": {
+        "config_id": "B0_dense_only",
+        "mode": "dense",
+        "top_k": 5,
+        "chunk_chars": 1600,
+        "overlap_chars": 200,
+        "embedding_model": "BAAI/bge-base-en-v1.5",
+        "rrf_k": 60,
+        "candidates": 20
+      },
+      "elapsed_seconds": 2.02,
+      "retrieval_metrics": {
+        "recall_at_k": 0.6875,
+        "mrr": 0.5416666666666666,
+        "precision_at_k": 0.18819444444444444,
+        "k": 5,
+        "n_queries": 24
+      },
+      "generation_metrics": null,
+      "failures": [
+        {
+          "qid": "syn_011",
+          "question": "To which categories of financial institutions was the RBI circular DOR.AML.REC.445/14.06.001/2025-26 dated March 27, 2026 on Section 51A of UAPA addressed?",
+          "expected_chunk_ids": [
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0000"
+          ],
+          "retrieved_chunk_ids": [
+            "SEBI_Mar 26, 20_updates_for_implementation_of_section_51a_of_uapa_1967__029__0000",
+            "SEBI_Mar 26, 20_updates_for_implementation_of_section_51a_of_uapa_1967__028__0000",
+            "SEBI_Mar 11, 20_updates_for_implementation_of_section_51a_of_uapa_1967__041__0000",
+            "RBI_RBI-2025-2_rbi2025-2026225doramlrec41514060012025-26_027__0000",
+            "RBI_RBI-2025-2_rbi2025-2026242doramlrec43714060012025-26_010__0000"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.0,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "syn_012",
+          "question": "What role did OMAR AL SARRAF play in ISIL (Da'esh) according to the UNSC listing referenced in the RBI circular dated March 27, 2026?",
+          "expected_chunk_ids": [
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0003"
+          ],
+          "retrieved_chunk_ids": [
+            "RBI_RBI-2025-2_rbi2025-2026251doramlrec44514060012025-26_001__0001",
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0001",
+            "RBI_RBI-2025-2_rbi2025-2026251doramlrec44514060012025-26_001__0003",
+            "SEBI_Mar 26, 20_updates_for_implementation_of_section_51a_of_uapa_1967__029__0003",
+            "SEBI_Feb 27, 20_updates_for_implementation_of_section_51a_of_uapa_1967__045__0002"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.0,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "syn_013",
+          "question": "What formula is given for calculating eligible quarterly profits (EP) for inclusion in NBFC capital computation under the RBI Second Amendment Directions (DOR.CAP.REC.No.416/2025-26)?",
+          "expected_chunk_ids": [
+            "RBI_RBI-2025-2_rbi2025-2026226dorcaprecno41621010022025-26_026__0001"
+          ],
+          "retrieved_chunk_ids": [
+            "RBI_RBI-2025-2_rbi2025-2026226dorcaprecno41621010022025-26_026__0000",
+            "RBI_RBI-2025-2_rbi2025-2026231dorcaprecno42121010022025-26_021__0001",
+            "RBI_RBI-2025-2_rbi2025-2026238dormrgrecno43321-01-0022025-26_014__0001",
+            "SEBI_2018_securities_and_exchange_board_of_india_issue_of_capital_063__0185",
+            "SEBI_2021_securities_and_exchange_board_of_india_issue_and_listin_056__0081"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.0,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "syn_015",
+          "question": "What was the total face value notified and accepted for the 91-Day Treasury Bill in the auction result announced by RBI on March 25, 2026?",
+          "expected_chunk_ids": [
+            "RBI_91-Day, 18_91-day_182-day_and_364-day_t-bill_auction_result_cut-of_048__0000"
+          ],
+          "retrieved_chunk_ids": [
+            "RBI_Auction of_auction_of_91-day_182-day_and_364-day_treasury_bills_076__0000",
+            "RBI_Calendar f_calendar_for_auction_of_government_of_india_treasury_bi_030__0001",
+            "RBI_Auction of_auction_of_government_of_india_dated_securities_028__0001"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.0,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "syn_017",
+          "question": "What activities constitute the role of a 'banker to an issue' as defined in the SEBI (Bankers to an Issue) Regulations, 1994?",
+          "expected_chunk_ids": [
+            "SEBI_1994_securities_and_exchange_board_of_india_bankers_to_an_is_088__0002"
+          ],
+          "retrieved_chunk_ids": [
+            "SEBI_1994_securities_and_exchange_board_of_india_bankers_to_an_is_088__0000",
+            "SEBI_1994_securities_and_exchange_board_of_india_bankers_to_an_is_088__0046",
+            "SEBI_1994_securities_and_exchange_board_of_india_bankers_to_an_is_088__0043"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.0,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "syn_018",
+          "question": "How do the SEBI (Prohibition of Fraudulent and Unfair Trade Practices) Regulations, 2003 define 'fraud' in relation to dealing in securities?",
+          "expected_chunk_ids": [
+            "SEBI_2003_sebi_prohibition_of_fraudulent_and_unfair_trade_practic_080__0001"
+          ],
+          "retrieved_chunk_ids": [
+            "SEBI_2003_sebi_prohibition_of_fraudulent_and_unfair_trade_practic_080__0030",
+            "SEBI_2003_sebi_prohibition_of_fraudulent_and_unfair_trade_practic_080__0000",
+            "SEBI_2003_sebi_prohibition_of_fraudulent_and_unfair_trade_practic_080__0005"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.0,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "syn_020",
+          "question": "What action did the UNSC Security Council Committee take regarding Hayat Tahrir al-Sham as communicated in RBI circular DOR.AML.REC.415/14.06.001/2025-26 dated March 2, 2026?",
+          "expected_chunk_ids": [
+            "RBI_RBI-2025-2_rbi2025-2026225doramlrec41514060012025-26_027__0001",
+            "RBI_RBI-2025-2_rbi2025-2026225doramlrec41514060012025-26_027__0002"
+          ],
+          "retrieved_chunk_ids": [
+            "SEBI_Feb 27, 20_updates_for_implementation_of_section_51a_of_uapa_1967__045__0002",
+            "RBI_RBI-2025-2_rbi2025-2026225doramlrec41514060012025-26_027__0001",
+            "SEBI_Feb 27, 20_updates_for_implementation_of_section_51a_of_uapa_1967__045__0004",
+            "RBI_RBI-2025-2_rbi2025-2026225doramlrec41514060012025-26_027__0000",
+            "RBI_RBI-2025-2_rbi2025-2026251doramlrec44514060012025-26_001__0000"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.5,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "adv_005",
+          "question": "What does Section 51A of UAPA 1967 specifically require financial institutions to do regarding UNSC-designated entities?",
+          "expected_chunk_ids": [
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0000",
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0001",
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0004"
+          ],
+          "retrieved_chunk_ids": [
+            "SEBI_Mar 26, 20_updates_for_implementation_of_section_51a_of_uapa_1967__028__0000",
+            "SEBI_Mar 26, 20_updates_for_implementation_of_section_51a_of_uapa_1967__029__0000",
+            "SEBI_Mar 11, 20_updates_for_implementation_of_section_51a_of_uapa_1967__041__0000",
+            "RBI_RBI-2025-2_rbi2025-2026225doramlrec41514060012025-26_027__0000",
+            "RBI_RBI-2025-2_rbi2025-2026251doramlrec44514060012025-26_001__0000"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.0,
+          "faithfulness": -1.0
+        }
+      ]
+    },
+    {
+      "config_id": "B1_bm25_only",
+      "config_snapshot": {
+        "config_id": "B1_bm25_only",
+        "mode": "bm25",
+        "top_k": 5,
+        "chunk_chars": 1600,
+        "overlap_chars": 200,
+        "embedding_model": "BAAI/bge-base-en-v1.5",
+        "rrf_k": 60,
+        "candidates": 20
+      },
+      "elapsed_seconds": 1.48,
+      "retrieval_metrics": {
+        "recall_at_k": 0.7638888888888888,
+        "mrr": 0.6736111111111112,
+        "precision_at_k": 0.20833333333333334,
+        "k": 5,
+        "n_queries": 24
+      },
+      "generation_metrics": null,
+      "failures": [
+        {
+          "qid": "syn_010",
+          "question": "What is the maximum number of characters in a Unique Transaction Identifier (UTI) under the RBI Directions on Unique Identifiers in Financial Markets, 2026, and how is it structured?",
+          "expected_chunk_ids": [
+            "RBI_Master Dir_master_direction_-_reserve_bank_of_india_unique_identif_084__0005"
+          ],
+          "retrieved_chunk_ids": [
+            "RBI_RBI releas_rbi_releases_master_direction_on_unique_identifiers_in__037__0000",
+            "RBI_Master Dir_master_direction_-_reserve_bank_of_india_unique_identif_084__0000",
+            "RBI_Master Dir_master_direction_-_reserve_bank_of_india_unique_identif_084__0001",
+            "SEBI_Mar 14, 20_address_by_chairman_sebi_at_moneycontrol_global_wealth__038__0002",
+            "SEBI_2015_securities_and_exchange_board_of_india_prohibition_of_i_068__0042"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.0,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "syn_013",
+          "question": "What formula is given for calculating eligible quarterly profits (EP) for inclusion in NBFC capital computation under the RBI Second Amendment Directions (DOR.CAP.REC.No.416/2025-26)?",
+          "expected_chunk_ids": [
+            "RBI_RBI-2025-2_rbi2025-2026226dorcaprecno41621010022025-26_026__0001"
+          ],
+          "retrieved_chunk_ids": [
+            "RBI_RBI-2025-2_rbi2025-2026226dorcaprecno41621010022025-26_026__0000",
+            "RBI_RBI-2025-2_rbi2025-2026227dorcaprecno41721010022025-26_025__0000",
+            "RBI_RBI-2025-2_rbi2025-2026231dorcaprecno42121010022025-26_021__0000"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.0,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "syn_017",
+          "question": "What activities constitute the role of a 'banker to an issue' as defined in the SEBI (Bankers to an Issue) Regulations, 1994?",
+          "expected_chunk_ids": [
+            "SEBI_1994_securities_and_exchange_board_of_india_bankers_to_an_is_088__0002"
+          ],
+          "retrieved_chunk_ids": [
+            "SEBI_1994_securities_and_exchange_board_of_india_bankers_to_an_is_088__0035",
+            "SEBI_1994_securities_and_exchange_board_of_india_bankers_to_an_is_088__0001",
+            "SEBI_1994_securities_and_exchange_board_of_india_bankers_to_an_is_088__0034"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.0,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "syn_018",
+          "question": "How do the SEBI (Prohibition of Fraudulent and Unfair Trade Practices) Regulations, 2003 define 'fraud' in relation to dealing in securities?",
+          "expected_chunk_ids": [
+            "SEBI_2003_sebi_prohibition_of_fraudulent_and_unfair_trade_practic_080__0001"
+          ],
+          "retrieved_chunk_ids": [
+            "SEBI_2003_sebi_prohibition_of_fraudulent_and_unfair_trade_practic_080__0000",
+            "SEBI_2003_sebi_prohibition_of_fraudulent_and_unfair_trade_practic_080__0005",
+            "SEBI_2003_sebi_prohibition_of_fraudulent_and_unfair_trade_practic_080__0004"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.0,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "syn_020",
+          "question": "What action did the UNSC Security Council Committee take regarding Hayat Tahrir al-Sham as communicated in RBI circular DOR.AML.REC.415/14.06.001/2025-26 dated March 2, 2026?",
+          "expected_chunk_ids": [
+            "RBI_RBI-2025-2_rbi2025-2026225doramlrec41514060012025-26_027__0001",
+            "RBI_RBI-2025-2_rbi2025-2026225doramlrec41514060012025-26_027__0002"
+          ],
+          "retrieved_chunk_ids": [
+            "RBI_RBI-2025-2_rbi2025-2026225doramlrec41514060012025-26_027__0000",
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_095__0000",
+            "RBI_RBI-2025-2_rbi2025-2026242doramlrec43714060012025-26_010__0000",
+            "SEBI_Feb 27, 20_updates_for_implementation_of_section_51a_of_uapa_1967__045__0002",
+            "SEBI_Mar 26, 20_updates_for_implementation_of_section_51a_of_uapa_1967__028__0000"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.0,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "adv_005",
+          "question": "What does Section 51A of UAPA 1967 specifically require financial institutions to do regarding UNSC-designated entities?",
+          "expected_chunk_ids": [
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0000",
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0001",
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0004"
+          ],
+          "retrieved_chunk_ids": [
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_095__0000",
+            "RBI_RBI-2025-2_rbi2025-2026242doramlrec43714060012025-26_010__0000",
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0000",
+            "SEBI_Mar 11, 20_updates_for_implementation_of_section_51a_of_uapa_1967__041__0000",
+            "SEBI_Mar 26, 20_updates_for_implementation_of_section_51a_of_uapa_1967__028__0000"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.3333333333333333,
+          "faithfulness": -1.0
+        }
+      ]
+    },
+    {
+      "config_id": "B2_hybrid",
+      "config_snapshot": {
+        "config_id": "B2_hybrid",
+        "mode": "hybrid",
+        "top_k": 5,
+        "chunk_chars": 1600,
+        "overlap_chars": 200,
+        "embedding_model": "BAAI/bge-base-en-v1.5",
+        "rrf_k": 60,
+        "candidates": 20
+      },
+      "elapsed_seconds": 3.56,
+      "retrieval_metrics": {
+        "recall_at_k": 0.7847222222222222,
+        "mrr": 0.6402777777777778,
+        "precision_at_k": 0.19999999999999998,
+        "k": 5,
+        "n_queries": 24
+      },
+      "generation_metrics": null,
+      "failures": [
+        {
+          "qid": "syn_013",
+          "question": "What formula is given for calculating eligible quarterly profits (EP) for inclusion in NBFC capital computation under the RBI Second Amendment Directions (DOR.CAP.REC.No.416/2025-26)?",
+          "expected_chunk_ids": [
+            "RBI_RBI-2025-2_rbi2025-2026226dorcaprecno41621010022025-26_026__0001"
+          ],
+          "retrieved_chunk_ids": [
+            "RBI_RBI-2025-2_rbi2025-2026226dorcaprecno41621010022025-26_026__0000",
+            "RBI_RBI-2025-2_rbi2025-2026231dorcaprecno42121010022025-26_021__0001",
+            "RBI_RBI-2025-2_rbi2025-2026232dorcaprecno42221010022025-26_020__0001",
+            "SEBI_2018_securities_and_exchange_board_of_india_issue_of_capital_063__0185",
+            "SEBI_2021_securities_and_exchange_board_of_india_issue_and_listin_056__0081"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.0,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "syn_015",
+          "question": "What was the total face value notified and accepted for the 91-Day Treasury Bill in the auction result announced by RBI on March 25, 2026?",
+          "expected_chunk_ids": [
+            "RBI_91-Day, 18_91-day_182-day_and_364-day_t-bill_auction_result_cut-of_048__0000"
+          ],
+          "retrieved_chunk_ids": [
+            "RBI_Auction of_auction_of_91-day_182-day_and_364-day_treasury_bills_076__0000",
+            "RBI_Auction of_auction_of_state_government_securities_072__0004",
+            "RBI_Auction of_auction_of_state_government_securities_revised_071__0004"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.0,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "syn_017",
+          "question": "What activities constitute the role of a 'banker to an issue' as defined in the SEBI (Bankers to an Issue) Regulations, 1994?",
+          "expected_chunk_ids": [
+            "SEBI_1994_securities_and_exchange_board_of_india_bankers_to_an_is_088__0002"
+          ],
+          "retrieved_chunk_ids": [
+            "SEBI_1994_securities_and_exchange_board_of_india_bankers_to_an_is_088__0035",
+            "SEBI_1994_securities_and_exchange_board_of_india_bankers_to_an_is_088__0040",
+            "SEBI_1994_securities_and_exchange_board_of_india_bankers_to_an_is_088__0001"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.0,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "syn_018",
+          "question": "How do the SEBI (Prohibition of Fraudulent and Unfair Trade Practices) Regulations, 2003 define 'fraud' in relation to dealing in securities?",
+          "expected_chunk_ids": [
+            "SEBI_2003_sebi_prohibition_of_fraudulent_and_unfair_trade_practic_080__0001"
+          ],
+          "retrieved_chunk_ids": [
+            "SEBI_2003_sebi_prohibition_of_fraudulent_and_unfair_trade_practic_080__0000",
+            "SEBI_2003_sebi_prohibition_of_fraudulent_and_unfair_trade_practic_080__0005",
+            "SEBI_2003_sebi_prohibition_of_fraudulent_and_unfair_trade_practic_080__0030"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.0,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "syn_020",
+          "question": "What action did the UNSC Security Council Committee take regarding Hayat Tahrir al-Sham as communicated in RBI circular DOR.AML.REC.415/14.06.001/2025-26 dated March 2, 2026?",
+          "expected_chunk_ids": [
+            "RBI_RBI-2025-2_rbi2025-2026225doramlrec41514060012025-26_027__0001",
+            "RBI_RBI-2025-2_rbi2025-2026225doramlrec41514060012025-26_027__0002"
+          ],
+          "retrieved_chunk_ids": [
+            "RBI_RBI-2025-2_rbi2025-2026225doramlrec41514060012025-26_027__0000",
+            "SEBI_Feb 27, 20_updates_for_implementation_of_section_51a_of_uapa_1967__045__0002",
+            "RBI_RBI-2025-2_rbi2025-2026225doramlrec41514060012025-26_027__0001",
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_095__0000",
+            "SEBI_Mar 26, 20_updates_for_implementation_of_section_51a_of_uapa_1967__028__0000"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.5,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "adv_005",
+          "question": "What does Section 51A of UAPA 1967 specifically require financial institutions to do regarding UNSC-designated entities?",
+          "expected_chunk_ids": [
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0000",
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0001",
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0004"
+          ],
+          "retrieved_chunk_ids": [
+            "SEBI_Mar 26, 20_updates_for_implementation_of_section_51a_of_uapa_1967__028__0000",
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_095__0000",
+            "RBI_RBI-2025-2_rbi2025-2026242doramlrec43714060012025-26_010__0000",
+            "SEBI_Mar 11, 20_updates_for_implementation_of_section_51a_of_uapa_1967__041__0000",
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0000"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.3333333333333333,
+          "faithfulness": -1.0
+        }
+      ]
+    },
+    {
+      "config_id": "B5_higher_k",
+      "config_snapshot": {
+        "config_id": "B5_higher_k",
+        "mode": "hybrid",
+        "top_k": 10,
+        "chunk_chars": 1600,
+        "overlap_chars": 200,
+        "embedding_model": "BAAI/bge-base-en-v1.5",
+        "rrf_k": 60,
+        "candidates": 20
+      },
+      "elapsed_seconds": 3.09,
+      "retrieval_metrics": {
+        "recall_at_k": 0.7847222222222222,
+        "mrr": 0.6402777777777778,
+        "precision_at_k": 0.1763888888888889,
+        "k": 10,
+        "n_queries": 24
+      },
+      "generation_metrics": null,
+      "failures": [
+        {
+          "qid": "syn_013",
+          "question": "What formula is given for calculating eligible quarterly profits (EP) for inclusion in NBFC capital computation under the RBI Second Amendment Directions (DOR.CAP.REC.No.416/2025-26)?",
+          "expected_chunk_ids": [
+            "RBI_RBI-2025-2_rbi2025-2026226dorcaprecno41621010022025-26_026__0001"
+          ],
+          "retrieved_chunk_ids": [
+            "RBI_RBI-2025-2_rbi2025-2026226dorcaprecno41621010022025-26_026__0000",
+            "RBI_RBI-2025-2_rbi2025-2026231dorcaprecno42121010022025-26_021__0001",
+            "RBI_RBI-2025-2_rbi2025-2026232dorcaprecno42221010022025-26_020__0001",
+            "SEBI_2018_securities_and_exchange_board_of_india_issue_of_capital_063__0185",
+            "SEBI_2021_securities_and_exchange_board_of_india_issue_and_listin_056__0081",
+            "SEBI_1996_securities_and_exchange_board_of_india_mutual_funds_reg_087__0292"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.0,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "syn_015",
+          "question": "What was the total face value notified and accepted for the 91-Day Treasury Bill in the auction result announced by RBI on March 25, 2026?",
+          "expected_chunk_ids": [
+            "RBI_91-Day, 18_91-day_182-day_and_364-day_t-bill_auction_result_cut-of_048__0000"
+          ],
+          "retrieved_chunk_ids": [
+            "RBI_Auction of_auction_of_91-day_182-day_and_364-day_treasury_bills_076__0000",
+            "RBI_Auction of_auction_of_state_government_securities_072__0004",
+            "RBI_Auction of_auction_of_state_government_securities_revised_071__0004"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.0,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "syn_017",
+          "question": "What activities constitute the role of a 'banker to an issue' as defined in the SEBI (Bankers to an Issue) Regulations, 1994?",
+          "expected_chunk_ids": [
+            "SEBI_1994_securities_and_exchange_board_of_india_bankers_to_an_is_088__0002"
+          ],
+          "retrieved_chunk_ids": [
+            "SEBI_1994_securities_and_exchange_board_of_india_bankers_to_an_is_088__0035",
+            "SEBI_1994_securities_and_exchange_board_of_india_bankers_to_an_is_088__0040",
+            "SEBI_1994_securities_and_exchange_board_of_india_bankers_to_an_is_088__0001"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.0,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "syn_018",
+          "question": "How do the SEBI (Prohibition of Fraudulent and Unfair Trade Practices) Regulations, 2003 define 'fraud' in relation to dealing in securities?",
+          "expected_chunk_ids": [
+            "SEBI_2003_sebi_prohibition_of_fraudulent_and_unfair_trade_practic_080__0001"
+          ],
+          "retrieved_chunk_ids": [
+            "SEBI_2003_sebi_prohibition_of_fraudulent_and_unfair_trade_practic_080__0000",
+            "SEBI_2003_sebi_prohibition_of_fraudulent_and_unfair_trade_practic_080__0005",
+            "SEBI_2003_sebi_prohibition_of_fraudulent_and_unfair_trade_practic_080__0030"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.0,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "syn_020",
+          "question": "What action did the UNSC Security Council Committee take regarding Hayat Tahrir al-Sham as communicated in RBI circular DOR.AML.REC.415/14.06.001/2025-26 dated March 2, 2026?",
+          "expected_chunk_ids": [
+            "RBI_RBI-2025-2_rbi2025-2026225doramlrec41514060012025-26_027__0001",
+            "RBI_RBI-2025-2_rbi2025-2026225doramlrec41514060012025-26_027__0002"
+          ],
+          "retrieved_chunk_ids": [
+            "RBI_RBI-2025-2_rbi2025-2026225doramlrec41514060012025-26_027__0000",
+            "SEBI_Feb 27, 20_updates_for_implementation_of_section_51a_of_uapa_1967__045__0002",
+            "RBI_RBI-2025-2_rbi2025-2026225doramlrec41514060012025-26_027__0001",
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_095__0000",
+            "SEBI_Mar 26, 20_updates_for_implementation_of_section_51a_of_uapa_1967__028__0000",
+            "SEBI_Feb 27, 20_updates_for_implementation_of_section_51a_of_uapa_1967__045__0004"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.5,
+          "faithfulness": -1.0
+        },
+        {
+          "qid": "adv_005",
+          "question": "What does Section 51A of UAPA 1967 specifically require financial institutions to do regarding UNSC-designated entities?",
+          "expected_chunk_ids": [
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0000",
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0001",
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0004"
+          ],
+          "retrieved_chunk_ids": [
+            "SEBI_Mar 26, 20_updates_for_implementation_of_section_51a_of_uapa_1967__028__0000",
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_095__0000",
+            "RBI_RBI-2025-2_rbi2025-2026242doramlrec43714060012025-26_010__0000",
+            "SEBI_Mar 11, 20_updates_for_implementation_of_section_51a_of_uapa_1967__041__0000",
+            "RBI_Implementa_implementation_of_section_51a_of_uapa_1967_updates_to_u_085__0000",
+            "SEBI_Mar 26, 20_updates_for_implementation_of_section_51a_of_uapa_1967__029__0000"
+          ],
+          "model_answer": "",
+          "error_type": "retrieval_miss",
+          "recall": 0.3333333333333333,
+          "faithfulness": -1.0
+        }
+      ]
+    }
+  ]
+}

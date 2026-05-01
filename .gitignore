@@ -78,5 +78,18 @@ demo/ui/__pycache__/
 wandb/
 mlruns/
 
+# RAG pre-built indices (large binary blobs — rebuild with rag/scripts/build_index.py)
+rag/index/
+rag/index_800/
+rag/index_2400/
+rag/__pycache__/
+
+# RAG build logs
+data/eval/build_*.log
+
+# Experimental novel-methods RAG artefacts (large binaries)
+evaluation/novel_methods/rag_evaluation/doc_chunks.json
+evaluation/novel_methods/rag_evaluation/faiss_index/
+
 # paper/docx_unpacked is a scratch unpack folder
 paper/docx_unpacked/

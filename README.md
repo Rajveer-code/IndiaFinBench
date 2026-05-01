@@ -7,6 +7,8 @@
 [![License: MIT](https://img.shields.io/badge/Code-MIT-blue.svg)](LICENSE)
 [![EMNLP 2026](https://img.shields.io/badge/Target-EMNLP%202026-red.svg)]()
 
+> This repository includes both a benchmark (IndiaFinBench) and a hybrid retrieval system achieving Recall@5 = 0.785 with detailed ablation analysis across six configurations.
+
 ---
 
 ## What is IndiaFinBench?
@@ -293,6 +295,40 @@ The κ = 0.611 for contradiction detection falls in the "substantial agreement" 
 - **Gemini 2.5 Pro NUM weakness**: Gemini 2.5 Pro scores only 48.9% on NUM — the lowest of any model — despite ranking 1st on REG (89.7%), exposing a task-type dissociation.
 - **Numerical reasoning as discriminator**: 35.9pp spread between best (Gemini 2.5 Flash: 84.8%) and worst (Gemini 2.5 Pro: 48.9%) — the most informative task for model differentiation.
 - **All 12 models beat the human baseline**: Human expert accuracy was 60.0%; all 12 models exceed this, with Gemini 2.5 Flash leading at 89.7%.
+
+---
+
+## Retrieval-Augmented System (Extension)
+
+This repository also includes a hybrid retrieval-augmented generation (RAG) system for querying the regulatory corpus — the open-book counterpart to the closed-book benchmark above.
+
+**Pipeline:** FAISS (dense) + BM25 (sparse) → RRF fusion → LLM generation
+
+### Key Result
+
+> Hybrid retrieval improves Recall@5 from 0.687 → 0.785 (+9.7pp) on the regulatory corpus, with BM25 achieving the best MRR (0.674), confirming that citation-heavy regulatory text strongly favours lexical matching.
+
+It was evaluated across six ablation configurations on a 35-item adversarial evaluation set.
+
+### Results
+
+| Config | Recall@5 | MRR | p50 ms |
+|--------|----------|-----|--------|
+| Dense only (B0) | 0.688 | 0.542 | 48 |
+| BM25 only (B1) | 0.764 | **0.674** | 30 |
+| **Hybrid RRF (B2)** ◄ | **0.785** | 0.640 | 77 |
+| Small chunks 800-char (B3) | 0.583 | 0.493 | 138 |
+| Large chunks 2400-char (B4) | 0.542 | 0.410 | 71 |
+| Hybrid k=10 (B5) | 0.785 | 0.640 | 78 |
+
+1600-char chunking is the empirical optimum. Smaller chunks (800) reduce recall due to fragmentation of multi-clause regulatory provisions; larger chunks (2400) introduce noise that degrades ranking quality.
+
+For full methodology, architecture, ablation analysis, and failure analysis: **[RAG_SYSTEM.md](./RAG_SYSTEM.md)**
+
+```bash
+python -m rag.scripts.build_index          # build FAISS + BM25 index (~3 min, CPU)
+python -m rag.scripts.run_evaluation       # run 6-config ablation
+```
 
 ---
 

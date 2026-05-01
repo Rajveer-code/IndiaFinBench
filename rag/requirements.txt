@@ -1,0 +1,18 @@
+# RAG pipeline dependencies
+# Pin minor versions; patch versions are free to float for security fixes.
+
+# Core retrieval
+faiss-cpu>=1.8,<2.0
+sentence-transformers>=3.0,<4.0
+rank-bm25>=0.2,<0.3
+
+# Generation backends
+groq>=0.11,<1.0       # Groq API client (primary)
+ollama>=0.3,<1.0      # Ollama local client (fallback)
+
+# Utilities
+numpy>=1.26,<3.0
+tqdm>=4.66,<5.0
+
+# Evaluation (Phase 3)
+google-generativeai>=0.8,<1.0   # Gemini 1.5 Flash as faithfulness judge

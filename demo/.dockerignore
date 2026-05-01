@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+.env
+.git
+.gitignore
+*.md
+leaderboard.db
+rag/setup_datastore.py
+.claude/

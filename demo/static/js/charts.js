@@ -113,31 +113,34 @@ window.buildTable = function(col,dir){
     tbody.appendChild(tr);
   });
 
-  // Claude row
-  const ct=document.createElement('tr');ct.className='tr-subset';
-  ct.innerHTML=`
-    <td class="c"><span class="rank-b rbh">†</span></td>
-    <td><div class="model-cell">${iconHtml(CLAUDE,11)}<div><div class="model-name" style="opacity:0.7">†Claude 3 Haiku</div><div class="model-note">150-item subset only</div></div></div></td>
-    <td><span style="font-family:var(--mono);font-size:12px">—</span></td>
-    <td>${typePill(CLAUDE.type)}</td>
-    <td class="c"><span class="sc ${scClass(CLAUDE.reg)}">${CLAUDE.reg.toFixed(1)}%</span></td>
-    <td class="c"><span class="sc ${scClass(CLAUDE.num)}">${CLAUDE.num.toFixed(1)}%</span></td>
-    <td class="c"><span class="sc ${scClass(CLAUDE.con)}">${CLAUDE.con.toFixed(1)}%</span></td>
-    <td class="c"><span class="sc ${scClass(CLAUDE.tmp)}">${CLAUDE.tmp.toFixed(1)}%</span></td>
-    <td class="c"><span class="ov ${scClass(CLAUDE.overall)}">${CLAUDE.overall.toFixed(1)}%</span></td>
-    <td class="c" style="font-size:11px;color:var(--text4);font-family:var(--mono)">${CLAUDE.ci}</td>`;
-  tbody.appendChild(ct);
+  // Claude subset row
+  if(CLAUDE){
+    const ct=document.createElement('tr');ct.className='tr-subset';
+    const csHf=CLAUDE.hf_id.length>36?CLAUDE.hf_id.slice(0,34)+'…':CLAUDE.hf_id;
+    ct.innerHTML=`
+      <td class="c"><span class="rank-b rbh">†</span></td>
+      <td><div class="model-cell"><div class="model-icon" style="background:#C17B4220;color:#C17B42;border-color:#C17B4240">C</div><div><div class="model-name" style="opacity:0.7">†Claude 3 Haiku</div><div class="model-note">150-item subset only</div></div></div></td>
+      <td><span style="font-family:var(--mono);font-size:12px">—</span></td>
+      <td>${typePill(CLAUDE.type)}</td>
+      <td class="c"><span class="sc ${scClass(CLAUDE.reg)}">${CLAUDE.reg.toFixed(1)}%</span></td>
+      <td class="c"><span class="sc ${scClass(CLAUDE.num)}">${CLAUDE.num.toFixed(1)}%</span></td>
+      <td class="c"><span class="sc ${scClass(CLAUDE.con)}">${CLAUDE.con.toFixed(1)}%</span></td>
+      <td class="c"><span class="sc ${scClass(CLAUDE.tmp)}">${CLAUDE.tmp.toFixed(1)}%</span></td>
+      <td class="c"><span class="ov ${scClass(CLAUDE.overall)}">${CLAUDE.overall.toFixed(1)}%</span></td>
+      <td class="c" style="font-size:11px;color:var(--text4);font-family:var(--mono)">${CLAUDE.ci}</td>`;
+    tbody.appendChild(ct);
+  }
 
   // Human
   const h=HUMAN,tr=document.createElement('tr');tr.className='tr-human';
   tr.innerHTML=`
     <td class="c"><span class="rank-b rbh">—</span></td>
-    <td><div class="model-cell"><div class="model-icon" style="background:#f1f5f9;color:#94a3b8;border-color:#e2e8f0">H</div><div><div class="model-name" style="font-style:italic;font-weight:400">Human Expert <span style="font-size:10px">(n=30)</span></div><div class="model-hfid">Expert annotators</div></div></div></td>
+    <td><div class="model-cell"><div class="model-icon" style="background:#f1f5f9;color:#94a3b8;border-color:#e2e8f0">H</div><div><div class="model-name" style="font-style:italic;font-weight:400">Human Expert <span style="font-size:10px">(n=100)</span></div><div class="model-hfid">Expert annotators</div></div></div></td>
     <td>—</td><td>${typePill('Human Baseline')}</td>
-    <td class="c"><span class="sc ${scClass(h.reg)}">${h.reg.toFixed(1)}%</span></td>
-    <td class="c"><span class="sc ${scClass(h.num)}">${h.num.toFixed(1)}%</span></td>
+    <td class="c"><span style="color:var(--text4);font-family:var(--mono);font-size:12px">—</span></td>
+    <td class="c"><span style="color:var(--text4);font-family:var(--mono);font-size:12px">—</span></td>
     <td class="c"><span class="sc ${scClass(h.con)}">${h.con.toFixed(1)}%</span></td>
-    <td class="c"><span class="sc ${scClass(h.tmp)}">${h.tmp.toFixed(1)}%</span></td>
+    <td class="c"><span style="color:var(--text4);font-family:var(--mono);font-size:12px">—</span></td>
     <td class="c"><span class="ov sc-lo" style="background:#f1f5f9;color:#94a3b8">${h.overall.toFixed(1)}%</span></td>
     <td class="c" style="font-size:11px;color:var(--text4)">—</td>`;
   tbody.appendChild(tr);

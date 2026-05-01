@@ -14,9 +14,11 @@ Usage:
 """
 
 import json
+import os
 import random
 import sys
 import threading
+import time
 import uuid
 from pathlib import Path
 
@@ -39,6 +41,17 @@ with QUESTIONS_PATH.open(encoding="utf-8") as _f:
 init_db()
 
 app = Flask(__name__, template_folder=str(_DEMO_DIR / "templates"))
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0  # no browser caching of static files
+
+# Unique stamp per process start — forces browser to re-fetch all JS on every restart
+_JS_VER = str(int(time.time()))
+
+@app.after_request
+def _no_cache(response):
+    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    return response
 
 _eval_lock = threading.Lock()
 _eval_jobs: dict[str, dict] = {}   # job_id → status dict
@@ -53,15 +66,15 @@ TASK_FULL = {
 HUMAN_BASELINE = {
     "rank":      "—",
     "label":     "Human Expert",
-    "hf_id":     "— (n=30 sampled items)",
+    "hf_id":     "— (n=100 sampled items)",
     "params":    "—",
     "type":      "Human Baseline",
-    "overall":   60.0,
+    "overall":   69.0,
     "reg":       55.6,
     "num":       44.4,
     "con":       83.3,
     "tmp":       66.7,
-    "n_items":   30,
+    "n_items":   100,
     "submitted": "2026-03-15",
     "is_human":  True,
 }
@@ -94,7 +107,14 @@ def _normalize_models(df) -> list[dict]:
 def index():
     df     = get_leaderboard()
     models = _normalize_models(df) if not df.empty else []
-    return render_template("index.html", models=models, human=HUMAN_BASELINE)
+    return render_template(
+        "index.html",
+        models=models,
+        human=HUMAN_BASELINE,
+        model_count=12,
+        human_overall=f"{HUMAN_BASELINE['overall']:.1f}",
+        js_ver=_JS_VER,
+    )
 
 
 @app.route("/api/leaderboard")
@@ -177,6 +197,20 @@ def api_job(job_id: str):
     return jsonify(job)
 
 
+@app.route("/api/rag", methods=["POST"])
+def api_rag():
+    data  = request.get_json() or {}
+    query = (data.get("query") or "").strip()
+    if not query:
+        return jsonify({"error": "Missing query"}), 400
+    try:
+        from rag.rag import ask
+        result = ask(query)
+    except Exception as exc:          # noqa: BLE001
+        result = {"error": f"RAG unavailable: {exc!s}"[:300]}
+    return jsonify(result)
+
+
 @app.route("/api/example")
 def api_example():
     task = request.args.get("task", "All")
@@ -209,4 +243,5 @@ def api_example():
 # ── Entry point ────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=7860, debug=False)
+    port = int(os.getenv("PORT", "7860"))
+    app.run(host="0.0.0.0", port=port, debug=False)

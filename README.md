@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/Code-MIT-blue.svg)](LICENSE)
 [![EMNLP 2026](https://img.shields.io/badge/Target-EMNLP%202026-red.svg)]()
 
-> This repository includes both a benchmark (IndiaFinBench) and a hybrid retrieval system achieving Recall@5 = 0.785 with detailed ablation analysis across six configurations.
+> Benchmark + hybrid retrieval system for regulatory text, achieving Recall@5 = 0.785 with ablation across 6 configurations.
 
 ---
 
@@ -302,7 +302,12 @@ The κ = 0.611 for contradiction detection falls in the "substantial agreement" 
 
 This repository also includes a hybrid retrieval-augmented generation (RAG) system for querying the regulatory corpus — the open-book counterpart to the closed-book benchmark above.
 
-**Pipeline:** FAISS (dense) + BM25 (sparse) → RRF fusion → LLM generation
+**Retrieval Pipeline:** FAISS (dense) + BM25 (sparse) → Reciprocal Rank Fusion (RRF) → LLM generation
+
+```
+Corpus → Chunking → [ FAISS  +  BM25 ] → RRF → Answer
+                      dense     sparse
+```
 
 ### Key Result
 
@@ -322,6 +327,8 @@ It was evaluated across six ablation configurations on a 35-item adversarial eva
 | Hybrid k=10 (B5) | 0.785 | 0.640 | 78 |
 
 1600-char chunking is the empirical optimum. Smaller chunks (800) reduce recall due to fragmentation of multi-clause regulatory provisions; larger chunks (2400) introduce noise that degrades ranking quality.
+
+This demonstrates that hybrid retrieval is necessary for domain-specific corpora containing structured identifiers such as regulatory clauses and circular references.
 
 For full methodology, architecture, ablation analysis, and failure analysis: **[RAG_SYSTEM.md](./RAG_SYSTEM.md)**
 

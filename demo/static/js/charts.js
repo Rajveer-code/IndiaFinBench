@@ -198,19 +198,16 @@ window.doSubmit = function(){
   const hfId=document.getElementById('hfId').value.trim();
   if(!hfId){showStatus('st-e','Please enter a HuggingFace model ID.');return}
   const label=document.getElementById('dispName').value.trim();
-  document.getElementById('subBtn').disabled=true;
-  showStatus('st-q','Queuing evaluation…');
-  fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({hf_id:hfId,label,params:document.getElementById('modelParams').value.trim(),model_type:document.getElementById('mtype').value,smoke:document.getElementById('smokeChk').checked})})
+  const btn=document.getElementById('subBtn');
+  btn.disabled=true;
+  showStatus('st-q','Preparing submission…');
+  fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({hf_id:hfId,label,params:document.getElementById('modelParams').value.trim(),model_type:document.getElementById('mtype').value})})
     .then(r=>r.json()).then(data=>{
-      if(data.error){showStatus('st-e',data.error);document.getElementById('subBtn').disabled=false;return}
-      showStatus('st-r','Evaluation running… do not close the page.');
-      const poll=setInterval(()=>{
-        fetch('/api/job/'+data.job_id).then(r=>r.json()).then(job=>{
-          if(job.status==='done'){clearInterval(poll);const r=job.result,pt=r.per_task||{};showStatus('st-d',`✓ ${r.label}: ${r.overall}% overall. Reload to see updated leaderboard.`);document.getElementById('subBtn').disabled=false}
-          else if(job.status==='error'){clearInterval(poll);showStatus('st-e',job.error);document.getElementById('subBtn').disabled=false}
-        });
-      },3000);
-    }).catch(e=>{showStatus('st-e','Error: '+e.message);document.getElementById('subBtn').disabled=false});
+      if(data.error){showStatus('st-e',data.error);btn.disabled=false;return}
+      window.open(data.issue_url,'_blank');
+      showStatus('st-d','Submission opened as a GitHub issue. We will run the evaluation and update the leaderboard within a few days.');
+      btn.disabled=false;
+    }).catch(e=>{showStatus('st-e','Error: '+e.message);btn.disabled=false});
 };
 function showStatus(cls,msg){const b=document.getElementById('statusBox');b.className='status-box '+cls;b.style.display='block';b.textContent=msg}
 

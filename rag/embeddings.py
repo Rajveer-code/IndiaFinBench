@@ -29,7 +29,7 @@ class BGEEmbedder:
     ) -> None:
         self._model      = SentenceTransformer(model_name, device=device)
         self.batch_size  = batch_size
-        self.dim: int    = self._model.get_embedding_dimension()
+        self.dim: int    = self._model.get_sentence_embedding_dimension()
 
     def encode_corpus(self, texts: list[str], show_progress: bool = True) -> np.ndarray:
         """

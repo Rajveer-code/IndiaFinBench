@@ -2,19 +2,37 @@
 
 **The first publicly available evaluation benchmark for large language model performance on Indian financial regulatory text.**
 
-[![HuggingFace Demo](https://img.shields.io/badge/Demo-HuggingFace_Spaces-yellow)](https://huggingface.co/spaces/Rajveer-code/IndiaFinBench)
-[![HuggingFace Dataset](https://img.shields.io/badge/HuggingFace-Dataset-yellow)](https://huggingface.co/datasets/Rajveer-code/IndiaFinBench)
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-HuggingFace_Spaces-FFD21E?style=flat)](https://huggingface.co/spaces/Rajveer-code/IndiaFinBench)
+[![HuggingFace Dataset](https://img.shields.io/badge/🤗_Dataset-Rajveer--code%2FIndiaFinBench-FFD21E)](https://huggingface.co/datasets/Rajveer-code/IndiaFinBench)
 [![License: CC BY 4.0](https://img.shields.io/badge/Dataset-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![License: MIT](https://img.shields.io/badge/Code-MIT-blue.svg)](LICENSE)
-[![EMNLP 2026](https://img.shields.io/badge/Target-EMNLP%202026-red.svg)]()
+[![Target: EMNLP 2026](https://img.shields.io/badge/Target-EMNLP%202026-red.svg)]()
 
-> Benchmark + hybrid retrieval system for regulatory text, achieving Recall@5 = 0.785 with ablation across 6 configurations.
+> **406 expert-annotated QA items · 192 SEBI + RBI documents · 12 LLMs evaluated · Hybrid RAG with Recall@5 = 0.785**
+
+---
+
+## 🌐 Live Demo
+
+**→ [huggingface.co/spaces/Rajveer-code/IndiaFinBench](https://huggingface.co/spaces/Rajveer-code/IndiaFinBench)**
+
+A fully working Flask web application deployed on HuggingFace Spaces (Docker, CPU, free tier):
+
+| Feature | Description |
+|---|---|
+| **Interactive Leaderboard** | Sortable table of 12 LLMs with 95% Wilson CIs, per-task breakdown (REG / NUM / CON / TMP), difficulty analysis |
+| **Animated Bar Charts** | Hover-interactive visualisations of task and difficulty performance |
+| **Dataset Explorer** | Browse random benchmark items filtered by task type and difficulty |
+| **RAG Demo** | Live hybrid retrieval (FAISS + BM25 + RRF) over 192 regulatory documents, answered by Groq LLaMA-3.3-70B |
+| **Model Submission** | Opens a pre-filled GitHub issue with the exact evaluation command |
+
+**Stack:** Python 3.11 · Flask 3 · Gunicorn · FAISS-CPU · sentence-transformers (BAAI/bge-base-en-v1.5) · rank-bm25 · Groq API · SQLite · Docker
 
 ---
 
 ## What is IndiaFinBench?
 
-IndiaFinBench is a zero-shot evaluation benchmark consisting of 406 expert-annotated question-answer pairs drawn from 192 documents published by the Securities and Exchange Board of India (SEBI) and the Reserve Bank of India (RBI). It is designed to test whether large language models can reliably reason about Indian financial regulatory text — a domain with distinctive challenges not captured by existing Western-centric financial NLP benchmarks.
+IndiaFinBench is a zero-shot evaluation benchmark consisting of **406 expert-annotated question-answer pairs** drawn from **192 documents** published by the Securities and Exchange Board of India (SEBI) and the Reserve Bank of India (RBI), spanning 1992–2026. It tests whether large language models can reliably reason about Indian financial regulatory text — a domain with distinctive challenges not captured by existing Western-centric financial NLP benchmarks.
 
 Indian regulatory documents embed numerical thresholds in dense prose, reference chains of superseding circulars that require temporal reasoning to untangle, and use jurisdiction-specific terminology (LODR, PMLA, SFB, AIF, FEMA) that models trained on Western corpora may not reliably interpret. IndiaFinBench makes these challenges measurable.
 
@@ -40,11 +58,9 @@ Results on the full 406-item benchmark under zero-shot, context-only evaluation:
 | 12 | Gemma 4 E4B | 83.9% | 50.0% | 72.6% | 62.8% | 70.4% | [65.8%, 74.7%] |
 | — | Human Expert (n=30) | 55.6% | 44.4% | 83.3% | 66.7% | 60.0% | — |
 
-| — | †Claude 3 Haiku | 92.5% | **93.8%** | 86.7% | 91.4% | 91.3% | [85.7%, 94.9%] |
+> **†** Claude 3 Haiku was evaluated on the initial 150-item subset (REG=53, NUM=32, CON=30, TMP=35): Overall **91.3%**. Provided for contextualisation; not directly comparable to the 406-item results above.
 
-> **†** Claude 3 Haiku was evaluated on the initial 150-item subset (REG=53, NUM=32, CON=30, TMP=35) due to API access constraints at the time of evaluation. Its result is provided for contextualisation but is not directly comparable to the 406-item results.
-
-95% Wilson score confidence intervals. Paired bootstrap significance testing (10,000 resamples) across all 66 model pairs confirms three statistically distinct performance tiers. Full significance results in `evaluation/bootstrap_significance_results.json`.
+95% Wilson score confidence intervals. Paired bootstrap significance testing (10,000 resamples) across all 66 model pairs confirms **three statistically distinct performance tiers**. Full significance matrix in `evaluation/bootstrap_significance_results.json`.
 
 ---
 
@@ -52,271 +68,59 @@ Results on the full 406-item benchmark under zero-shot, context-only evaluation:
 
 ```
 IndiaFinBench (406 items)
-├── REG — Regulatory Interpretation (174 items, 42.9%)
+├── REG — Regulatory Interpretation  (174 items, 42.9%)
 │         Given a regulatory passage, identify the correct rule, threshold,
 │         or scope of applicability. Tests precision reading of regulatory language.
 │
-├── NUM — Numerical Reasoning (92 items, 22.7%)
-│         Perform arithmetic over figures embedded in regulatory text —
+├── NUM — Numerical Reasoning         (92 items, 22.7%)
+│         Perform arithmetic over figures embedded in regulatory text:
 │         capital ratios, dividend limits, margin requirements.
 │
-├── CON — Contradiction Detection (62 items, 15.3%)
+├── CON — Contradiction Detection     (62 items, 15.3%)
 │         Given two regulatory passages, determine whether they contradict
-│         each other on the stated issue (Yes/No + explanation).
+│         each other on the stated issue (Yes/No + explanation required).
 │
-└── TMP — Temporal Reasoning (78 items, 19.2%)
+└── TMP — Temporal Reasoning          (78 items, 19.2%)
           Establish the chronological ordering of regulatory events, identify
           which circular was operative at a given time, or compute elapsed time
-          between milestones.
+          between regulatory milestones.
 ```
 
-Difficulty distribution: Easy 160 (39.4%) · Medium 182 (44.8%) · Hard 64 (15.8%)
-
----
-
-## Quick Start
-
-### Load from HuggingFace
-
-```python
-from datasets import load_dataset
-
-ds = load_dataset("Rajveer-code/IndiaFinBench", split="train")
-print(f"Total items: {len(ds)}")  # 406
-
-# Filter by task type
-reg_items = ds.filter(lambda x: x["task_type"] == "regulatory_interpretation")
-print(f"REG items: {len(reg_items)}")  # 174
-
-# Inspect a single item
-item = ds[0]
-print(item["context"])
-print(item["question"])
-print(item["reference_answer"])
-```
-
-### Run Evaluation on a New Model
-
-```bash
-# Clone the repository
-git clone https://github.com/Rajveer-code/IndiaFinBench.git
-cd IndiaFinBench
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run zero-shot evaluation (API model example)
-python evaluation/evaluate.py \
-    --dataset data/benchmark/indiafinbench_v1.csv \
-    --model gemini-2.5-flash \
-    --provider google \
-    --output results/predictions/my_model.csv
-
-# Run evaluation on a local model via Ollama
-python evaluation/evaluate.py \
-    --dataset data/benchmark/indiafinbench_v1.csv \
-    --model llama3:8b \
-    --provider ollama \
-    --output results/predictions/my_model.csv
-```
-
-### Regenerate All Figures and Statistical Outputs
-
-```bash
-# Generates all paper figures + bootstrap/Wilson CI/difficulty outputs
-python scripts/generate_figures.py
-```
-
-This single script produces:
-- `paper/figures/performance_heatmap.png`
-- `paper/figures/radar_chart.png`
-- `paper/figures/difficulty_lineplot.png`
-- `paper/figures/inter_task_correlation.png`
-- `evaluation/bootstrap_significance_results.json`
-- `evaluation/wilson_ci_results.json`
-- `evaluation/difficulty_breakdown.csv`
-- `evaluation/task_accuracy_matrix.csv`
-
----
-
-## Repository Structure
-
-```
-IndiaFinBench/
-│
-├── data/
-│   ├── benchmark/
-│   │   └── indiafinbench_v1.csv                 # Canonical 406-item benchmark (CSV)
-│   ├── metadata_sebi.csv                        # 92 SEBI source documents with URLs
-│   └── metadata_rbi.csv                         # 100 RBI source documents with URLs
-│
-├── annotation/
-│   ├── raw_qa/
-│   │   ├── indiafinbench_qa_combined_406.json   # Full benchmark (JSON, original format)
-│   │   └── indiafinbench_qa_combined_150.json   # Initial 150-item subset
-│   ├── guidelines/
-│   │   └── annotation_guide_v1.md               # Annotation protocol
-│   ├── iaa/
-│   │   ├── iaa_60item_sample.csv                # Original 60-item IAA (κ=0.611 CON, 85% overall)
-│   │   ├── iaa_60item_summary.csv               # IAA summary statistics by task type
-│   │   ├── iaa_expansion_annotator2.csv         # Expansion 60-item IAA (annotator 2 responses)
-│   │   └── iaa_expansion_reference.csv          # Expansion 60-item reference answers
-│   └── human_eval/                              # Human evaluation responses (n=30)
-│
-├── evaluation/
-│   ├── evaluate.py                              # Canonical evaluation entry point
-│   ├── prompts/                                 # Task-type system prompts
-│   ├── results/                                 # Per-model prediction CSVs (legacy location)
-│   ├── results_judged/                          # LLM-as-judge re-scored predictions
-│   ├── results_fewshot/                         # 3-shot evaluation results
-│   ├── error_analysis/                          # Error taxonomy, bootstrap, Wilson CI
-│   └── novel_methods/                           # 11 novel methodological analyses
-│
-├── results/
-│   ├── predictions/                             # Canonical per-model predictions (12 models)
-│   │   ├── gemini_2_5_flash.csv
-│   │   ├── gemini_2_5_pro.csv
-│   │   ├── qwen3_32b.csv
-│   │   ├── llama_3_3_70b.csv
-│   │   ├── llama_4_scout_17b.csv
-│   │   ├── kimi_k2.csv
-│   │   ├── llama_3_8b.csv
-│   │   ├── gpt_oss_120b.csv
-│   │   ├── gpt_oss_20b.csv
-│   │   ├── mistral_7b.csv
-│   │   ├── deepseek_r1_70b.csv
-│   │   └── gemma_4_e4b.csv
-│   └── aggregate/
-│       └── all_model_results.csv                # Aggregated Table 6 results (12 models)
-│
-├── scripts/
-│   ├── evaluate_new_models_v2.py                # Extended model evaluations (7 models)
-│   ├── evaluate_v7_models.py                    # DeepSeek R1, Gemma 4, Gemini 2.5 Pro
-│   ├── generate_figures.py                      # All paper figures + statistical outputs
-│   ├── bootstrap_significance.py                # Paired bootstrap testing
-│   ├── wilson_ci.py                             # 95% Wilson CI computation
-│   ├── compute_kappa.py                         # IAA Cohen's kappa
-│   ├── error_analysis.py                        # Error taxonomy classification
-│   ├── collect_sebi.py                          # SEBI document scraper
-│   ├── collect_rbi.py                           # RBI document scraper
-│   ├── parse_pdfs.py                            # PDF-to-text pipeline
-│   └── exp[1-11]_*.py                           # Novel methodological analysis scripts
-│
-├── paper/
-│   ├── indiafinbench_paper_v12.md               # Current paper (v12, EMNLP 2026 submission)
-│   ├── references.bib                           # BibTeX references
-│   ├── figures/                                 # Publication figures (PNG + PDF)
-│   └── tables/                                  # LaTeX table sources
-│
-├── notebooks/
-│   ├── 01_data_exploration.ipynb
-│   ├── 02_kappa_analysis.ipynb
-│   └── 03_evaluation_analysis.ipynb
-│
-├── demo/                                        # Leaderboard web application (Flask)
-│   └── app.py
-│
-├── _archive/                                    # Intermediate/deprecated scripts (see _archive/README.md)
-│
-├── README.md
-├── README_HF.md                                 # HuggingFace dataset card
-├── requirements.txt
-└── LICENSE
-```
-
----
-
-## Reproducing the Results
-
-### Full Evaluation Pipeline
-
-```bash
-# 1. Collect source documents (optional — raw PDFs available on request)
-python scripts/collect_sebi.py --output data/raw/sebi/
-python scripts/collect_rbi.py --output data/raw/rbi/
-python scripts/parse_pdfs.py --input data/raw/ --output data/parsed/
-
-# 2. Run evaluation on a model (canonical entry point)
-python evaluation/evaluate.py \
-    --dataset data/benchmark/indiafinbench_v1.csv \
-    --model <model_name> \
-    --provider <groq|google|anthropic|ollama|openrouter> \
-    --output results/predictions/<model>.csv
-
-# 3. Compute statistics and generate figures (requires result CSVs)
-python scripts/generate_figures.py
-
-# 4. Compute inter-annotator agreement
-python scripts/compute_kappa.py
-
-# 5. Score human evaluation
-python scripts/score_human_eval.py
-```
-
-All evaluation CSVs from our runs are included in `results/predictions/` and `evaluation/results/`, so steps 2 and 3 can be run independently.
-
-### Scoring Details
-
-Answers are scored using a four-stage procedure:
-1. Exact match (after case-normalisation and punctuation stripping)
-2. Fuzzy token match using RapidFuzz `token_set_ratio >= 0.72`
-3. Numerical extraction match (handles currency symbols, commas, units)
-4. Yes/No match for contradiction detection
-
-The 0.72 fuzzy threshold was calibrated by manual inspection of borderline cases and validated against adjacent thresholds (0.65 too permissive, 0.80 too strict). Full ablation data in `evaluation/error_analysis/fuzzy_ablation_*.csv`.
-
----
-
-## Annotation Quality
-
-IndiaFinBench was validated through two complementary passes:
-
-**1. Model-based secondary validation (150 items):** LLaMA-3.3-70B-Versatile independently attempted each item to verify unambiguous answerability from context. Overall agreement: 90.7%. Cohen's κ = 0.918 for contradiction detection (binary Yes/No labels).
-
-**2. Human inter-annotator agreement (120 items across two annotator sets):** A second human annotator independently answered two stratified random samples (60 + 60 items) across all four task types, without access to the primary annotator's reference answers. Results below are from the initial 60-item set after corrected NUM scoring.
-
-| Task | Items | Agreement | Cohen's κ |
-|------|-------|-----------|-----------|
-| Regulatory Interpretation | 11 | 100.0% | — |
-| Temporal Reasoning | 16 | 87.5% | — |
-| Contradiction Detection | 17 | 82.4% | **0.611** |
-| Numerical Reasoning | 16 | 75.0% | — |
-| **Overall** | **60** | **85.0%** | — |
-
-The κ = 0.611 for contradiction detection falls in the "substantial agreement" range (Landis & Koch, 1977), consistent with human IAA on similar regulatory contradiction tasks. Full IAA data in `annotation/iaa/`.
+**Difficulty:** Easy 160 (39.4%) · Medium 182 (44.8%) · Hard 64 (15.8%)
 
 ---
 
 ## Key Findings
 
-- **Three performance tiers**: Frontier API models (81–90%), mid-tier open-weight models (75–79%), and Gemma 4 E4B (70%). Bootstrap testing confirms most cross-tier differences are statistically significant (p<0.05).
-- **Efficiency over scale**: Llama 4 Scout 17B statistically matches LLaMA-3.3-70B (p=0.79) with one-quarter the parameters.
-- **Scaling plateau**: GPT-OSS 120B and GPT-OSS 20B are statistically indistinguishable (p=0.91, delta=+0.3pp).
-- **DeepSeek R1 paradox**: Despite being a reasoning-specialised model, DeepSeek R1 70B ranks 11th, particularly weak on temporal reasoning (70.5%).
-- **Gemini 2.5 Pro NUM weakness**: Gemini 2.5 Pro scores only 48.9% on NUM — the lowest of any model — despite ranking 1st on REG (89.7%), exposing a task-type dissociation.
-- **Numerical reasoning as discriminator**: 35.9pp spread between best (Gemini 2.5 Flash: 84.8%) and worst (Gemini 2.5 Pro: 48.9%) — the most informative task for model differentiation.
-- **All 12 models beat the human baseline**: Human expert accuracy was 60.0%; all 12 models exceed this, with Gemini 2.5 Flash leading at 89.7%.
+- **Three performance tiers confirmed by bootstrap testing:** Frontier API models (81–90%), mid-tier open-weight models (75–79%), and Gemma 4 E4B (70%). Most cross-tier differences are statistically significant (p < 0.05).
+- **Efficiency over scale:** Llama 4 Scout 17B statistically matches LLaMA-3.3-70B (p = 0.79) with one-quarter the parameters — strong evidence that scale alone does not drive regulatory reasoning.
+- **Scaling plateau:** GPT-OSS 120B and GPT-OSS 20B are statistically indistinguishable (p = 0.91, Δ = +0.3pp).
+- **DeepSeek R1 paradox:** Despite being reasoning-specialised, DeepSeek R1 70B ranks 11th — particularly weak on temporal reasoning (70.5%), exposing a gap between general chain-of-thought capability and domain-specific timeline reasoning.
+- **Gemini 2.5 Pro NUM dissociation:** Scores only 48.9% on NUM (lowest of any model) while ranking 1st on REG (89.7%), demonstrating that task-type performance can be highly dissociated even within the same model.
+- **NUM as the key discriminator:** 35.9pp spread between best (Gemini 2.5 Flash: 84.8%) and worst (Gemini 2.5 Pro: 48.9%) — the most informative task type for differentiating model capability.
+- **All 12 models beat the human baseline:** Human expert accuracy = 60.0%; all 12 evaluated LLMs exceed this, with Gemini 2.5 Flash leading at 89.7%.
 
 ---
 
-## Retrieval-Augmented System (Extension)
+## Hybrid RAG System
 
-This repository also includes a hybrid retrieval-augmented generation (RAG) system for querying the regulatory corpus — the open-book counterpart to the closed-book benchmark above.
+This repository also includes a hybrid retrieval-augmented generation (RAG) system for **open-book querying** of the regulatory corpus — the open-book counterpart to the closed-book benchmark above. It is integrated into the live demo.
 
-**Retrieval Pipeline:** FAISS (dense) + BM25 (sparse) → Reciprocal Rank Fusion (RRF) → LLM generation
+**Pipeline:**
 
 ```
-Corpus → Chunking → [ FAISS  +  BM25 ] → RRF → Answer
-                      dense     sparse
+Query → BGE Embedder → FAISS (dense)  ┐
+                   → BM25  (sparse) ──┤ RRF → Top-K chunks → Groq LLaMA-3.3-70B → Answer
+                                       ┘
 ```
 
-### Key Result
+- **Embeddings:** BAAI/bge-base-en-v1.5 (768-dim, asymmetric query/corpus encoding)
+- **Sparse index:** BM25 (rank-bm25) over 1600-character chunks
+- **Dense index:** FAISS flat L2 (17 MB, 4,347 vectors)
+- **Fusion:** Reciprocal Rank Fusion (k = 60)
+- **Generator:** Groq `llama-3.3-70b-versatile` (14,400 free requests/day)
 
-> Hybrid retrieval improves Recall@5 from 0.687 → 0.785 (+9.7pp) on the regulatory corpus, with BM25 achieving the best MRR (0.674), confirming that citation-heavy regulatory text strongly favours lexical matching.
-
-It was evaluated across six ablation configurations on a 35-item adversarial evaluation set.
-
-### Results
+### Retrieval Ablation Results
 
 | Config | Recall@5 | MRR | p50 ms |
 |--------|----------|-----|--------|
@@ -327,15 +131,219 @@ It was evaluated across six ablation configurations on a 35-item adversarial eva
 | Large chunks 2400-char (B4) | 0.542 | 0.410 | 71 |
 | Hybrid k=10 (B5) | 0.785 | 0.640 | 78 |
 
-1600-char chunking is the empirical optimum. Smaller chunks (800) reduce recall due to fragmentation of multi-clause regulatory provisions; larger chunks (2400) introduce noise that degrades ranking quality.
-
-This demonstrates that hybrid retrieval is necessary for domain-specific corpora containing structured identifiers such as regulatory clauses and circular references.
-
-For full methodology, architecture, ablation analysis, and failure analysis: **[RAG_SYSTEM.md](./RAG_SYSTEM.md)**
+Hybrid RRF improves Recall@5 by **+9.7pp** over dense-only. BM25 achieves the best MRR, confirming that citation-heavy regulatory text with structured identifiers strongly favours lexical matching. 1600-char chunking is the empirical optimum: smaller chunks fragment multi-clause provisions; larger chunks introduce retrieval noise.
 
 ```bash
-python -m rag.scripts.build_index          # build FAISS + BM25 index (~3 min, CPU)
-python -m rag.scripts.run_evaluation       # run 6-config ablation
+# Build the index from the parsed corpus (~3 min on CPU)
+python -m rag.scripts.build_index
+
+# Run the 6-configuration retrieval ablation
+python -m rag.scripts.run_evaluation
+```
+
+---
+
+## Demo Application
+
+### Running Locally
+
+```bash
+# Clone and install
+git clone https://github.com/Rajveer-code/IndiaFinBench.git
+cd IndiaFinBench
+pip install -r demo/requirements.txt -r rag/requirements.txt
+
+# Set Groq API key (free at console.groq.com)
+export GROQ_API_KEY="your_key_here"
+
+# Start the server
+python demo/app.py
+# → http://localhost:7860
+```
+
+### API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/` | Leaderboard HTML page |
+| `GET` | `/api/leaderboard` | JSON — 12 models + human baseline |
+| `GET` | `/api/example?task=&diff=` | Random benchmark item (filterable) |
+| `POST` | `/api/rag` | Hybrid RAG query (rate-limited 20 req/min) |
+| `POST` | `/api/submit` | Returns pre-filled GitHub issue URL |
+
+### Deployment Architecture
+
+```
+HuggingFace Spaces (Docker, CPU basic, free — 2 vCPU / 16 GB RAM)
+│
+├── Gunicorn (1 worker, 4 threads, port 7860)
+│   └── Flask app  demo/app.py
+│
+├── RAG pipeline  rag/
+│   ├── BGE embedder (pre-baked in Docker image, ~270 MB)
+│   ├── FAISS index  rag/index/faiss.index  (17 MB, via Git LFS)
+│   └── BM25  index  rag/index/bm25.pkl     (18 MB, via Git LFS)
+│
+└── SQLite  demo/leaderboard.db  (seeded at startup, read-only at runtime)
+```
+
+The BGE model is downloaded once at Docker build time and baked into the image, so the first RAG request is fast (~200 ms) rather than triggering a 30-second cold start.
+
+### Running Tests
+
+```bash
+pytest demo/tests/test_app.py -v
+# 14 passed in <2s
+```
+
+---
+
+## Quick Start — Benchmark Evaluation
+
+### Load the Dataset
+
+```python
+from datasets import load_dataset
+
+ds = load_dataset("Rajveer-code/IndiaFinBench", split="train")
+print(f"Total items: {len(ds)}")  # 406
+
+# Filter by task type
+reg_items = ds.filter(lambda x: x["task_type"] == "regulatory_interpretation")
+print(f"REG items: {len(reg_items)}")  # 174
+```
+
+### Evaluate a New Model
+
+```bash
+# API model
+python evaluation/evaluate.py \
+    --dataset data/benchmark/indiafinbench_v1.csv \
+    --model gemini-2.5-flash \
+    --provider google \
+    --output results/predictions/gemini_flash.csv
+
+# Local model via Ollama
+python evaluation/evaluate.py \
+    --dataset data/benchmark/indiafinbench_v1.csv \
+    --model llama3:8b \
+    --provider ollama \
+    --output results/predictions/llama3_8b.csv
+```
+
+### Regenerate Figures and Statistics
+
+```bash
+# All paper figures + bootstrap / Wilson CI / difficulty outputs
+python scripts/generate_figures.py
+```
+
+---
+
+## Annotation Quality
+
+**Model-based validation (150 items):** LLaMA-3.3-70B independently attempted each item to verify unambiguous answerability from context. Overall agreement: **90.7%**. Cohen's κ = 0.918 for contradiction detection (binary Yes/No).
+
+**Human inter-annotator agreement (120 items, two independent annotators):**
+
+| Task | Items | Agreement | Cohen's κ |
+|------|-------|-----------|-----------|
+| Regulatory Interpretation | 11 | 100.0% | — |
+| Temporal Reasoning | 16 | 87.5% | — |
+| Contradiction Detection | 17 | 82.4% | **0.611** |
+| Numerical Reasoning | 16 | 75.0% | — |
+| **Overall** | **60** | **85.0%** | — |
+
+κ = 0.611 for contradiction detection falls in the "substantial agreement" range (Landis & Koch, 1977), consistent with human IAA on comparable regulatory NLP tasks. Full IAA data in `annotation/iaa/`.
+
+---
+
+## Scoring Methodology
+
+Answers are scored using a **four-stage procedure**:
+
+1. **Exact match** — after case-normalisation and punctuation stripping
+2. **Fuzzy token match** — RapidFuzz `token_set_ratio ≥ 0.72`
+3. **Numerical extraction match** — handles currency symbols, commas, units
+4. **Yes/No match** — for contradiction detection items
+
+The 0.72 fuzzy threshold was calibrated by manual inspection of borderline cases and validated against adjacent thresholds (0.65 too permissive, 0.80 too strict). Full ablation in `evaluation/error_analysis/fuzzy_ablation_*.csv`.
+
+---
+
+## Repository Structure
+
+```
+IndiaFinBench/
+│
+├── data/
+│   ├── benchmark/indiafinbench_v1.csv     # Canonical 406-item benchmark
+│   ├── metadata_sebi.csv                  # 92 SEBI source documents with URLs
+│   └── metadata_rbi.csv                   # 100 RBI source documents with URLs
+│
+├── annotation/
+│   ├── raw_qa/                            # Full benchmark JSON (406 + 150-item subset)
+│   ├── guidelines/annotation_guide_v1.md  # Annotation protocol
+│   ├── iaa/                               # Inter-annotator agreement data (120 items)
+│   └── human_eval/                        # Human evaluation responses (n=30)
+│
+├── evaluation/
+│   ├── evaluate.py                        # Canonical evaluation entry point
+│   ├── prompts/                           # Per-task-type system prompts
+│   ├── results/                           # Per-model prediction CSVs
+│   ├── error_analysis/                    # Error taxonomy, bootstrap, Wilson CI
+│   └── novel_methods/                     # 11 novel methodological analyses
+│
+├── results/
+│   ├── predictions/                       # Canonical predictions (12 models)
+│   └── aggregate/all_model_results.csv    # Aggregated Table 6 results
+│
+├── scripts/
+│   ├── generate_figures.py                # All paper figures + statistical outputs
+│   ├── bootstrap_significance.py          # Paired bootstrap (10k resamples)
+│   ├── wilson_ci.py                       # 95% Wilson CI computation
+│   ├── compute_kappa.py                   # IAA Cohen's kappa
+│   └── exp[1-11]_*.py                     # Novel methodological analysis scripts
+│
+├── rag/                                   # Hybrid RAG pipeline
+│   ├── pipeline.py                        # Top-level RAGPipeline orchestrator
+│   ├── embeddings.py                      # BGE embedder (asymmetric query/corpus)
+│   ├── index.py                           # FAISS dense index
+│   ├── bm25_index.py                      # BM25 sparse index
+│   ├── retriever.py                       # HybridRetriever with RRF fusion
+│   ├── generator.py                       # Groq LLM generation
+│   ├── config.py                          # RAGConfig dataclass
+│   ├── index/                             # Pre-built indices (Git LFS)
+│   │   ├── faiss.index                    #   17 MB FAISS flat index
+│   │   ├── bm25.pkl                       #   18 MB BM25 serialised model
+│   │   └── chunks.pkl                     #   9.8 MB chunk metadata
+│   └── scripts/
+│       ├── build_index.py                 # Index construction script
+│       └── run_evaluation.py              # 6-config ablation evaluation
+│
+├── demo/                                  # Live web application
+│   ├── app.py                             # Flask app (leaderboard, RAG, submit APIs)
+│   ├── requirements.txt                   # Flask, gunicorn, FAISS, sentence-transformers
+│   ├── templates/index.html               # Single-page leaderboard UI
+│   ├── static/js/
+│   │   ├── charts.js                      # Bar charts, submit handler, RAG UI
+│   │   ├── data.js                        # Model data + Wilson CI bounds (frontend)
+│   │   └── animations.js                  # Scroll animations
+│   ├── database/db.py                     # SQLite leaderboard (init + query)
+│   ├── data/
+│   │   ├── questions.json                 # 406 benchmark items (for dataset explorer)
+│   │   └── baselines.json                 # Baseline model results (seeds DB)
+│   └── tests/test_app.py                  # 14 API behaviour tests
+│
+├── paper/
+│   ├── indiafinbench_paper_v12.md         # Current paper draft (EMNLP 2026)
+│   ├── references.bib                     # BibTeX references
+│   └── figures/                           # Publication figures
+│
+├── Dockerfile                             # Root Dockerfile for HF Spaces (Docker SDK)
+├── .dockerignore                          # Excludes .env, corpus, research artefacts
+├── README.md                              # This file
+└── LICENSE
 ```
 
 ---
@@ -344,11 +352,11 @@ python -m rag.scripts.run_evaluation       # run 6-config ablation
 
 ```bibtex
 @article{pall2026indiafinbench,
-  title={{IndiaFinBench}: An Evaluation Benchmark for Large Language Model Performance on Indian Financial Regulatory Text},
-  author={Pall, Rajveer Singh},
-  journal={Proceedings of EMNLP},
-  year={2026},
-  url={https://github.com/Rajveer-code/IndiaFinBench}
+  title     = {{IndiaFinBench}: An Evaluation Benchmark for Large Language Model Performance on Indian Financial Regulatory Text},
+  author    = {Pall, Rajveer Singh},
+  journal   = {Proceedings of EMNLP},
+  year      = {2026},
+  url       = {https://github.com/Rajveer-code/IndiaFinBench}
 }
 ```
 
@@ -356,14 +364,16 @@ python -m rag.scripts.run_evaluation       # run 6-config ablation
 
 ## License
 
-- **Dataset** (`data/benchmark/`, `annotation/`): [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — free to use with attribution
-- **Code** (`scripts/`, `evaluation/`, `demo/`): [MIT License](LICENSE)
-- **Source regulatory documents**: Public domain (published by Government of India agencies for public use)
+| Component | License |
+|-----------|---------|
+| Dataset (`data/benchmark/`, `annotation/`) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — free to use with attribution |
+| Code (`scripts/`, `evaluation/`, `demo/`, `rag/`) | [MIT License](LICENSE) |
+| Source regulatory documents | Public domain (Government of India) |
 
 ---
 
 ## Contact
 
-Rajveer Singh Pall — rajveerpall04@gmail.com
+**Rajveer Singh Pall** — rajveerpall04@gmail.com
 
-For questions about the benchmark, evaluation methodology, or collaboration inquiries, open an issue on this repository or contact directly.
+For questions about the benchmark, evaluation methodology, or collaboration inquiries, open an issue or contact directly.

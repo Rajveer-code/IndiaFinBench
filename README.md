@@ -2,6 +2,7 @@
 
 **The first publicly available evaluation benchmark for large language model performance on Indian financial regulatory text.**
 
+[![HuggingFace Demo](https://img.shields.io/badge/Demo-HuggingFace_Spaces-yellow)](https://huggingface.co/spaces/Rajveer-code/IndiaFinBench)
 [![HuggingFace Dataset](https://img.shields.io/badge/HuggingFace-Dataset-yellow)](https://huggingface.co/datasets/Rajveer-code/IndiaFinBench)
 [![License: CC BY 4.0](https://img.shields.io/badge/Dataset-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![License: MIT](https://img.shields.io/badge/Code-MIT-blue.svg)](LICENSE)

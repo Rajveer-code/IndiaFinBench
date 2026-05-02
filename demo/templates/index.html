@@ -429,7 +429,7 @@ footer{padding:40px 20px;border-top:1px solid var(--border);text-align:center}
     <div class="section-hd anim">
       <div class="section-eyebrow">Open Evaluation</div>
       <div class="section-title">Submit a Model</div>
-      <div class="section-sub">Evaluate any public HuggingFace model zero-shot on all 406 IndiaFinBench items and add it to the leaderboard. Kimi K2 and GPT-OSS models are accessed via Groq API.</div>
+      <div class="section-sub">Submit any public HuggingFace model for zero-shot evaluation on all 406 IndiaFinBench items. We run the evaluation and add results to the leaderboard.</div>
     </div>
     <div class="submit-grid anim d1">
       <div class="glass-card"><div class="card-shine"></div><div class="card-pad" style="display:flex;flex-direction:column;gap:18px">
@@ -442,17 +442,16 @@ footer{padding:40px 20px;border-top:1px solid var(--border);text-align:center}
           <div class="form-grp"><label class="form-lbl" for="modelParams">Parameters</label><input class="form-input" type="text" id="modelParams" placeholder="e.g. 7B"></div>
           <div class="form-grp"><label class="form-lbl" for="mtype">Model Type</label><select class="form-input" id="mtype"><option>Frontier API</option><option>Open-weight API</option><option>Local (Ollama)</option><option>Reasoning API</option></select></div>
         </div>
-        <label style="display:flex;align-items:center;gap:9px;font-size:13px;cursor:pointer"><input type="checkbox" id="smokeChk" checked style="accent-color:var(--accent);width:14px;height:14px">Smoke test first (10 items)</label>
-        <div><button class="sub-btn" id="subBtn" onclick="doSubmit()">▶ Run Evaluation</button></div>
+        <div><button class="sub-btn" id="subBtn" onclick="doSubmit()">↗ Open Submission Issue</button></div>
         <div class="status-box" id="statusBox"></div>
       </div></div>
       <div class="glass-card" style="background:var(--bg2)"><div class="card-shine"></div><div class="card-pad">
         <div style="font-size:17px;font-weight:700;font-family:var(--serif);margin-bottom:16px">How It Works</div>
         <div class="step-list">
-          <div class="step-item"><div class="step-num">1</div><div class="step-text">Enter a public HF model ID loaded via <code>transformers.pipeline</code> with deterministic decoding.</div></div>
-          <div class="step-item"><div class="step-num">2</div><div class="step-text"><strong>Smoke test</strong> (10 items) confirms the model loads before committing to the full run.</div></div>
-          <div class="step-item"><div class="step-num">3</div><div class="step-text">Full run scores all <strong>406 items</strong> zero-shot using the same four-stage scoring procedure.</div></div>
-          <div class="step-item"><div class="step-num">4</div><div class="step-text">Results saved to leaderboard instantly. Reload to see rankings with 95% Wilson CIs.</div></div>
+          <div class="step-item"><div class="step-num">1</div><div class="step-text">Enter a public HuggingFace model ID and click <strong>Open Submission Issue</strong>.</div></div>
+          <div class="step-item"><div class="step-num">2</div><div class="step-text">A pre-filled GitHub issue opens with your model details and the exact evaluation command.</div></div>
+          <div class="step-item"><div class="step-num">3</div><div class="step-text">Submit the issue — we run the eval locally on all <strong>406 items</strong> using the four-stage scoring procedure.</div></div>
+          <div class="step-item"><div class="step-num">4</div><div class="step-text">Results are added to the leaderboard with 95% Wilson CIs, usually within a few days.</div></div>
         </div>
       </div></div>
     </div>
@@ -494,7 +493,7 @@ footer{padding:40px 20px;border-top:1px solid var(--border);text-align:center}
     </div>
 
     <div style="margin-top:16px;font-size:12px;color:var(--text4);text-align:center" class="anim d2">
-      Powered by <strong>Vertex AI Search</strong> · <strong>Gemini Flash</strong> · 192 SEBI &amp; RBI documents
+      Powered by <strong>FAISS + BM25 hybrid retrieval</strong> · <strong>Groq LLaMA-3.3-70B</strong> · 192 SEBI &amp; RBI documents (1992–2026)
     </div>
   </div>
 </section>

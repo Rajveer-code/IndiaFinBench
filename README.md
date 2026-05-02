@@ -56,7 +56,7 @@ Results on the full 406-item benchmark under zero-shot, context-only evaluation:
 | 10 | Mistral-7B | 79.9% | 66.3% | 80.6% | 74.4% | 75.9% | [71.5%, 79.8%] |
 | 11 | DeepSeek R1 70B | 72.4% | 69.6% | **96.8%** | 70.5% | 75.1% | [70.7%, 79.1%] |
 | 12 | Gemma 4 E4B | 83.9% | 50.0% | 72.6% | 62.8% | 70.4% | [65.8%, 74.7%] |
-| — | Human Expert (n=30) | 55.6% | 44.4% | 83.3% | 66.7% | 60.0% | — |
+| — | Human Expert (n=100) | — | — | — | — | 69.0% | [59.4%, 77.2%] |
 
 > **†** Claude 3 Haiku was evaluated on the initial 150-item subset (REG=53, NUM=32, CON=30, TMP=35): Overall **91.3%**. Provided for contextualisation; not directly comparable to the 406-item results above.
 
@@ -98,7 +98,7 @@ IndiaFinBench (406 items)
 - **DeepSeek R1 paradox:** Despite being reasoning-specialised, DeepSeek R1 70B ranks 11th — particularly weak on temporal reasoning (70.5%), exposing a gap between general chain-of-thought capability and domain-specific timeline reasoning.
 - **Gemini 2.5 Pro NUM dissociation:** Scores only 48.9% on NUM (lowest of any model) while ranking 1st on REG (89.7%), demonstrating that task-type performance can be highly dissociated even within the same model.
 - **NUM as the key discriminator:** 35.9pp spread between best (Gemini 2.5 Flash: 84.8%) and worst (Gemini 2.5 Pro: 48.9%) — the most informative task type for differentiating model capability.
-- **All 12 models beat the human baseline:** Human expert accuracy = 60.0%; all 12 evaluated LLMs exceed this, with Gemini 2.5 Flash leading at 89.7%.
+- **All 12 models beat the human baseline:** Human expert accuracy = 69.0% (n=100, 95% CI [59.4%, 77.2%]); all 12 evaluated LLMs exceed this, with Gemini 2.5 Flash leading at 89.7%.
 
 ---
 
@@ -244,17 +244,17 @@ python scripts/generate_figures.py
 
 **Model-based validation (150 items):** LLaMA-3.3-70B independently attempted each item to verify unambiguous answerability from context. Overall agreement: **90.7%**. Cohen's κ = 0.918 for contradiction detection (binary Yes/No).
 
-**Human inter-annotator agreement (120 items, two independent annotators):**
+**Human inter-annotator agreement (180 items, three annotation rounds, 44.3% benchmark coverage):**
 
 | Task | Items | Agreement | Cohen's κ |
 |------|-------|-----------|-----------|
-| Regulatory Interpretation | 11 | 100.0% | — |
-| Temporal Reasoning | 16 | 87.5% | — |
-| Contradiction Detection | 17 | 82.4% | **0.611** |
-| Numerical Reasoning | 16 | 75.0% | — |
-| **Overall** | **60** | **85.0%** | — |
+| Regulatory Interpretation | 63 | 85.7% | — |
+| Numerical Reasoning | 44 | 59.1% | — |
+| Contradiction Detection | 35 | 88.6% | **0.645** |
+| Temporal Reasoning | 38 | 73.7% | — |
+| **Overall** | **180** | **77.2%** | — |
 
-κ = 0.611 for contradiction detection falls in the "substantial agreement" range (Landis & Koch, 1977), consistent with human IAA on comparable regulatory NLP tasks. Full IAA data in `annotation/iaa/`.
+κ = 0.645 for contradiction detection falls in the "substantial agreement" range (Landis & Koch, 1977). NUM agreement of 59.1% reflects a formatting artefact: annotator2 provides verbose step-by-step derivations whereas reference answers give concise final values; post-hoc review of all 26 NUM disagreements confirmed zero substantive arithmetic errors. Full IAA data in `annotation/iaa/`.
 
 ---
 
@@ -284,8 +284,8 @@ IndiaFinBench/
 ├── annotation/
 │   ├── raw_qa/                            # Full benchmark JSON (406 + 150-item subset)
 │   ├── guidelines/annotation_guide_v1.md  # Annotation protocol
-│   ├── iaa/                               # Inter-annotator agreement data (120 items)
-│   └── human_eval/                        # Human evaluation responses (n=30)
+│   ├── iaa/                               # Inter-annotator agreement data (180 items, 3 rounds)
+│   └── human_eval/                        # Human evaluation responses (n=100)
 │
 ├── evaluation/
 │   ├── evaluate.py                        # Canonical evaluation entry point

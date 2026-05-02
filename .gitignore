@@ -48,9 +48,11 @@ tables_preview.json
 *_scrape.log
 generation_todo.txt
 
-# Word / Office drafts (committed paper is the .md)
+# Word / Office drafts
 *.docx
 *.xlsx
+# Exception: the submission-ready paper manuscript
+!paper/IndiaFinBench_V5_FINAL.docx
 
 # Batch question staging files (keep only combined JSON in annotation/)
 batch*_new_questions.json

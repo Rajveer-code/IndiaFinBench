@@ -1,0 +1,40 @@
+# ── SECURITY — never bake API keys into the image ──────────────────────────────
+.env
+.env.*
+
+# ── Not needed at serve time (RAG index is pre-built) ──────────────────────────
+data/parsed/
+data/raw/
+data/eval/
+
+# ── Research artifacts — large, not needed in the app ──────────────────────────
+annotation/
+paper/
+evaluation/
+scripts/
+notebooks/
+_archive/
+results/
+
+# ── Dev tooling ────────────────────────────────────────────────────────────────
+.claude/
+demo/.claude/
+docs/superpowers/
+
+# ── Alternate RAG indices (only default rag/index/ is needed) ──────────────────
+rag/index_800/
+rag/index_2400/
+
+# ── Build / runtime artifacts ──────────────────────────────────────────────────
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.log
+*.db.bak
+.git/
+.gitignore
+
+# ── Misc ───────────────────────────────────────────────────────────────────────
+*.tmp
+.DS_Store

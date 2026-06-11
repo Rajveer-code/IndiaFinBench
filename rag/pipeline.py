@@ -138,6 +138,9 @@ class RAGPipeline:
             results: list[RetrievalResult] = self._retriever.retrieve(
                 query.strip(), mode=mode
             )
+            if self._generator is None:
+                return {"error": "Generation disabled in current configuration."}
+
             answer = self._generator.generate(query.strip(), results)
             sources = [
                 {

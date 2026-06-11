@@ -3,548 +3,514 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IndiaFinBench — LLM Benchmark for Indian Financial Regulatory Text</title>
+<title>IndiaFinBench — The First Benchmark for Indian Financial Regulation</title>
+<meta name="description" content="IndiaFinBench: 406 expert-annotated questions over 192 SEBI &amp; RBI regulatory documents (1992–2026). Twelve frontier LLMs evaluated. Hybrid RAG with Recall@5 = 0.785. Open dataset, open leaderboard.">
+<meta property="og:title" content="IndiaFinBench — Can language models read India's financial law?">
+<meta property="og:description" content="The first evaluation benchmark for LLM performance on Indian financial regulatory text. 406 questions · 192 documents · 12 models · open dataset.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://huggingface.co/spaces/Rajveer-code/IndiaFinBench">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23F5F1E8'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Georgia,serif' font-size='40' font-weight='700' fill='%23A33B20'%3E%C2%A7%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#F7F7F5;--bg2:#EFEEEC;--bg3:#E6E4E1;
-  --text:#111;--text2:#3A3A3A;--text3:#777;--text4:#AAA;
-  --border:rgba(0,0,0,0.07);--border2:rgba(0,0,0,0.12);
-  --accent:#4285F4;
-  --hero-bg:#060917;
-  --r:16px;--r-sm:10px;
-  --shadow:0 1px 3px rgba(0,0,0,0.04),0 4px 16px rgba(0,0,0,0.06);
-  --shadow-md:0 4px 24px rgba(0,0,0,0.08);
-  --shadow-lg:0 12px 48px rgba(0,0,0,0.12);
-  --mono:'JetBrains Mono',monospace;
-  --serif:'Playfair Display',Georgia,serif;
-  --sans:'DM Sans',system-ui,sans-serif;
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/main.css?v={{ js_ver }}">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "IndiaFinBench",
+  "description": "An evaluation benchmark of 406 expert-annotated question-answer pairs over 192 SEBI and RBI regulatory documents (1992-2026), testing LLM performance on Indian financial regulatory text.",
+  "url": "https://github.com/Rajveer-code/IndiaFinBench",
+  "sameAs": "https://huggingface.co/datasets/Rajveer-code/IndiaFinBench",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "creator": { "@type": "Person", "name": "Rajveer Singh Pall" },
+  "keywords": ["LLM evaluation", "financial NLP", "Indian regulation", "SEBI", "RBI", "benchmark"]
 }
-html{scroll-behavior:smooth}
-body{font-family:var(--sans);background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased}
-
-/* ── NAV ── */
-.nav-outer{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:300;width:calc(100% - 28px);max-width:1180px}
-nav{background:rgba(6,9,23,0.75);backdrop-filter:blur(28px) saturate(200%);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:0 22px;height:54px;display:flex;align-items:center;justify-content:space-between;transition:background 0.3s,border-color 0.3s}
-.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.nav-flag{width:30px;height:30px;border-radius:8px;background:linear-gradient(180deg,#FF9933 33%,#fff 33%,#fff 66%,#138808 66%);flex-shrink:0;position:relative;display:flex;align-items:center;justify-content:center}
-.nav-flag::after{content:'';width:8px;height:8px;border-radius:50%;border:1.5px solid #000080;position:absolute;box-sizing:border-box}
-.nav-logo-text{font-size:14px;font-weight:700;color:#fff;letter-spacing:-0.02em}
-.nav-logo-sub{font-size:10px;color:rgba(255,255,255,0.4)}
-.nav-links{display:flex;align-items:center;gap:2px}
-.nav-link{padding:6px 14px;border-radius:9px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.5);text-decoration:none;transition:all 0.2s}
-.nav-link:hover,.nav-link.active{color:#fff;background:rgba(255,255,255,0.1)}
-.nav-pill{padding:7px 16px;background:linear-gradient(135deg,#FF9933,#F59E0B);color:#fff;border-radius:9px;font-size:12px;font-weight:700;text-decoration:none;transition:opacity 0.15s;letter-spacing:0.02em}
-.nav-pill:hover{opacity:0.85}
-
-/* ── HERO ── */
-.hero{position:relative;padding:140px 20px 80px;background:var(--hero-bg);overflow:hidden;text-align:center}
-#heroCanvas{position:absolute;inset:0;pointer-events:none}
-.hero-content{position:relative;z-index:2}
-
-.hero-orb{position:absolute;border-radius:50%;filter:blur(1px);pointer-events:none;z-index:1}
-.orb1{width:200px;height:200px;top:10%;left:8%;background:radial-gradient(circle,rgba(74,144,255,0.12),transparent 70%)}
-.orb2{width:160px;height:160px;top:20%;right:10%;background:radial-gradient(circle,rgba(74,144,255,0.1),transparent 70%)}
-.orb3{width:120px;height:120px;bottom:20%;left:20%;background:radial-gradient(circle,rgba(100,170,255,0.1),transparent 70%)}
-.orb4{width:180px;height:180px;bottom:10%;right:15%;background:radial-gradient(circle,rgba(74,144,255,0.08),transparent 70%)}
-
-.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:100px;padding:6px 18px;font-size:11px;font-weight:600;letter-spacing:0.1em;color:rgba(255,255,255,0.6);text-transform:uppercase;margin-bottom:32px}
-.badge-dot{width:7px;height:7px;border-radius:50%;background:#4285F4;box-shadow:0 0 12px rgba(66,133,244,0.6);animation:glow-pulse 2s ease infinite}
-@keyframes glow-pulse{0%,100%{box-shadow:0 0 12px rgba(66,133,244,0.6)}50%{box-shadow:0 0 24px rgba(66,133,244,0.9)}}
-
-.hero h1{font-family:var(--serif);font-size:clamp(48px,7vw,86px);font-weight:800;line-height:1;letter-spacing:-0.03em;color:#fff;margin-bottom:10px}
-.hero-gradient{background:linear-gradient(135deg,#FF9933 0%,#F7B731 50%,#FF6B35 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-
-.hero-sub{font-size:clamp(15px,1.8vw,18px);color:rgba(255,255,255,0.45);max-width:580px;margin:20px auto 50px;line-height:1.75;font-weight:300}
-
-.stats-row{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}
-.stat-chip{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:18px 24px;min-width:115px;text-align:center;transition:all 0.3s cubic-bezier(0.23,1,0.32,1);backdrop-filter:blur(12px)}
-.stat-chip:hover{background:rgba(255,255,255,0.1);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.3)}
-.stat-num{font-size:30px;font-weight:800;font-family:var(--serif);line-height:1;letter-spacing:-0.03em;margin-bottom:5px}
-.stat-lbl{font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35)}
-.c-blue .stat-num{color:#4A90FF}.c-purple .stat-num{color:#A0B4CC}.c-white .stat-num{color:#fff}
-.c-green .stat-num{color:#6DD4A0}.c-amber .stat-num{color:#E8B460}.c-pink .stat-num{color:#D4A0B0}
-
-.hero-wave{position:absolute;bottom:-1px;left:0;right:0;line-height:0}
-.hero-wave svg{display:block;width:100%}
-
-/* ── SECTIONS ── */
-.section{padding:80px 20px}
-.section-alt{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-.container{max-width:1180px;margin:0 auto}
-.section-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
-.section-title{font-family:var(--serif);font-size:clamp(26px,3.5vw,38px);font-weight:700;letter-spacing:-0.02em;color:var(--text);margin-bottom:12px;line-height:1.1}
-.section-sub{font-size:15px;color:var(--text3);max-width:600px;line-height:1.7}
-.section-hd{margin-bottom:44px}
-
-/* ── GLASS CARD ── */
-.glass-card{background:rgba(255,255,255,0.8);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.6);border-radius:var(--r);box-shadow:var(--shadow),0 0 0 1px rgba(0,0,0,0.03);transition:transform 0.4s cubic-bezier(0.23,1,0.32,1),box-shadow 0.4s cubic-bezier(0.23,1,0.32,1);position:relative;overflow:hidden}
-.glass-card:hover{box-shadow:var(--shadow-md),0 0 0 1px rgba(0,0,0,0.05)}
-.card-shine{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity 0.3s;z-index:1;border-radius:inherit}
-.glass-card .card-pad{position:relative;z-index:2}
-.card-pad{padding:28px}
-
-/* ── BAR CHART ── */
-.task-tabs{display:inline-flex;gap:3px;background:var(--bg3);border-radius:12px;padding:3px}
-.task-tab{padding:6px 16px;border-radius:9px;font-size:13px;font-weight:600;color:var(--text3);cursor:pointer;border:none;background:none;font-family:inherit;transition:all 0.2s}
-.task-tab:hover{color:var(--text2)}
-.task-tab.active{background:#fff;color:var(--text);box-shadow:0 1px 4px rgba(0,0,0,0.08)}
-.chart-controls{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:14px;margin-bottom:32px}
-
-.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-.bar-label{width:170px;min-width:170px;display:flex;align-items:center;justify-content:flex-end;gap:7px}
-.bar-rank{font-size:11px;color:var(--text4);font-weight:700;min-width:24px;text-align:right;font-family:var(--mono)}
-.bar-name{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px}
-.bar-name.human{color:var(--text3);font-style:italic;font-weight:400}
-
-.bar-track{flex:1;height:48px;background:var(--bg2);border-radius:12px;position:relative;cursor:default;overflow:visible;transition:background 0.15s}
-.bar-track:hover{background:var(--bg3)}
-
-.bar-fill{height:100%;border-radius:12px;position:relative;overflow:hidden;transition:width 1.2s cubic-bezier(0.22,0.61,0.36,1);background:#4A90FF}
-.bar-fill-human{background:#B8C5D4}
-.bar-shimmer{position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,0.2) 50%,transparent 100%);transform:translateX(-100%);animation:none}
-.bar-fill.shown .bar-shimmer{animation:shimmer 1.5s ease 0.3s}
-@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
-
-.bar-pct{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:14px;font-weight:700;color:#fff;font-family:var(--mono);opacity:0;transition:opacity 0.35s;white-space:nowrap;text-shadow:0 1px 3px rgba(0,0,0,0.2)}
-.bar-fill.shown .bar-pct{opacity:1}
-
-.bar-icon-wrap{position:absolute;right:-22px;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;background:#fff;border:1px solid #e5e5e5;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.1);opacity:0;transition:opacity 0.4s 0.8s;overflow:hidden;padding:4px}
-.bar-fill.shown ~ .bar-icon-wrap{opacity:1}
-
-.bar-tooltip{position:absolute;bottom:calc(100% + 12px);left:50%;transform:translateX(-50%);background:#111;color:#fff;border-radius:12px;padding:14px 16px;font-size:12px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity 0.2s;z-index:99;box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,255,0.08)}
-.bar-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#111}
-.bar-track:hover .bar-tooltip{opacity:1}
-.tt-name{font-weight:700;font-size:13px;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.1)}
-.tt-grid{display:grid;grid-template-columns:auto auto;gap:3px 18px}
-.tt-k{color:rgba(255,255,255,0.45);font-size:11.5px}
-.tt-v{font-weight:600;font-family:var(--mono);text-align:right;font-size:11.5px}
-.tt-ci{font-size:10px;color:rgba(255,255,255,0.3);margin-top:6px;text-align:center}
-
-/* ── TABLE ── */
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:13px}
-thead tr{border-bottom:2px solid var(--border2)}
-th{padding:11px 13px;text-align:left;font-size:10.5px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;white-space:nowrap;cursor:pointer;user-select:none;background:var(--bg2);transition:color 0.12s}
-th:hover{color:var(--text2)}
-th.c{text-align:center}
-.sort-icon{margin-left:3px;opacity:0.35;font-size:10px}
-th.sorted .sort-icon{opacity:1;color:var(--accent)}
-tbody tr{border-bottom:1px solid var(--border);transition:background 0.15s}
-tbody tr:hover{background:rgba(66,133,244,0.04)}
-td{padding:12px 13px;white-space:nowrap;vertical-align:middle}
-td.c{text-align:center}
-.rank-b{width:28px;height:28px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
-.rb1{background:linear-gradient(135deg,#FEF3C7,#FDE68A);color:#78350F;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
-.rb2{background:linear-gradient(135deg,#F1F5F9,#E2E8F0);color:#334155}
-.rb3{background:linear-gradient(135deg,#FED7AA,#FDBA74);color:#78350F}
-.rbn{background:var(--bg3);color:var(--text3)}
-.rbh{background:var(--bg3);color:var(--text4);font-size:10px}
-.model-cell{display:flex;align-items:center;gap:10px}
-.model-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;border:1.5px solid;letter-spacing:-0.02em;transition:transform 0.2s}
-.model-cell:hover .model-icon{transform:scale(1.1)}
-.model-name{font-size:13px;font-weight:600;color:var(--text)}
-.model-hfid{font-size:10.5px;color:var(--text4);font-family:var(--mono);margin-top:1px}
-.model-note{font-size:10px;color:var(--text4);font-style:italic}
-.sc{display:inline-block;padding:3px 8px;border-radius:6px;font-family:var(--mono);font-size:12px;font-weight:600}
-.sc-hi{background:#DCFCE7;color:#166534}.sc-md{background:#FEF9C3;color:#854D0E}.sc-lo{background:#FEE2E2;color:#991B1B}
-.ov{display:inline-block;padding:4px 10px;border-radius:8px;font-family:var(--mono);font-size:13px;font-weight:700}
-.type-badge{display:inline-block;padding:3px 9px;border-radius:100px;font-size:10.5px;font-weight:600;border:1px solid;white-space:nowrap}
-.tb-frontier{background:#EFF6FF;color:#1D4ED8;border-color:#BFDBFE}
-.tb-subset{background:#FFF7ED;color:#C2410C;border-color:#FED7AA}
-.tb-open{background:#F0FDF4;color:#166534;border-color:#BBF7D0}
-.tb-local{background:#F5F3FF;color:#6D28D9;border-color:#DDD6FE}
-.tb-reasoning{background:#FEF3C7;color:#92400E;border-color:#FDE68A}
-.tb-human{background:#F1F5F9;color:#64748B;border-color:#CBD5E1}
-.tr-human{background:var(--bg2)}
-.tr-subset{background:#FFFBEB}
-
-/* ── BREAKDOWN ── */
-.breakdown-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-@media(max-width:920px){.breakdown-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:520px){.breakdown-grid{grid-template-columns:1fr}}
-.bc{padding:24px;transition:transform 0.4s cubic-bezier(0.23,1,0.32,1),box-shadow 0.4s}
-.bc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.task-pill{display:inline-block;padding:4px 11px;border-radius:8px;font-family:var(--mono);font-size:12px;font-weight:700}
-.bc-n{font-size:11px;color:var(--text3)}
-.bc-title{font-size:14.5px;font-weight:700;margin-bottom:4px}
-.bc-desc{font-size:12px;color:var(--text3);line-height:1.5;margin-bottom:16px}
-.bc-row{display:flex;align-items:center;justify-content:space-between;font-size:13px;padding:4px 0}
-.bc-pos{font-size:10px;color:var(--text4);width:16px;font-weight:700;font-family:var(--mono)}
-.bc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.bc-model-name{font-weight:500}
-.bc-score{font-family:var(--mono);font-size:12.5px;font-weight:700}
-.bc-sep{border-top:1px dashed var(--border2);margin:9px 0}
-
-/* ── DIFFICULTY ── */
-.diff-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px}
-@media(max-width:640px){.diff-grid{grid-template-columns:1fr}}
-.diff-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px 24px;transition:transform 0.3s,box-shadow 0.3s}
-.diff-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
-.diff-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
-.diff-count{font-size:28px;font-weight:800;font-family:var(--serif);letter-spacing:-0.03em;margin-bottom:2px}
-.diff-pct{font-size:12.5px;color:var(--text3)}
-.diff-bar{height:5px;border-radius:3px;margin-top:12px;background:var(--bg3);overflow:hidden}
-.diff-bar-fill{height:100%;border-radius:3px;width:0;transition:width 1.2s 0.3s cubic-bezier(0.22,0.61,0.36,1)}
-
-/* ── ABOUT ── */
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-@media(max-width:800px){.about-grid{grid-template-columns:1fr}}
-.stat-table{width:100%;border-collapse:collapse;font-size:13px}
-.stat-table th{padding:9px 12px;font-size:10.5px;color:var(--text3);text-transform:uppercase;letter-spacing:0.07em;font-weight:600;background:var(--bg3);cursor:default}
-.stat-table td{padding:10px 12px;border-bottom:1px solid var(--border)}
-.stat-table td:last-child{font-family:var(--mono);color:var(--accent);font-weight:600;text-align:right}
-.cite-wrap{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:16px;position:relative}
-.cite-pre{font-family:var(--mono);font-size:11.5px;color:var(--text2);line-height:1.8;white-space:pre;overflow-x:auto}
-.copy-btn{position:absolute;top:10px;right:10px;padding:4px 12px;background:#fff;border:1px solid var(--border);border-radius:7px;font-size:11px;font-weight:600;color:var(--text3);cursor:pointer;font-family:inherit;transition:all 0.15s}
-.copy-btn:hover{background:#EFF6FF;color:#1D4ED8;border-color:#BFDBFE}
-.link-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border:1.5px solid var(--border2);border-radius:10px;font-size:13px;font-weight:500;color:var(--text2);text-decoration:none;transition:all 0.2s}
-.link-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(66,133,244,0.06);transform:translateY(-1px)}
-.finding-box{background:linear-gradient(135deg,#EFF6FF 0%,#F5F3FF 50%,#FCE7F3 100%);border:1px solid rgba(66,133,244,0.15);border-radius:14px;padding:22px 24px}
-.finding-box p{font-size:14px;line-height:1.8;color:var(--text2)}
-
-/* ── SUBMIT ── */
-.submit-grid{display:grid;grid-template-columns:3fr 2fr;gap:24px}
-@media(max-width:800px){.submit-grid{grid-template-columns:1fr}}
-.form-grp{display:flex;flex-direction:column;gap:6px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:600px){.form-row{grid-template-columns:1fr}}
-.form-lbl{font-size:13px;font-weight:600;color:var(--text2)}
-.form-input{padding:10px 14px;border:1.5px solid var(--border2);border-radius:10px;font-size:14px;font-family:inherit;color:var(--text);background:#fff;transition:all 0.2s;outline:none}
-.form-input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(66,133,244,0.1)}
-.form-input::placeholder{color:var(--text4)}
-.sub-btn{padding:12px 28px;background:linear-gradient(135deg,#111,#333);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:8px}
-.sub-btn:hover{background:linear-gradient(135deg,var(--accent),#6366F1);transform:translateY(-1px);box-shadow:0 6px 24px rgba(66,133,244,0.3)}
-.sub-btn:active{transform:scale(0.98)}
-.sub-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none!important}
-.status-box{padding:12px 14px;border-radius:10px;font-size:13px;line-height:1.5;display:none;white-space:pre-line}
-.st-q{background:#EFF6FF;color:#1D4ED8;border:1px solid #BFDBFE}
-.st-r{background:#FEF3C7;color:#92400E;border:1px solid #FDE68A}
-.st-d{background:#DCFCE7;color:#166534;border:1px solid #BBF7D0}
-.st-e{background:#FEE2E2;color:#991B1B;border:1px solid #FECACA}
-.step-list{display:flex;flex-direction:column;gap:12px}
-.step-item{display:flex;gap:12px}
-.step-num{width:24px;height:24px;background:#EFF6FF;color:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
-.step-text{font-size:13px;color:var(--text2);line-height:1.55}
-code{background:var(--bg3);padding:1px 5px;border-radius:4px;font-size:11px;font-family:var(--mono);color:var(--text2)}
-
-/* ── RAG DEMO ── */
-.rag-search-row{display:flex;gap:10px;align-items:center;margin-bottom:14px}
-.rag-input{flex:1;height:48px;border:1.5px solid var(--border2);border-radius:12px;padding:0 16px;font-family:var(--sans);font-size:14px;background:#fff;color:var(--text);outline:none;transition:border-color 0.2s,box-shadow 0.2s}
-.rag-input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(66,133,244,0.1)}
-.rag-input::placeholder{color:var(--text4)}
-.rag-btn{height:48px;padding:0 26px;background:linear-gradient(135deg,var(--accent),#6366F1);color:#fff;border:none;border-radius:12px;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:opacity 0.15s,transform 0.1s;white-space:nowrap;flex-shrink:0}
-.rag-btn:hover{opacity:0.88;transform:translateY(-1px)}
-.rag-btn:active{transform:scale(0.97)}
-.rag-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none!important}
-.rag-examples{display:flex;flex-wrap:wrap;align-items:center;gap:7px}
-.rag-ex-lbl{font-size:12px;color:var(--text4);font-weight:600;text-transform:uppercase;letter-spacing:0.08em}
-.rag-ex{background:#fff;border:1px solid var(--border);border-radius:100px;padding:5px 13px;font-size:12px;color:var(--text3);cursor:pointer;font-family:var(--sans);transition:all 0.15s}
-.rag-ex:hover{background:#EFF6FF;color:var(--accent);border-color:rgba(66,133,244,0.4)}
-.rag-result{margin-top:20px;display:flex;flex-direction:column;gap:14px}
-.rag-answer-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.rag-answer-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent)}
-.rag-loading{display:none;align-items:center;gap:8px;font-size:12px;color:var(--text3)}
-.rag-spinner{width:15px;height:15px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.75s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.rag-answer-text{font-size:14.5px;line-height:1.8;color:var(--text2);white-space:pre-wrap;min-height:24px}
-.rag-sources-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
-.rag-source-card{background:rgba(255,255,255,0.75);border:1px solid rgba(255,255,255,0.6);border-radius:12px;padding:16px;box-shadow:var(--shadow)}
-.rag-source-num{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:5px}
-.rag-source-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px;line-height:1.35}
-.rag-source-text{font-size:12px;color:var(--text3);line-height:1.6;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
-.rag-empty{font-size:13px;color:var(--text4);text-align:center;padding:20px 0;display:none}
-
-/* ── FOOTER ── */
-footer{padding:40px 20px;border-top:1px solid var(--border);text-align:center}
-.footer-main{font-size:14px;font-weight:500;color:var(--text2)}
-.footer-sub{font-size:12px;color:var(--text4);margin-top:5px}
-
-/* ── TWEAKS ── */
-.tweaks-panel{position:fixed;bottom:24px;right:24px;background:#fff;border:1px solid var(--border2);border-radius:16px;padding:20px;box-shadow:var(--shadow-lg);z-index:500;width:240px;display:none;animation:twk-in 0.25s ease}
-@keyframes twk-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.tweaks-title{font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:7px}
-.tweaks-row{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
-.tweaks-lbl{font-size:11px;font-weight:600;color:var(--text3)}
-.tweaks-toggle{display:flex;gap:5px}
-.tw-btn{flex:1;padding:6px;border:1.5px solid var(--border2);border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;font-family:inherit;background:#fff;color:var(--text3);transition:all 0.15s}
-.tw-btn.active{background:#EFF6FF;border-color:#BFDBFE;color:#1D4ED8}
-
-/* ── ANIMATIONS ── */
-.anim{opacity:0;transform:translateY(24px);transition:opacity 0.7s cubic-bezier(0.23,1,0.32,1),transform 0.7s cubic-bezier(0.23,1,0.32,1)}
-.anim.visible{opacity:1;transform:translateY(0)}
-.anim.d1{transition-delay:0.08s}.anim.d2{transition-delay:0.16s}.anim.d3{transition-delay:0.24s}.anim.d4{transition-delay:0.32s}
-
-@media(max-width:700px){.nav-links{display:none}.bar-label{width:110px;min-width:110px}.bar-name{max-width:86px}.section{padding:52px 16px}.hero{padding:120px 16px 60px}.bar-icon-wrap{display:none}}
-</style>
+</script>
 </head>
 <body>
 
-<!-- NAV -->
-<div class="nav-outer">
-  <nav>
-    <a href="#top" class="nav-logo"><div class="nav-flag"></div><div><div class="nav-logo-text">IndiaFinBench</div><div class="nav-logo-sub">LLM Evaluation · EMNLP 2026</div></div></a>
-    <div class="nav-links">
-      <a href="#leaderboard" class="nav-link">Leaderboard</a>
-      <a href="#tasks" class="nav-link">Tasks</a>
-      <a href="#difficulty" class="nav-link">Analysis</a>
-      <a href="#submit" class="nav-link">Submit</a>
-      <a href="#rag" class="nav-link">RAG Demo</a>
-      <a href="#about" class="nav-link">About</a>
-    </div>
-    <a href="#about" class="nav-pill">Read Paper ↗</a>
-  </nav>
-</div>
+<a class="skip-link" href="#leaderboard">Skip to leaderboard</a>
 
-<!-- HERO -->
-<div id="top"></div>
+<!-- ════════ MASTHEAD ════════ -->
+<header class="masthead" id="masthead">
+  <div class="masthead-inner">
+    <a class="brand" href="#top" aria-label="IndiaFinBench — back to top">
+      <span class="brand-seal" aria-hidden="true">§</span>
+      <span class="brand-word">India<em>Fin</em>Bench</span>
+    </a>
+    <nav class="mast-nav" aria-label="Chapters">
+      <a href="#problem">Problem</a>
+      <a href="#corpus">Corpus</a>
+      <a href="#benchmark">Benchmark</a>
+      <a href="#leaderboard">Leaderboard</a>
+      <a href="#findings">Findings</a>
+      <a href="#retrieval">Retrieval</a>
+      <a href="#access">Access</a>
+    </nav>
+    <div class="mast-actions">
+      <a class="mast-btn" href="https://huggingface.co/datasets/Rajveer-code/IndiaFinBench" target="_blank" rel="noopener">Dataset</a>
+      <a class="mast-btn mast-btn-solid" href="https://github.com/Rajveer-code/IndiaFinBench" target="_blank" rel="noopener">GitHub</a>
+      <button class="mast-menu" id="menuBtn" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="mast-drawer" id="menuDrawer">
+    <a href="#problem">§ 01 — The Problem</a>
+    <a href="#corpus">§ 02 — The Corpus</a>
+    <a href="#benchmark">§ 03 — The Benchmark</a>
+    <a href="#leaderboard">§ 04 — The Evaluation</a>
+    <a href="#findings">§ 05 — The Findings</a>
+    <a href="#retrieval">§ 06 — The Retrieval</a>
+    <a href="#access">§ 07 — The Access</a>
+  </div>
+</header>
+
+<!-- ════════ PROGRESS RAIL ════════ -->
+<aside class="rail" id="rail" aria-hidden="true">
+  <div class="rail-line"><div class="rail-fill" id="railFill"></div></div>
+  <ol class="rail-list">
+    <li data-ch="problem"><a href="#problem"><b>01</b><span>Problem</span></a></li>
+    <li data-ch="corpus"><a href="#corpus"><b>02</b><span>Corpus</span></a></li>
+    <li data-ch="benchmark"><a href="#benchmark"><b>03</b><span>Benchmark</span></a></li>
+    <li data-ch="leaderboard"><a href="#leaderboard"><b>04</b><span>Evaluation</span></a></li>
+    <li data-ch="findings"><a href="#findings"><b>05</b><span>Findings</span></a></li>
+    <li data-ch="retrieval"><a href="#retrieval"><b>06</b><span>Retrieval</span></a></li>
+    <li data-ch="access"><a href="#access"><b>07</b><span>Access</span></a></li>
+  </ol>
+</aside>
+
+<main id="top">
+
+<!-- ════════ HERO ════════ -->
 <section class="hero">
-  <canvas id="heroCanvas"></canvas>
-  <div class="hero-orb orb1"></div>
-  <div class="hero-orb orb2"></div>
-  <div class="hero-orb orb3"></div>
-  <div class="hero-orb orb4"></div>
-  <div class="hero-content container">
-    <div class="hero-badge anim"><span class="badge-dot"></span>EMNLP 2026 &nbsp;·&nbsp; Zero-Shot &nbsp;·&nbsp; SEBI &amp; RBI</div>
-    <h1 class="anim d1">India<span class="hero-gradient">FinBench</span></h1>
-    <p class="hero-sub anim d2">The first expert-annotated benchmark for evaluating large language models on Indian financial regulatory text — 192 documents spanning 1992–2026.</p>
-    <div class="stats-row anim d3">
-      <div class="stat-chip c-amber"><div class="stat-num" data-count="406">406</div><div class="stat-lbl">QA Pairs</div></div>
-      <div class="stat-chip c-blue"><div class="stat-num" id="modelCount" data-count="12">12</div><div class="stat-lbl">Models</div></div>
-      <div class="stat-chip c-white"><div class="stat-num" data-count="4">4</div><div class="stat-lbl">Task Types</div></div>
-      <div class="stat-chip c-purple"><div class="stat-num" data-count="192">192</div><div class="stat-lbl">Documents</div></div>
-      <div class="stat-chip c-green"><div class="stat-num">89.7%</div><div class="stat-lbl">Best Score</div></div>
-      <div class="stat-chip c-pink"><div class="stat-num" id="humanBaseline">69.0%</div><div class="stat-lbl">Human Baseline</div></div>
+  <canvas id="docCanvas" aria-hidden="true"></canvas>
+  <div class="hero-inner">
+    <p class="hero-kicker reveal">A research benchmark &amp; open dataset · EMNLP 2026 submission</p>
+    <h1 class="hero-title reveal">Can language models read India&rsquo;s <em>financial&nbsp;law?</em></h1>
+    <p class="hero-sub reveal">
+      IndiaFinBench is the first evaluation benchmark for large language models on Indian
+      financial regulatory text — <strong>406 expert-annotated questions</strong> drawn from
+      <strong>192 SEBI and RBI documents</strong> spanning thirty-four years of the regulatory record.
+    </p>
+    <div class="hero-cta reveal">
+      <a class="btn btn-ink" href="#leaderboard">Read the leaderboard</a>
+      <a class="btn btn-line" href="#retrieval">Query the corpus live</a>
     </div>
   </div>
-  <div class="hero-wave"><svg viewBox="0 0 1440 64" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M0 64C240 0 480 20 720 32C960 44 1200 0 1440 64V64H0Z" fill="#F7F7F5"/></svg></div>
-</section>
-
-<!-- LEADERBOARD -->
-<section id="leaderboard" class="section" style="padding-top:56px">
-  <div class="container">
-    <div class="section-hd anim">
-      <div class="section-eyebrow">Live Rankings</div>
-      <div class="section-title">Performance Leaderboard</div>
-      <div class="section-sub">Zero-shot accuracy across 406 expert-annotated items. Each model has a unique colour. Hover any bar for full breakdown.</div>
-    </div>
-
-    <div class="glass-card anim d1" style="border-radius:18px">
-      <div class="card-shine"></div>
-      <div class="card-pad">
-        <div class="chart-controls">
-          <div>
-            <div style="font-size:20px;font-weight:700;font-family:var(--serif)" id="chartTitle">Overall Accuracy</div>
-            <div style="font-size:13px;color:var(--text3);margin-top:4px" id="chartDesc">All 406 items · zero-shot · no fine-tuning</div>
-          </div>
-          <div class="task-tabs" id="taskTabs">
-            <button class="task-tab active" data-t="overall">Overall</button>
-            <button class="task-tab" data-t="reg">REG</button>
-            <button class="task-tab" data-t="num">NUM</button>
-            <button class="task-tab" data-t="con">CON</button>
-            <button class="task-tab" data-t="tmp">TMP</button>
-          </div>
-        </div>
-        <div id="barChart"></div>
-      </div>
-    </div>
+  <div class="hero-ledger reveal" role="list" aria-label="Benchmark statistics">
+    <div class="ledger-cell" role="listitem"><span class="ledger-num" data-count="406">0</span><span class="ledger-lbl">expert-annotated questions</span></div>
+    <div class="ledger-cell" role="listitem"><span class="ledger-num" data-count="192">0</span><span class="ledger-lbl">RBI &amp; SEBI documents</span></div>
+    <div class="ledger-cell" role="listitem"><span class="ledger-num" data-count="12">0</span><span class="ledger-lbl">frontier models evaluated</span></div>
+    <div class="ledger-cell" role="listitem"><span class="ledger-num" data-count="0.785" data-dec="3">0</span><span class="ledger-lbl">Recall@5, hybrid retrieval</span></div>
+    <div class="ledger-cell" role="listitem"><span class="ledger-num" data-count="89.7" data-dec="1" data-suffix="%">0</span><span class="ledger-lbl">best model accuracy</span></div>
+    <div class="ledger-cell" role="listitem"><span class="ledger-num" data-count="69.0" data-dec="1" data-suffix="%">0</span><span class="ledger-lbl">human expert baseline</span></div>
   </div>
 </section>
 
-<!-- FULL TABLE -->
-<section class="section" style="padding-top:16px">
-  <div class="container">
-    <div class="section-hd anim">
-      <div class="section-eyebrow">Complete Results</div>
-      <div class="section-title">Full Results Table</div>
-      <div class="section-sub">Click column headers to sort. <span style="font-style:italic">†Claude 3 Haiku evaluated on 150-item subset only.</span></div>
+<!-- ════════ §01 THE PROBLEM ════════ -->
+<section class="chapter" id="problem">
+  <header class="ch-head reveal">
+    <span class="ch-no">§ 01</span>
+    <h2 class="ch-title">The Problem</h2>
+    <p class="ch-lede">Benchmarks read English. Regulation reads differently.</p>
+  </header>
+
+  <div class="prose-cols reveal">
+    <p>
+      Financial NLP benchmarks — FinQA, TAT-QA, FiQA — are built almost entirely on Western
+      corporate filings. None test whether a model can navigate the regulatory apparatus
+      governing the world&rsquo;s most populous market. Indian regulation poses three difficulties
+      that existing benchmarks never measure.
+    </p>
+    <p>
+      Numerical thresholds are buried in dense statutory prose, often written out in words.
+      Circulars supersede one another in long chains, so the <em>operative</em> rule at a given
+      date is a temporal-reasoning problem, not a lookup. And the vocabulary — LODR, PMLA,
+      AIF, FEMA, SFB — is jurisdiction-specific, thinly represented in Western training corpora.
+    </p>
+  </div>
+
+  <div class="problem-grid">
+    <article class="problem-card reveal">
+      <span class="pc-no">i</span>
+      <h3>Numbers hide in prose</h3>
+      <p>Capital ratios, margin requirements and filing deadlines appear as words inside clauses, not cells inside tables. Extraction requires precision reading, then arithmetic.</p>
+    </article>
+    <article class="problem-card reveal">
+      <span class="pc-no">ii</span>
+      <h3>Circulars supersede circulars</h3>
+      <p>A 2019 master circular may amend a 2014 directive that replaced a 1998 notification. Answering &ldquo;what rule applied in 2016?&rdquo; means untangling the chain.</p>
+    </article>
+    <article class="problem-card reveal">
+      <span class="pc-no">iii</span>
+      <h3>The vocabulary is sovereign</h3>
+      <p>LODR is not a typo and an AIF is not a hedge fund. Jurisdiction-specific terms of art carry exact legal meanings that general-purpose corpora rarely teach.</p>
+    </article>
+  </div>
+
+  <figure class="specimen reveal" aria-label="Annotated regulatory excerpt">
+    <figcaption class="spec-head">
+      <span class="spec-tag">Exhibit A</span>
+      <span class="spec-src">SEBI (LODR) Regulations · Regulation 33(3)(a)</span>
+    </figcaption>
+    <blockquote class="spec-body">
+      The listed entity shall submit quarterly and year-to-date standalone financial results to the
+      stock exchange within <mark class="m-num" data-note="numeral written as words">forty-five days</mark>
+      of end of each quarter, <mark class="m-scope" data-note="scope exception">other than the last quarter</mark>,
+      as per the requirements of <mark class="m-ref" data-note="cross-reference to resolve">Regulation&nbsp;33</mark>.
+    </blockquote>
+    <figcaption class="spec-legend">
+      <span><i class="lg lg-num"></i>numerical threshold in prose</span>
+      <span><i class="lg lg-scope"></i>scope exception</span>
+      <span><i class="lg lg-ref"></i>cross-reference</span>
+    </figcaption>
+  </figure>
+</section>
+
+<!-- ════════ §02 THE CORPUS ════════ -->
+<section class="chapter ch-alt" id="corpus">
+  <header class="ch-head reveal">
+    <span class="ch-no">§ 02</span>
+    <h2 class="ch-title">The Corpus</h2>
+    <p class="ch-lede">Thirty-four years of primary sources, read in full.</p>
+  </header>
+
+  <div class="corpus-grid">
+    <div class="corpus-copy reveal">
+      <p class="prose">
+        Every question in IndiaFinBench traces to a primary-source document published by the
+        Securities and Exchange Board of India or the Reserve Bank of India between
+        <strong>1992 and 2026</strong> — circulars, master directions, notifications and
+        regulations, collected with full source URLs and parsed into a queryable corpus.
+      </p>
+      <dl class="corpus-stats">
+        <div><dt>SEBI documents</dt><dd class="mono c-green">92</dd></div>
+        <div><dt>RBI documents</dt><dd class="mono c-red">100</dd></div>
+        <div><dt>Document span</dt><dd class="mono">1992–2026</dd></div>
+        <div><dt>Indexed chunks</dt><dd class="mono">4,347</dd></div>
+        <div><dt>Chunk size</dt><dd class="mono">1,600 chars</dd></div>
+        <div><dt>License</dt><dd class="mono">Public domain (GoI)</dd></div>
+      </dl>
     </div>
-    <div class="glass-card anim d1" style="overflow:hidden">
-      <div class="card-shine"></div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr>
-            <th class="c" onclick="tSort('rank')">Rank<span class="sort-icon">↕</span></th>
-            <th>Model</th>
-            <th onclick="tSort('params')">Params<span class="sort-icon">↕</span></th>
-            <th>Type</th>
-            <th class="c" onclick="tSort('reg')">REG<span class="sort-icon">↕</span></th>
-            <th class="c" onclick="tSort('num')">NUM<span class="sort-icon">↕</span></th>
-            <th class="c" onclick="tSort('con')">CON<span class="sort-icon">↕</span></th>
-            <th class="c" onclick="tSort('tmp')">TMP<span class="sort-icon">↕</span></th>
-            <th class="c" onclick="tSort('overall')">Overall<span class="sort-icon">↓</span></th>
-            <th class="c">95% CI</th>
-          </tr></thead>
-          <tbody id="tBody"></tbody>
-        </table>
+    <figure class="doc-field reveal" aria-label="192 source documents: 92 SEBI, 100 RBI">
+      <div class="doc-dots" id="docDots"></div>
+      <figcaption><span><i class="dot dot-sebi"></i>SEBI &middot; 92</span><span><i class="dot dot-rbi"></i>RBI &middot; 100</span><span class="doc-total">192 documents</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ════════ §03 THE BENCHMARK ════════ -->
+<section class="chapter" id="benchmark">
+  <header class="ch-head reveal">
+    <span class="ch-no">§ 03</span>
+    <h2 class="ch-title">The Benchmark</h2>
+    <p class="ch-lede">From circular to question: a dual-validated construction.</p>
+  </header>
+
+  <ol class="pipeline reveal" aria-label="Benchmark construction pipeline">
+    <li><b>Collect</b><span>192 primary documents, 1992–2026, with source URLs</span></li>
+    <li><b>Author</b><span>QA pairs drafted against exact passages, four task types</span></li>
+    <li><b>Validate</b><span>model check on answerability — 90.7% agreement, κ = 0.918 (CON)</span></li>
+    <li><b>Adjudicate</b><span>human IAA on 180 items across 3 rounds — 77.2% agreement, κ = 0.645 (CON)</span></li>
+    <li><b>Release</b><span>406 items, CC BY 4.0, with per-item difficulty labels</span></li>
+  </ol>
+
+  <div class="task-grid" id="taskGrid"><!-- built by JS from IFB_TASKS --></div>
+
+  <div class="diff-strip reveal" aria-label="Difficulty distribution">
+    <div class="diff-bar-outer">
+      <div class="diff-seg ds-easy" style="--w:39.4%" title="Easy: 160 items"><span>Easy · 160</span></div>
+      <div class="diff-seg ds-med" style="--w:44.8%" title="Medium: 182 items"><span>Medium · 182</span></div>
+      <div class="diff-seg ds-hard" style="--w:15.8%" title="Hard: 64 items"><span>Hard · 64</span></div>
+    </div>
+    <p class="diff-note">Difficulty assigned at authoring time by reasoning depth — <em>hard</em> means multi-instrument tracking or compound arithmetic.</p>
+  </div>
+</section>
+
+<!-- ════════ §04 THE EVALUATION ════════ -->
+<section class="chapter ch-alt" id="leaderboard">
+  <header class="ch-head reveal">
+    <span class="ch-no">§ 04</span>
+    <h2 class="ch-title">The Evaluation</h2>
+    <p class="ch-lede">Twelve models. Zero shots. One human baseline to beat.</p>
+  </header>
+
+  <div class="panel reveal">
+    <div class="panel-bar">
+      <div>
+        <h3 class="panel-title" id="chartTitle">Overall accuracy</h3>
+        <p class="panel-sub" id="chartDesc">All 406 items · zero-shot · 95% Wilson confidence intervals on hover</p>
       </div>
+      <div class="tabset" id="taskTabs" role="tablist" aria-label="Metric">
+        <button class="tab active" role="tab" aria-selected="true" data-t="overall">Overall</button>
+        <button class="tab" role="tab" aria-selected="false" data-t="reg">REG</button>
+        <button class="tab" role="tab" aria-selected="false" data-t="num">NUM</button>
+        <button class="tab" role="tab" aria-selected="false" data-t="con">CON</button>
+        <button class="tab" role="tab" aria-selected="false" data-t="tmp">TMP</button>
+      </div>
+    </div>
+    <div class="chart" id="barChart"></div>
+    <p class="chart-foot">Dashed rule marks the human expert baseline for the selected metric (n = 100). Paired bootstrap over all 66 model pairs resolves <strong>three statistically distinct tiers</strong>.</p>
+  </div>
+
+  <div class="panel reveal">
+    <div class="panel-bar">
+      <div>
+        <h3 class="panel-title">Full results</h3>
+        <p class="panel-sub">Click a column to sort · † Claude 3 Haiku scored 91.3% on the initial 150-item subset; listed separately as not directly comparable</p>
+      </div>
+    </div>
+    <div class="table-scroll">
+      <table class="gz-table" id="resultsTable">
+        <thead><tr>
+          <th class="c sortable" data-k="rank">#</th>
+          <th>Model</th>
+          <th class="sortable" data-k="params">Params</th>
+          <th>Access</th>
+          <th class="c sortable" data-k="reg">REG</th>
+          <th class="c sortable" data-k="num">NUM</th>
+          <th class="c sortable" data-k="con">CON</th>
+          <th class="c sortable" data-k="tmp">TMP</th>
+          <th class="c sortable sorted" data-k="overall">Overall</th>
+          <th class="c">95% CI</th>
+        </tr></thead>
+        <tbody id="tBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel reveal">
+    <div class="panel-bar">
+      <div>
+        <h3 class="panel-title">Accuracy by difficulty</h3>
+        <p class="panel-sub">Δ = hard − easy. LLaMA-3.3-70B <em>improves</em> on hard items; Gemma 4 E4B collapses by 26.3 points.</p>
+      </div>
+    </div>
+    <div class="table-scroll">
+      <table class="gz-table" id="diffTable">
+        <thead><tr><th>Model</th><th class="c">Easy <span class="th-n">n=160</span></th><th class="c">Medium <span class="th-n">n=182</span></th><th class="c">Hard <span class="th-n">n=64</span></th><th class="c">Δ</th></tr></thead>
+        <tbody id="diffBody"></tbody>
+      </table>
     </div>
   </div>
 </section>
 
-<!-- TASK BREAKDOWN -->
-<section id="tasks" class="section section-alt">
-  <div class="container">
-    <div class="section-hd anim">
-      <div class="section-eyebrow">Per-Task Analysis</div>
-      <div class="section-title">Task Breakdown</div>
-      <div class="section-sub">Top-5 models per task. Each task probes a distinct reasoning capability unique to Indian financial regulation.</div>
-    </div>
-    <div class="breakdown-grid anim d1" id="breakdownGrid"></div>
+<!-- ════════ §05 THE FINDINGS ════════ -->
+<section class="chapter" id="findings">
+  <header class="ch-head reveal">
+    <span class="ch-no">§ 05</span>
+    <h2 class="ch-title">The Findings</h2>
+    <p class="ch-lede">What 4,872 graded answers say about regulatory reasoning.</p>
+  </header>
+
+  <div class="findings-grid">
+    <article class="finding reveal">
+      <span class="f-no">Finding 1</span>
+      <p class="f-stat">3 tiers</p>
+      <h3>Performance is tiered, and the tiers are real</h3>
+      <p>Paired bootstrap (10,000 resamples, all 66 pairs) separates frontier API models (81–90%), mid-tier open-weight models (75–79%), and a small-model floor at 70%. Most cross-tier gaps are significant at p &lt; 0.05.</p>
+    </article>
+    <article class="finding reveal">
+      <span class="f-no">Finding 2</span>
+      <p class="f-stat">17B ≈ 70B</p>
+      <h3>Scale alone does not buy regulatory reasoning</h3>
+      <p>Llama 4 Scout 17B statistically matches LLaMA-3.3-70B (p = 0.79) with a quarter of the parameters — and GPT-OSS 120B is indistinguishable from GPT-OSS 20B (p = 0.91, Δ = +0.3 pp).</p>
+    </article>
+    <article class="finding reveal">
+      <span class="f-no">Finding 3</span>
+      <p class="f-stat">35.9 pp</p>
+      <h3>Numerical reasoning is the discriminator</h3>
+      <p>NUM shows the widest spread of any task — from 84.8% (Gemini 2.5 Flash) down to 48.9% (Gemini 2.5 Pro). If you want to tell models apart, ask them to do arithmetic inside statute.</p>
+    </article>
+    <article class="finding reveal">
+      <span class="f-no">Finding 4</span>
+      <p class="f-stat">48.9% vs 89.7%</p>
+      <h3>Capability dissociates within a single model</h3>
+      <p>Gemini 2.5 Pro ranks first on regulatory interpretation yet last on numerical reasoning — task-type performance can split wide open inside the same weights.</p>
+    </article>
+    <article class="finding reveal">
+      <span class="f-no">Finding 5</span>
+      <p class="f-stat">11th / 12</p>
+      <h3>Reasoning-specialised ≠ timeline-capable</h3>
+      <p>DeepSeek R1 70B, built for chain-of-thought, ranks 11th overall and manages only 70.5% on temporal reasoning — general deliberation does not transfer to supersession chains.</p>
+    </article>
+    <article class="finding reveal">
+      <span class="f-no">Finding 6</span>
+      <p class="f-stat">12 / 12 &gt; human</p>
+      <h3>Every model beats the human baseline</h3>
+      <p>Human experts score 69.0% (n = 100, CI [59.4, 77.2]). All twelve models exceed it — yet the best still miss one answer in ten, in a domain where the answer is a legal obligation.</p>
+    </article>
   </div>
 </section>
 
-<!-- DIFFICULTY -->
-<section id="difficulty" class="section">
-  <div class="container">
-    <div class="section-hd anim">
-      <div class="section-eyebrow">Difficulty Analysis</div>
-      <div class="section-title">Performance by Question Difficulty</div>
-      <div class="section-sub">Assigned at authoring time based on reasoning steps. Hard = multi-instrument tracking or complex arithmetic.</div>
-    </div>
-    <div class="diff-grid anim d1">
-      <div class="diff-card"><div class="diff-label">Easy</div><div class="diff-count" style="color:#10B981">160</div><div class="diff-pct">39.4% of benchmark</div><div class="diff-bar"><div class="diff-bar-fill" data-w="39.4" style="background:#10B981"></div></div></div>
-      <div class="diff-card"><div class="diff-label">Medium</div><div class="diff-count" style="color:#F59E0B">182</div><div class="diff-pct">44.8% of benchmark</div><div class="diff-bar"><div class="diff-bar-fill" data-w="44.8" style="background:#F59E0B"></div></div></div>
-      <div class="diff-card"><div class="diff-label">Hard</div><div class="diff-count" style="color:#EF4444">64</div><div class="diff-pct">15.8% of benchmark</div><div class="diff-bar"><div class="diff-bar-fill" data-w="15.8" style="background:#EF4444"></div></div></div>
-    </div>
-    <div class="glass-card anim d2" style="overflow:hidden">
-      <div class="card-shine"></div>
-      <div class="card-pad" style="padding-bottom:0">
-        <div style="font-size:17px;font-weight:700;font-family:var(--serif);margin-bottom:4px">Accuracy by Difficulty Level</div>
-        <div style="font-size:13px;color:var(--text3);margin-bottom:20px">LLaMA-3.3-70B <em>improves</em> on hard items (79.4% → 90.6%). Gemma 4 E4B collapses (82.5% → 56.2%). †Gemini 2.5 Pro's hard drop reflects verbose-output scoring artifact.</div>
+<!-- ════════ §06 THE RETRIEVAL ════════ -->
+<section class="chapter ch-alt" id="retrieval">
+  <header class="ch-head reveal">
+    <span class="ch-no">§ 06</span>
+    <h2 class="ch-title">The Retrieval</h2>
+    <p class="ch-lede">The benchmark closes the book. The retrieval system opens it.</p>
+  </header>
+
+  <p class="prose prose-narrow reveal">
+    IndiaFinBench evaluates closed-book reading. Its open-book counterpart is a hybrid
+    retrieval system over the same 192-document corpus: dense semantic search and sparse
+    lexical search run in parallel, fused by reciprocal rank — because regulatory text,
+    saturated with citation identifiers, rewards exact matching as much as meaning.
+  </p>
+
+  <figure class="rag-diagram reveal" aria-label="Hybrid retrieval pipeline">
+    <svg viewBox="0 0 940 240" xmlns="http://www.w3.org/2000/svg" role="img">
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0L10 5L0 10z" fill="currentColor"/>
+        </marker>
+      </defs>
+      <g class="rd-node" transform="translate(10,90)">
+        <rect width="130" height="60" rx="3"/>
+        <text x="65" y="28" text-anchor="middle" class="rd-t1">Query</text>
+        <text x="65" y="45" text-anchor="middle" class="rd-t2">natural language</text>
+      </g>
+      <path class="rd-flow" d="M140 110 H 205 V 55 H 250" marker-end="url(#arr)"/>
+      <path class="rd-flow" d="M140 130 H 205 V 185 H 250" marker-end="url(#arr)"/>
+      <g class="rd-node rd-dense" transform="translate(250,25)">
+        <rect width="190" height="60" rx="3"/>
+        <text x="95" y="28" text-anchor="middle" class="rd-t1">Dense · FAISS</text>
+        <text x="95" y="45" text-anchor="middle" class="rd-t2">BGE · 768-d · 4,347 vectors</text>
+      </g>
+      <g class="rd-node rd-sparse" transform="translate(250,155)">
+        <rect width="190" height="60" rx="3"/>
+        <text x="95" y="28" text-anchor="middle" class="rd-t1">Sparse · BM25</text>
+        <text x="95" y="45" text-anchor="middle" class="rd-t2">lexical · 1,600-char chunks</text>
+      </g>
+      <path class="rd-flow" d="M440 55 H 505 V 105 H 530" marker-end="url(#arr)"/>
+      <path class="rd-flow" d="M440 185 H 505 V 135 H 530" marker-end="url(#arr)"/>
+      <g class="rd-node rd-rrf" transform="translate(530,90)">
+        <rect width="160" height="60" rx="3"/>
+        <text x="80" y="28" text-anchor="middle" class="rd-t1">RRF fusion</text>
+        <text x="80" y="45" text-anchor="middle" class="rd-t2">reciprocal rank · k = 60</text>
+      </g>
+      <path class="rd-flow" d="M690 120 H 780" marker-end="url(#arr)"/>
+      <g class="rd-node" transform="translate(780,90)">
+        <rect width="150" height="60" rx="3"/>
+        <text x="75" y="28" text-anchor="middle" class="rd-t1">Answer</text>
+        <text x="75" y="45" text-anchor="middle" class="rd-t2">LLaMA-3.3-70B · cited</text>
+      </g>
+    </svg>
+  </figure>
+
+  <div class="panel reveal">
+    <div class="panel-bar">
+      <div>
+        <h3 class="panel-title">Retrieval ablation</h3>
+        <p class="panel-sub">Six configurations. Hybrid fusion gains +9.7 points of Recall@5 over dense-only; BM25 alone wins MRR — lexical structure matters in law.</p>
       </div>
-      <div class="table-wrap">
-        <table><thead><tr><th>Model</th><th class="c">Easy (n=160)</th><th class="c">Medium (n=182)</th><th class="c">Hard (n=64)</th></tr></thead><tbody id="diffBody"></tbody></table>
+    </div>
+    <div class="table-scroll">
+      <table class="gz-table">
+        <thead><tr><th>Configuration</th><th class="c">Recall@5</th><th class="c">MRR</th><th class="c">p50 latency</th></tr></thead>
+        <tbody>
+          <tr><td>Dense only <span class="cfg">B0</span></td><td class="c mono">0.688</td><td class="c mono">0.542</td><td class="c mono">48 ms</td></tr>
+          <tr><td>BM25 only <span class="cfg">B1</span></td><td class="c mono">0.764</td><td class="c mono"><strong>0.674</strong></td><td class="c mono">30 ms</td></tr>
+          <tr class="row-hi"><td><strong>Hybrid RRF</strong> <span class="cfg">B2</span> <span class="cfg-pick">selected</span></td><td class="c mono"><strong>0.785</strong></td><td class="c mono">0.640</td><td class="c mono">77 ms</td></tr>
+          <tr><td>Small chunks, 800 chars <span class="cfg">B3</span></td><td class="c mono">0.583</td><td class="c mono">0.493</td><td class="c mono">138 ms</td></tr>
+          <tr><td>Large chunks, 2,400 chars <span class="cfg">B4</span></td><td class="c mono">0.542</td><td class="c mono">0.410</td><td class="c mono">71 ms</td></tr>
+          <tr><td>Hybrid, k = 10 <span class="cfg">B5</span></td><td class="c mono">0.785</td><td class="c mono">0.640</td><td class="c mono">78 ms</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel panel-live reveal" id="ragPanel">
+    <div class="panel-bar">
+      <div>
+        <h3 class="panel-title"><span class="live-dot" aria-hidden="true"></span>Ask the corpus</h3>
+        <p class="panel-sub">Live hybrid retrieval over all 192 documents — every claim sourced, every source scored.</p>
       </div>
+    </div>
+    <div class="rag-row">
+      <input class="rag-input" id="ragQ" type="text" placeholder="What is the minimum capital adequacy ratio for banks?" aria-label="Question for the regulatory corpus">
+      <button class="btn btn-ink" id="ragBtn">Retrieve</button>
+    </div>
+    <div class="rag-examples" aria-label="Example queries">
+      <button class="chip" data-q="What is the circuit breaker limit for NSE stocks?">Circuit breaker limits</button>
+      <button class="chip" data-q="What is SEBI's definition of insider trading?">Insider trading definition</button>
+      <button class="chip" data-q="What is the minimum capital adequacy ratio for banks?">Capital adequacy ratio</button>
+      <button class="chip" data-q="What are the KYC requirements for opening a bank account?">KYC requirements</button>
+    </div>
+    <div class="rag-out" id="ragOut" hidden>
+      <div class="rag-status" id="ragStatus" hidden><span class="spinner" aria-hidden="true"></span><span id="ragStatusText">Retrieving from corpus…</span></div>
+      <div class="rag-answer" id="ragAnswer"></div>
+      <div class="rag-sources" id="ragSources"></div>
     </div>
   </div>
 </section>
 
-<!-- SUBMIT -->
-<section id="submit" class="section section-alt">
-  <div class="container">
-    <div class="section-hd anim">
-      <div class="section-eyebrow">Open Evaluation</div>
-      <div class="section-title">Submit a Model</div>
-      <div class="section-sub">Submit any public HuggingFace model for zero-shot evaluation on all 406 IndiaFinBench items. We run the evaluation and add results to the leaderboard.</div>
+<!-- ════════ §07 THE ACCESS ════════ -->
+<section class="chapter" id="access">
+  <header class="ch-head reveal">
+    <span class="ch-no">§ 07</span>
+    <h2 class="ch-title">The Access</h2>
+    <p class="ch-lede">An open dataset, an open leaderboard, an open invitation.</p>
+  </header>
+
+  <div class="panel reveal" id="explorerPanel">
+    <div class="panel-bar">
+      <div>
+        <h3 class="panel-title">Examine a specimen</h3>
+        <p class="panel-sub">Draw a random item from the 406 — filtered by task and difficulty, answer sealed until you ask.</p>
+      </div>
+      <div class="explorer-controls">
+        <select class="select" id="exTask" aria-label="Task type">
+          <option value="All">All tasks</option>
+          <option value="Regulatory Interpretation">Regulatory Interpretation</option>
+          <option value="Numerical Reasoning">Numerical Reasoning</option>
+          <option value="Contradiction Detection">Contradiction Detection</option>
+          <option value="Temporal Reasoning">Temporal Reasoning</option>
+        </select>
+        <select class="select" id="exDiff" aria-label="Difficulty">
+          <option value="All">All difficulties</option>
+          <option value="Easy">Easy</option>
+          <option value="Medium">Medium</option>
+          <option value="Hard">Hard</option>
+        </select>
+        <button class="btn btn-ink" id="exBtn">Draw item</button>
+      </div>
     </div>
-    <div class="submit-grid anim d1">
-      <div class="glass-card"><div class="card-shine"></div><div class="card-pad" style="display:flex;flex-direction:column;gap:18px">
-        <div><div style="font-size:18px;font-weight:700;font-family:var(--serif)">Model Evaluation</div><div style="font-size:13px;color:var(--text3);margin-top:4px">Enter a public HF model ID. Evaluated zero-shot on all 406 items with task-aware scoring.</div></div>
-        <div class="form-row">
-          <div class="form-grp"><label class="form-lbl" for="hfId">HuggingFace Model ID <span style="color:#EF4444">*</span></label><input class="form-input" type="text" id="hfId" placeholder="e.g. mistralai/Mistral-7B-Instruct-v0.3"></div>
-          <div class="form-grp"><label class="form-lbl" for="dispName">Display Name</label><input class="form-input" type="text" id="dispName" placeholder="e.g. Mistral-7B"></div>
-        </div>
-        <div class="form-row">
-          <div class="form-grp"><label class="form-lbl" for="modelParams">Parameters</label><input class="form-input" type="text" id="modelParams" placeholder="e.g. 7B"></div>
-          <div class="form-grp"><label class="form-lbl" for="mtype">Model Type</label><select class="form-input" id="mtype"><option>Frontier API</option><option>Open-weight API</option><option>Local (Ollama)</option><option>Reasoning API</option></select></div>
-        </div>
-        <div><button class="sub-btn" id="subBtn" onclick="doSubmit()">↗ Open Submission Issue</button></div>
-        <div class="status-box" id="statusBox"></div>
-      </div></div>
-      <div class="glass-card" style="background:var(--bg2)"><div class="card-shine"></div><div class="card-pad">
-        <div style="font-size:17px;font-weight:700;font-family:var(--serif);margin-bottom:16px">How It Works</div>
-        <div class="step-list">
-          <div class="step-item"><div class="step-num">1</div><div class="step-text">Enter a public HuggingFace model ID and click <strong>Open Submission Issue</strong>.</div></div>
-          <div class="step-item"><div class="step-num">2</div><div class="step-text">A pre-filled GitHub issue opens with your model details and the exact evaluation command.</div></div>
-          <div class="step-item"><div class="step-num">3</div><div class="step-text">Submit the issue — we run the eval locally on all <strong>406 items</strong> using the four-stage scoring procedure.</div></div>
-          <div class="step-item"><div class="step-num">4</div><div class="step-text">Results are added to the leaderboard with 95% Wilson CIs, usually within a few days.</div></div>
-        </div>
-      </div></div>
+    <div class="ex-card" id="exCard" hidden>
+      <div class="ex-meta"><span class="ex-id mono" id="exId"></span><span class="ex-badge" id="exTaskBadge"></span><span class="ex-badge" id="exDiffBadge"></span></div>
+      <p class="ex-label">Context</p>
+      <blockquote class="ex-context" id="exContext"></blockquote>
+      <p class="ex-label">Question</p>
+      <p class="ex-question" id="exQuestion"></p>
+      <button class="btn btn-line btn-sm" id="exReveal">Unseal answer</button>
+      <div class="ex-answer" id="exAnswer" hidden><p class="ex-label">Gold answer</p><p class="mono" id="exAnswerText"></p></div>
     </div>
   </div>
-</section>
 
-<!-- RAG DEMO -->
-<section id="rag" class="section">
-  <div class="container">
-    <div class="section-hd anim">
-      <div class="section-eyebrow">Live Retrieval</div>
-      <div class="section-title">RAG Demo</div>
-      <div class="section-sub">Ask questions grounded in all 192 SEBI &amp; RBI regulatory documents (1992–2026). Answers are retrieved and generated in real-time — no hallucination, every claim is sourced.</div>
-    </div>
-    <div class="glass-card anim d1"><div class="card-shine"></div><div class="card-pad">
-      <div class="rag-search-row">
-        <input class="rag-input" id="ragQ" type="text" placeholder="e.g. What is the SEBI margin requirement for equity derivatives?" onkeydown="if(event.key==='Enter')doRag()">
-        <button class="rag-btn" id="ragBtn" onclick="doRag()">Ask ↗</button>
+  <div class="access-grid">
+    <div class="panel reveal">
+      <div class="panel-bar"><div><h3 class="panel-title">Submit a model</h3><p class="panel-sub">Any public HuggingFace model, evaluated zero-shot on all 406 items with four-stage scoring. Results join the leaderboard with Wilson CIs.</p></div></div>
+      <div class="form-grid">
+        <label class="field"><span>HuggingFace model ID <em>*</em></span><input class="input" id="hfId" type="text" placeholder="mistralai/Mistral-7B-Instruct-v0.3"></label>
+        <label class="field"><span>Display name</span><input class="input" id="dispName" type="text" placeholder="Mistral-7B"></label>
+        <label class="field"><span>Parameters</span><input class="input" id="modelParams" type="text" placeholder="7B"></label>
+        <label class="field"><span>Model type</span>
+          <select class="select" id="mtype"><option>Frontier API</option><option>Open-weight API</option><option>Local (Ollama)</option><option>Reasoning API</option></select>
+        </label>
       </div>
-      <div class="rag-examples">
-        <span class="rag-ex-lbl">Try:</span>
-        <button class="rag-ex" onclick="setRagQ(this)">What is the circuit breaker limit for NSE stocks?</button>
-        <button class="rag-ex" onclick="setRagQ(this)">RBI repo rate changes in 2024</button>
-        <button class="rag-ex" onclick="setRagQ(this)">SEBI definition of insider trading</button>
-        <button class="rag-ex" onclick="setRagQ(this)">Minimum capital adequacy ratio for banks</button>
+      <div class="form-foot">
+        <button class="btn btn-ink" id="subBtn">Open submission issue</button>
+        <p class="status" id="statusBox" role="status" hidden></p>
       </div>
-    </div></div>
-
-    <div id="ragResult" class="rag-result" style="display:none">
-      <div class="glass-card anim"><div class="card-shine"></div><div class="card-pad">
-        <div class="rag-answer-hd">
-          <div class="rag-answer-label">Answer</div>
-          <div class="rag-loading" id="ragLoading"><div class="rag-spinner"></div>Retrieving from corpus…</div>
-        </div>
-        <div class="rag-answer-text" id="ragAnswer"></div>
-      </div></div>
-      <div class="rag-sources-grid" id="ragSources"></div>
-      <div class="rag-empty" id="ragEmpty">No relevant passages found. Try a different query.</div>
     </div>
 
-    <div style="margin-top:16px;font-size:12px;color:var(--text4);text-align:center" class="anim d2">
-      Powered by <strong>FAISS + BM25 hybrid retrieval</strong> · <strong>Groq LLaMA-3.3-70B</strong> · 192 SEBI &amp; RBI documents (1992–2026)
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about" class="section">
-  <div class="container">
-    <div class="section-hd anim">
-      <div class="section-eyebrow">Research Benchmark</div>
-      <div class="section-title">About IndiaFinBench</div>
-      <div class="section-sub">192 primary-source regulatory documents (1992–2026), dual-layer annotation quality validation.</div>
-    </div>
-    <div class="about-grid">
-      <div style="display:flex;flex-direction:column;gap:20px" class="anim d1">
-        <div class="glass-card"><div class="card-shine"></div><div class="card-pad">
-          <div style="font-size:17px;font-weight:700;font-family:var(--serif);margin-bottom:16px">Task Types</div>
-          <div style="display:flex;flex-direction:column;gap:13px">
-            <div style="display:flex;gap:12px;align-items:flex-start"><span class="task-pill" style="background:#4285F418;color:#4285F4">REG</span><div><div style="font-size:13.5px;font-weight:600;margin-bottom:3px">Regulatory Interpretation · n = 174</div><div style="font-size:12px;color:var(--text3);line-height:1.5">Extract compliance rules, thresholds and deadlines from SEBI and RBI circulars.</div></div></div>
-            <div style="display:flex;gap:12px;align-items:flex-start"><span class="task-pill" style="background:#F59E0B18;color:#F59E0B">NUM</span><div><div style="font-size:13.5px;font-weight:600;margin-bottom:3px">Numerical Reasoning · n = 92</div><div style="font-size:12px;color:var(--text3);line-height:1.5">Arithmetic over capital adequacy ratios, dividend limits, and margin requirements.</div></div></div>
-            <div style="display:flex;gap:12px;align-items:flex-start"><span class="task-pill" style="background:#10B98118;color:#10B981">CON</span><div><div style="font-size:13.5px;font-weight:600;margin-bottom:3px">Contradiction Detection · n = 62</div><div style="font-size:12px;color:var(--text3);line-height:1.5">Determine whether two regulatory passages contradict each other (Yes/No + explanation).</div></div></div>
-            <div style="display:flex;gap:12px;align-items:flex-start"><span class="task-pill" style="background:#8B5CF618;color:#8B5CF6">TMP</span><div><div style="font-size:13.5px;font-weight:600;margin-bottom:3px">Temporal Reasoning · n = 78</div><div style="font-size:12px;color:var(--text3);line-height:1.5">Sequence regulatory amendments and identify which circular was operative at a given time.</div></div></div>
-          </div>
-        </div></div>
-        <div class="finding-box anim d2">
-          <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px">Key Findings</div>
-          <p>All 12 models surpass the <strong>69.0%</strong> human baseline (n=100). Gemini 2.5 Flash leads at <strong>89.7%</strong>. Numerical reasoning is the most discriminative task (<strong>35.9 pp</strong> spread). Llama 4 Scout 17B matches LLaMA-3.3-70B with ¼ the parameters (p=0.79). GPT-OSS 20B→120B yields no benefit (p=0.91). Gemini 2.5 Pro falls to Tier 2 due to verbose-output scoring artifact (corrected: 84.5%). Human IAA confirmed stable across 120 items (κ=0.611 CON).</p>
-        </div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:20px" class="anim d2">
-        <div class="glass-card"><div class="card-shine"></div><div class="card-pad">
-          <div style="font-size:17px;font-weight:700;font-family:var(--serif);margin-bottom:14px">Dataset Statistics</div>
-          <table class="stat-table"><thead><tr><th>Statistic</th><th style="text-align:right">Value</th></tr></thead><tbody>
-            <tr><td>Total QA pairs</td><td>406</td></tr>
-            <tr><td>Easy / Medium / Hard</td><td>160 / 182 / 64</td></tr>
-            <tr><td>SEBI source documents</td><td>92</td></tr>
-            <tr><td>RBI source documents</td><td>100</td></tr>
-            <tr><td>Total source documents</td><td>192</td></tr>
-            <tr><td>Document span</td><td>1992–2026</td></tr>
-            <tr><td>Avg. context length</td><td>~142 words</td></tr>
-            <tr><td>Model validation agreement</td><td>90.7%</td></tr>
-            <tr><td>Cohen's κ (CON, model)</td><td>0.918</td></tr>
-            <tr><td>Human IAA overall</td><td>76.7%</td></tr>
-            <tr><td>Cohen's κ (CON, human)</td><td>0.611</td></tr>
-            <tr><td>Human expert baseline</td><td>69.0% (n=100)</td></tr>
-          </tbody></table>
-        </div></div>
-        <div class="glass-card"><div class="card-shine"></div><div class="card-pad">
-          <div style="font-size:17px;font-weight:700;font-family:var(--serif);margin-bottom:12px">Citation</div>
-          <div class="cite-wrap">
-            <button class="copy-btn" onclick="copyCite()" id="copyBtn">Copy</button>
-            <pre class="cite-pre" id="citeText">{% raw %}@article{pall2026indiafinbench,
+    <div class="panel reveal">
+      <div class="panel-bar"><div><h3 class="panel-title">Cite the record</h3><p class="panel-sub">Dataset CC BY 4.0 · code MIT · source documents public domain (Government of India).</p></div></div>
+      <div class="cite-box">
+        <button class="copy-btn" id="copyBtn">Copy</button>
+<pre class="mono" id="citeText">{% raw %}@article{pall2026indiafinbench,
   title   = {{IndiaFinBench}: An Evaluation Benchmark
              for LLM Performance on Indian Financial
              Regulatory Text},
@@ -553,112 +519,26 @@ footer{padding:40px 20px;border-top:1px solid var(--border);text-align:center}
   year    = {2026},
   url     = {https://github.com/Rajveer-code/IndiaFinBench}
 }{% endraw %}</pre>
-          </div>
-          <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:8px">
-            <a href="https://huggingface.co/datasets/Rajveer-code/IndiaFinBench" class="link-btn" target="_blank">🤗 HuggingFace</a>
-            <a href="https://github.com/Rajveer-code/IndiaFinBench" class="link-btn" target="_blank">
-              <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              GitHub
-            </a>
-          </div>
-        </div></div>
+      </div>
+      <div class="access-links">
+        <a class="btn btn-line" href="https://huggingface.co/datasets/Rajveer-code/IndiaFinBench" target="_blank" rel="noopener">Dataset on HuggingFace</a>
+        <a class="btn btn-line" href="https://github.com/Rajveer-code/IndiaFinBench" target="_blank" rel="noopener">Code on GitHub</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-main">IndiaFinBench 2026 · EMNLP 2026 · <strong>Rajveer Singh Pall</strong> · Gyan Ganga Institute of Technology and Sciences</div>
-  <div class="footer-sub">192 SEBI &amp; RBI documents · 406 expert-annotated QA pairs · 12 models · Zero-shot evaluation · CC BY 4.0 Dataset · MIT Code</div>
+</main>
+
+<!-- ════════ FOOTER ════════ -->
+<footer class="footer">
+  <div class="footer-rule" aria-hidden="true"></div>
+  <p class="footer-brand"><span class="brand-seal">§</span> India<em>Fin</em>Bench</p>
+  <p class="footer-line">Rajveer Singh Pall · Gyan Ganga Institute of Technology and Sciences · <a href="mailto:rajveerpall04@gmail.com">rajveerpall04@gmail.com</a></p>
+  <p class="footer-sub">406 questions · 192 documents · 12 models · zero-shot · dataset CC BY 4.0 · code MIT</p>
 </footer>
 
-<!-- TWEAKS -->
-<div class="tweaks-panel" id="tweaksPanel">
-  <div class="tweaks-title">⚙ Tweaks</div>
-  <div class="tweaks-row"><div class="tweaks-lbl">Hero Background</div><div class="tweaks-toggle">
-    <button class="tw-btn active" onclick="setHeroBg('#060917',this)">Dark</button>
-    <button class="tw-btn" onclick="setHeroBg('#0a0520',this)">Purple</button>
-    <button class="tw-btn" onclick="setHeroBg('#050f0a',this)">Forest</button>
-  </div></div>
-  <div class="tweaks-row"><div class="tweaks-lbl">Bar Style</div><div class="tweaks-toggle">
-    <button class="tw-btn active" onclick="setBarStyle('rounded',this)">Rounded</button>
-    <button class="tw-btn" onclick="setBarStyle('sharp',this)">Sharp</button>
-  </div></div>
-</div>
-
-<script>
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "heroBg": "#060917",
-  "accent": "#4285F4",
-  "barStyle": "rounded"
-}/*EDITMODE-END*/;
-</script>
 <script src="/static/js/data.js?v={{ js_ver }}"></script>
-<script src="/static/js/charts.js?v={{ js_ver }}"></script>
-<script src="/static/js/animations.js?v={{ js_ver }}"></script>
-<script>
-buildBarChart('overall');
-buildTable('overall',-1);
-buildBreakdown();
-buildDiffTable();
-
-/* RAG Demo */
-window.doRag = async function(){
-  const q = document.getElementById('ragQ').value.trim();
-  if(!q) return;
-  const btn = document.getElementById('ragBtn');
-  btn.disabled = true;
-  const result = document.getElementById('ragResult');
-  result.style.display = 'flex';
-  document.getElementById('ragLoading').style.display = 'flex';
-  document.getElementById('ragAnswer').textContent = '';
-  document.getElementById('ragSources').innerHTML = '';
-  document.getElementById('ragEmpty').style.display = 'none';
-  try {
-    const res = await fetch('/api/rag', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({query: q})
-    });
-    const data = await res.json();
-    document.getElementById('ragLoading').style.display = 'none';
-    if(data.error){
-      document.getElementById('ragAnswer').textContent = '⚠ ' + data.error;
-    } else {
-      document.getElementById('ragAnswer').textContent = data.answer || '';
-      const sources = data.sources || [];
-      if(sources.length){
-        const grid = document.getElementById('ragSources');
-        sources.forEach((s,i)=>{
-          const card = document.createElement('div');
-          card.className = 'rag-source-card';
-          card.innerHTML = `<div class="rag-source-num">Source ${i+1}</div>`
-            + `<div class="rag-source-title">${s.title||s.doc_id||'Document'}</div>`
-            + `<div class="rag-source-text">${s.text||''}</div>`;
-          grid.appendChild(card);
-        });
-      } else {
-        document.getElementById('ragEmpty').style.display = 'block';
-      }
-    }
-  } catch(e) {
-    document.getElementById('ragLoading').style.display = 'none';
-    document.getElementById('ragAnswer').textContent = '⚠ Network error: ' + e.message;
-  }
-  btn.disabled = false;
-};
-window.setRagQ = function(btn){
-  document.getElementById('ragQ').value = btn.textContent.trim();
-  doRag();
-};
-// Sync hero chips from live JS data in case browser had old HTML cached
-(function(){
-  var mc = document.getElementById('modelCount');
-  var hc = document.getElementById('humanBaseline');
-  if(mc && window.IFB_MODELS){ mc.dataset.count = String(window.IFB_MODELS.length); mc.textContent = String(window.IFB_MODELS.length); }
-  if(hc && window.IFB_HUMAN){ hc.textContent = window.IFB_HUMAN.overall.toFixed(1)+'%'; }
-})();
-</script>
+<script src="/static/js/main.js?v={{ js_ver }}" defer></script>
 </body>
 </html>

@@ -324,11 +324,11 @@ IndiaFinBench/
 ├── demo/                                  # Live web application
 │   ├── app.py                             # Flask app (leaderboard, RAG, submit APIs)
 │   ├── requirements.txt                   # Flask, gunicorn, FAISS, sentence-transformers
-│   ├── templates/index.html               # Single-page leaderboard UI
+│   ├── templates/index.html               # Single-page research site (7-chapter scroll narrative)
+│   ├── static/css/main.css                # Design system (archival-editorial light theme)
 │   ├── static/js/
-│   │   ├── charts.js                      # Bar charts, submit handler, RAG UI
 │   │   ├── data.js                        # Model data + Wilson CI bounds (frontend)
-│   │   └── animations.js                  # Scroll animations
+│   │   └── main.js                        # Charts, tables, canvas, RAG UI, explorer, submit
 │   ├── database/db.py                     # SQLite leaderboard (init + query)
 │   ├── data/
 │   │   ├── questions.json                 # 406 benchmark items (for dataset explorer)

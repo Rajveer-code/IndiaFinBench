@@ -181,13 +181,19 @@ HuggingFace Spaces (Docker, CPU basic, free — 2 vCPU / 16 GB RAM)
 │
 ├── RAG pipeline  rag/
 │   ├── BGE embedder (pre-baked in Docker image, ~270 MB)
-│   ├── FAISS index  rag/index/faiss.index  (17 MB, via Git LFS)
-│   └── BM25  index  rag/index/bm25.pkl     (18 MB, via Git LFS)
+│   ├── FAISS index  rag/index/faiss.index  (17 MB)
+│   └── BM25  index  rag/index/bm25.pkl     (18 MB)
 │
 └── SQLite  demo/leaderboard.db  (seeded at startup, read-only at runtime)
 ```
 
 The BGE model is downloaded once at Docker build time and baked into the image, so the first RAG request is fast (~200 ms) rather than triggering a 30-second cold start.
+
+**Deploying:** the Space repo is a filtered artifact of this repository — only the files the Docker build needs, with index binaries stored via Git LFS (a HuggingFace requirement). Redeploy with:
+
+```bash
+bash scripts/deploy_space.sh
+```
 
 ### Running Tests
 
@@ -303,6 +309,7 @@ IndiaFinBench/
 │   ├── bootstrap_significance.py          # Paired bootstrap (10k resamples)
 │   ├── wilson_ci.py                       # 95% Wilson CI computation
 │   ├── compute_kappa.py                   # IAA Cohen's kappa
+│   ├── deploy_space.sh                    # Filtered LFS deploy to HF Spaces
 │   └── exp[1-11]_*.py                     # Novel methodological analysis scripts
 │
 ├── rag/                                   # Hybrid RAG pipeline
@@ -313,7 +320,7 @@ IndiaFinBench/
 │   ├── retriever.py                       # HybridRetriever with RRF fusion
 │   ├── generator.py                       # Groq LLM generation
 │   ├── config.py                          # RAGConfig dataclass
-│   ├── index/                             # Pre-built indices (Git LFS)
+│   ├── index/                             # Pre-built indices
 │   │   ├── faiss.index                    #   17 MB FAISS flat index
 │   │   ├── bm25.pkl                       #   18 MB BM25 serialised model
 │   │   └── chunks.pkl                     #   9.8 MB chunk metadata

@@ -30,6 +30,8 @@
 </head>
 <body>
 
+<canvas id="archiveCanvas" aria-hidden="true"></canvas>
+
 <a class="skip-link" href="#leaderboard">Skip to leaderboard</a>
 
 <!-- ════════ MASTHEAD ════════ -->
@@ -85,7 +87,6 @@
 
 <!-- ════════ HERO ════════ -->
 <section class="hero">
-  <canvas id="docCanvas" aria-hidden="true"></canvas>
   <div class="hero-inner">
     <p class="hero-kicker reveal">A research benchmark &amp; open dataset · EMNLP 2026 submission</p>
     <h1 class="hero-title reveal">Can language models read India&rsquo;s <em>financial&nbsp;law?</em></h1>
@@ -99,6 +100,7 @@
       <a class="btn btn-line" href="#retrieval">Query the corpus live</a>
     </div>
   </div>
+  <p class="hero-scrollcue reveal" aria-hidden="true">Scroll — the archive assembles<span class="cue-arrow">↓</span></p>
   <div class="hero-ledger reveal" role="list" aria-label="Benchmark statistics">
     <div class="ledger-cell" role="listitem"><span class="ledger-num" data-count="406">0</span><span class="ledger-lbl">expert-annotated questions</span></div>
     <div class="ledger-cell" role="listitem"><span class="ledger-num" data-count="192">0</span><span class="ledger-lbl">RBI &amp; SEBI documents</span></div>
@@ -540,5 +542,6 @@
 
 <script src="/static/js/data.js?v={{ js_ver }}"></script>
 <script src="/static/js/main.js?v={{ js_ver }}" defer></script>
+<script src="/static/js/archive-scene.js?v={{ js_ver }}" defer></script>
 </body>
 </html>

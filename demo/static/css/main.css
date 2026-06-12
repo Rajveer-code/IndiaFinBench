@@ -199,6 +199,14 @@ a { color: inherit; }
   padding: 168px 24px 0;
   border-bottom: 1px solid var(--rule);
 }
+/* radial paper glow keeps the headline column clear of the archive scene */
+.hero::before {
+  content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(ellipse 56% 54% at 50% 40%,
+    var(--paper) 30%,
+    color-mix(in srgb, var(--paper) 72%, transparent) 62%,
+    transparent 100%);
+}
 .hero-inner {
   position: relative; z-index: 2;
   max-width: var(--maxw); margin: 0 auto; text-align: center;
@@ -265,7 +273,7 @@ a { color: inherit; }
 .chapter { padding: 110px 24px; position: relative; }
 .chapter > * { max-width: var(--maxw); margin-left: auto; margin-right: auto; }
 .ch-alt {
-  background: color-mix(in srgb, var(--paper-deep) 84%, transparent);
+  background: color-mix(in srgb, var(--paper-deep) 91%, transparent);
   border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
 }
 
@@ -292,6 +300,19 @@ a { color: inherit; }
 .prose { font-size: 16px; line-height: 1.8; color: var(--ink-2); }
 .prose strong { color: var(--ink); }
 .prose-narrow { max-width: 70ch; margin-bottom: 48px; }
+
+/* vellum: frosted-paper panel that guarantees legibility over the scene */
+.vellum {
+  background: color-mix(in srgb, var(--paper) 70%, transparent);
+  -webkit-backdrop-filter: blur(10px) saturate(130%);
+  backdrop-filter: blur(10px) saturate(130%);
+  border: 1px solid var(--rule-soft);
+  padding: 30px 34px;
+}
+@supports not (backdrop-filter: blur(1px)) {
+  .vellum { background: color-mix(in srgb, var(--paper) 94%, transparent); }
+}
+
 .prose-cols {
   columns: 2; column-gap: 56px; column-rule: 1px solid var(--rule-soft);
   margin-bottom: 64px; font-size: 16px; line-height: 1.8; color: var(--ink-2);

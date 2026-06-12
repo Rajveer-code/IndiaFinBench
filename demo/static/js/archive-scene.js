@@ -45,7 +45,7 @@
     '  gl_Position = uProj * mv;',
     '  vUv = aCorner * 0.5 + 0.5;',
     '  vKind = aMeta.x;',
-    '  vFade = clamp(1.0 - (-mv.z - 4.0) / 16.0, 0.18, 1.0);',
+    '  vFade = clamp(1.0 - (-mv.z - 4.0) / 13.0, 0.10, 0.85);',
     '}'
   ].join('\n');
 
@@ -66,9 +66,10 @@
     '  vec3 ink   = vec3(0.110, 0.094, 0.071);',
     '  vec3 sebi  = vec3(0.122, 0.361, 0.271);',
     '  vec3 rbi   = vec3(0.639, 0.231, 0.125);',
-    '  vec3 tint  = mix(sebi, rbi, vKind);',
+    '  vec3 paper = vec3(0.961, 0.945, 0.910);',
+    '  vec3 tint  = mix(mix(sebi, rbi, vKind), paper, 0.30);', // muted toward paper
     '  vec3 col   = mix(ink, tint, border);',
-    '  float a = border * 0.62 + lines * 0.20 + 0.045;',
+    '  float a = border * 0.42 + lines * 0.13 + 0.03;',
     '  gl_FragColor = vec4(col, a * uAlpha * vFade);',
     '}'
   ].join('\n');
@@ -113,7 +114,7 @@
   var MOTE_FS = [
     'precision mediump float;',
     'uniform float uAlpha;',
-    'void main(){ gl_FragColor = vec4(0.110, 0.094, 0.071, 0.13 * uAlpha); }'
+    'void main(){ gl_FragColor = vec4(0.110, 0.094, 0.071, 0.09 * uAlpha); }'
   ].join('\n');
 
   function compile(type, src) {
@@ -153,33 +154,40 @@
   var tangle = new Float32Array(N_DOCS * 3);
   var grid = new Float32Array(N_DOCS * 3);
 
-  // cloud: wide drifting ellipsoid behind the hero
+  // cloud: drifting halo around the text column — the centre stays empty
+  // so the hero headline and chapter prose are never occluded
   for (var i = 0; i < N_DOCS; i++) {
-    var th = rand() * Math.PI * 2, ph = Math.acos(rand() * 2 - 1), r = Math.pow(rand(), 0.5);
-    cloud[i * 3]     = Math.sin(ph) * Math.cos(th) * 8.2 * r;
-    cloud[i * 3 + 1] = Math.cos(ph) * 4.0 * r;
-    cloud[i * 3 + 2] = -9.0 + Math.sin(ph) * Math.sin(th) * 3.4 * r;
+    var x, y;
+    do {
+      x = (rand() * 2 - 1) * 9.5;
+      y = (rand() * 2 - 1) * 4.6;
+    } while (Math.abs(x) < 3.6 && Math.abs(y) < 3.0); // keep-out rectangle
+    cloud[i * 3]     = x;
+    cloud[i * 3 + 1] = y;
+    cloud[i * 3 + 2] = -9.0 - rand() * 4.5;
   }
 
-  // tangle: 12 supersession chains — random walks knotting right of the text column
+  // tangle: 12 supersession chains — random walks knotting deep and to the
+  // right, clear of the reading column
   var CHAINS = 12, perChain = Math.ceil(N_DOCS / CHAINS), idx = 0;
   for (var c = 0; c < CHAINS; c++) {
-    var x = 2.6 + (rand() - 0.5) * 6.4, y = (rand() - 0.5) * 3.6, z = -9.0 + (rand() - 0.5) * 2.5;
+    var x = 4.4 + (rand() - 0.5) * 4.6, y = (rand() - 0.5) * 4.2, z = -11.5 + (rand() - 0.5) * 2.5;
     for (var k = 0; k < perChain && idx < N_DOCS; k++, idx++) {
-      x += (rand() - 0.5) * 1.5 - (x - 2.6) * 0.07;
-      y += (rand() - 0.5) * 1.1 - y * 0.07;
+      x += (rand() - 0.5) * 1.4 - (x - 4.4) * 0.08;
+      y += (rand() - 0.5) * 1.1 - y * 0.06;
       z += (rand() - 0.5) * 0.8;
       tangle[idx * 3] = x; tangle[idx * 3 + 1] = y; tangle[idx * 3 + 2] = z;
     }
   }
 
-  // grid: 16 × 12 archive wall — SEBI block fills first, RBI block after
-  var COLS = 16, SX = 0.74, SY = 0.96;
+  // grid: 16 × 12 archive wall — SEBI block fills first, RBI block after.
+  // Sits deep so it reads as a watermark, not a competitor to the copy.
+  var COLS = 16, SX = 0.86, SY = 1.04;
   for (i = 0; i < N_DOCS; i++) {
     var col = i % COLS, row = Math.floor(i / COLS);
-    grid[i * 3]     = (col - (COLS - 1) / 2) * SX + 1.2;
+    grid[i * 3]     = (col - (COLS - 1) / 2) * SX + 2.2;
     grid[i * 3 + 1] = ((11 - row) - 5.5) * SY * 0.62;
-    grid[i * 3 + 2] = -10.5 + (rand() - 0.5) * 0.3;
+    grid[i * 3 + 2] = -13.5 + (rand() - 0.5) * 0.3;
   }
 
   /* ── Doc quad buffers (6 verts per doc) ───────────────────────────── */
@@ -333,7 +341,7 @@
     gl.drawArrays(gl.POINTS, 0, N_MOTES);
 
     // chain lines: visible only inside the tangle phase
-    var lineAlpha = alpha * t1 * (1 - t2) * 0.16;
+    var lineAlpha = alpha * t1 * (1 - t2) * 0.11;
     if (lineAlpha > 0.004) {
       gl.useProgram(lineProg);
       attrib(lineL.a.aCloud, lineBufs.cloud, 3);
@@ -360,8 +368,8 @@
     gl.uniform1f(docL.u.uT2, t2);
     gl.uniform1f(docL.u.uTime, time);
     var small = W < 700;
-    gl.uniform1f(docL.u.uSize, (small ? 0.115 : 0.155) + t2 * 0.07);
-    gl.uniform1f(docL.u.uAlpha, alpha * (small ? 0.68 : 1) * (1 - t2 * 0.25));
+    gl.uniform1f(docL.u.uSize, (small ? 0.115 : 0.16) + t2 * 0.08);
+    gl.uniform1f(docL.u.uAlpha, alpha * (small ? 0.55 : 0.85) * (1 - t2 * 0.3));
     gl.drawArrays(gl.TRIANGLES, 0, V);
   }
 

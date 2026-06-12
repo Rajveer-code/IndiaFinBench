@@ -22,6 +22,16 @@
     });
   };
 
+  /* ── Deep links: jump instantly on load instead of animating from top ─ */
+  if (location.hash) {
+    var deepTarget = document.getElementById(location.hash.slice(1));
+    if (deepTarget) {
+      requestAnimationFrame(function () {
+        deepTarget.scrollIntoView({ behavior: 'instant', block: 'start' });
+      });
+    }
+  }
+
   /* ── Masthead drawer ──────────────────────────────────────────────── */
   var menuBtn = $('#menuBtn');
   var drawer = $('#menuDrawer');

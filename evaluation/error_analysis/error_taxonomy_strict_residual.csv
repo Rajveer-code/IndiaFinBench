@@ -1,0 +1,25 @@
+model,regime,DKF,NRF,TRF,CGF,total
+Gemini 2.5 Flash,strict,12,14,14,2,42
+Gemini 2.5 Flash,residual,6,2,10,0,18
+Qwen3-32B,strict,25,21,11,2,59
+Qwen3-32B,residual,4,5,7,1,17
+LLaMA-3.3-70B,strict,25,23,18,0,66
+LLaMA-3.3-70B,residual,4,7,7,0,18
+Llama 4 Scout 17B,strict,24,31,13,0,68
+Llama 4 Scout 17B,residual,6,5,5,0,16
+Kimi K2,strict,21,32,22,0,75
+Kimi K2,residual,3,6,7,0,16
+LLaMA-3-8B,strict,37,33,18,1,89
+LLaMA-3-8B,residual,9,14,11,1,35
+GPT-OSS 120B,strict,39,37,16,1,93
+GPT-OSS 120B,residual,7,6,5,0,18
+GPT-OSS 20B,strict,41,38,14,1,94
+GPT-OSS 20B,residual,7,7,10,1,25
+Gemini 2.5 Pro,strict,19,47,29,2,97
+Gemini 2.5 Pro,residual,5,5,9,1,20
+Mistral-7B,strict,41,31,26,0,98
+Mistral-7B,residual,4,16,18,0,38
+DeepSeek R1 70B,strict,51,28,19,3,101
+DeepSeek R1 70B,residual,7,3,2,2,14
+Gemma 4 E4B,strict,29,46,43,2,120
+Gemma 4 E4B,residual,18,33,29,2,82

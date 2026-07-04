@@ -12,9 +12,9 @@
 
 <br>
 
-| 406 | 192 | 12 | 0.785 | 69.0% |
+| 406 | 192 | 12 | 0.785 | 80.0% |
 |:---:|:---:|:---:|:---:|:---:|
-| Expert-annotated QA items | SEBI + RBI documents | LLMs benchmarked | Hybrid RAG Recall@5 | Human expert baseline |
+| Expert-annotated QA items | SEBI + RBI documents | LLMs benchmarked | Hybrid RAG Recall@5 | Human reference (n=60, med+hard) |
 
 </div>
 
@@ -26,7 +26,7 @@ Existing financial NLP benchmarks — FinQA, ConvFinQA, FLUE — evaluate models
 
 IndiaFinBench fills this gap. It is a **zero-shot, closed-book evaluation benchmark** of 406 expert-annotated question-answer pairs drawn from 192 circulars, regulations, and master directions published by SEBI and the RBI between 1992 and 2026. The benchmark tests four distinct reasoning capabilities — regulatory interpretation, numerical computation, contradiction detection across circulars, and temporal reasoning over chronological document sequences — each of which must be solved from document evidence alone, without retrieval.
 
-The benchmark reveals that **all 12 evaluated LLMs surpass the 69.0% human expert baseline**, that efficiency dominates scale (a 17B-parameter model statistically matches a 70B model), and that performance on numerical and temporal tasks is poorly correlated with performance on regulatory interpretation — suggesting that task-type coverage matters more than overall accuracy when assessing LLM deployment readiness.
+The benchmark reveals that **strict string-matching and semantic (LLM-judge-corrected) scoring tell substantively different stories** — the two regimes bracket true accuracy and separate genuine capability gaps from format non-compliance — that efficiency dominates scale (a 17B-parameter model statistically matches a 70B model), and that on a 60-item medium-and-hard subset no model significantly outperforms a careful non-specialist human (80.0%), while the weakest model is significantly worse.
 
 ---
 
@@ -36,11 +36,11 @@ The benchmark reveals that **all 12 evaluated LLMs surpass the 69.0% human exper
 
 2. **Four-axis task taxonomy** — REG (regulatory interpretation), NUM (numerical reasoning), CON (contradiction detection), TMP (temporal reasoning) — designed to expose orthogonal capabilities that aggregate accuracy conceals.
 
-3. **Human expert baseline with inter-annotator agreement** — 100-item human evaluation (69.0%, 95% CI [59.4%, 77.2%]) plus 180-item three-round IAA study. Establishes that current LLMs collectively exceed human expert performance on this domain, a finding without precedent in Indian regulatory NLP.
+3. **Human reference point with inter-annotator agreement** — 60-item human evaluation by a single non-specialist evaluator on medium and hard items (80.0%, 95% Wilson CI [68.2%, 88.2%]) with paired human-vs-model bootstrap tests, plus a 180-item three-round IAA study. No model significantly outperforms the human on the shared items; only the weakest is significantly worse.
 
-4. **Bootstrap statistical significance at scale** — Paired bootstrap (10,000 resamples) across all 66 model pairs identifies three statistically distinct performance tiers, resolving which leaderboard gaps reflect genuine capability differences.
+4. **Bootstrap statistical significance at scale** — Paired bootstrap (10,000 resamples) across all 66 model pairs under both scoring regimes (42/66 significant at p < 0.05 strict; 19/66 after Bonferroni), resolving which leaderboard gaps reflect genuine capability differences.
 
-5. **Efficiency-over-scale finding** — Llama 4 Scout 17B matches LLaMA-3.3-70B (p = 0.79) with one-quarter the parameters. GPT-OSS 120B and 20B are statistically indistinguishable (p = 0.91). Directly challenges the scaling assumption in regulatory NLP deployment decisions.
+5. **Efficiency-over-scale finding** — Llama 4 Scout 17B matches LLaMA-3.3-70B (p = 0.80) with one-quarter the parameters. GPT-OSS 120B and 20B are statistically indistinguishable (p = 0.86). Both null results persist under judge-corrected scoring, directly challenging the scaling assumption in regulatory NLP deployment decisions.
 
 6. **Hybrid RAG system with full ablation** — Production-grade FAISS + BM25 pipeline with Reciprocal Rank Fusion, benchmarked across six retrieval configurations. Hybrid RRF improves Recall@5 by +9.7pp over dense-only retrieval; optimal chunk size empirically determined at 1,600 characters.
 
@@ -50,13 +50,13 @@ The benchmark reveals that **all 12 evaluated LLMs surpass the 69.0% human exper
 
 ## Key Findings
 
-> **All 12 LLMs surpass the human expert baseline.** Human accuracy = 69.0% (n=100). The weakest model (Gemma 4 E4B: 70.4%) still exceeds human performance, suggesting domain-specialist LLM deployment in Indian regulatory compliance may already be feasible.
+> **No model significantly beats a careful non-specialist human on the benchmark's harder half.** On the 60 shared medium-and-hard items the human scores 80.0%; the best model reaches 85.0% (paired bootstrap p = 0.48, not significant) and only Gemma 4 E4B is significantly worse (63.3%, p = 0.011). Models decisively exceed the human only on multi-step numerical reasoning (best model 84.8% vs human 56.2%).
 
 > **NUM is the most discriminating task type.** A 35.9 percentage-point spread between best (Gemini 2.5 Flash: 84.8%) and worst (Gemini 2.5 Pro: 48.9%) on numerical reasoning — versus only ~13pp on regulatory interpretation — identifies NUM as the primary capability differentiator.
 
-> **DeepSeek R1 paradox.** Despite being reasoning-specialised, DeepSeek R1 70B ranks 11th overall — particularly weak on temporal reasoning (70.5%). Chain-of-thought training does not generalise to domain-specific chronological regulatory reasoning.
+> **DeepSeek R1 extractability gap.** The reasoning-specialised DeepSeek R1 70B ranks 11th under strict scoring, yet the item-level judge audit reclassifies 86% of its 101 errors as format non-compliance; its judge-corrected accuracy (96.6%) is statistically tied with the top cluster. Reasoning-style output fails deployment-style extractive pipelines — a capability-vs-extractable-capability distinction that single-metric evaluation conflates.
 
-> **Three statistically distinct performance tiers.** Bootstrap significance testing confirms: Tier 1 = Gemini 2.5 Flash, Qwen3-32B, LLaMA-3.3-70B, Llama 4 Scout (81–90%); Tier 2 = Kimi K2 through Mistral-7B (75–82%); Tier 3 = Gemma 4 E4B (70%). Most cross-tier differences are statistically significant at p < 0.05.
+> **Three descriptive performance clusters under strict scoring.** Tier 1 = Gemini 2.5 Flash, Qwen3-32B, LLaMA-3.3-70B, Llama 4 Scout 17B, Kimi K2 (81.5–89.7%); Tier 2 = LLaMA-3-8B through DeepSeek R1 70B (75–79%); Tier 3 = Gemma 4 E4B (70.4%). The top-versus-bottom separation is Bonferroni-robust; the middle boundaries are graded, not categorical (e.g., Gemma vs Mistral p = 0.072). Under judge-corrected scoring, 11 of 12 models converge to 90.6–96.6% and only Gemma remains separable.
 
 > **Task-type performance is highly dissociated.** Gemini 2.5 Pro ranks 1st on REG (89.7%) but last on NUM (48.9%) within the same model. Aggregate accuracy misrepresents deployment suitability for specific regulatory tasks.
 
@@ -99,7 +99,7 @@ Zero-shot, closed-book evaluation on the full 406-item benchmark. All prompts pr
 | 10 | Mistral-7B | 79.9% | 66.3% | 80.6% | 74.4% | 75.9% | [71.5%, 79.8%] |
 | 11 | DeepSeek R1 70B | 72.4% | 69.6% | **96.8%** | 70.5% | 75.1% | [70.7%, 79.1%] |
 | 12 | Gemma 4 E4B | 83.9% | 50.0% | 72.6% | 62.8% | 70.4% | [65.8%, 74.7%] |
-| — | **Human Expert** *(n=100)* | — | — | — | — | 69.0% | [59.4%, 77.2%] |
+| — | **Human (non-specialist)** *(n=60, med+hard)* | 100.0 | 56.2 | 82.4 | 87.5 | 80.0% | [68.2%, 88.2%] |
 
 95% Wilson score confidence intervals. Paired bootstrap significance (10,000 resamples) across all 66 model pairs confirms three statistically distinct performance tiers. Full significance matrix: `evaluation/bootstrap_significance_results.json`.
 
@@ -318,7 +318,7 @@ IndiaFinBench/
 │   ├── raw_qa/                            # Full benchmark JSON (406 + 150-item dev subset)
 │   ├── guidelines/annotation_guide_v1.md  # Annotation protocol and decision rules
 │   ├── iaa/                               # Inter-annotator agreement data (180 items, 3 rounds)
-│   └── human_eval/                        # Human expert evaluation responses (n=100)
+│   └── human_eval/                        # Human evaluation responses (n=60, single non-specialist)
 │
 ├── evaluation/
 │   ├── evaluate.py                        # Canonical evaluation entry point

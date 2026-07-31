@@ -8,7 +8,8 @@
 [![HuggingFace Dataset](https://img.shields.io/badge/🤗_Dataset-Rajveer--code%2FIndiaFinBench-FFD21E?style=flat-square)](https://huggingface.co/datasets/Rajveer-code/IndiaFinBench)
 [![License: CC BY 4.0](https://img.shields.io/badge/Dataset-CC%20BY%204.0-lightgrey?style=flat-square)](https://creativecommons.org/licenses/by/4.0/)
 [![License: MIT](https://img.shields.io/badge/Code-MIT-blue?style=flat-square)](LICENSE)
-[![Target: EMNLP 2026](https://img.shields.io/badge/Target-EMNLP%202026-red?style=flat-square)]()
+[![arXiv](https://img.shields.io/badge/arXiv-2604.19298-b31b1b?style=flat-square)](https://arxiv.org/abs/2604.19298)
+[![Under review: FinNLP @ EMNLP 2026](https://img.shields.io/badge/Under_review-FinNLP_%40_EMNLP_2026-red?style=flat-square)](https://arxiv.org/abs/2604.19298)
 
 <br>
 
@@ -383,13 +384,15 @@ IndiaFinBench/
 ## Citation
 
 ```bibtex
-@article{pall2026indiafinbench,
-  title     = {{IndiaFinBench}: An Evaluation Benchmark for Large Language Model Performance
-               on Indian Financial Regulatory Text},
-  author    = {Pall, Rajveer Singh},
-  journal   = {Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing},
-  year      = {2026},
-  url       = {https://github.com/Rajveer-code/IndiaFinBench}
+@misc{pall2026indiafinbench,
+  title         = {{IndiaFinBench}: An Evaluation Benchmark for Large Language Model Performance
+                   on Indian Financial Regulatory Text},
+  author        = {Pall, Rajveer Singh},
+  year          = {2026},
+  eprint        = {2604.19298},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL},
+  url           = {https://arxiv.org/abs/2604.19298}
 }
 ```
 

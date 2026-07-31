@@ -252,12 +252,14 @@ The benchmark reflects the linguistic register of SEBI and RBI documents. Models
 If you use IndiaFinBench in your research, please cite:
 
 ```bibtex
-@article{pall2026indiafinbench,
+@misc{pall2026indiafinbench,
   title={{IndiaFinBench}: An Evaluation Benchmark for Large Language Model Performance on Indian Financial Regulatory Text},
   author={Pall, Rajveer Singh},
-  journal={Proceedings of EMNLP},
   year={2026},
-  url={https://github.com/Rajveer-code/IndiaFinBench}
+  eprint={2604.19298},
+  archivePrefix={arXiv},
+  primaryClass={cs.CL},
+  url={https://arxiv.org/abs/2604.19298}
 }
 ```
 

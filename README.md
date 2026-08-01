@@ -10,6 +10,7 @@
 [![License: MIT](https://img.shields.io/badge/Code-MIT-blue?style=flat-square)](LICENSE)
 [![arXiv](https://img.shields.io/badge/arXiv-2604.19298-b31b1b?style=flat-square)](https://arxiv.org/abs/2604.19298)
 [![Under review: FinNLP @ EMNLP 2026](https://img.shields.io/badge/Under_review-FinNLP_%40_EMNLP_2026-red?style=flat-square)](https://arxiv.org/abs/2604.19298)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21739533.svg)](https://doi.org/10.5281/zenodo.21739533)
 
 <br>
 

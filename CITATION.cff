@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this benchmark or software, please cite it as below."
+title: "IndiaFinBench: An Evaluation Benchmark for Large Language Model Performance on Indian Financial Regulatory Text"
+type: software
+authors:
+  - family-names: Pall
+    given-names: "Rajveer Singh"
+    orcid: "https://orcid.org/0009-0001-6762-6134"
+license: MIT
+repository-code: "https://github.com/Rajveer-code/IndiaFinBench"
+identifiers:
+  - type: other
+    value: "arXiv:2604.19298"
+    description: "arXiv preprint (v2)"
+preferred-citation:
+  type: article
+  title: "IndiaFinBench: An Evaluation Benchmark for Large Language Model Performance on Indian Financial Regulatory Text"
+  authors:
+    - family-names: Pall
+      given-names: "Rajveer Singh"
+      orcid: "https://orcid.org/0009-0001-6762-6134"
+  year: 2026
+  identifiers:
+    - type: other
+      value: "arXiv:2604.19298"

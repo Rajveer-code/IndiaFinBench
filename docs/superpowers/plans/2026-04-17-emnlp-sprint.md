@@ -268,7 +268,7 @@ Expected: file exists, size > 0.
 export GOOGLE_CLOUD_PROJECT=finindiabench
 export GOOGLE_CLOUD_LOCATION=us-central1
 export GOOGLE_APPLICATION_CREDENTIALS="D:/Projects/IndiaFinBench/gcp-key.json"
-export GROQ_API_KEY="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"
+export GROQ_API_KEY="<YOUR_GROQ_API_KEY>"
 ```
 
 - [ ] **Step 5: Test Vertex AI connection**
@@ -1289,7 +1289,7 @@ if __name__ == "__main__":
 export GOOGLE_CLOUD_PROJECT=finindiabench
 export GOOGLE_CLOUD_LOCATION=us-central1  
 export GOOGLE_APPLICATION_CREDENTIALS="D:/Projects/IndiaFinBench/gcp-key.json"
-export GROQ_API_KEY="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"
+export GROQ_API_KEY="<YOUR_GROQ_API_KEY>"
 python scripts/cot_ablation.py
 ```
 

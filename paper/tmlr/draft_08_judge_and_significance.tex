@@ -87,7 +87,7 @@ Section~\ref{sec:discussion} returns to two comparisons inside the Tier 1 platea
 measurable accuracy difference.
 
 \textbf{Robustness to document-level clustering.} 406 items are not 406 independent draws: they trace
-to 34 source documents (Section~\ref{sec:models}, Appendix~\ref{app:provenance}), and several
+to 34 source documents (Section~\ref{sec:models}, Section~\ref{app:provenance}), and several
 contradiction-detection items link two documents at once. We re-ran \emph{all 66} pairwise
 comparisons under a document-clustered bootstrap---resampling the 27 connected components formed by
 unioning documents that co-occur in any contradiction item, rather than resampling items
@@ -99,5 +99,5 @@ correction (item-level: 15--16, itself boundary-sensitive to Monte Carlo noise a
 comparisons this paper does not otherwise discuss. Every comparison this paper specifically reports
 as a finding, including the human-reference comparison in Section~\ref{sec:human}, agrees in
 direction between the two tests: the correction changes the overall significance count meaningfully
-(36$\to$29) without overturning any conclusion this paper draws. Appendix~\ref{app:clustering}
+(36$\to$29) without overturning any conclusion this paper draws. Section~\ref{app:clustering}
 reports the full 66-pair comparison and the clustering construction.

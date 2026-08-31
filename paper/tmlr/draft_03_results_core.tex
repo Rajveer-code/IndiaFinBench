@@ -90,29 +90,29 @@ answered correctly by at least 11 of 12 models; floor items by at most 1 of 12.}
 \toprule
 Category & Items & \% & Criterion \\
 \midrule
-Ceiling            & 203 & 50.0 & $p \ge 0.9$ \\
-Discriminative     & 137 & 33.7 & $0.3 < p < 0.8$, $s$ above median \\
-Intermediate       & 60  & 14.8 & remainder \\
-Floor              & 6   & 1.5  & $p \le 0.1$ \\
+Ceiling            & 213 & 52.5 & $p \ge 0.9$ \\
+Discriminative     & 134 & 33.0 & $0.3 < p < 0.8$, $s$ above median \\
+Intermediate       & 52  & 12.8 & remainder \\
+Floor              & 7   & 1.7  & $p \le 0.1$ \\
 \midrule
 Total              & 406 & 100  & \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Half the benchmark sits at ceiling. 203 of 406 items are answered correctly by at least 11 of the
-12 models, and 6 more are answered correctly by at most one, so 209 items---slightly over half---
+Half the benchmark sits at ceiling. 213 of 406 items are answered correctly by at least 11 of the
+12 models, and 7 more are answered correctly by at most one, so 220 items---slightly over half---
 carry almost no information about the relative ordering of these systems. The median item is
-answered correctly by 87.5\% of models, and mean spread across all items is 0.44. By the criterion
-in Table~\ref{tab:effsize}, 137 items do the discriminating.
+answered correctly by 91.7\% of models, and mean spread across all items is 0.419. By the criterion
+in Table~\ref{tab:effsize}, 134 items do the discriminating.
 
-An independent route gives the same count. Analysing consensus rather than spread, 203 items are
+An independent route gives the same count. Analysing consensus rather than spread, 213 items are
 answered correctly by more than 90\% of models and 11 items by fewer than 20\%. The ceiling count
-of 203 is reached by two calculations that share no threshold, which is the reassurance we can
+of 213 is reached by two calculations that share no threshold, which is the reassurance we can
 offer that it is not an artifact of where the cut was placed.
 
 We report this about our own benchmark deliberately. It bears directly on how the results above
-should be read: a gap of a few points between two mid-table models rests on a subset of 137 items,
+should be read: a gap of a few points between two mid-table models rests on a subset of 134 items,
 not 406, and confidence intervals computed over the full item count understate that. It also
 suggests a construction lesson we did not anticipate when building the benchmark---annotating for
 coverage of a domain and annotating for discrimination between systems are different objectives,

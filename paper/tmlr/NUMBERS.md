@@ -480,3 +480,46 @@ explicitly rather than only in a robustness appendix.
 
 Outputs: `evaluation/provenance_audit.csv`, `evaluation/provenance_summary.json`,
 `evaluation/clustered_bootstrap.json`.
+
+---
+
+## 11. Item-discrimination counts — THIRD correction (2026-08-31, same day)
+
+`exp7`'s post-Gemma-fix rerun (committed in §8's pipeline-refresh commit) gives **213 ceiling / 134
+discriminative / 7 floor** — not 203/137/6, which was itself a second-generation number computed
+between the two Gemma reruns. Cross-checked two ways: `exp11`'s independent consensus count now
+also reads 213, and a fresh standalone script (`scripts/threshold_sensitivity_and_dedup.py`)
+reproduces 213/7/134 exactly from raw correctness data. Fixed in all four drafts
+(01/02/03/06) — verified zero remaining occurrences of "203" or "137".
+
+Also fixed: median item accuracy 91.7% (was 87.5%), mean spread 0.419 (was 0.44), Intermediate band
+52 items (was 60).
+
+Threshold-sensitivity table (Phase 3.3) at `evaluation/threshold_sensitivity.json`: ceiling ranges
+213 (p≥0.85 or p≥0.90, identical) to 143 (p≥0.95); discriminative band ranges 83 to 168 across three
+reasonable cutoffs. The paper's chosen cutoffs sit mid-range, not at an extreme — evidence the
+number wasn't picked to maximise the finding.
+
+## 12. ⚠ PENDING — do not patch these again until the phi4-mini judge finishes
+
+The following are known-stale RIGHT NOW and will change again once `evaluation/results_judged_phi4/`
+completes (background job, launched with ETA ~3.75h from §9's write-up). Patching them before then
+is wasted work:
+
+- **Spearman ρ = 0.455, p = 0.14** in `draft_02_introduction.tex` line ~45 — stale from before even
+  the §7 correction (should already be 0.413/0.18 per §7, was missed in an earlier pass, will change
+  a THIRD time once Gemma's corrected accuracy enters the regime table under the new judge).
+- **The entire strict-vs-corrected regime table and `figure_regime_stat.png`** — built from
+  `evaluation/results_judged/` (Gemini-as-judge, and for Gemma specifically, audits the OLD wrong
+  predictions). Must be rebuilt from `evaluation/results_judged_phi4/` once complete, using
+  `scripts/generate_regime_figure.py`'s pattern adapted to the new judge's column names
+  (`strict_correct`, `judge_verdict` instead of `auto_score`, `judge_score`).
+- **The abstract's "excluding Gemma, remaining eleven span 14.6/6.0 points" compression finding** —
+  its entire premise (Gemma is the outlier to exclude) no longer holds now that Gemma is 6th of 12.
+  Needs either recomputing with whichever model is now the true outlier, or reframing entirely.
+- **The decision gate on DeepSeek's 11th→1st reversal** (committed in §9) has not yet been
+  evaluated — it fires once the phi4 pass completes.
+
+**Action when the judge finishes:** rebuild the regime table/figure first, re-derive ρ/τ and the
+compression claim from that, apply the decision gate, then do one clean sweep of every draft file.
+Do not touch these numbers piecemeal before that point.

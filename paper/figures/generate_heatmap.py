@@ -8,12 +8,15 @@ models = [
     'Gemini 2.5 Pro', 'Mistral-7B', 'DeepSeek R1 70B', 'Gemma 4 E4B'
 ]
 
-data = {
-    'REG': [93.1, 85.1, 86.2, 86.2, 89.1, 79.9, 79.9, 79.9, 89.7, 79.9, 72.4, 83.9],
-    'NUM': [84.8, 77.2, 75.0, 66.3, 65.2, 64.1, 59.8, 58.7, 48.9, 66.3, 69.6, 50.0],
-    'CON': [88.7, 90.3, 95.2, 98.4, 91.9, 93.5, 95.2, 95.2, 93.5, 80.6, 96.8, 72.6],
-    'TMP': [88.5, 92.3, 79.5, 84.6, 75.6, 78.2, 76.9, 76.9, 64.1, 74.4, 70.5, 62.8],
-}
+# Data is loaded from the evaluation results files, never hardcoded, so this
+# figure cannot drift from the numbers in the paper. Verified 2026-08-31:
+# the previous hardcoded block matched the data on all 48 cells.
+import sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).resolve().parents[2]))
+from scripts.novel_methods_utils import get_task_accuracies
+
+_acc = (get_task_accuracies() * 100).round(1)
+data = {t: [float(_acc.loc[m, t]) for m in models] for t in ['REG', 'NUM', 'CON', 'TMP']}
 
 tasks = ['REG', 'NUM', 'CON', 'TMP']
 matrix = np.array([[data[t][i] for t in tasks] for i in range(len(models))])

@@ -5,6 +5,38 @@
 
 \subsection{Overall Performance}
 \label{sec:main-results}
+\label{sec:main-results-text}
+
+\begin{table*}[t]
+\centering\small
+\begin{tabular}{lrrrrrl}
+\toprule
+\textbf{Model} & \textbf{REG} & \textbf{NUM} & \textbf{CON} & \textbf{TMP} & \textbf{Overall} & \textbf{95\% CI} \\
+\midrule
+Gemini 2.5 Flash & 93.1 & 84.8 & 88.7 & 88.5 & 89.7 & [86.3\%, 92.3\%] \\
+Qwen3-32B & 85.1 & 77.2 & 90.3 & 92.3 & 85.5 & [81.7\%, 88.6\%] \\
+LLaMA-3.3-70B & 86.2 & 75.0 & 95.2 & 79.5 & 83.7 & [79.8\%, 87.0\%] \\
+Llama 4 Scout 17B & 86.2 & 66.3 & 98.4 & 84.6 & 83.3 & [79.3\%, 86.6\%] \\
+Kimi K2 & 89.1 & 65.2 & 91.9 & 75.6 & 81.5 & [77.5\%, 85.0\%] \\
+Gemma 4 E4B & 86.2 & 70.7 & 79.0 & 71.8 & 78.8 & [74.6\%, 82.5\%] \\
+LLaMA-3-8B & 79.9 & 64.1 & 93.5 & 78.2 & 78.1 & [73.8\%, 81.8\%] \\
+GPT-OSS 120B & 79.9 & 59.8 & 95.2 & 76.9 & 77.1 & [72.8\%, 80.9\%] \\
+GPT-OSS 20B & 79.9 & 58.7 & 95.2 & 76.9 & 76.8 & [72.5\%, 80.7\%] \\
+Gemini 2.5 Pro\textdagger{} & 89.7 & 48.9 & 93.5 & 64.1 & 76.1 & [71.7\%, 80.0\%] \\
+Mistral-7B & 79.9 & 66.3 & 80.6 & 74.4 & 75.9 & [71.5\%, 79.8\%] \\
+DeepSeek-R1-Distill & 72.4 & 69.6 & 96.8 & 70.5 & 75.1 & [70.7\%, 79.1\%] \\
+\midrule
+\textbf{Average} & \textbf{84.0} & \textbf{67.2} & \textbf{91.5} & \textbf{77.8} & \textbf{80.1} & --- \\
+\bottomrule
+\end{tabular}
+\caption{IndiaFinBench results --- accuracy (\%) by task type under the strict string-matching
+pipeline. All twelve models evaluated on the full 406-item benchmark. 95\% Wilson score
+\citep{wilson1927} confidence intervals shown for overall accuracy. \textdagger{}Gemini 2.5 Pro
+evaluated via Vertex AI; lower NUM/TMP scores are a scoring artifact of its verbose output style
+(Section~\ref{sec:regime}). Judge-audited accuracies are in Section~\ref{sec:regime} and
+Appendix~\ref{app:judge}.}
+\label{tab:mainresults}
+\end{table*}
 
 Table~\ref{tab:mainresults} reports strict accuracy for all twelve models on the full 406-item
 benchmark. Scores span 75.1\% (DeepSeek-R1-Distill) to 89.7\% (Gemini 2.5 Flash), a 14.6-point range

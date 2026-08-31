@@ -1,0 +1,68 @@
+\section{Dataset Construction}
+
+Closing this gap requires building from Indian regulatory documents at a scale sufficient for reliable model comparison, while preserving the domain expertise that interpreting them demands---the constraint that shaped every design choice below.
+
+\subsection{Source Document Collection}
+
+We collected 192 regulatory documents spanning 1992--2026 from two official Indian government sources: the Securities and Exchange Board of India (92 documents: circulars, master circulars, regulations, orders; sebi.gov.in) and the Reserve Bank of India (100 documents: circulars, policy statements, directions; rbi.org.in). Documents were downloaded using a custom Python scraping pipeline and converted to clean text using pdfplumber, which handles the multi-column layouts and embedded tables common in Indian regulatory PDFs particularly well. Figure~\ref{fig:pipeline} (Appendix~\ref{app:examples}) illustrates the full dataset construction pipeline; Appendix~\ref{app:sourcedocs} lists the regulatory categories covered.
+
+\subsection{Task Types}
+
+IndiaFinBench defines four task types, each probing a distinct reasoning capability. Figure~\ref{fig:taskexamples} (Appendix~\ref{app:examples}) provides a representative example of each.
+
+\textbf{Regulatory Interpretation (REG, 174 items).} Given a regulatory passage, identify the correct rule, compliance threshold, or scope of applicability---e.g., that a stock exchange must forward a registration application ``not later than thirty days of receipt.''
+
+\textbf{Numerical Reasoning (NUM, 92 items).} Perform arithmetic over figures embedded in regulatory text---e.g., computing a Small Finance Bank's maximum eligible dividend from its Tier 1 Capital Ratio and adjusted profit after tax. Requires both correct extraction and arithmetic execution.
+
+\textbf{Contradiction Detection (CON, 62 items).} Given two passages from different regulatory instruments, determine (Yes/No, with a one-sentence explanation) whether they contradict on the issue described---probing supersession tracking, a core challenge where circulars are frequently amended.
+
+\textbf{Temporal Reasoning (TMP, 78 items).} Establish chronological ordering of regulatory events, identify which version of a rule was in force at a given time, or compute elapsed time between milestones. Indian regulatory documents frequently reference earlier instruments only by date, requiring a consistent regulatory timeline.
+
+\subsection{Annotation Protocol}
+
+All question-answer pairs were authored by the primary annotator, who has specialist experience with Indian financial regulatory documents. Expert single-annotator construction is standard for domain-specific benchmarks where annotation requires expertise unavailable to crowdsourced pools \citep{hendrycks2021cuad, malik2021ildc, islam2023financebench}; IndiaFinBench requires parallel familiarity with SEBI's securities regulation framework, RBI's prudential norms, and the amendment-chain structure linking hundreds of circulars over three decades. Section~\ref{sec:iaa} presents an independent human inter-annotator agreement study that empirically validates annotation quality. Each item consists of a context passage (80--500 words), a question, a reference answer, and metadata fields (task type, difficulty, source document).
+
+Answer formats are standardized by task type: extractive spans for regulatory interpretation and temporal reasoning; calculated values with units for numerical reasoning (e.g., `Rs.~5,500 crore'); and `Yes' or `No' with a brief explanation for contradiction detection.
+
+Difficulty levels were assigned by the number of reasoning steps required: easy items are single-step extraction (160 items, 39.4\%), medium items require multi-clause reasoning or calculation (182, 44.8\%), and hard items span multiple instruments or complex arithmetic (64, 15.8\%).
+
+\textbf{Annotation scale rationale.} The 406-item scale is a deliberate quality-over-quantity decision: each item requires domain knowledge of SEBI circulars, RBI master directions, and their decade-spanning amendment chains, which is structurally incompatible with crowdsourcing. For context, FinanceBench released 150 expert-verified items \citep{islam2023financebench}. IndiaFinBench's 406 items span 192 source documents across 34 years and four task types, and the IAA study (Section~\ref{sec:iaa}) independently validates 44.3\% of all items.
+
+Every item was individually reviewed to ensure: (1) the answer is unambiguously derivable from the provided context; (2) the question has exactly one correct answer; and (3) the context is sufficient without external knowledge.
+
+\subsection{Model-Based Secondary Validation}
+
+To confirm that items are unambiguously answerable from context, a secondary validation pass was conducted using LLaMA-3.3-70B-Versatile (via Groq API) as an independent quality-checker under a context-only, zero-shot prompt (temperature = 0). Although LLaMA-3.3-70B also appears in the main evaluation, the two uses are functionally distinct: the validation pass asks whether a question is unambiguously answerable from its context passage---a different task from the evaluation's open-ended QA. The validation endpoint was accessed in isolation from the evaluation pipeline, preventing cross-contamination of outputs.
+
+Using a model-based validator as a tractability check follows established benchmark construction practice \citep{islam2023financebench, hendrycks2021cuad}.
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{lrrrr}
+\toprule
+ & \multicolumn{2}{c}{\textbf{Model-based}} & \multicolumn{2}{c}{\textbf{Human IAA}} \\
+\textbf{Task} & \textbf{Items} & \textbf{Agr.} & \textbf{Items} & \textbf{Agr.} \\
+\midrule
+REG & 53 & 85.7\% & 63 & 85.7\% \\
+NUM & 32 & 84.4\% & 44 & 59.1\% \\
+CON & 30 & 96.7\%\textsuperscript{$\kappa$=.918} & 35 & 88.6\%\textsuperscript{$\kappa$=.645} \\
+TMP & 35 & 77.1\% & 38 & 73.7\% \\
+\midrule
+\textbf{All} & \textbf{150} & \textbf{90.7\%} & \textbf{180} & \textbf{77.2\%} \\
+\bottomrule
+\end{tabular}
+\caption{Annotation validation: model-based secondary pass (150-item subset) and human inter-annotator agreement (180 items, three 60-item rounds, second annotator blind to reference answers). Cohen's $\kappa$ applies only to the binary CON task.}
+\label{tab:validation}
+\end{table}
+
+The 90.7\% overall agreement rate (Table~\ref{tab:validation}, left) exceeds the 80\% threshold commonly used as a benchmark quality criterion. Items with genuine disagreement ($\sim$1.3\% of the initial set) were removed.
+
+\subsection{Human Inter-Annotator Agreement}
+\label{sec:iaa}
+
+To provide rigorous empirical validation of single-annotator annotation quality, we conducted a human inter-annotator agreement (IAA) study in which a second independent human annotator completed three annotation rounds of 60 items each (180 items total; 44.3\% of the benchmark), drawn proportionally from all four task types and weighted toward medium and hard difficulty. The annotator worked from context passages and questions alone, without access to the primary annotator's reference answers at any stage.
+
+Agreement was then computed between the primary annotator's reference answers and the second annotator's responses, using the same four-stage scoring procedure applied to model predictions (Section~\ref{sec:scoring}); results are in Table~\ref{tab:validation} (right).
+
+The $\kappa$ = 0.645 for contradiction detection falls in the `substantial agreement' band by \citet{landiskoch1977} conventions, and is comparable to human agreement rates reported for similar binary contradiction detection tasks in legal NLP. The lower numerical reasoning agreement (59.1\%) reflects formatting conventions rather than substantive disagreement: reference answers often included intermediate calculation steps (e.g., `Rs.~19,000 crore maximum per Table~1 of the Directions'), whereas the second annotator provided only final values (`19,000 crore'). Post-hoc review of every discordant numerical item confirmed the computed values were equivalent in all cases; disagreements arose solely from intermediate-step presence, currency symbol style, and comma placement.
+

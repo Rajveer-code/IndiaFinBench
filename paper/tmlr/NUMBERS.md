@@ -555,3 +555,26 @@ the same relationship as nominal vs. discriminative size.
 
 **Deliberately still stale (see §12):** the regime table, ρ/τ, and the "excluding Gemma" compression
 claim in `draft_01`/`draft_03`. Do not touch until the phi4-mini judge completes.
+
+---
+
+## 14. MILESTONE — full manuscript compiles end-to-end (2026-08-31)
+
+`paper/tmlr/build/main.tex` assembles all drafts (01-10 + reused/fixed acl_source blocks) against the
+official TMLR stylefile. **Zero LaTeX errors, bibtex clean, only one undefined reference**
+(`tab:judgereliability`, correctly pending the phi4-mini judge). 27 pages total; main content
+(through the Ethics statement, before References) runs **~16-17 pages** — over the 12pp fast-review
+target (not a hard limit; TMLR has none). Likely to shrink once the appendix's still-pending,
+duplicated judge/error-taxonomy content is consolidated with the new main-text Section~\ref{sec:judge}
+rather than carrying both. Revisit page count after the judge-dependent sections are finalized, not
+before.
+
+Fixed during assembly: wrong bib key (`chen2022convfinqa` → `zheng2022convfinqa`), missing
+`\label{sec:limitations}`, missing main-results Table 2 (was never carried into the new draft
+structure — added with corrected Gemma row [86.2/70.7/79.0/71.8/78.8, CI [74.6,82.5]] and corrected
+task means [84.0/67.2/91.5/77.8/80.1]), new Appendix (provenance + clustered-bootstrap, drawn
+directly from Phase 1 outputs).
+
+**Still explicitly pending** (do not remove markers before the judge finishes): the regime table
+(`tab:judgereliability`), the entire reused appendix/error-analysis block (marked `[[PENDING]]` at
+its own top), and the abstract/results "excluding Gemma" compression claim.

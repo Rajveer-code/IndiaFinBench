@@ -1,0 +1,104 @@
+% ---------------------------------------------------------------------------
+% DRAFT 9 — Limitations, Ethics/human-subject statement, licensing.
+% Base text reused from acl_source/acl_latex.tex (STRUCTURE.md: "Keep").
+% Fixes: copyright overclaim removed, human-subject content added honestly
+% (author confirmed annotators were personal contacts -- batchmates and
+% parents -- uncompensated volunteers; institutional-review status is
+% UNRESOLVED and marked as such, never inferred as "not required"),
+% cross-model judge referenced, LLM-use footnote (TMLR FAQ: required,
+% page-1 footnote, verbatim policy).
+% ---------------------------------------------------------------------------
+
+\section*{Limitations}
+\label{sec:limitations}
+
+Several limitations should be noted. The automated four-stage scoring pipeline penalizes
+semantically correct predictions that differ in number format (`50\%' vs `fifty per cent') or
+verbosity; the primary LLM-as-judge audit (Appendix~\ref{app:judge}) reclassifies 78.4\% of flagged
+items as correct. Neither strict nor judge-audited scoring is ground truth: strict scores
+under-count (format false negatives), while judge-audited scores likely over-count, since the
+judge's confirmed error mode is over-crediting correct intermediate reasoning that reaches a wrong
+final answer (3 of 28 audited verdicts). True accuracy lies between the two bounds we report. A
+second, cross-model judge (Section~\ref{sec:judge}) partially addresses this: because the two judges
+share no model family, correlated judge error is no longer the only explanation available for a
+disputed verdict, though it does not eliminate the possibility that both judges share a bias human
+adjudicators would not. The benchmark also does not cover Hindi--English code-switched regulatory
+text that appears in some official documents.
+
+The human reference study involves a single non-specialist evaluator on 60 medium-and-hard items; it
+anchors the harder half of the benchmark but supports no population-level claims about human
+performance, and a domain specialist would likely score higher. The IAA study covers 180 of 406
+items (44.3\%) across three rounds with CON agreement stable at $\kappa$ = 0.645; agreement on
+open-ended tasks reflects the same verbosity artifact documented in Appendix~\ref{app:judge}.
+Few-shot evaluation was conducted on only four top-performing models (Appendix~\ref{app:fewshot}).
+
+A structural limitation shared across all evaluations is context-injection: models receive the
+relevant passage directly rather than retrieving it from the full document corpus, testing reading
+comprehension over a provided excerpt rather than the retrieval or full-document understanding
+real-world compliance workflows also require. The benchmark is a static snapshot of SEBI and RBI
+regulation as of early 2026 and will need periodic refresh as the regulatory landscape evolves.
+
+Primary annotation was conducted by a single domain-expert annotator, with the independent human
+inter-annotator study above providing external validation; Section~\nameref{sec:humansubjects}
+below states who the annotators and evaluator were and what oversight, if any, applied. All
+questions and gold-standard answers are in English; the official Hindi-language versions of the same
+circulars are not included, limiting applicability to multilingual regulatory analysis. Coverage is
+also limited to two regulators---extending to the Insurance Regulatory and Development Authority of
+India (IRDAI), the Pension Fund Regulatory and Development Authority (PFRDA), and commodity-segment
+regulation would substantially broaden the benchmark's coverage of the Indian financial regulatory
+ecosystem.
+
+Finally, IndiaFinBench evaluates short extractive responses rather than longer-form generation; it
+does not test whether models can draft regulatory summaries, identify compliance gaps, or produce
+legally coherent reasoning chains---capabilities that are arguably more consequential for
+legal-technology applications and a natural next step for the benchmark.
+
+We also note a construction limitation surfaced by our own analysis rather than external review: the
+difficulty label assigned at annotation time (Section~\ref{sec:models}) predicts empirical
+difficulty for only 3 of the 12 evaluated models (Section~\ref{sec:difficulty}), and roughly half of
+all items do not discriminate between the systems evaluated here (Section~\ref{sec:effsize}). Both
+findings bear on how confidently any single-digit accuracy gap on this benchmark, ours or a future
+system's, should be read.
+
+\section*{Ethics Statement}
+\label{sec:humansubjects}
+
+\textbf{Source data.} IndiaFinBench is built from primary source documents published by the
+Securities and Exchange Board of India (sebi.gov.in) and the Reserve Bank of India (rbi.org.in) for
+public access. These are works of an Indian government body; we make no claim that they are in the
+public domain or free of copyright, and we do not represent the CC~BY~4.0 license below as covering
+the source documents themselves. What is released under CC~BY~4.0 is the authors' own contribution:
+the questions, reference answers, difficulty and task-type annotations, evaluation harness, and
+model predictions. Every item's provenance (source document and, where applicable, URL) is included
+in the release so that claims can be traced back to the original regulatory text.
+
+\textbf{Human participants.} Two human contributions appear in this paper: the second annotator in
+the inter-annotator agreement study (Section~\ref{sec:iaa}) and the non-specialist evaluator
+(Section~\ref{sec:human}). Both were volunteers from the author's personal and academic network
+(fellow students and family members), recruited directly rather than through any institutional
+subject pool, informed of the study's purpose before participating, and uncompensated. No
+demographic, identifying, or personal information about either participant is collected, stored, or
+released; the public dataset contains only their task responses (answers to benchmark items), not
+any information about who they are. \textbf{Institutional review status:} this activity has not
+been reviewed by an institutional ethics board, and we make no determination here about whether such
+review would be required under any particular institution's policy---that determination is left to
+readers applying their own institution's standards, and to the author's institution before any
+subsequent submission of this or related work. We report this status plainly rather than asserting
+an exemption we have not confirmed.
+
+\textbf{Content and use.} The benchmark is designed to evaluate model performance on regulatory
+reasoning tasks and does not contain toxic, harmful, or privacy-violating content. We are not aware
+of a use of this benchmark, or of the models evaluated against it, that would constitute a
+foreseeable harm beyond the ordinary risks of applying any LLM evaluation to a regulated domain: a
+practitioner treating any model's output here as a substitute for qualified legal or compliance
+advice would be misusing the benchmark's findings, which concern relative model performance on
+constructed QA items, not the models' fitness for real regulatory decision-making.
+
+\subsubsection*{Broader Impact Statement}
+
+This work measures how scoring methodology affects reported LLM performance and releases a new
+evaluation resource; it does not train or release a new model, and we see no material risk of
+negative societal impact beyond the general risks of LLM benchmarking research. To the extent this
+paper has a broader implication, it argues for more transparent, multi-regime benchmark reporting,
+which we expect to reduce rather than increase the risk of over-trusting a single leaderboard number
+in deployment decisions.

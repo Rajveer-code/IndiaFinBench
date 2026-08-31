@@ -1,0 +1,223 @@
+% ---------------------------------------------------------------------------
+% DRAFT 7 — Dataset Construction + Experimental Setup.
+% Base text reused from acl_source/acl_latex.tex per STRUCTURE.md's own
+% "Keep"/"Keep, trim" verdict -- these sections were not identified as
+% needing a rewrite. Fixes applied on top of the reused text:
+%   - 192-vs-34-document claim corrected and explicitly reported (Phase 1.1)
+%   - DeepSeek renamed to DeepSeek-R1-Distill-Llama-70B
+%   - full model-identity table added, resolving the "documented in the
+%     evaluation code" claim with the actual identifiers, verified in
+%     scripts/evaluate.py and scripts/evaluate_new_models.py
+%   - Gemma's exact tag (gemma3:4b) stated explicitly, with the provenance
+%     note explaining why it needed re-confirming
+% ---------------------------------------------------------------------------
+
+\section{Dataset Construction}
+
+Closing this gap requires building from Indian regulatory documents at a scale sufficient for
+reliable model comparison, while preserving the domain expertise that interpreting them
+demands---the constraint that shaped every design choice below.
+
+\subsection{Source Document Collection}
+
+We collected 192 regulatory documents spanning 1992--2026 from two official Indian government
+sources: the Securities and Exchange Board of India (92 documents: circulars, master circulars,
+regulations, orders; sebi.gov.in) and the Reserve Bank of India (100 documents: circulars, policy
+statements, directions; rbi.org.in). Documents were downloaded using a custom Python scraping
+pipeline and converted to clean text using pdfplumber, which handles the multi-column layouts and
+embedded tables common in Indian regulatory PDFs particularly well. Figure~\ref{fig:pipeline}
+(Appendix~\ref{app:examples}) illustrates the full dataset construction pipeline;
+Appendix~\ref{app:sourcedocs} lists the regulatory categories covered.
+
+The 406 annotated items are drawn from \textbf{34 of these 192 documents}---the collection was
+sized for coverage of the regulatory categories in Appendix~\ref{app:sourcedocs}, while annotation
+effort concentrated on documents dense enough in extractable QA content to be worth an expert
+annotator's time. Appendix~\ref{app:provenance} reports the full provenance: item counts per
+document (median 6, largest 63) and the document-level clustering used for the significance testing
+in Section~\ref{sec:significance}, since items sharing a source document are not independent draws.
+
+\subsection{Task Types}
+
+IndiaFinBench defines four task types, each probing a distinct reasoning capability.
+Figure~\ref{fig:taskexamples} (Appendix~\ref{app:examples}) provides a representative example of
+each.
+
+\textbf{Regulatory Interpretation (REG, 174 items).} Given a regulatory passage, identify the
+correct rule, compliance threshold, or scope of applicability---e.g., that a stock exchange must
+forward a registration application ``not later than thirty days of receipt.''
+
+\textbf{Numerical Reasoning (NUM, 92 items).} Perform arithmetic over figures embedded in
+regulatory text---e.g., computing a Small Finance Bank's maximum eligible dividend from its Tier 1
+Capital Ratio and adjusted profit after tax. Requires both correct extraction and arithmetic
+execution.
+
+\textbf{Contradiction Detection (CON, 62 items).} Given two passages from different regulatory
+instruments, determine (Yes/No, with a one-sentence explanation) whether they contradict on the
+issue described---probing supersession tracking, a core challenge where circulars are frequently
+amended.
+
+\textbf{Temporal Reasoning (TMP, 78 items).} Establish chronological ordering of regulatory events,
+identify which version of a rule was in force at a given time, or compute elapsed time between
+milestones. Indian regulatory documents frequently reference earlier instruments only by date,
+requiring a consistent regulatory timeline.
+
+\subsection{Annotation Protocol}
+
+All question-answer pairs were authored by the primary annotator, who has specialist experience with
+Indian financial regulatory documents. Expert single-annotator construction is standard for
+domain-specific benchmarks where annotation requires expertise unavailable to crowdsourced pools
+\citep{hendrycks2021cuad, malik2021ildc, islam2023financebench}; IndiaFinBench requires parallel
+familiarity with SEBI's securities regulation framework, RBI's prudential norms, and the
+amendment-chain structure linking hundreds of circulars over three decades. Section~\ref{sec:iaa}
+presents an independent human inter-annotator agreement study that empirically validates annotation
+quality. Each item consists of a context passage (80--500 words), a question, a reference answer,
+and metadata fields (task type, difficulty, source document).
+
+Answer formats are standardized by task type: extractive spans for regulatory interpretation and
+temporal reasoning; calculated values with units for numerical reasoning (e.g., `Rs.~5,500 crore');
+and `Yes' or `No' with a brief explanation for contradiction detection.
+
+Difficulty levels were assigned by the number of reasoning steps required: easy items are
+single-step extraction (160 items, 39.4\%), medium items require multi-clause reasoning or
+calculation (182, 44.8\%), and hard items span multiple instruments or complex arithmetic (64,
+15.8\%). Section~\ref{sec:difficulty} reports that this label predicts empirical difficulty for only
+three of the twelve evaluated models.
+
+\textbf{Annotation scale rationale.} The 406-item scale is a deliberate quality-over-quantity
+decision: each item requires domain knowledge of SEBI circulars, RBI master directions, and their
+decade-spanning amendment chains, which is structurally incompatible with crowdsourcing. For context,
+FinanceBench released 150 expert-verified items \citep{islam2023financebench}. IndiaFinBench's 406
+items span four task types across 34 source documents (Appendix~\ref{app:provenance}), and the IAA
+study (Section~\ref{sec:iaa}) independently validates 44.3\% of all items.
+
+Every item was individually reviewed to ensure: (1) the answer is unambiguously derivable from the
+provided context; (2) the question has exactly one correct answer; and (3) the context is sufficient
+without external knowledge.
+
+\subsection{Model-Based Secondary Validation}
+
+To confirm that items are unambiguously answerable from context, a secondary validation pass was
+conducted using LLaMA-3.3-70B-Versatile (via Groq API) as an independent quality-checker under a
+context-only, zero-shot prompt (temperature = 0). Although LLaMA-3.3-70B also appears in the main
+evaluation, the two uses are functionally distinct: the validation pass asks whether a question is
+unambiguously answerable from its context passage---a different task from the evaluation's
+open-ended QA. The validation endpoint was accessed in isolation from the evaluation pipeline,
+preventing cross-contamination of outputs.
+
+Using a model-based validator as a tractability check follows established benchmark construction
+practice \citep{islam2023financebench, hendrycks2021cuad}.
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{lrrrr}
+\toprule
+ & \multicolumn{2}{c}{\textbf{Model-based}} & \multicolumn{2}{c}{\textbf{Human IAA}} \\
+\textbf{Task} & \textbf{Items} & \textbf{Agr.} & \textbf{Items} & \textbf{Agr.} \\
+\midrule
+REG & 53 & 85.7\% & 63 & 85.7\% \\
+NUM & 32 & 84.4\% & 44 & 59.1\% \\
+CON & 30 & 96.7\%\textsuperscript{$\kappa$=.918} & 35 & 88.6\%\textsuperscript{$\kappa$=.645} \\
+TMP & 35 & 77.1\% & 38 & 73.7\% \\
+\midrule
+\textbf{All} & \textbf{150} & \textbf{90.7\%} & \textbf{180} & \textbf{77.2\%} \\
+\bottomrule
+\end{tabular}
+\caption{Annotation validation: model-based secondary pass (150-item subset) and human
+inter-annotator agreement (180 items, three 60-item rounds, second annotator blind to reference
+answers). Cohen's $\kappa$ applies only to the binary CON task.}
+\label{tab:validation}
+\end{table}
+
+The 90.7\% overall agreement rate (Table~\ref{tab:validation}, left) exceeds the 80\% threshold
+commonly used as a benchmark quality criterion. Items with genuine disagreement ($\sim$1.3\% of the
+initial set) were removed.
+
+\subsection{Human Inter-Annotator Agreement}
+\label{sec:iaa}
+
+To provide rigorous empirical validation of single-annotator annotation quality, we conducted a
+human inter-annotator agreement (IAA) study in which a second independent human annotator completed
+three annotation rounds of 60 items each (180 items total; 44.3\% of the benchmark), drawn
+proportionally from all four task types and weighted toward medium and hard difficulty. The
+annotator worked from context passages and questions alone, without access to the primary
+annotator's reference answers at any stage.
+
+Agreement was then computed between the primary annotator's reference answers and the second
+annotator's responses, using the same four-stage scoring procedure applied to model predictions
+(Section~\ref{sec:scoring}); results are in Table~\ref{tab:validation} (right).
+
+The $\kappa$ = 0.645 for contradiction detection falls in the `substantial agreement' band by
+\citet{landiskoch1977} conventions, and is comparable to human agreement rates reported for similar
+binary contradiction detection tasks in legal NLP. The lower numerical reasoning agreement (59.1\%)
+reflects formatting conventions rather than substantive disagreement: reference answers often
+included intermediate calculation steps (e.g., `Rs.~19,000 crore maximum per Table~1 of the
+Directions'), whereas the second annotator provided only final values (`19,000 crore'). Post-hoc
+review of every discordant numerical item confirmed the computed values were equivalent in all
+cases; disagreements arose solely from intermediate-step presence, currency symbol style, and comma
+placement.
+
+\section{Experimental Setup}
+
+\subsection{Models}
+\label{sec:models}
+
+We evaluate twelve models spanning a wide range of sizes, providers, and access modes on the full
+406-item benchmark (Table~\ref{tab:models}, Appendix~\ref{app:models}): Gemini 2.5 Flash and Gemini
+2.5 Pro (Google APIs); Qwen3-32B, LLaMA-3.3-70B, Llama 4 Scout 17B, Kimi K2, GPT-OSS 120B, GPT-OSS
+20B, and DeepSeek-R1-Distill-Llama-70B (Groq API); and LLaMA-3-8B, Mistral-7B, and Gemma 4 E4B
+(Google's Gemma 3, 4B parameters) run locally via Ollama v0.6.5 in 4-bit quantization (Q4\_K\_M) on
+an RTX 4060 (8~GB). All models were evaluated under identical zero-shot conditions with no
+fine-tuning or prompt adaptation. Appendix~\ref{app:models} lists the exact identifier used for
+every model, drawn directly from the evaluation harness rather than restated from memory: the Groq
+and Google API identifiers passed to each provider's API, and for the three locally-run models, the
+Ollama tag pulled and its reported parameter count.
+
+\subsection{Prompting Strategy}
+
+Our evaluation follows the extractive QA paradigm established by SQuAD \citep{rajpurkar2016squad},
+in the same spirit as DROP's discrete-reasoning-over-text framing \citep{dua2019drop}, with context
+passages provided directly to the model under zero-shot, context-only constraints. This isolates
+the model's ability to reason about the supplied regulatory text from its ability to recall
+memorized facts; it does not by itself establish that the underlying regulatory documents are
+absent from any model's training corpus, only that the model cannot use such memorized content
+\emph{instead of} the supplied passage without the context-only instruction being violated. All
+models received a system prompt establishing the context-only constraint: ``You are an expert in
+Indian financial regulation and policy. Answer questions using ONLY the provided context passage.
+Do not use any external knowledge. Be concise and precise. Give only the answer---no preamble.''
+Task-specific user prompts provided appropriate formatting instructions for each task type. For
+contradiction detection, both passages were labelled explicitly as `Passage A / Passage B'. For
+numerical reasoning, models were instructed to show calculation steps and include units---an
+instruction in tension with the system prompt's ``no preamble'' constraint, which is one source of
+the format-versus-content gap that Section~\ref{sec:regime} measures directly. All models were
+evaluated under identical prompting and decoding settings (temperature = 0.0; completion budget 200
+tokens for API models, 300 for local models).
+
+We evaluate exclusively under zero-shot conditions, as this most closely reflects practical
+deployment where users query models without domain-specific priming, and because it eliminates
+confounds from example selection strategy and ordering effects. Few-shot results for four top
+models are reported in Appendix~\ref{app:fewshot}.
+
+\subsection{Scoring}
+\label{sec:scoring}
+
+Answers were scored using a multi-stage matching procedure applied in sequence: (1) exact match
+after case-normalization and punctuation stripping; (2) fuzzy token match using RapidFuzz
+\texttt{token\_set\_ratio} $\geq$ 0.72, applied when exact match fails, with the 0.72 threshold
+established by manual inspection of 20 borderline cases and validated against adjacent thresholds
+(0.65 and 0.80); (3) numerical extraction match, where the item is scored correct if the set of
+numbers extracted from both the reference and prediction are identical (handling currency symbols,
+comma separators, and units); and (4) Yes/No match for contradiction detection, comparing the
+leading word of the prediction to the reference. We refer to accuracy under this procedure as
+\textbf{strict} accuracy throughout.
+
+Section~\ref{sec:regime} evaluates a second, \textbf{judge-audited} regime over the same
+predictions: a cross-model judge (Section~\ref{sec:judge}) reviews every prediction on REG, NUM, and
+TMP---not only the ones strict scoring marks wrong---and returns an independent verdict. We use
+``judge-audited,'' not ``corrected'' or ``semantic,'' throughout: the judge is itself an imperfect
+measurement (Section~\ref{sec:judge} reports its own error rate against human adjudication), not a
+ground truth that strict scoring falls short of.
+
+DeepSeek-R1-Distill-Llama-70B was accessed through an endpoint that returns final answers without
+exposed reasoning traces; its stored predictions contain no chain-of-thought markup, so we make no
+claim about the content of its internal deliberation, only about its final output under the fixed
+completion budget shared by every model in the study.

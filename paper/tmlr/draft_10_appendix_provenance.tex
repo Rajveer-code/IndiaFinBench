@@ -1,0 +1,65 @@
+\section{Document Provenance and Clustered Significance Testing}
+\label{app:provenance}
+\label{app:clustering}
+
+\subsection{Document Provenance}
+
+The 192 documents listed in Appendix~\ref{app:sourcedocs} are the full collected corpus. The 406
+annotated items trace to \textbf{34} of them, spanning both regulators; Table~\ref{tab:provenance}
+summarises the distribution.
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{lr}
+\toprule
+Documents collected (full corpus) & 192 \\
+Documents represented in the 406 items & 34 \\
+Largest single document (item count) & 63 \\
+Median items per document & 6 \\
+\bottomrule
+\end{tabular}
+\caption{Document provenance summary. Full item-level provenance
+(\texttt{evaluation/provenance\_audit.csv}) is released with the benchmark.}
+\label{tab:provenance}
+\end{table}
+
+\subsection{Document-Clustered Bootstrap}
+
+Items sharing a source document are not independent draws. We construct resampling clusters as the
+connected components of a graph over the 34 documents, with an edge added between
+\texttt{document\_a} and \texttt{document\_b} for every contradiction-detection item---since a CON
+item depends on two documents jointly, keeping them in separate clusters would let dependence leak
+across the resampling unit boundary. This produced \textbf{27} connected components (sizes: 68, 48,
+46, 41, 41, 35, 20, 13, 12, 11, 11, 10, 9, 7, 6, 4, 4, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1); four are singleton
+documents that appear in no contradiction pair.
+
+We re-ran six headline paired-bootstrap comparisons (10,000 resamples each) at the document-cluster
+level rather than the item level: resampling clusters with replacement, and including every item in
+each drawn cluster's data, rather than resampling items directly. Table~\ref{tab:clustered} reports
+both.
+
+\begin{table}[h]
+\centering\small
+\begin{tabular}{lrr}
+\toprule
+Comparison & Item-level $p$ & Cluster-level $p$ \\
+\midrule
+Gemini 2.5 Flash vs.\ Qwen3-32B & 0.052 & 0.060 \\
+Gemini 2.5 Flash vs.\ Gemma 4 E4B & $<$0.001 & $<$0.001 \\
+Llama 4 Scout 17B vs.\ LLaMA-3.3-70B & 0.788 & 0.825 \\
+GPT-OSS 120B vs.\ GPT-OSS 20B & 0.904 & 0.936 \\
+Gemma 4 E4B vs.\ DeepSeek-R1-Distill & 0.186 & 0.424 \\
+Gemma 4 E4B vs.\ Mistral-7B & 0.254 & 0.431 \\
+Human vs.\ Gemini 2.5 Flash (60-item subset, 17 clusters) & 0.427 & 0.558 \\
+\bottomrule
+\end{tabular}
+\caption{Item-level vs.\ document-clustered bootstrap $p$-values. All seven comparisons agree in
+significance direction; clustering did not overturn a conclusion drawn anywhere in this paper.}
+\label{tab:clustered}
+\end{table}
+
+Cluster assignment was checked for correctness before use: every item maps to exactly one component,
+every document appears in exactly one component, and the procedure is deterministic under a fixed
+random seed (verified by re-running with an identical seed and confirming bitwise-identical output).
+We do not treat "the clustered interval is wider" as a correctness check---no such guarantee exists
+in general--- and instead verified the construction directly.

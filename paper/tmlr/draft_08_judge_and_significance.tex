@@ -1,0 +1,81 @@
+% ---------------------------------------------------------------------------
+% DRAFT 8 — Judge methodology (design, described before results land) and the
+% significance/tiers section update (36/15 pairs + clustered-bootstrap robustness).
+% [[JUDGE_RESULTS_PENDING]] marks every number that depends on the still-running
+% phi4-mini full-coverage pass. Do not submit with this marker present.
+% ---------------------------------------------------------------------------
+
+\subsection{Cross-Model Judge}
+\label{sec:judge}
+
+An LLM-as-judge audit is only as convincing as the judge's independence from what it is judging.
+The item-level judge used to compute judge-audited accuracy is Gemini 2.5 Flash---one of the twelve
+evaluated models. To assess whether this affects the audit, we additionally judge every REG/NUM/TMP
+prediction with \textbf{phi4-mini} (Microsoft Phi, 3.8B parameters), run locally via Ollama at zero
+cost. Phi shares no model family with any of the twelve benchmarked systems. We call this a
+\textbf{cross-model} judge, not an independent or ground-truth one: phi4-mini is a small model, and
+disagreement between it and Gemini 2.5 Flash is compatible with either judge being wrong, which is
+why we pair it with human adjudication rather than treating its verdict as final.
+
+The cross-model pass covers \textbf{every} REG/NUM/TMP prediction---344 items $\times$ 12 models
+$=$ 4{,}128 judgements---not only the items strict scoring marks wrong. Full coverage is what makes
+a strict \emph{false-positive} rate estimable for the first time: the original audit design, by
+construction, could only characterise false negatives. CON is excluded from both judges, matching
+the pipeline's existing rationale (Section~\ref{sec:scoring}): it is scored by exact Yes/No match
+against an unambiguous binary label, which does not benefit from semantic review.
+
+Before committing to the full pass we validated the judge on two small, targeted samples. On eight
+items Gemini 2.5 Flash itself answered correctly under strict scoring, phi4-mini agreed on all
+eight---a sanity check, not evidence of discrimination. On eight items DeepSeek-R1-Distill answered
+incorrectly under strict scoring, phi4-mini flipped seven to correct---in every case a genuine
+format mismatch (a digit where the reference used a written-out number, or a short preamble before
+the answer)---and correctly held the eighth as incorrect, where the model's predicted figure
+(``ten per cent'') simply did not match the reference (``twenty per cent''). The judge discriminates
+rather than rubber-stamping either the strict score or a blanket verdict.
+
+\textbf{[[JUDGE\_RESULTS\_PENDING]]} Table~\ref{tab:judgereliability} reports, for every model: the
+strict false-negative rate (items strict scoring marked wrong that the cross-model judge marks
+correct), the strict false-positive rate (the reverse), and agreement between the two judges
+(Cohen's $\kappa$). To resolve genuine disagreement between judges from cases where one judge is
+simply mistaken, we hand-adjudicate a sample stratified across task type, strict-correct/incorrect
+status, and model strength, deliberately oversampling items where the two judges disagree---these
+are the only cases informative about which judge is right. Appendix~\ref{app:judge} reports full
+per-item results and the manual-audit protocol.
+
+\textbf{Decision rule, stated before the results were examined.} If the cross-model judge supports
+DeepSeek-R1-Distill's strict-11th-to-corrected-1st reversal (Section~\ref{sec:regime}), we report it
+as the paper's central finding. If it does not, we report the discrepancy plainly and the paper's
+central finding becomes the effective-size result (Section~\ref{sec:effsize}) instead. We commit to
+this rule here, before running the full pass, specifically so that the choice of headline result is
+not made after seeing which one looks better.
+
+\subsection{Statistical Significance and Performance Tiers}
+\label{sec:significance}
+
+Paired bootstrap significance testing (10,000 resamples) across all 66 model pairs finds 36 pairs
+significantly different at $p < 0.05$, of which 15 survive Bonferroni correction
+($\alpha = 0.05/66 \approx 0.00076$). Three descriptive performance clusters organize the results
+under strict scoring; their boundaries are robust at the top and bottom of the ranking but
+statistical, not categorical, in the middle.
+
+\textbf{Tier 1 --- strong performers (81.5--89.7\%):} Gemini 2.5 Flash, Qwen3-32B, LLaMA-3.3-70B,
+Llama 4 Scout 17B, and Kimi K2. \textbf{Tier 2 --- middle performers (75--79\%):} LLaMA-3-8B,
+GPT-OSS 120B, GPT-OSS 20B, Gemini 2.5 Pro, Mistral-7B, and DeepSeek-R1-Distill.
+\textbf{Tier 3 --- weakest performer:} Gemma 4 E4B, alone at 70.4\%\footnote{[[JUDGE\_RESULTS\_PENDING:
+re-verify this tier assignment against the final strict table once the regime section is rebuilt;
+Gemma's corrected identity changes its position relative to several Tier 2 models.]]}.
+
+Every Tier 1 model separates from Gemma 4 E4B at the Bonferroni threshold. Within Tier 1, the four
+models below Gemini 2.5 Flash are statistically indistinguishable from one another ($p$ = 0.06--0.79),
+forming a genuine plateau rather than a fine-grained ranking. Section~\ref{sec:discussion} returns to
+two comparisons inside this plateau---Llama 4 Scout 17B vs.\ LLaMA-3.3-70B and GPT-OSS 120B vs.\ 20B---
+where a large parameter difference produces no measurable accuracy difference.
+
+\textbf{Robustness to document-level clustering.} 406 items are not 406 independent draws: they trace
+to 34 source documents (Section~\ref{sec:models}, Appendix~\ref{app:provenance}), and several
+contradiction-detection items link two documents at once. We re-ran the six comparisons above under
+a document-clustered bootstrap---resampling the 27 connected components formed by unioning documents
+that co-occur in any contradiction item, rather than resampling items directly---and every
+comparison agreed in significance with the item-level test, including the human-reference comparison
+in Section~\ref{sec:human}. Clustering did not overturn a single conclusion in this paper.
+Appendix~\ref{app:clustering} reports the full comparison and the clustering construction.

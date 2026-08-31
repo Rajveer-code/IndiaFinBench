@@ -1,0 +1,40 @@
+% [[PENDING: rebuild entirely from evaluation/results_judged_phi4/ once complete -- do not
+%  submit with Gemini-only judge verdicts and pre-fix Gemma error counts. See NUMBERS.md sec 12.]]
+
+\section{Error Analysis}
+\label{sec:errortax-sub}
+
+\subsection{Error Taxonomy}
+
+We classify model failures into four interpretable error types via a deterministic mapping from item task type and difficulty (released with the evaluation code; contradiction-detection errors map to TRF because the task probes supersession tracking, and hard REG items map to CGF):
+
+\textbf{Domain Knowledge Failure (DKF)}: unfamiliarity with Indian regulatory concepts, terminology, or thresholds. \textbf{Numerical Reasoning Failure (NRF)}: arithmetic errors---wrong calculation, unit conversion, or formula application despite the formula appearing in context. \textbf{Temporal Reasoning Failure (TRF)}: mis-ordering regulatory events, misidentifying the circular in force at a given time, or failing to track supersession. \textbf{Context Grounding Failure (CGF)}: using external knowledge instead of the passage, or failing to extract a span clearly present in context.
+
+Table~\ref{tab:errortax} shows error distributions for five key models under both scoring regimes: strict-pipeline errors, and residual errors that survive the item-level judge audit (Appendix~\ref{app:judge}). The distinction matters because strict errors mix true failures with format mismatches, whereas residual errors are the judge-confirmed failures.
+
+\begin{table*}[t]
+\centering\small
+\begin{tabular}{llrrrrr}
+\toprule
+\textbf{Model} & \textbf{Errors} & \textbf{DKF} & \textbf{NRF} & \textbf{TRF} & \textbf{CGF} & \textbf{Total} \\
+\midrule
+\multirow{2}{*}{Gemini 2.5 Flash} & strict & 12 (29\%) & 14 (33\%) & 14 (33\%) & 2 (5\%) & 42 \\
+ & residual & 6 (33\%) & 2 (11\%) & 10 (56\%) & 0 (0\%) & 18 \\
+\multirow{2}{*}{Qwen3-32B} & strict & 25 (42\%) & 21 (36\%) & 11 (19\%) & 2 (3\%) & 59 \\
+ & residual & 4 (24\%) & 5 (29\%) & 7 (41\%) & 1 (6\%) & 17 \\
+\multirow{2}{*}{LLaMA-3.3-70B} & strict & 25 (38\%) & 23 (35\%) & 18 (27\%) & 0 (0\%) & 66 \\
+ & residual & 4 (22\%) & 7 (39\%) & 7 (39\%) & 0 (0\%) & 18 \\
+\multirow{2}{*}{DeepSeek-R1-Distill-Llama-70B} & strict & 51 (50\%) & 28 (28\%) & 19 (19\%) & 3 (3\%) & 101 \\
+ & residual & 7 (50\%) & 3 (21\%) & 2 (14\%) & 2 (14\%) & 14 \\
+\multirow{2}{*}{Gemma 4 E4B} & strict & 29 (24\%) & 46 (38\%) & 43 (36\%) & 2 (2\%) & 120 \\
+ & residual & 18 (22\%) & 33 (40\%) & 29 (35\%) & 2 (2\%) & 82 \\
+\bottomrule
+\end{tabular}
+\caption{Error distribution by type for five key models under strict scoring and after judge correction (residual). DKF: Domain Knowledge Failure; NRF: Numerical Reasoning Failure; TRF: Temporal Reasoning Failure; CGF: Context Grounding Failure. Models selected as top performer (Gemini 2.5 Flash), bottom performer (Gemma 4 E4B), and three distinctive profiles. Counts derive from the released rule-based mapping and per-item judge verdicts; CON errors (mapped to TRF) are not judge-reviewed, so they persist into the residual column.}
+\label{tab:errortax}
+\end{table*}
+
+Three patterns emerge. First, for top-tier models the judge audit removes most numerical and domain-knowledge errors as format artifacts, leaving temporal-supersession failures as the largest residual category (Gemini 2.5 Flash: 56\%, Qwen3-32B: 41\%, LLaMA-3.3-70B: 39\%)---though residual totals are small (17--18 items), so these shares are indicative rather than precise. Second, DeepSeek-R1-Distill-Llama-70B's 101 strict errors collapse to 14 residual errors (86\% reclassified as format non-compliance), the largest correction of any model; its strict-error profile says more about its output format than its reasoning. Third, Gemma 4 E4B's errors barely move (120 $\rightarrow$ 82), confirming a genuine capability gap concentrated in numerical reasoning. Context Grounding Failure is rare in every regime.
+
+Representative failure examples for each error type are given in Appendix~\ref{app:examples}.
+

@@ -7,6 +7,10 @@ models = [
     'Kimi K2', 'LLaMA-3-8B', 'GPT-OSS 120B', 'GPT-OSS 20B',
     'Gemini 2.5 Pro', 'Mistral-7B', 'DeepSeek R1 70B', 'Gemma 4 E4B'
 ]
+# Display label only -- MODEL_FILES' internal key stays 'DeepSeek R1 70B' for
+# CSV lookups elsewhere; this is what actually renders on the axis.
+DISPLAY = {'DeepSeek R1 70B': 'DeepSeek-R1-Distill-Llama-70B'}
+labels = [DISPLAY.get(m, m) for m in models]
 
 # Data is loaded from the evaluation results files, never hardcoded, so this
 # figure cannot drift from the numbers in the paper. Verified 2026-08-31:
@@ -29,7 +33,7 @@ ax.set_xticklabels(['Regulatory\nInterpretation', 'Numerical\nReasoning',
                     'Contradiction\nDetection', 'Temporal\nReasoning'],
                    fontsize=10, fontweight='bold')
 ax.set_yticks(range(len(models)))
-ax.set_yticklabels(models, fontsize=9)
+ax.set_yticklabels(labels, fontsize=9)
 ax.xaxis.set_label_position('top')
 ax.xaxis.tick_top()
 

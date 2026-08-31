@@ -1,9 +1,3 @@
-% [[PENDING: this entire appendix block still carries pre-Gemma-fix, Gemini-only-judge numbers.
-%  Do not submit until Table C1 (Gemma CON row), Appendix D (judge stats), the models table,
-%  and the failure-example (Gemma REG example still valid conceptually, verify post-rerun),
-%  and Table 7 difficulty numbers are regenerated from evaluation/results/gemma4_e4b_results.csv
-%  and evaluation/results_judged_phi4/. See paper/tmlr/NUMBERS.md sec 12.]]
-
 \appendix
 
 \section{Source Document Categories}
@@ -42,7 +36,7 @@ GPT-OSS 20B & 95.2 & +9.7 & 97.2 \\
 Gemini 2.5 Pro & 93.5 & +8.0 & 91.6 \\
 Mistral-7B & 80.6 & $-$4.9 & 88.7 \\
 DeepSeek-R1-Distill-Llama-70B & 96.8 & +11.3 & 98.1 \\
-Gemma 4 E4B & 72.6 & $-$12.9 & 74.7 \\
+Gemma 4 E4B & 79.0 & $-$6.5 & 87.7 \\
 \midrule
 Majority baseline & 85.5 & --- & 50.0 \\
 \bottomrule
@@ -56,48 +50,33 @@ Majority baseline & 85.5 & --- & 50.0 \\
 
 The automated scoring pipeline (Section~\ref{sec:scoring}) uses four stages: exact match, fuzzy token matching (RapidFuzz \texttt{token\_set\_ratio} $\geq$ 0.72), numerical extraction match, and Yes/No match for contradiction detection. While rigorous, the pipeline penalizes answers that are semantically correct but formatted differently from the reference answer---a systematic limitation of string-based matching for open-ended regulatory QA.
 
-\subsection{Judge Validation Study}
+\subsection{Judge Rubric}
 
-To quantify this false-negative rate, we applied Gemini 2.5 Flash as a semantic judge over items marked incorrect across the twelve models on NUM, REG, and TMP task types. The strict pipeline flagged 935 such predictions; 874 were judged, and the remaining 61 (58 empty responses, 3 API failures) were retained as incorrect without review, since no semantic judgment can rescue an empty prediction. CON items use exact Yes/No matching and require no secondary validation. The judge received the question, reference answer, and model prediction, and returned CORRECT or INCORRECT with a one-sentence rationale.
+Both judges used in this paper---the Gemini 2.5 Flash pilot described below and the phi4-mini cross-model judge of Section~\ref{sec:judge}---were given the identical rubric, at temperature 0:
 
-Judge reliability was estimated on a stratified 28-item manual audit (20 NUM, 5 REG, 3 TMP). Manual review confirmed 25 of 28 verdicts (89.3\%) as correct. The three judge errors all involved multi-step numerical problems where the model showed correct intermediate reasoning but reached a wrong final answer (NUM\_074: predicted Rs.~19,000 crore vs.\ reference Rs.~33,000 crore; NUM\_103: concluded wrong direction for a threshold comparison; NUM\_136: applied wrong regulatory fee slab). These errors reflect the judge's tendency to over-credit partial reasoning chains on NUM items.
+\begin{quote}\small\noindent
+Determine if the model prediction is CORRECT.\\
+Rules:\\
+--- CORRECT if the final value or fact matches, even if: different formatting (currency symbols, comma separators, units), extra calculation steps shown before the final answer, paraphrasing of the same regulatory rule, or rounding within 1\%.\\
+--- INCORRECT only if: wrong number, wrong threshold, wrong date, wrong entity, or contradicts the reference.\\
+Reply with exactly: CORRECT or INCORRECT, plus a one-sentence reason.
+\end{quote}
 
-\subsection{Results}
+\subsection{Gemini Pilot}
 
-Across 874 judged predictions, the judge reclassified 685 from incorrect to correct---an overall flip rate of 78.4\% (REG: 261/327 = 79.8\%; NUM: 272/348 = 78.2\%; TMP: 152/199 = 76.4\%). Table~\ref{tab:d1} presents corrected accuracies computed directly from the item-level verdicts: a prediction counts as correct if the strict pipeline accepted it or the judge reclassified it, over the full 406-item denominator. No aggregate correction formula is involved, and every value is exactly reproducible from the released per-item audit log.
+Before committing to a full-coverage second judge, we piloted semantic re-scoring with Gemini 2.5 Flash---one of the twelve evaluated models---over items strict scoring marked incorrect across NUM, REG, and TMP. The strict pipeline flagged 935 such predictions; 874 were judged, and the remaining 61 (58 empty responses, 3 API failures) were retained as incorrect without review, since no semantic judgment can rescue an empty prediction. CON items use exact Yes/No matching and were not part of this pilot.
+
+Judge reliability was estimated on a stratified 28-item manual audit (20 NUM, 5 REG, 3 TMP). Manual review confirmed 25 of 28 verdicts (89.3\%) as correct. The three judge errors all involved multi-step numerical problems where the model showed correct intermediate reasoning but reached a wrong final answer (NUM\_074: predicted Rs.~19,000 crore vs.\ reference Rs.~33,000 crore; NUM\_103: concluded wrong direction for a threshold comparison; NUM\_136: applied wrong regulatory fee slab)---the judge's tendency to over-credit partial reasoning chains on NUM items, referenced in Section~\ref{sec:discussion}. Across the 874 judged predictions, Gemini reclassified 685 from incorrect to correct, an overall flip rate of 78.4\% (REG: 261/327 = 79.8\%; NUM: 272/348 = 78.2\%; TMP: 152/199 = 76.4\%).
+
+Because Gemini is itself one of the evaluated models and this pilot covered only strict failures---so it could characterise false negatives but not false positives---these results motivated, rather than substitute for, the full-coverage cross-model judge (phi4-mini, sharing no model family with any evaluated system, reviewing all 4{,}128 REG/NUM/TMP predictions including strict-correct ones) whose results are reported in Section~\ref{sec:judge} and Table~\ref{tab:judgereliability}. Item-level Gemini verdicts remain available at \texttt{evaluation/results\_judged/} in the repository; the final judge-audited accuracies used throughout this paper are computed from phi4-mini's full-coverage pass (\texttt{evaluation/results\_judged\_phi4/}), not from this pilot.
 
 \subsection{Root Causes}
 
-Three systematic causes account for the majority of false negatives: (1) \textit{Numeric format differences} --- models frequently use digits (`50\%', `365 days') while references use written numbers (`fifty per cent', `three hundred and sixty-five days'). (2) \textit{Verbose answers} --- models prefix the correct answer with calculation steps or regulatory citations. (3) \textit{Abbreviated answers} --- models give a shorter but correct version of the reference (e.g., ref = `Six months after completion of the open offer'; pred = `Six months').
+Three systematic causes, identified during the Gemini pilot and consistent with the phi4-mini false-negative cases, account for the majority of strict false negatives: (1) \textit{Numeric format differences} --- models frequently use digits (`50\%', `365 days') while references use written numbers (`fifty per cent', `three hundred and sixty-five days'). (2) \textit{Verbose answers} --- models prefix the correct answer with calculation steps or regulatory citations. (3) \textit{Abbreviated answers} --- models give a shorter but correct version of the reference (e.g., ref = `Six months after completion of the open offer'; pred = `Six months').
 
-\subsection{Interpretation}
+\subsection{Human Adjudication Protocol}
 
-The two scoring regimes bracket true accuracy: strict scores under-count because of format false negatives, while judge-corrected scores likely over-count, given the judge's audited tendency to over-credit correct intermediate reasoning that reaches a wrong final answer. The two regimes tell substantively different stories, and we report both rather than claiming invariance. Under correction, eleven of twelve models converge to 90.6--96.6\% and are largely statistically indistinguishable; only Gemma 4 E4B (79.8\%) remains separated from every other model (all pairwise p $<$ 0.05, paired bootstrap on corrected labels). Of the 42 pairwise comparisons significant under strict scoring, 18 remain significant under corrected scoring. The strict-scoring tier structure of Section~\ref{sec:significance} is therefore a property of format-sensitive evaluation---which is exactly the deployment condition it models---while corrected scoring shows that the underlying semantic capability of current mid-size and frontier models on this benchmark is far more uniform, with the notable exception of Gemma 4 E4B's persistent numerical deficit. Item-level verdicts and judge-corrected CSVs are released at \texttt{evaluation/results\_judged/} in the repository.
-
-\begin{table*}[t]
-\centering\footnotesize
-\begin{tabular}{lcccccc}
-\toprule
-\textbf{Model} & \textbf{REG} & \textbf{NUM} & \textbf{CON} & \textbf{TMP} & \textbf{Overall} \\
- & \textit{rep./corr.} & \textit{rep./corr.} & \textit{rep./corr.} & \textit{rep./corr.} & \textit{rep./corr.} \\
-\midrule
-Gemini 2.5 Flash & 93.1/97.1 & 84.8/97.8 & 88.7/88.7 & 88.5/94.9 & 89.7/95.6 \\
-Qwen3-32B & 85.1/97.1 & 77.2/94.6 & 90.3/90.3 & 92.3/98.7 & 85.5/95.8 \\
-LLaMA-3.3-70B & 86.2/97.7 & 75.0/92.4 & 95.2/95.2 & 79.5/94.9 & 83.7/95.6 \\
-Llama 4 Scout 17B & 86.2/96.6 & 66.3/94.6 & 98.4/98.4 & 84.6/94.9 & 83.3/96.1 \\
-Kimi K2 & 89.1/98.9 & 65.2/93.5 & 91.9/91.9 & 75.6/96.2 & 81.5/96.1 \\
-LLaMA-3-8B & 79.9/94.3 & 64.1/84.8 & 93.5/93.5 & 78.2/91.0 & 78.1/91.4 \\
-GPT-OSS 120B & 79.9/96.0 & 59.8/93.5 & 95.2/95.2 & 76.9/97.4 & 77.1/95.6 \\
-GPT-OSS 20B & 79.9/96.6 & 58.7/92.4 & 95.2/95.2 & 76.9/88.5 & 76.8/93.8 \\
-Gemini 2.5 Pro & 89.7/97.1 & 48.9/94.6 & 93.5/93.5 & 64.1/92.3 & 76.1/95.1 \\
-Mistral-7B & 79.9/98.3 & 66.3/82.6 & 80.6/80.6 & 74.4/91.0 & 75.9/90.6 \\
-DeepSeek-R1-Distill-Llama-70B & 72.4/95.4 & 69.6/96.7 & 96.8/96.8 & 70.5/98.7 & 75.1/96.6 \\
-Gemma 4 E4B & 83.9/90.2 & 50.0/64.1 & 72.6/72.6 & 62.8/80.8 & 70.4/79.8 \\
-\bottomrule
-\end{tabular}
-\caption{Reported (rep.) and judge-corrected (corr.) accuracies (\%) by task, computed item-by-item from the released audit log: corrected-correct = pipeline-correct $\cup$ judge-flipped, over the full 406-item denominator. CON was not judge-reviewed, so its values are identical in both regimes. Corrected values are an optimistic bound (see Interpretation); the strict and corrected columns bracket true accuracy.}
-\label{tab:d1}
-\end{table*}
+To check both judges against a human reader, we built a 238-item adjudication sheet (\texttt{annotation/judge\_audit/adjudication\_sheet.csv}, \texttt{scripts/build\_adjudication\_control\_sample.py}): the 174 REG/NUM/TMP items where Gemini and phi4-mini disagree---the only cases informative about which judge is right---plus a stratified control sample of 64 items (8 per stratum, fixed random seed) spanning cases where the available methods \emph{agree}: \texttt{\{REG,NUM,TMP\}\_strict\_incorrect\_judges\_agree} (both judges concur an item is wrong), \texttt{\{REG,NUM,TMP\}\_strict\_correct\_phi4\_agrees} (phi4-mini does not dispute a strict-correct item; no Gemini verdict exists for these, since Gemini only ever judged strict failures), and two CON strata (\texttt{CON\_strict\_correct\_no\_judge}, \texttt{CON\_strict\_incorrect\_no\_judge}) that spot-check the exact-match scorer directly, since CON is never judge-reviewed by either model. This sample is evidence about specific, informative cases, not a random draw sized to estimate a population-level judge error rate, and Section~\ref{sec:judge} reports it as such once adjudication is complete.
 
 \section{Evaluated Models}
 \label{app:models}
@@ -154,11 +133,11 @@ Figure~\ref{fig:pipeline} illustrates the dataset construction pipeline. Figure~
 
 \paragraph{Representative failure examples.}
 
-\textbf{Domain Knowledge Failure (Gemma 4 E4B, Regulatory Interpretation).} Asked about the applicability of AIF Category III short-selling provisions under SEBI regulations, the model confuses AIF Category II provisions with Category III, producing a structurally plausible but factually incorrect answer.
+\textbf{Domain Knowledge Failure (Gemma 4 E4B, Temporal Reasoning, item TMP\_039).} Asked whether a December~15, 2026 OTC derivative transaction is subject to Unique Transaction Identifier requirements that take effect January~1, 2027, the model answers ``Yes,'' misapplying the forward-looking effective date to a transaction entered into before it; the reference answer is ``No,'' since the requirements do not yet apply. (Hard temporal-reasoning items map to DKF under the taxonomy of Appendix~\ref{sec:errortax-sub}, since the failure is a substantive misunderstanding of when a rule takes effect, not a surface mismatch.)
 
 \textbf{Numerical Reasoning Failure (GPT-OSS 120B, Numerical Reasoning).} Given an RBI calculation requiring the maximum eligible dividend as a percentage of adjusted PAT, the model correctly identifies the relevant table but applies the wrong conditional threshold, computing the dividend at a higher rate than is warranted by the given capital ratio.
 
-\textbf{Temporal Reasoning Failure (DeepSeek-R1-Distill-Llama-70B, Temporal Reasoning).} Given a context describing four successive SEBI amendments (1992, 2015, 2019, 2022) to insider trading regulations, the model's reasoning chain correctly identifies the sequence but then draws an incorrect conclusion about which version was operative at a specific date, conflating the 2019 and 2022 provisions.
+\textbf{Temporal Reasoning Failure (DeepSeek-R1-Distill-Llama-70B, Temporal Reasoning, item TMP\_036).} Asked when the SEBI (Research Analysts) Regulations 2014---published September~1, 2014, effective ninety days later---came into force, the model answers ``November 29, 2014''; the reference date is November 30, 2014, one day later. The model's day-count method is correct; its arithmetic is off by one day.
 
 \textbf{Context Grounding Failure (LLaMA-3.3-70B, Contradiction Detection).} Given two RBI passages specifying the same 5\% non-competitive bidding allocation limit in different phrasing (`five per cent' vs.\ `5\%'), the model incorrectly identifies a contradiction based on surface-level differences rather than recognizing semantic equivalence.
 
@@ -170,7 +149,7 @@ Table~\ref{tab:difficulty} reports per-model accuracy by difficulty level; Figur
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig_correlation.png}
-\caption{Inter-task correlation matrix across the four task types. Values indicate Spearman $\rho$ correlation of per-model accuracy vectors across tasks (n=12 models). With n=12, the critical $\rho$ for significance at p$<$0.05 (two-tailed) is approximately 0.58; only the NUM--TMP correlation ($\rho$=0.69) reaches this threshold.}
+\caption{Inter-task correlation matrix across the four task types. Values indicate Spearman $\rho$ correlation of per-model accuracy vectors across tasks (n=12 models). With n=12, the critical $\rho$ for significance at p$<$0.05 (two-tailed) is approximately 0.58; no pairwise inter-task correlation reaches this threshold: NUM--TMP is the largest at $\rho$=0.50, REG--CON and NUM--CON are weakly negative ($\rho\approx-0.33$), and the remaining pairs are small and positive. Task performance is largely task-specific rather than reflecting one latent capability.}
 \label{fig:correlation}
 \end{figure}
 
@@ -192,7 +171,7 @@ GPT-OSS 20B & 75.0 & 79.7 & 73.4 \\
 Gemini 2.5 Pro\textdagger{} & 83.1 & 72.5 & 68.8 \\
 Mistral-7B & 74.4 & 76.9 & 76.6 \\
 DeepSeek-R1-Distill-Llama-70B & 72.5 & 77.5 & 75.0 \\
-Gemma 4 E4B & 82.5 & 64.8 & 56.2 \\
+Gemma 4 E4B & 82.5 & 74.7 & 81.2 \\
 \bottomrule
 \end{tabular}
 \caption{Accuracy (\%) by difficulty level (full 406-item evaluation, strict pipeline). \textdagger{}Verbose-output scoring artifact; see Appendix~\ref{app:judge}.}

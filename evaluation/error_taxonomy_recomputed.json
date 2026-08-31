@@ -1,0 +1,82 @@
+{
+  "Gemini 2.5 Flash": {
+    "strict": {
+      "DKF": 12,
+      "NRF": 14,
+      "TRF": 13,
+      "CGF": 3
+    },
+    "strict_total": 42,
+    "residual": {
+      "DKF": 4,
+      "NRF": 2,
+      "TRF": 7,
+      "CGF": 1
+    },
+    "residual_total": 14
+  },
+  "Qwen3-32B": {
+    "strict": {
+      "DKF": 25,
+      "NRF": 21,
+      "TRF": 10,
+      "CGF": 3
+    },
+    "strict_total": 59,
+    "residual": {
+      "DKF": 1,
+      "NRF": 3,
+      "TRF": 7,
+      "CGF": 1
+    },
+    "residual_total": 12
+  },
+  "LLaMA-3.3-70B": {
+    "strict": {
+      "DKF": 25,
+      "NRF": 23,
+      "TRF": 17,
+      "CGF": 1
+    },
+    "strict_total": 66,
+    "residual": {
+      "DKF": 0,
+      "NRF": 2,
+      "TRF": 5,
+      "CGF": 1
+    },
+    "residual_total": 8
+  },
+  "DeepSeek-R1-Distill-Llama-70B": {
+    "strict": {
+      "DKF": 51,
+      "NRF": 28,
+      "TRF": 19,
+      "CGF": 3
+    },
+    "strict_total": 101,
+    "residual": {
+      "DKF": 2,
+      "NRF": 1,
+      "TRF": 5,
+      "CGF": 0
+    },
+    "residual_total": 8
+  },
+  "Gemma 4 E4B": {
+    "strict": {
+      "DKF": 25,
+      "NRF": 27,
+      "TRF": 31,
+      "CGF": 3
+    },
+    "strict_total": 86,
+    "residual": {
+      "DKF": 1,
+      "NRF": 6,
+      "TRF": 15,
+      "CGF": 2
+    },
+    "residual_total": 24
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "yes_n": 9,
+  "no_n": 53,
+  "majority_baseline_pct": 85.5,
+  "per_model": {
+    "Gemini 2.5 Flash": {
+      "con_acc": 88.7,
+      "sensitivity": 88.9,
+      "specificity": 88.7,
+      "balanced_acc": 88.8
+    },
+    "Qwen3-32B": {
+      "con_acc": 90.3,
+      "sensitivity": 100.0,
+      "specificity": 88.7,
+      "balanced_acc": 94.3
+    },
+    "LLaMA-3.3-70B": {
+      "con_acc": 95.2,
+      "sensitivity": 100.0,
+      "specificity": 94.3,
+      "balanced_acc": 97.2
+    },
+    "Llama 4 Scout 17B": {
+      "con_acc": 98.4,
+      "sensitivity": 100.0,
+      "specificity": 98.1,
+      "balanced_acc": 99.1
+    },
+    "Kimi K2": {
+      "con_acc": 91.9,
+      "sensitivity": 100.0,
+      "specificity": 90.6,
+      "balanced_acc": 95.3
+    },
+    "LLaMA-3-8B": {
+      "con_acc": 93.5,
+      "sensitivity": 88.9,
+      "specificity": 94.3,
+      "balanced_acc": 91.6
+    },
+    "GPT-OSS 120B": {
+      "con_acc": 95.2,
+      "sensitivity": 100.0,
+      "specificity": 94.3,
+      "balanced_acc": 97.2
+    },
+    "GPT-OSS 20B": {
+      "con_acc": 95.2,
+      "sensitivity": 100.0,
+      "specificity": 94.3,
+      "balanced_acc": 97.2
+    },
+    "Gemini 2.5 Pro": {
+      "con_acc": 93.5,
+      "sensitivity": 88.9,
+      "specificity": 94.3,
+      "balanced_acc": 91.6
+    },
+    "Mistral-7B": {
+      "con_acc": 80.6,
+      "sensitivity": 100.0,
+      "specificity": 77.4,
+      "balanced_acc": 88.7
+    },
+    "DeepSeek-R1-Distill-Llama-70B": {
+      "con_acc": 96.8,
+      "sensitivity": 100.0,
+      "specificity": 96.2,
+      "balanced_acc": 98.1
+    },
+    "Gemma 4 E4B": {
+      "con_acc": 79.0,
+      "sensitivity": 100.0,
+      "specificity": 75.5,
+      "balanced_acc": 87.7
+    }
+  }
+}

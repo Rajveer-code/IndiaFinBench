@@ -1,15 +1,19 @@
+import csv
+import pathlib
+
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.stats import spearmanr
 
-# Per-model accuracy vectors across 4 tasks (12 models)
-REG = [93.1, 85.1, 86.2, 86.2, 89.1, 79.9, 79.9, 79.9, 89.7, 79.9, 72.4, 83.9]
-NUM = [84.8, 77.2, 75.0, 66.3, 65.2, 64.1, 59.8, 58.7, 48.9, 66.3, 69.6, 50.0]
-CON = [88.7, 90.3, 95.2, 98.4, 91.9, 93.5, 95.2, 95.2, 93.5, 80.6, 96.8, 72.6]
-TMP = [88.5, 92.3, 79.5, 84.6, 75.6, 78.2, 76.9, 76.9, 64.1, 74.4, 70.5, 62.8]
+# Per-model accuracy vectors across 4 tasks (12 models), loaded live from the
+# canonical task-accuracy matrix so this figure cannot drift from the numbers
+# in the paper. Previously hardcoded and went stale after the Gemma re-run.
+CSV_PATH = pathlib.Path(__file__).resolve().parents[2] / "evaluation" / "task_accuracy_matrix.csv"
+with open(CSV_PATH, newline="", encoding="utf-8") as f:
+    rows = {r["model"]: r for r in csv.DictReader(f)}
 
 tasks = ['REG', 'NUM', 'CON', 'TMP']
-vectors = [REG, NUM, CON, TMP]
+vectors = [[float(rows[m][t]) for m in rows] for t in tasks]
 
 corr_matrix = np.zeros((4, 4))
 for i in range(4):
@@ -35,7 +39,7 @@ for i in range(4):
 cbar = plt.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
 cbar.set_label("Spearman ρ", fontsize=9)
 
-plt.title('Inter-Task Correlation\n(Spearman ρ, n=12 models)',
+plt.title(f'Inter-Task Correlation\n(Spearman ρ, n={len(rows)} models)',
           fontsize=10, fontweight='bold')
 plt.tight_layout()
 plt.savefig('paper/figures/figure4_correlation.pdf', dpi=300, bbox_inches='tight')

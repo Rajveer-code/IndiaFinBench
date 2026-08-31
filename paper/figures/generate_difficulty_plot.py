@@ -1,30 +1,25 @@
+import csv
+import pathlib
+
 import matplotlib.pyplot as plt
-import numpy as np
 
-models = [
-    'Gemini 2.5 Flash', 'Qwen3-32B', 'LLaMA-3.3-70B', 'Llama 4 Scout 17B',
-    'Kimi K2', 'LLaMA-3-8B', 'GPT-OSS 120B', 'GPT-OSS 20B',
-    'Gemini 2.5 Pro', 'Mistral-7B', 'DeepSeek R1 70B', 'Gemma 4 E4B'
-]
+# Loaded live from the canonical difficulty breakdown so this figure cannot
+# drift from the numbers in the paper. Previously hardcoded and went stale
+# after the Gemma re-run (Medium/Hard rows changed materially).
+CSV_PATH = pathlib.Path(__file__).resolve().parents[2] / "evaluation" / "difficulty_breakdown.csv"
+with open(CSV_PATH, newline="", encoding="utf-8") as f:
+    rows = {r["model"]: r for r in csv.DictReader(f)}
 
-# Easy(n=160), Medium(n=182), Hard(n=64) — verified from 406-item CSVs
+DISPLAY = {'DeepSeek R1 70B': 'DeepSeek-R1-Distill-Llama-70B'}
+models = list(rows.keys())
 accuracy_by_difficulty = {
-    'Gemini 2.5 Flash':  [92.5, 89.0, 84.4],
-    'Qwen3-32B':         [81.9, 87.9, 87.5],
-    'LLaMA-3.3-70B':     [79.4, 85.2, 90.6],
-    'Llama 4 Scout 17B': [82.5, 81.9, 89.1],
-    'Kimi K2':           [81.9, 80.8, 82.8],
-    'LLaMA-3-8B':        [76.2, 79.7, 78.1],
-    'GPT-OSS 120B':      [79.4, 76.4, 73.4],
-    'GPT-OSS 20B':       [75.0, 79.7, 73.4],
-    'Gemini 2.5 Pro':    [83.1, 72.5, 68.8],   # was blank row — now filled
-    'Mistral-7B':        [74.4, 76.9, 76.6],
-    'DeepSeek R1 70B':   [72.5, 77.5, 75.0],
-    'Gemma 4 E4B':       [82.5, 64.8, 56.2],
+    m: [float(rows[m]["easy_acc"]), float(rows[m]["medium_acc"]), float(rows[m]["hard_acc"])]
+    for m in models
 }
 
 x = [0, 1, 2]
-x_labels = ['Easy\n(n=160)', 'Medium\n(n=182)', 'Hard\n(n=64)']
+easy_n, med_n, hard_n = rows[models[0]]["easy_n"], rows[models[0]]["medium_n"], rows[models[0]]["hard_n"]
+x_labels = [f'Easy\n(n={easy_n})', f'Medium\n(n={med_n})', f'Hard\n(n={hard_n})']
 
 # Colour scheme: tier-based
 tier1_color = '#2166ac'
@@ -47,14 +42,14 @@ for model, vals in accuracy_by_difficulty.items():
 
     ax.plot(x, vals, marker='o', color=color, linewidth=lw,
             markersize=5, zorder=zorder,
-            label=model if (model in tier1 or model in tier3) else '_nolegend_',
+            label=DISPLAY.get(model, model) if (model in tier1 or model in tier3) else '_nolegend_',
             alpha=0.85 if color != tier2_color else 0.5)
 
 # Label endpoints for key models
 key_labels = ['Gemini 2.5 Flash', 'Gemma 4 E4B', 'LLaMA-3.3-70B', 'Gemini 2.5 Pro']
 for model in key_labels:
     vals = accuracy_by_difficulty[model]
-    ax.annotate(model, xy=(2, vals[2]), xytext=(2.05, vals[2]),
+    ax.annotate(DISPLAY.get(model, model), xy=(2, vals[2]), xytext=(2.05, vals[2]),
                 fontsize=7.5, va='center')
 
 ax.set_xticks(x)

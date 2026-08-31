@@ -1,7 +1,7 @@
 {
-  "max_dissociation_model": "DeepSeek R1 70B",
-  "max_DI": 0.157,
+  "max_dissociation_model": "Gemini 2.5 Pro",
+  "max_DI": 0.1868,
   "min_dissociation_model": "Qwen3-32B",
   "min_DI": -0.0109,
-  "mean_DI": 0.0749
+  "mean_DI": 0.0842
 }

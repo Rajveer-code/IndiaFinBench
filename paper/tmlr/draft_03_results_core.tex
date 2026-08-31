@@ -39,30 +39,32 @@ scores share the better rank. Generated from the released per-item judge verdict
 \input{tables/table_regime.tex}
 \end{table}
 
-The regimes disagree about who is best. Strict accuracy spans 70.4--89.7\%, corrected accuracy
-79.8--96.6\%, and the two orderings are only weakly related: Spearman $\rho = 0.413$ ($p = 0.18$),
-Kendall $\tau = 0.313$ ($p = 0.17$). With twelve models these tests have little power, so we do not
-claim the rankings are independent---we claim the strict ranking is a poor predictor of the
-corrected one, which Figure~\ref{fig:regime} and Table~\ref{tab:regime} show directly. Eight of the
-twelve models move by two or more positions.
+The regimes disagree about who is best. Strict accuracy spans 75.1--89.7\%, judge-audited accuracy
+93.6--98.0\%, and the two orderings are essentially uncorrelated: Spearman $\rho = 0.113$
+($p = 0.73$), Kendall $\tau = 0.094$ ($p = 0.68$). With twelve models these tests have little power,
+so we do not claim the rankings are independent in a strict statistical sense---we claim the strict
+ranking is a poor predictor of the judge-audited one, which Figure~\ref{fig:regime} and
+Table~\ref{tab:regime} show directly. Ten of the twelve models move by two or more positions under
+competition ranking (ties share the better rank).
 
-A second effect is visible in the accuracies rather than the ranks. Setting aside Gemma 4 E4B, the
-weakest model and the only one whose errors survive the audit in bulk, the remaining eleven models
-span 14.6 points under strict scoring (75.1--89.7) and 6.0 points under corrected scoring
-(90.6--96.6). Correcting for format compliance compresses the field to a little over a third of its
-apparent spread, and three models tie outright at 95.6. Most of what a strict leaderboard displays
-as a capability gap between mid-table models is not a capability gap.
+A second effect is visible in the accuracies rather than the ranks. The full field spans 14.5 points
+under strict scoring (75.1--89.7) and just 4.4 points under judge-audited scoring (93.6--98.0).
+Correcting for format compliance compresses the field to under a third of its apparent spread. Most
+of what a strict leaderboard displays as a capability gap between mid-table models is not a
+capability gap.
 
-The clearest case is DeepSeek-R1-Distill, which ranks 11th of twelve under strict scoring and 1st under
-corrected scoring. Of its 101 strict errors, 87 are reclassified as correct---86.1\%---leaving 14
-genuine failures, the fewest of any model in the study. Its strict score is not a measurement of
-its regulatory reasoning. It is a measurement of how far its output format sits from the reference
-format, and the two happen to be far apart because the model narrates its working. The system
-prompt asked for an answer with no preamble; a model whose signature behaviour is visible reasoning
-is penalised for exactly that behaviour, under a rule that cannot tell narration from error.
+The clearest case is DeepSeek-R1-Distill, which ranks 12th of twelve---last place---under strict
+scoring and reaches an exact tie for 1st with LLaMA-3.3-70B under judge-audited scoring (both
+398/406, 98.0\%). Of its 99 strict errors on REG/NUM/TMP, 93 are reclassified as correct---93.9\%---
+leaving 6 genuine failures, the fewest of any model in the study. Its strict score is not a
+measurement of its regulatory reasoning. It is a measurement of how far its output format sits from
+the reference format, and the two happen to be far apart because the model narrates its working. The
+system prompt asked for an answer with no preamble; a model whose signature behaviour is visible
+reasoning is penalised for exactly that behaviour, under a rule that cannot tell narration from
+error.
 
 This has a practical reading that is not a criticism of string matching. A compliance workflow that
-consumes model output through a format-sensitive parser really would fail on those 87 items, and
+consumes model output through a format-sensitive parser really would fail on those 93 items, and
 for that deployment question the strict number is the honest one. What the strict number cannot do
 is answer the capability question, and the two are routinely reported as if they were the same
 quantity. A leaderboard that reports one accuracy figure has silently chosen which question to

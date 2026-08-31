@@ -36,14 +36,20 @@ the answer)---and correctly held the eighth as incorrect, where the model's pred
 (``ten per cent'') simply did not match the reference (``twenty per cent''). The judge discriminates
 rather than rubber-stamping either the strict score or a blanket verdict.
 
-\textbf{[[JUDGE\_RESULTS\_PENDING]]} Table~\ref{tab:judgereliability} reports, for every model: the
-strict false-negative rate (items strict scoring marked wrong that the cross-model judge marks
-correct), the strict false-positive rate (the reverse), and agreement between the two judges
-(Cohen's $\kappa$). To resolve genuine disagreement between judges from cases where one judge is
-simply mistaken, we hand-adjudicate a sample stratified across task type, strict-correct/incorrect
-status, and model strength, deliberately oversampling items where the two judges disagree---these
-are the only cases informative about which judge is right. Appendix~\ref{app:judge} reports full
-per-item results and the manual-audit protocol.
+Table~\ref{tab:judgereliability} reports, for every model, the strict false-negative rate (items
+strict scoring marked wrong that phi4-mini marks correct), the strict false-positive rate (the
+reverse---estimable for the first time because this pass covers every item, not only strict
+failures), and the resulting 406-item judge-audited accuracy. On the 874 items Gemini 2.5 Flash
+originally judged, phi4-mini agrees with it on 700 (\textbf{80.1\% raw agreement}). This is neither
+suspiciously high (which would suggest one judge merely rubber-stamping the other) nor low enough to
+call either judge unreliable outright; it indicates real, bounded disagreement between two models
+neither of which we treat as ground truth. To resolve genuine disagreement between judges from cases
+where one judge is simply mistaken, we hand-adjudicate a sample stratified across task type,
+strict-correct/incorrect status, and model strength, deliberately oversampling the 174 items where
+the two judges disagree---these are the only cases informative about which judge is right.
+Appendix~\ref{app:judge} reports full per-item results and the manual-audit protocol.
+\textbf{[[PENDING: human adjudication of the 174-item disagreement sample has not yet been
+performed; this paragraph should report its results before submission.]]}
 
 \textbf{Decision rule, stated before the results were examined.} If the cross-model judge supports
 DeepSeek-R1-Distill's strict-11th-to-corrected-1st reversal (Section~\ref{sec:regime}), we report it
@@ -62,17 +68,18 @@ under strict scoring; their boundaries are robust at the top and bottom of the r
 statistical, not categorical, in the middle.
 
 \textbf{Tier 1 --- strong performers (81.5--89.7\%):} Gemini 2.5 Flash, Qwen3-32B, LLaMA-3.3-70B,
-Llama 4 Scout 17B, and Kimi K2. \textbf{Tier 2 --- middle performers (75--79\%):} LLaMA-3-8B,
-GPT-OSS 120B, GPT-OSS 20B, Gemini 2.5 Pro, Mistral-7B, and DeepSeek-R1-Distill.
-\textbf{Tier 3 --- weakest performer:} Gemma 4 E4B, alone at 70.4\%\footnote{[[JUDGE\_RESULTS\_PENDING:
-re-verify this tier assignment against the final strict table once the regime section is rebuilt;
-Gemma's corrected identity changes its position relative to several Tier 2 models.]]}.
+Llama 4 Scout 17B, and Kimi K2, all four of the latter statistically indistinguishable from one
+another ($p$ = 0.06--0.79), forming a genuine plateau rather than a fine-grained ranking.
+\textbf{The remaining seven models (70--79\%)} do not separate into a clean second and third tier:
+Gemma 4 E4B (78.8\%) is significantly below only the five Tier 1 models and is statistically
+indistinguishable from every other model in the field ($p$ = 0.21--0.73), including
+DeepSeek-R1-Distill, Mistral-7B, Gemini 2.5 Pro, and both GPT-OSS variants. Under strict scoring the
+bottom seven models form one broad, largely undifferentiated cluster rather than the two-tier
+structure a cursory read of the ranking would suggest.
 
-Every Tier 1 model separates from Gemma 4 E4B at the Bonferroni threshold. Within Tier 1, the four
-models below Gemini 2.5 Flash are statistically indistinguishable from one another ($p$ = 0.06--0.79),
-forming a genuine plateau rather than a fine-grained ranking. Section~\ref{sec:discussion} returns to
-two comparisons inside this plateau---Llama 4 Scout 17B vs.\ LLaMA-3.3-70B and GPT-OSS 120B vs.\ 20B---
-where a large parameter difference produces no measurable accuracy difference.
+Section~\ref{sec:discussion} returns to two comparisons inside the Tier 1 plateau---Llama 4 Scout
+17B vs.\ LLaMA-3.3-70B and GPT-OSS 120B vs.\ 20B---where a large parameter difference produces no
+measurable accuracy difference.
 
 \textbf{Robustness to document-level clustering.} 406 items are not 406 independent draws: they trace
 to 34 source documents (Section~\ref{sec:models}, Appendix~\ref{app:provenance}), and several

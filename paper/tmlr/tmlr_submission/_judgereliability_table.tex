@@ -1,0 +1,24 @@
+\begin{table}[h]
+\centering\small
+\begin{tabular}{lrrr}
+\toprule
+Model & Strict FN\% & Strict FP\% & 406-item judge-audited acc. \\
+\midrule
+Gemini 2.5 Flash & 80.0 & 9.1 & 96.5 \\
+Qwen3-32B & 88.7 & 6.2 & 97.0 \\
+LLaMA-3.3-70B & 92.1 & 13.5 & 98.0 \\
+Llama 4 Scout 17B & 88.1 & 3.6 & 97.8 \\
+Kimi K2 & 94.3 & 6.6 & 97.8 \\
+Gemma 4 E4B & 84.9 & 10.3 & 94.1 \\
+LLaMA-3-8B & 80.0 & 9.7 & 94.8 \\
+GPT-OSS 120B & 92.2 & 5.9 & 97.5 \\
+GPT-OSS 20B & 92.3 & 7.1 & 97.5 \\
+Gemini 2.5 Pro & 89.2 & 4.0 & 96.5 \\
+Mistral-7B & 83.7 & 12.0 & 93.6 \\
+DeepSeek-R1-Distill & 93.9 & 9.4 & 98.0 \\
+\bottomrule
+\end{tabular}
+\caption{Cross-model judge (phi4-mini) reliability by model, full REG/NUM/TMP coverage (344 items
+each). FN/FP rates relative to strict scoring; final column is 406-item accuracy including CON.}
+\label{tab:judgereliability}
+\end{table}

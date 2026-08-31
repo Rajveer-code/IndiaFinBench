@@ -610,3 +610,39 @@ Limitations rather than left only in this ledger.
 Recompiled clean after all changes (0 errors).
 
 **Not yet done (R3.4):** the anonymized supplementary package. Phase 6.5, still outstanding.
+
+---
+
+## 16. MILESTONE — phi4-mini judge complete, decision gate CONFIRMED (2026-09-01)
+
+Full coverage: 4,128/4,128 REG/NUM/TMP predictions judged, all 12 models × 344 items.
+
+**Decision gate (committed in §9 before results were seen): CONFIRMED.** DeepSeek-R1-Distill reverses
+from strict rank **12 (dead last, not 11th as earlier drafts said)** to judge-audited rank **1**, in
+an **exact tie with LLaMA-3.3-70B** (both 398/406 = 98.03%, verified to full precision, not a
+rounding artifact). 93.9% of its strict errors (93 of 99) are format non-compliance, not wrong
+reasoning — up from the old Gemini-only figure of 86%.
+
+**A ranking bug caught before it shipped:** the first pass of `analyze_phi4_judge.py` used plain
+positional ranking, which silently broke this exact tie by assigning arbitrary distinct ranks.
+Rebuilt with competition ranking (same fix already applied once before to the Gemini-based table;
+evidently needed applying again for a second, independent script). Corrected: **10 of 12 models**
+move ≥2 ranks (not 8), full field compresses from **14.5pp to 4.4pp** (not 14.6/6.0), Spearman
+$\rho=0.113$, $p=0.73$ (essentially uncorrelated — not the earlier 0.413/0.455, both computed on
+stale tables).
+
+**Gemini-vs-phi4-mini raw agreement: 80.1%** (700/874 on Gemini's originally-judged pool) — real,
+bounded, neither suspiciously high nor low. The 174 disagreement items are the sheet for human
+adjudication: `annotation/judge_audit/adjudication_sheet.csv` (built, not yet filled).
+
+**Tier structure corrected.** Gemma is no longer an isolated "Tier 3" — under corrected bootstrap
+significance it's indistinguishable from 7 of the other 11 models (p=0.21–0.73), including
+DeepSeek-R1-Distill, Mistral-7B, Gemini 2.5 Pro, and both GPT-OSS variants. Only the 5 Tier-1 models
+separate significantly. Rewrote the tier paragraph rather than patch it.
+
+Regenerated: `paper/tables/table_regime.tex`, `paper/figures/figure_regime_shift.png/pdf`,
+`_judgereliability_table.tex` (new). All copied into `tmlr_submission/`. Full manuscript recompiles
+clean (0 errors) with all of the above integrated.
+
+**`PRE_SUBMISSION_AUDIT.py`: 1 failure, and it's the correct one** — the human-adjudication
+`[[PENDING]]` marker. Every automatable check passes.

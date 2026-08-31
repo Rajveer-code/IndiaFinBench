@@ -437,3 +437,46 @@ cases are known.
 **Correction to the master plan's own estimate:** the plan said "4,872 predictions (12×406)". The
 real full-coverage scope under the existing JUDGE_TASKS design is **4,128** (12×344, CON excluded),
 not 4,872.
+
+---
+
+## 10. Phase 1 — provenance audit and document-clustered significance (2026-08-31)
+
+`scripts/provenance_and_clustered_bootstrap.py`. Confirms and quantifies the finding in §8: 34
+documents represented (not 192 — that's the collected corpus), connected-component clustering
+(merging documents co-linked by any CON item) yields **27 independent clusters**.
+
+| Quantity | Value |
+|---|---|
+| Documents collected (corpus) | 192 (92 SEBI + 100 RBI) |
+| Documents represented in the 406 QA items | **34** |
+| Connected components (resampling units) | **27** |
+| Largest component | 68 items |
+| Median component | 7 items |
+| Components of size 1 | 4 |
+
+**Correctness checks passed:** clusters disjoint and exhaustive (every item in exactly one, no
+document in two components); fixed-seed determinism confirmed (identical output across two runs).
+Note: "clustered CI must be wider than item-level" is **not** a valid check and was not used — no
+such mathematical guarantee exists.
+
+**Headline comparisons — item-level vs document-clustered bootstrap, all six AGREE in
+significance:**
+
+| Pair | Item p | Cluster p | Conclusion |
+|---|---|---|---|
+| Gemini 2.5 Flash vs Qwen3-32B | 0.0517 | 0.0600 | agree (n.s.) |
+| Gemini 2.5 Flash vs Gemma 4 E4B | 0.0000 | 0.0000 | agree (sig.) |
+| Llama 4 Scout 17B vs LLaMA-3.3-70B | 0.7878 | 0.8251 | agree (n.s.) |
+| GPT-OSS 120B vs GPT-OSS 20B | 0.9037 | 0.9355 | agree (n.s.) |
+| Gemma 4 E4B vs DeepSeek R1 70B | 0.1856 | 0.4242 | agree (n.s.) |
+| Gemma 4 E4B vs Mistral-7B | 0.2540 | 0.4307 | agree (n.s.) |
+| **Human vs Gemini 2.5 Flash (60-item subset)** | 0.4272 | 0.5581 | **agree (n.s.)** |
+
+**This is a genuine strength for the paper, not a caveat to bury.** Clustering did not overturn a
+single headline conclusion — the human-comparison claim, the parameter-efficiency null results, and
+the significance/non-significance pattern all survive the independence correction. State this
+explicitly rather than only in a robustness appendix.
+
+Outputs: `evaluation/provenance_audit.csv`, `evaluation/provenance_summary.json`,
+`evaluation/clustered_bootstrap.json`.

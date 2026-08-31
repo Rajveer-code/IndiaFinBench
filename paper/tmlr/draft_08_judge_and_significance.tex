@@ -22,7 +22,10 @@ $=$ 4{,}128 judgements---not only the items strict scoring marks wrong. Full cov
 a strict \emph{false-positive} rate estimable for the first time: the original audit design, by
 construction, could only characterise false negatives. CON is excluded from both judges, matching
 the pipeline's existing rationale (Section~\ref{sec:scoring}): it is scored by exact Yes/No match
-against an unambiguous binary label, which does not benefit from semantic review.
+against an unambiguous binary label, which does not benefit from semantic review. Excluding it is
+conservative for the disagreement rates we report below, not convenient: CON is the one task where
+strict and judge-based scoring would agree almost by construction, so its absence removes a source
+of trivial agreement rather than manufacturing disagreement elsewhere.
 
 Before committing to the full pass we validated the judge on two small, targeted samples. On eight
 items Gemini 2.5 Flash itself answered correctly under strict scoring, phi4-mini agreed on all
@@ -73,9 +76,16 @@ where a large parameter difference produces no measurable accuracy difference.
 
 \textbf{Robustness to document-level clustering.} 406 items are not 406 independent draws: they trace
 to 34 source documents (Section~\ref{sec:models}, Appendix~\ref{app:provenance}), and several
-contradiction-detection items link two documents at once. We re-ran the six comparisons above under
-a document-clustered bootstrap---resampling the 27 connected components formed by unioning documents
-that co-occur in any contradiction item, rather than resampling items directly---and every
-comparison agreed in significance with the item-level test, including the human-reference comparison
-in Section~\ref{sec:human}. Clustering did not overturn a single conclusion in this paper.
-Appendix~\ref{app:clustering} reports the full comparison and the clustering construction.
+contradiction-detection items link two documents at once. We re-ran \emph{all 66} pairwise
+comparisons under a document-clustered bootstrap---resampling the 27 connected components formed by
+unioning documents that co-occur in any contradiction item, rather than resampling items
+directly---not only the comparisons this paper singles out as findings, since checking only
+hand-picked pairs would risk an unrepresentatively reassuring picture. The clustered test finds
+\textbf{29 of 66} pairs significant at $p<0.05$ (item-level: 36) and \textbf{11} surviving Bonferroni
+correction (item-level: 15--16, itself boundary-sensitive to Monte Carlo noise across independent
+10,000-resample runs). \textbf{Nine pairs flip significance direction} under clustering---all among
+comparisons this paper does not otherwise discuss. Every comparison this paper specifically reports
+as a finding, including the human-reference comparison in Section~\ref{sec:human}, agrees in
+direction between the two tests: the correction changes the overall significance count meaningfully
+(36$\to$29) without overturning any conclusion this paper draws. Appendix~\ref{app:clustering}
+reports the full 66-pair comparison and the clustering construction.

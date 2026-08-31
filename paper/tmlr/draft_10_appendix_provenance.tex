@@ -33,10 +33,12 @@ across the resampling unit boundary. This produced \textbf{27} connected compone
 46, 41, 41, 35, 20, 13, 12, 11, 11, 10, 9, 7, 6, 4, 4, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1); four are singleton
 documents that appear in no contradiction pair.
 
-We re-ran six headline paired-bootstrap comparisons (10,000 resamples each) at the document-cluster
-level rather than the item level: resampling clusters with replacement, and including every item in
-each drawn cluster's data, rather than resampling items directly. Table~\ref{tab:clustered} reports
-both.
+We re-ran paired-bootstrap significance testing (10,000 resamples) at the document-cluster level for
+\textbf{all 66 pairwise comparisons}, plus the human-reference comparison separately: resampling
+clusters with replacement, and including every item in each drawn cluster's data, rather than
+resampling items directly. Table~\ref{tab:clustered} reports the seven comparisons discussed in the
+main text; the full 66-pair table is released with the evaluation code
+(\texttt{evaluation/clustered\_bootstrap\_full66.json}).
 
 \begin{table}[h]
 \centering\small
@@ -53,8 +55,11 @@ Gemma 4 E4B vs.\ Mistral-7B & 0.254 & 0.431 \\
 Human vs.\ Gemini 2.5 Flash (60-item subset, 17 clusters) & 0.427 & 0.558 \\
 \bottomrule
 \end{tabular}
-\caption{Item-level vs.\ document-clustered bootstrap $p$-values. All seven comparisons agree in
-significance direction; clustering did not overturn a conclusion drawn anywhere in this paper.}
+\caption{Item-level vs.\ document-clustered bootstrap $p$-values for the seven comparisons discussed
+in the main text. All seven agree in significance direction. Across the full 66-pair table, 29 of 66
+are significant under clustering versus 36 item-level, and 9 pairs (not shown here, none discussed
+in the main text) flip significance direction --- see the released full comparison for the complete
+picture rather than only these seven.}
 \label{tab:clustered}
 \end{table}
 

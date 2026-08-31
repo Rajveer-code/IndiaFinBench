@@ -578,3 +578,35 @@ directly from Phase 1 outputs).
 **Still explicitly pending** (do not remove markers before the judge finishes): the regime table
 (`tab:judgereliability`), the entire reused appendix/error-analysis block (marked `[[PENDING]]` at
 its own top), and the abstract/results "excluding Gemma" compression claim.
+
+---
+
+## 15. Phase 7 — hostile review (2026-08-31)
+
+`paper/tmlr/HOSTILE_REVIEW.md`: three adversarial passes on stable (non-judge-dependent) content.
+Most objections were already addressed by existing hedged framing; two produced real fixes:
+
+**R2.2 (statistical) — real gap, now closed.** The clustered-bootstrap robustness check only
+re-tested 6-7 hand-picked headline pairs, all of which happened to agree with the item-level test —
+a reviewer could reasonably call this cherry-picked. Re-ran clustered bootstrap on **all 66 pairs**:
+29/66 significant at p<0.05 under clustering (36 item-level), 11 survive Bonferroni (15-16
+item-level, itself boundary-noisy across independent runs), and **9 pairs flip significance
+direction** — none of which the paper discusses as a specific finding. The "clustering overturned
+nothing" claim was too strong for the full picture; corrected to the honest version: every
+comparison the paper actually draws a conclusion from agrees between the two tests, but the
+correction changes the whole-table count meaningfully. Full results:
+`evaluation/clustered_bootstrap_full66.json`.
+
+**R3.1 (novelty) — real risk, addressed with one paragraph.** The single most dangerous objection at
+TMLR: "scoring regimes disagree" alone is folklore, not a contribution. Added an explicit sentence
+in the Introduction distinguishing the paper's actual claim (magnitude and structure of the
+disagreement under controlled same-items measurement) from the weaker, already-known claim.
+
+Two minor hedges added: the CON-exclusion-is-conservative-not-convenient point (R1.1), and an honest
+statement that the Gemma identity confirmation, while high-confidence, rests on consistency with the
+paper's own methods text rather than a fully independent primary record (R1.2) — added to
+Limitations rather than left only in this ledger.
+
+Recompiled clean after all changes (0 errors).
+
+**Not yet done (R3.4):** the anonymized supplementary package. Phase 6.5, still outstanding.

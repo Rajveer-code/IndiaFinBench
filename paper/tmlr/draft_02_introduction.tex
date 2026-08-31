@@ -14,6 +14,13 @@ computes the right dividend and writes it as \texttt{19,000 crore} where the ref
 \texttt{Rs.\ 19,000 crore} has reasoned correctly and scored zero. Under string-matching evaluation
 this is indistinguishable from not knowing the answer.
 
+That string-match and semantic scoring can disagree is not itself a new observation. What this paper
+adds is a measurement of how large and structured that disagreement is under controlled
+conditions---the same 406 items, the same twelve models, a domain chosen specifically to block
+memorization---rather than an isolated anecdote: an eleven-rank reversal for one model, a field-wide
+compression to a third of its apparent spread, and an independent finding that roughly half the
+items carrying that leaderboard don't discriminate between the systems on it at all.
+
 The usual response is to treat such cases as noise---a small, uniform tax on every model that leaves
 rankings intact. We show that this assumption fails, and that it fails hardest for exactly the models
 whose output style diverges most from the reference format. Reasoning-oriented models, which

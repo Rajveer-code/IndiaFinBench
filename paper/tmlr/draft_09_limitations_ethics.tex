@@ -32,6 +32,15 @@ items (44.3\%) across three rounds with CON agreement stable at $\kappa$ = 0.645
 open-ended tasks reflects the same verbosity artifact documented in Appendix~\ref{app:judge}.
 Few-shot evaluation was conducted on only four top-performing models (Appendix~\ref{app:fewshot}).
 
+One checkpoint identity rests on inference rather than a surviving primary record: Gemma's local
+Ollama tag was re-confirmed as \texttt{gemma3:4b} via the API's own model-metadata endpoint
+(4,299,915,632 parameters, family \texttt{gemma3}) after an initial ambiguity in the evaluation
+script, and this matches the parameter count already stated in our own methods text---which is
+consistent evidence, not fully independent confirmation, since the methods text and the re-run
+identity could in principle have been aligned to each other rather than to an external record. We
+consider this resolved with reasonable confidence but flag the residual uncertainty rather than
+overstating it as settled fact.
+
 A structural limitation shared across all evaluations is context-injection: models receive the
 relevant passage directly rather than retrieving it from the full document corpus, testing reading
 comprehension over a provided excerpt rather than the retrieval or full-document understanding

@@ -2,18 +2,22 @@
 
 Run this before submitting and nothing else. Every check either passes or
 prints exactly why it failed. No manual interpretation should be needed.
+Checks are exact-equality where a real value is known; a "close enough" (>=)
+check hides exactly the kind of silent regression this script exists to catch.
 
 Usage: python PRE_SUBMISSION_AUDIT.py
 """
 import csv
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent
 TEX_DIR = ROOT / "paper" / "tmlr"
 SUB_DIR = TEX_DIR / "tmlr_submission"
+MAIN_TEX = SUB_DIR / "main.tex"
 
 failures = []
 warnings = []
@@ -33,7 +37,6 @@ def warn(name, detail=""):
 
 print("=== SCIENTIFIC ===")
 
-# 12 models, 406 items each, no duplicate ids, no FAIL predictions
 import sys as _sys
 _sys.path.insert(0, str(ROOT))
 from scripts.novel_methods_utils import MODEL_FILES, RESULTS_DIR  # noqa: E402
@@ -41,8 +44,20 @@ from scripts.novel_methods_utils import MODEL_FILES, RESULTS_DIR  # noqa: E402
 n_models = len(MODEL_FILES)
 check("12 models in MODEL_FILES", n_models == 12, f"found {n_models}")
 
+# Canonical item-id set from the dataset itself -- catches missing/substituted
+# ids that a same-length, no-internal-dupes check alone would miss.
+dataset = json.loads((ROOT / "annotation/raw_qa/indiafinbench_qa_combined_406.json").read_text(encoding="utf-8"))
+if isinstance(dataset, dict):
+    dataset = dataset.get("items", dataset.get("data", list(dataset.values())[0]))
+canonical_ids = {item["id"] for item in dataset}
+check("dataset has exactly 406 canonical item ids", len(canonical_ids) == 406, f"found {len(canonical_ids)}")
+canonical_by_task = {}
+for item in dataset:
+    canonical_by_task.setdefault(item["task_type"], set()).add(item["id"])
+
 all_406 = True
 no_dupes = True
+ids_match_canonical = True
 total_fails = 0
 for label, fname in MODEL_FILES.items():
     path = RESULTS_DIR / fname
@@ -58,20 +73,27 @@ for label, fname in MODEL_FILES.items():
     if len(ids) != len(set(ids)):
         no_dupes = False
         warn(f"{label}: duplicate item ids")
+    if set(ids) != canonical_ids:
+        ids_match_canonical = False
+        missing = canonical_ids - set(ids)
+        extra = set(ids) - canonical_ids
+        warn(f"{label}: id set does not match canonical dataset",
+             f"missing={len(missing)} extra={len(extra)}")
     total_fails += sum(1 for r in rows if "FAIL" in r.get("prediction", ""))
 
-check("all 12 models have 406 items", all_406)
-check("no duplicate item ids", no_dupes)
+check("all 12 models have exactly 406 items", all_406)
+check("no duplicate item ids in any model", no_dupes)
+check("every model's id set exactly matches the canonical dataset", ids_match_canonical)
 # The paper documents 3 API failures (part of "61: 58 empty + 3 API failures" in
 # Section 4.3) as an expected, scored-incorrect-by-design outcome, not a data bug.
-check("FAIL-prediction count matches documented methodology", total_fails == 3,
+check("FAIL-prediction count matches documented methodology (exactly 3)", total_fails == 3,
       f"found {total_fails}, paper documents 3 API failures -- investigate if this changed")
 
-# Provenance: 34 documents
+# Provenance: exactly 34 documents
 prov_path = ROOT / "evaluation" / "provenance_summary.json"
 if prov_path.exists():
     prov = json.load(open(prov_path, encoding="utf-8"))
-    check("provenance: 34 documents represented", prov["documents_represented_in_qa"] == 34,
+    check("provenance: exactly 34 documents represented", prov["documents_represented_in_qa"] == 34,
           f"found {prov['documents_represented_in_qa']}")
 else:
     check("provenance_summary.json exists", False)
@@ -81,34 +103,105 @@ gemma_path = RESULTS_DIR / "gemma4_e4b_results.csv"
 if gemma_path.exists():
     rows = list(csv.DictReader(open(gemma_path, encoding="utf-8")))
     versions = {r.get("model_version", "") for r in rows}
-    check("Gemma results use confirmed gemma3:4b identity", versions == {"gemma3:4b"},
+    check("Gemma results use confirmed gemma3:4b identity, exactly", versions == {"gemma3:4b"},
           f"found versions: {versions}")
 
-# Cross-model judge: full coverage
+# Cross-model judge: exact full coverage, exact per-model coverage, exact id match
 judge_dir = ROOT / "evaluation" / "results_judged_phi4"
+reg_num_tmp_ids = canonical_by_task.get("regulatory_interpretation", set()) \
+    | canonical_by_task.get("numerical_reasoning", set()) \
+    | canonical_by_task.get("temporal_reasoning", set())
+check("REG+NUM+TMP canonical ids total exactly 344", len(reg_num_tmp_ids) == 344,
+      f"found {len(reg_num_tmp_ids)}")
 if judge_dir.exists():
-    total_judged = sum(len(list(csv.DictReader(open(f, encoding="utf-8"))))
-                        for f in judge_dir.glob("*.csv"))
-    check("cross-model judge: full 4128-item coverage complete", total_judged >= 4128,
-          f"{total_judged}/4128 -- STILL RUNNING, this must be 4128 before submission")
+    judge_files = sorted(judge_dir.glob("*.csv"))
+    total_judged = 0
+    judge_all_344 = True
+    judge_ids_match = True
+    for f in judge_files:
+        jrows = list(csv.DictReader(open(f, encoding="utf-8")))
+        total_judged += len(jrows)
+        if len(jrows) != 344:
+            judge_all_344 = False
+            warn(f"{f.name}: {len(jrows)}/344 judged items")
+        if {r["id"] for r in jrows} != reg_num_tmp_ids:
+            judge_ids_match = False
+            warn(f"{f.name}: judged id set does not match canonical REG+NUM+TMP ids")
+    check("cross-model judge: exactly 12 model files present", len(judge_files) == 12,
+          f"found {len(judge_files)}")
+    check("cross-model judge: exactly 344 items per model", judge_all_344)
+    check("cross-model judge: every model's judged ids match canonical REG+NUM+TMP set", judge_ids_match)
+    check("cross-model judge: exactly 4128-item total coverage", total_judged == 4128,
+          f"{total_judged}/4128 -- STILL RUNNING or incomplete, this must be exactly 4128 before submission")
 else:
     check("evaluation/results_judged_phi4/ exists", False, "judge has not been run")
+
+# Document-clustered bootstrap: current, full 66-pair coverage
+clustered_path = ROOT / "evaluation" / "clustered_bootstrap_full66.json"
+if clustered_path.exists():
+    clustered = json.load(open(clustered_path, encoding="utf-8"))
+    check("clustered bootstrap: exactly 66 pairs (full table, not a subset)",
+          clustered.get("n_pairs") == 66, f"found {clustered.get('n_pairs')}")
+else:
+    check("evaluation/clustered_bootstrap_full66.json exists", False)
+
+# Human-adjudication sheet: correct structure (fill status is separately gated below)
+adjud_path = ROOT / "annotation" / "judge_audit" / "adjudication_sheet.csv"
+if adjud_path.exists():
+    adjud_rows = list(csv.DictReader(open(adjud_path, encoding="utf-8")))
+    groups = {r.get("sample_group", "") for r in adjud_rows}
+    check("adjudication sheet: exactly 238 rows (174 disagreement + 64 control)",
+          len(adjud_rows) == 238, f"found {len(adjud_rows)}")
+    check("adjudication sheet: both sample groups present",
+          groups == {"disagreement", "control_agreement"}, f"found groups: {groups}")
+else:
+    check("annotation/judge_audit/adjudication_sheet.csv exists", False)
+
+# Figure/data consistency: every generated figure/table must be newer than the
+# source data it was built from -- a stale copy is exactly the bug class this
+# check exists to catch (fig_heatmap.png etc. sat 4+ hours stale, pre-Gemma-fix,
+# undetected until a manual read caught it).
+print("\n=== FIGURE/DATA CONSISTENCY ===")
+SOURCE_FILES = list(RESULTS_DIR.glob("*.csv")) + [
+    ROOT / "evaluation" / "task_accuracy_matrix.csv",
+    ROOT / "evaluation" / "difficulty_breakdown.csv",
+    ROOT / "evaluation" / "phi4_regime_table.json",
+] + list((ROOT / "evaluation" / "results_judged_phi4").glob("*.csv"))
+newest_source_mtime = max(f.stat().st_mtime for f in SOURCE_FILES if f.exists())
+
+GENERATED_OUTPUTS = [
+    SUB_DIR / "figures" / "fig_heatmap.png",
+    SUB_DIR / "figures" / "fig_correlation.png",
+    SUB_DIR / "figures" / "fig_difficulty.png",
+    SUB_DIR / "figures" / "fig_radar.png",
+    SUB_DIR / "figures" / "figure_regime_shift.png",
+    SUB_DIR / "tables" / "table_regime.tex",
+    SUB_DIR / "tables" / "table_errortax.tex",
+]
+for out in GENERATED_OUTPUTS:
+    if out.exists():
+        check(f"{out.name}: newer than all source data", out.stat().st_mtime >= newest_source_mtime,
+              f"{out.name} predates a source file -- regenerate it")
+    else:
+        check(f"{out.name} exists", False)
 
 print("\n=== MANUSCRIPT ===")
 
 STALE_STRINGS = [
-    "69.0", "n = 100", "42 pairs", "0.041", "0.455", "0.364",
-    "0.790", "0.910", "0.861", "0.057", "19.3-point", "26.3-point",
+    "69.0", "n = 100", "42 pairs", "0.041", "0.455", "0.364", "0.413",
+    "0.790", "0.910", "0.861", "0.057", "19.3-point", "26.3-point", "29.5-point",
     "DeepSeek R1 70B",  # must be DeepSeek-R1-Distill-Llama-70B / DeepSeek-R1-Distill
+    "70.4--89.7", "79.8--96.6",  # pre-judge abstract accuracy ranges
+    "corrected accuracy", "corrected scoring", "corrected regime",
+    "11th of twelve", "11th to 1st", "strict-11th",
+    "remaining eleven span",  # the removed "excluding Gemma" compression framing
+    "86\\% reclassified", "86.1\\% reclassified",  # pre-phi4 DeepSeek reclassification figure
 ]
 # "semantic scoring" was blocklisted outright, but it has a legitimate descriptive use
 # (contrasting it with strict scoring, e.g. in a novelty-framing sentence) -- the actual
 # hazard is describing OUR judge-audited pipeline AS semantic/ground-truth, which
 # terminology consistency handles elsewhere, not a bare-phrase ban. Removed as
 # overly blunt (caught its own author's legitimate sentence on first tightening).
-# The false claim was specifically "items ... drawn from / span 192 documents" --
-# 192 alone is the correct, accurate size of the *collected corpus* and appears
-# legitimately throughout. Match only the actual false pattern.
 STALE_PATTERNS = [
     # The false claim was "items ... 192" with nothing correcting it in between.
     # "34 of 192" / "34 of these 192" is the correct, fixed phrasing -- exclude it
@@ -116,10 +209,6 @@ STALE_PATTERNS = [
     (r"\bitems?\s+.{0,15}?(?:drawn from|span(?:ning)?)\s+(?!34\b)192\b",
      "items drawn from/span 192 without the '34 of' correction (false -- should be 34)"),
 ]
-# "corrected accuracy" is legitimate ONLY inside the explicitly-pending appendix
-# block (marked [[PENDING]] at its own top); flagged separately via the
-# pending-marker check below rather than blocklisted outright, since the
-# post-judge appendix rewrite will retire the phrase along with the marker.
 
 main_tex = SUB_DIR / "main.tex"
 assembled_text = ""
@@ -144,12 +233,18 @@ if main_tex.exists():
         hit = re.search(pat, assembled_text)
         check(f"no stale pattern: {desc}", not hit, hit.group(0) if hit else "")
 
-    pending_markers = re.findall(r"\[\[([A-Z_]+)\]\]", assembled_text)
+    # Broad marker match: any [[...]] bracket pair, not just an all-caps single
+    # token. The narrow \[\[([A-Z_]+)\]\] version missed the real, prose-style
+    # "[[PENDING: human adjudication ...]]" marker and only caught an unrelated
+    # stale header comment -- exactly the kind of false-green result this script
+    # must not produce.
+    pending_markers = re.findall(r"\[\[.*?\]\]", assembled_text, flags=re.DOTALL)
     if pending_markers:
-        check("no [[PENDING]] markers remain", False,
-              f"{len(pending_markers)} found: {set(pending_markers)}")
+        previews = [m[:60].replace("\n", " ") + ("..." if len(m) > 60 else "") for m in pending_markers]
+        check("zero [[PENDING]] markers remain", False,
+              f"{len(pending_markers)} found: {previews}")
     else:
-        check("no [[PENDING]] markers remain", True)
+        check("zero [[PENDING]] markers remain", True)
 
     check("LLM-use footnote present", "Use of AI assistance" in assembled_text)
     check("human-subject statement present", "Institutional review status" in assembled_text)
@@ -166,6 +261,57 @@ if main_tex.exists():
           "accepted" not in re.search(r"usepackage(\[[^\]]*\])?\{tmlr\}", assembled_text).group(0)
           if re.search(r"usepackage(\[[^\]]*\])?\{tmlr\}", assembled_text) else False)
     check("no \\author{} block (anonymous)", r"\author{" not in assembled_text)
+
+print("\n=== COMPILATION ===")
+
+if main_tex.exists():
+    try:
+        result = subprocess.run(
+            ["latexmk", "-pdf", "-interaction=nonstopmode", "-f", "main.tex"],
+            cwd=SUB_DIR, capture_output=True, text=True, timeout=180)
+        log_path = SUB_DIR / "main.log"
+        log_text = log_path.read_text(encoding="utf-8", errors="replace") if log_path.exists() else ""
+        pdf_path = SUB_DIR / "main.pdf"
+
+        check("main.pdf produced", pdf_path.exists())
+        latex_errors = re.findall(r"^! .+$", log_text, flags=re.MULTILINE)
+        check("zero LaTeX errors in compile log", len(latex_errors) == 0,
+              f"{len(latex_errors)} found: {latex_errors[:5]}")
+        undefined_refs = re.findall(r"Reference `[^']+' on page \d+ undefined", log_text)
+        check("zero undefined references", len(undefined_refs) == 0,
+              f"{len(undefined_refs)} found: {undefined_refs[:5]}")
+        undefined_cites = re.findall(r"Citation `[^']+' on page \d+ undefined", log_text)
+        check("zero undefined citations", len(undefined_cites) == 0,
+              f"{len(undefined_cites)} found: {undefined_cites[:5]}")
+
+        page_match = re.search(r"Output written on main\.pdf \((\d+) pages?", log_text)
+        total_pages = int(page_match.group(1)) if page_match else None
+
+        # Main-content page count, measured up to \label{sec:mainend} placed
+        # immediately before \bibliography in main.tex -- TMLR has no hard page
+        # limit, but the 12pp fast-review target is a real strategic goal, so
+        # this is a soft target (warn), not a hard fail, unless wildly exceeded.
+        aux_path = SUB_DIR / "main.aux"
+        main_content_pages = None
+        if aux_path.exists():
+            aux_text = aux_path.read_text(encoding="utf-8", errors="replace")
+            m = re.search(r"\\newlabel\{sec:mainend\}\{\{[^}]*\}\{(\d+)\}", aux_text)
+            if m:
+                main_content_pages = int(m.group(1))
+        if main_content_pages is not None:
+            print(f"  [INFO] main content runs to page {main_content_pages} (12pp is the fast-review target, not a hard limit)")
+            if main_content_pages > 16:
+                warn("main content well over the 12pp fast-review target", f"{main_content_pages} pages")
+        else:
+            warn("could not measure main-content page count", "add \\label{sec:mainend} before \\bibliography in main.tex")
+        if total_pages is not None:
+            print(f"  [INFO] total pages (incl. appendix/references): {total_pages}")
+    except FileNotFoundError:
+        check("latexmk available", False, "install MiKTeX/TeX Live or compile manually before submitting")
+    except subprocess.TimeoutExpired:
+        check("compile completes within 180s", False)
+else:
+    check("main.tex exists for compilation", False)
 
 print("\n" + "=" * 60)
 if failures:

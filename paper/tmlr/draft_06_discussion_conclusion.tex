@@ -7,12 +7,12 @@
 
 \subsection{What a Single Accuracy Number Hides}
 
-The strict and corrected regimes rank the same twelve models on the same 406 items, and they
+The strict and judge-audited regimes rank the same twelve models on the same 406 items, and they
 disagree about the ordering. That disagreement is not noise to be averaged away; it is the
 measurement telling us that two distinct quantities have been collapsed into one. Strict accuracy
-measures what a format-sensitive pipeline can extract. Corrected accuracy measures what the model
+measures what a format-sensitive pipeline can extract. Judge-audited accuracy measures what the model
 appears to know. For most models the two are close, which is why the conflation usually goes
-unnoticed. For a model that narrates its reasoning, they differ by twenty points and eleven ranks.
+unnoticed. For a model that narrates its reasoning, they differ by twenty-three points and eleven ranks.
 
 The practical consequence is that a leaderboard cannot be read without knowing which question it
 answers. If the intended use is an automated compliance pipeline that parses model output
@@ -24,7 +24,7 @@ guess which of these they are looking at.
 We would not argue for replacing string matching with judge-based scoring. Judges have their own
 failure modes, and ours is no exception: our manual audit found the judge correct on 25 of 28 items,
 and all three errors ran the same direction---over-crediting a model that showed sound intermediate
-work but reached a wrong final answer. That bias inflates corrected scores for exactly the verbose,
+work but reached a wrong final answer. That bias inflates judge-audited scores for exactly the verbose,
 reasoning-heavy models that strict scoring penalises. The two regimes err in opposite directions,
 which is the argument for reporting both and treating the interval between them as the honest
 statement of what is known.
@@ -68,7 +68,7 @@ Benchmark accuracy is reported as a property of a model. It is a property of a m
 rule together, and on IndiaFinBench those two contributions are separable and large. Scoring twelve
 LLMs under strict string matching and under an item-level judge audit of every flagged error
 produces two rankings that agree only weakly: the model placed last under strict scoring places
-first under corrected scoring, because 86\% of its strict errors are format non-compliance rather
+first under judge-audited scoring, because 93.9\% of its strict errors are format non-compliance rather
 than incorrect reasoning. Neither regime is wrong. They answer different questions, and reporting
 one alone leaves the reader unable to tell which.
 

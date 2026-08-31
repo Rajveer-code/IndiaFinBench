@@ -5,19 +5,21 @@ here, is a 406-item expert-annotated benchmark over SEBI and RBI regulatory text
 regulatory interpretation, numerical reasoning, contradiction detection, and temporal reasoning; it
 is built on a corpus where models cannot fall back on memorised Western financial text, which makes
 the comparison sharper. We evaluate twelve contemporary LLMs zero-shot under two scoring regimes: a
-strict four-stage string-matching pipeline, and an item-level judge audit of all 874 flagged errors,
-itself checked against manual review (89.3\% agreement on a 28-item stratified audit).
+strict four-stage string-matching pipeline, and a judge-audited regime in which a cross-model
+judge---sharing no model family with any evaluated system---reviews every regulatory-interpretation,
+numerical-reasoning, and temporal-reasoning prediction, not only the ones strict scoring marks wrong.
 
-The regimes disagree, and the disagreement is not cosmetic. Strict accuracy spans 70.4--89.7\%;
-judge-corrected accuracy spans 79.8--96.6\%. DeepSeek-R1-Distill-Llama-70B, a reasoning-distilled model, ranks
-12th of twelve (last place) under strict scoring and 1st under judge-corrected scoring, because
-93.9\% of its strict errors are format non-compliance rather than wrong reasoning. Nine of the
-twelve models move by two or more ranks, and the two orderings are only weakly related (Spearman
-$\rho = 0.413$,
-$p = 0.18$), so a strict leaderboard says little about which model reasons better. The correction
-also compresses the field: excluding the weakest model, the remaining eleven span 14.6 points under
-strict scoring and 6.0 under corrected scoring. Most of the apparent capability gap between
-mid-table models is format compliance.
+The regimes disagree, and the disagreement is not cosmetic. Strict accuracy spans 75.1--89.7\%;
+judge-audited accuracy spans 93.6--98.0\%. DeepSeek-R1-Distill-Llama-70B, a reasoning-distilled model, ranks
+12th of twelve (last place) under strict scoring and reaches an exact tie for 1st under judge-audited
+scoring (both DeepSeek-R1-Distill-Llama-70B and LLaMA-3.3-70B at 398/406, 98.0\%), because
+93.9\% of its strict errors are format non-compliance rather than wrong reasoning. Ten of the
+twelve models move by two or more ranks, and the two orderings are essentially uncorrelated (Spearman
+$\rho = 0.113$,
+$p = 0.73$), so a strict leaderboard says little about which model reasons better. Judge auditing
+also compresses the field: the twelve-model spread narrows from 14.5 points under strict scoring to
+4.4 under judge-audited scoring. Most of the apparent capability gap across the field is format
+compliance, not reasoning.
 
 Item-level analysis compounds the problem. At least 11 of the 12 models answer 213 of the 406 items
 correctly, so those items separate almost no pair of systems; the benchmark's discriminative signal

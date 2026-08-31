@@ -10,13 +10,12 @@
 \label{sec:regime}
 
 Every model was scored twice over identical predictions. The strict regime is the four-stage
-string-matching pipeline of Section~\ref{sec:scoring}. The corrected regime takes every prediction
-the strict pipeline marked wrong on REG, NUM, and TMP---874 items across the twelve models---and
-submits it to an item-level judge that sees the question, the reference answer, and the prediction,
-and returns a verdict with a one-sentence rationale. Contradiction-detection items use exact Yes/No
-matching and need no semantic review. The judge reclassified 685 of the 874 flagged predictions as
-correct, an overall flip rate of 78.4\% (REG 261/327, NUM 272/348, TMP 152/199). A stratified
-28-item manual audit of the judge's own verdicts confirmed 25 of 28, or 89.3\%.
+string-matching pipeline of Section~\ref{sec:scoring}. The judge-audited regime submits every
+regulatory-interpretation, numerical-reasoning, and temporal-reasoning prediction---not only the
+ones strict scoring marked wrong---to a cross-model judge (phi4-mini, Section~\ref{sec:judge}) that
+shares no model family with any of the twelve evaluated systems, and returns a verdict with a
+one-sentence rationale. Contradiction-detection items use exact Yes/No matching and need no semantic
+review.
 
 Nothing about the models changed between the two regimes. Only the rule changed.
 
@@ -25,14 +24,14 @@ Nothing about the models changed between the two regimes. Only the rule changed.
 \includegraphics[width=0.86\linewidth]{figures/figure_regime_shift.png}
 \caption{Model rank under strict string matching (left) and under the item-level judge audit
 (right), over identical predictions. Coloured lines move by two or more positions. DeepSeek-R1-Distill
-(red) moves from 11th to 1st. Tied scores share a rank.}
+(red) moves from 12th to 1st. Tied scores share a rank.}
 \label{fig:regime}
 \end{figure}
 
 \begin{table}[t]
 \centering
 \caption{Accuracy and rank under both scoring regimes. Strict is the automated string-matching
-pipeline; corrected applies the item-level judge verdict. Ranks are competition ranks, so tied
+pipeline; judge-audited applies the cross-model judge verdict. Ranks are competition ranks, so tied
 scores share the better rank. Generated from the released per-item judge verdicts by
 \texttt{scripts/generate\_regime\_figure.py}.}
 \label{tab:regime}

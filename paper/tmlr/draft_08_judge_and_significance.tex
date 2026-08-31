@@ -1,8 +1,9 @@
 % ---------------------------------------------------------------------------
-% DRAFT 8 — Judge methodology (design, described before results land) and the
-% significance/tiers section update (36/15 pairs + clustered-bootstrap robustness).
-% [[JUDGE_RESULTS_PENDING]] marks every number that depends on the still-running
-% phi4-mini full-coverage pass. Do not submit with this marker present.
+% DRAFT 8 — Judge methodology and the significance/tiers section (36/15 pairs
+% + clustered-bootstrap robustness). The phi4-mini full-coverage pass and the
+% 238-item adjudication sheet (174 disagreement + 64 stratified control) are
+% both complete; the one remaining PENDING marker below is genuine and
+% intentional -- it clears only once Rajveer has filled in the human verdicts.
 % ---------------------------------------------------------------------------
 
 \subsection{Cross-Model Judge}
@@ -43,16 +44,20 @@ failures), and the resulting 406-item judge-audited accuracy. On the 874 items G
 originally judged, phi4-mini agrees with it on 700 (\textbf{80.1\% raw agreement}). This is neither
 suspiciously high (which would suggest one judge merely rubber-stamping the other) nor low enough to
 call either judge unreliable outright; it indicates real, bounded disagreement between two models
-neither of which we treat as ground truth. To resolve genuine disagreement between judges from cases
-where one judge is simply mistaken, we hand-adjudicate a sample stratified across task type,
-strict-correct/incorrect status, and model strength, deliberately oversampling the 174 items where
-the two judges disagree---these are the only cases informative about which judge is right.
-Appendix~\ref{app:judge} reports full per-item results and the manual-audit protocol.
-\textbf{[[PENDING: human adjudication of the 174-item disagreement sample has not yet been
-performed; this paragraph should report its results before submission.]]}
+neither of which we treat as ground truth. To resolve genuine disagreement between judges and check
+whether agreement between methods also tracks human judgment, we hand-adjudicate 238 items: the 174
+REG/NUM/TMP items where Gemini and phi4-mini disagree---the only cases informative about which judge
+is right---plus a stratified control sample of 64 items (8 per stratum) spanning judge-agreement
+cases across strict-correct/incorrect status and all four task types, including two
+contradiction-detection strata that spot-check the exact-match scorer directly, since CON is never
+judge-reviewed by either model. The control sample is evidence about specific, informative cases, not
+a random draw sized to estimate a population-level judge error rate, and we do not report it as one.
+Appendix~\ref{app:judge} reports the full sampling protocol and per-item results.
+\textbf{[[PENDING: human adjudication of the 238-item sheet (174 disagreement + 64 stratified
+control) has not yet been performed; this paragraph should report its results before submission.]]}
 
 \textbf{Decision rule, stated before the results were examined.} If the cross-model judge supports
-DeepSeek-R1-Distill's strict-11th-to-corrected-1st reversal (Section~\ref{sec:regime}), we report it
+DeepSeek-R1-Distill's strict-12th-to-judge-audited-1st reversal (Section~\ref{sec:regime}), we report it
 as the paper's central finding. If it does not, we report the discrepancy plainly and the paper's
 central finding becomes the effective-size result (Section~\ref{sec:effsize}) instead. We commit to
 this rule here, before running the full pass, specifically so that the choice of headline result is

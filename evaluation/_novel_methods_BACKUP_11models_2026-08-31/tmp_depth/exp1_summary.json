@@ -1,0 +1,79 @@
+{
+  "total_tmp_items": 78,
+  "tier_distribution": {
+    "High": 40,
+    "Medium": 28,
+    "Low": 10
+  },
+  "avg_complexity_score": 0.5034,
+  "avg_num_dates": 2.79,
+  "avg_amendment_count": 1.94,
+  "correlations": [
+    {
+      "model": "Gemini 2.5 Flash",
+      "spearman_r": -0.107,
+      "p_value": 0.3511,
+      "significant": false
+    },
+    {
+      "model": "GPT-OSS 20B",
+      "spearman_r": -0.093,
+      "p_value": 0.4165,
+      "significant": false
+    },
+    {
+      "model": "Kimi K2",
+      "spearman_r": -0.082,
+      "p_value": 0.4738,
+      "significant": false
+    },
+    {
+      "model": "Gemma 4 E4B",
+      "spearman_r": -0.071,
+      "p_value": 0.5349,
+      "significant": false
+    },
+    {
+      "model": "LLaMA-3-8B",
+      "spearman_r": 0.041,
+      "p_value": 0.7234,
+      "significant": false
+    },
+    {
+      "model": "GPT-OSS 120B",
+      "spearman_r": 0.043,
+      "p_value": 0.7068,
+      "significant": false
+    },
+    {
+      "model": "LLaMA-3.3-70B",
+      "spearman_r": 0.047,
+      "p_value": 0.6811,
+      "significant": false
+    },
+    {
+      "model": "Mistral-7B",
+      "spearman_r": 0.093,
+      "p_value": 0.4198,
+      "significant": false
+    },
+    {
+      "model": "Llama 4 Scout 17B",
+      "spearman_r": 0.153,
+      "p_value": 0.1806,
+      "significant": false
+    },
+    {
+      "model": "DeepSeek R1 70B",
+      "spearman_r": 0.212,
+      "p_value": 0.0619,
+      "significant": false
+    },
+    {
+      "model": "Qwen3-32B",
+      "spearman_r": 0.217,
+      "p_value": 0.0563,
+      "significant": false
+    }
+  ]
+}

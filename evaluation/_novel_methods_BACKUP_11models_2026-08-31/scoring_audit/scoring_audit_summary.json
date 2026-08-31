@@ -1,0 +1,25 @@
+{
+  "total_audited": 100,
+  "false_negative_rate": 0.35,
+  "partial_rate": 0.17,
+  "true_incorrect_rate": 0.48,
+  "by_task": [
+    {
+      "task_type": "contradiction_detection",
+      "false_negative_rate": 0.0
+    },
+    {
+      "task_type": "numerical_reasoning",
+      "false_negative_rate": 0.56
+    },
+    {
+      "task_type": "regulatory_interpretation",
+      "false_negative_rate": 0.52
+    },
+    {
+      "task_type": "temporal_reasoning",
+      "false_negative_rate": 0.32
+    }
+  ],
+  "implied_accuracy_correction": 0.175
+}

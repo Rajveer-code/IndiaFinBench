@@ -1,0 +1,169 @@
+item_idx,model,difficulty,event_score,ordering_score,final_score,standard_correct,rsts
+0,Gemini 2.5 Flash,medium,1,1,1,1,1.0
+1,Gemini 2.5 Flash,medium,0,0,0,1,0.0
+2,Gemini 2.5 Flash,medium,0,0,0,1,0.0
+3,Gemini 2.5 Flash,medium,0,0,0,0,0.0
+4,Gemini 2.5 Flash,medium,1,1,1,1,1.0
+5,Gemini 2.5 Flash,medium,0,1,0,1,0.25
+6,Gemini 2.5 Flash,medium,1,1,1,1,1.0
+7,Gemini 2.5 Flash,medium,1,1,0,1,0.5
+8,Gemini 2.5 Flash,medium,0,1,0,1,0.25
+9,Gemini 2.5 Flash,medium,0,0,0,1,0.0
+10,Gemini 2.5 Flash,medium,0,0,0,1,0.0
+11,Gemini 2.5 Flash,medium,0,0,0,1,0.0
+12,Gemini 2.5 Flash,medium,0,0,0,1,0.0
+13,Gemini 2.5 Flash,medium,0,0,0,1,0.0
+14,Gemini 2.5 Flash,medium,0,0,0,1,0.0
+15,Gemini 2.5 Flash,medium,0,0,0,1,0.0
+16,Gemini 2.5 Flash,medium,0,0,0,1,0.0
+17,Gemini 2.5 Flash,medium,0,0,0,1,0.0
+18,Gemini 2.5 Flash,medium,0,0,0,1,0.0
+19,Gemini 2.5 Flash,medium,1,1,0,0,0.5
+20,Gemini 2.5 Flash,easy,1,1,1,1,1.0
+21,Gemini 2.5 Flash,easy,0,0,0,1,0.0
+22,Gemini 2.5 Flash,easy,0,1,0,1,0.25
+23,Gemini 2.5 Flash,easy,1,1,1,1,1.0
+24,Gemini 2.5 Flash,easy,0,1,0,1,0.25
+25,Gemini 2.5 Flash,easy,0,0,0,1,0.0
+26,Gemini 2.5 Flash,easy,0,1,0,1,0.25
+27,Gemini 2.5 Flash,easy,0,1,0,1,0.25
+28,Gemini 2.5 Flash,easy,0,1,0,1,0.25
+29,Gemini 2.5 Flash,easy,0,1,0,0,0.25
+30,Gemini 2.5 Flash,easy,1,1,1,1,1.0
+31,Gemini 2.5 Flash,easy,0,1,0,1,0.25
+32,Gemini 2.5 Flash,easy,0,1,0,1,0.25
+33,Gemini 2.5 Flash,easy,1,1,1,1,1.0
+34,Gemini 2.5 Flash,easy,1,0,0,1,0.25
+35,Gemini 2.5 Flash,easy,1,1,1,1,1.0
+36,Gemini 2.5 Flash,easy,0,0,0,1,0.0
+37,Gemini 2.5 Flash,easy,1,1,1,1,1.0
+38,Gemini 2.5 Flash,easy,0,0,0,1,0.0
+39,Gemini 2.5 Flash,easy,1,1,1,1,1.0
+40,Gemini 2.5 Flash,hard,1,1,1,1,1.0
+41,Gemini 2.5 Flash,hard,1,1,1,1,1.0
+42,Gemini 2.5 Flash,hard,0,0,0,1,0.0
+43,Gemini 2.5 Flash,hard,0,0,0,1,0.0
+44,Gemini 2.5 Flash,hard,0,0,0,0,0.0
+45,Gemini 2.5 Flash,hard,0,0,0,1,0.0
+46,Gemini 2.5 Flash,hard,1,1,1,1,1.0
+47,Gemini 2.5 Flash,hard,1,1,1,1,1.0
+48,Gemini 2.5 Flash,hard,0,0,0,1,0.0
+49,Gemini 2.5 Flash,hard,1,1,1,1,1.0
+50,Gemini 2.5 Flash,hard,0,0,0,0,0.0
+51,Gemini 2.5 Flash,hard,1,1,1,1,1.0
+52,Gemini 2.5 Flash,hard,1,1,0,1,0.5
+53,Gemini 2.5 Flash,hard,0,0,0,1,0.0
+54,Gemini 2.5 Flash,hard,0,0,0,0,0.0
+55,Gemini 2.5 Flash,hard,1,1,1,1,1.0
+0,DeepSeek R1 70B,medium,1,1,1,1,1.0
+1,DeepSeek R1 70B,medium,0,1,0,0,0.25
+2,DeepSeek R1 70B,medium,1,1,1,0,1.0
+3,DeepSeek R1 70B,medium,1,1,0,0,0.5
+4,DeepSeek R1 70B,medium,1,1,1,1,1.0
+5,DeepSeek R1 70B,medium,1,1,1,1,1.0
+6,DeepSeek R1 70B,medium,1,1,1,1,1.0
+7,DeepSeek R1 70B,medium,1,1,1,1,1.0
+8,DeepSeek R1 70B,medium,1,1,0,1,0.5
+9,DeepSeek R1 70B,medium,1,1,1,1,1.0
+10,DeepSeek R1 70B,medium,1,1,0,1,0.5
+11,DeepSeek R1 70B,medium,0,0,0,1,0.0
+12,DeepSeek R1 70B,medium,0,0,0,1,0.0
+13,DeepSeek R1 70B,medium,1,1,1,1,1.0
+14,DeepSeek R1 70B,medium,0,0,0,1,0.0
+15,DeepSeek R1 70B,medium,1,1,1,1,1.0
+16,DeepSeek R1 70B,medium,0,0,0,1,0.0
+17,DeepSeek R1 70B,medium,1,1,1,1,1.0
+18,DeepSeek R1 70B,medium,1,1,1,1,1.0
+19,DeepSeek R1 70B,medium,1,1,1,0,1.0
+20,DeepSeek R1 70B,easy,1,1,1,1,1.0
+21,DeepSeek R1 70B,easy,1,1,1,1,1.0
+22,DeepSeek R1 70B,easy,1,1,1,1,1.0
+23,DeepSeek R1 70B,easy,1,1,1,1,1.0
+24,DeepSeek R1 70B,easy,0,1,0,0,0.25
+25,DeepSeek R1 70B,easy,1,1,1,1,1.0
+26,DeepSeek R1 70B,easy,1,1,1,1,1.0
+27,DeepSeek R1 70B,easy,1,1,1,1,1.0
+28,DeepSeek R1 70B,easy,1,1,1,1,1.0
+29,DeepSeek R1 70B,easy,1,1,1,1,1.0
+30,DeepSeek R1 70B,easy,1,1,1,1,1.0
+31,DeepSeek R1 70B,easy,1,1,1,0,1.0
+32,DeepSeek R1 70B,easy,0,0,0,0,0.0
+33,DeepSeek R1 70B,easy,1,1,1,0,1.0
+34,DeepSeek R1 70B,easy,1,1,1,1,1.0
+35,DeepSeek R1 70B,easy,1,1,1,1,1.0
+36,DeepSeek R1 70B,easy,0,0,0,0,0.0
+37,DeepSeek R1 70B,easy,1,1,1,0,1.0
+38,DeepSeek R1 70B,easy,1,1,0,1,0.5
+39,DeepSeek R1 70B,easy,1,1,1,1,1.0
+40,DeepSeek R1 70B,hard,1,1,1,1,1.0
+41,DeepSeek R1 70B,hard,1,1,1,1,1.0
+42,DeepSeek R1 70B,hard,0,0,0,1,0.0
+43,DeepSeek R1 70B,hard,1,1,1,1,1.0
+44,DeepSeek R1 70B,hard,1,1,0,1,0.5
+45,DeepSeek R1 70B,hard,1,0,0,0,0.25
+46,DeepSeek R1 70B,hard,1,1,1,1,1.0
+47,DeepSeek R1 70B,hard,1,1,1,0,1.0
+48,DeepSeek R1 70B,hard,1,1,1,1,1.0
+49,DeepSeek R1 70B,hard,1,1,1,1,1.0
+50,DeepSeek R1 70B,hard,0,0,0,0,0.0
+51,DeepSeek R1 70B,hard,1,1,0,0,0.5
+52,DeepSeek R1 70B,hard,1,0,0,0,0.25
+53,DeepSeek R1 70B,hard,0,1,0,1,0.25
+54,DeepSeek R1 70B,hard,0,0,0,1,0.0
+55,DeepSeek R1 70B,hard,1,1,1,1,1.0
+0,LLaMA-3.3-70B,medium,1,1,1,0,1.0
+1,LLaMA-3.3-70B,medium,0,1,0,1,0.25
+2,LLaMA-3.3-70B,medium,1,1,1,0,1.0
+3,LLaMA-3.3-70B,medium,1,1,0,1,0.5
+4,LLaMA-3.3-70B,medium,1,1,1,1,1.0
+5,LLaMA-3.3-70B,medium,0,1,0,1,0.25
+6,LLaMA-3.3-70B,medium,1,1,1,0,1.0
+7,LLaMA-3.3-70B,medium,0,1,0,1,0.25
+8,LLaMA-3.3-70B,medium,1,1,1,1,1.0
+9,LLaMA-3.3-70B,medium,1,1,1,1,1.0
+10,LLaMA-3.3-70B,medium,1,1,0,1,0.5
+11,LLaMA-3.3-70B,medium,1,1,1,1,1.0
+12,LLaMA-3.3-70B,medium,1,1,1,1,1.0
+13,LLaMA-3.3-70B,medium,1,1,1,1,1.0
+14,LLaMA-3.3-70B,medium,1,1,0,0,0.5
+15,LLaMA-3.3-70B,medium,1,1,1,1,1.0
+16,LLaMA-3.3-70B,medium,1,1,1,1,1.0
+17,LLaMA-3.3-70B,medium,1,1,0,1,0.5
+18,LLaMA-3.3-70B,medium,1,1,0,1,0.5
+19,LLaMA-3.3-70B,medium,1,1,1,0,1.0
+20,LLaMA-3.3-70B,easy,1,1,0,0,0.5
+21,LLaMA-3.3-70B,easy,1,1,1,1,1.0
+22,LLaMA-3.3-70B,easy,1,1,1,1,1.0
+23,LLaMA-3.3-70B,easy,1,1,1,1,1.0
+24,LLaMA-3.3-70B,easy,1,1,1,1,1.0
+25,LLaMA-3.3-70B,easy,1,1,1,1,1.0
+26,LLaMA-3.3-70B,easy,1,1,1,1,1.0
+27,LLaMA-3.3-70B,easy,1,1,1,1,1.0
+28,LLaMA-3.3-70B,easy,1,1,1,1,1.0
+29,LLaMA-3.3-70B,easy,1,1,1,0,1.0
+30,LLaMA-3.3-70B,easy,1,1,0,1,0.5
+31,LLaMA-3.3-70B,easy,1,1,0,1,0.5
+32,LLaMA-3.3-70B,easy,1,1,1,1,1.0
+33,LLaMA-3.3-70B,easy,1,1,1,0,1.0
+34,LLaMA-3.3-70B,easy,1,1,1,1,1.0
+35,LLaMA-3.3-70B,easy,1,1,1,1,1.0
+36,LLaMA-3.3-70B,easy,1,1,1,0,1.0
+37,LLaMA-3.3-70B,easy,1,1,1,0,1.0
+38,LLaMA-3.3-70B,easy,1,1,1,1,1.0
+39,LLaMA-3.3-70B,easy,1,1,1,1,1.0
+40,LLaMA-3.3-70B,hard,1,1,1,1,1.0
+41,LLaMA-3.3-70B,hard,1,1,1,1,1.0
+42,LLaMA-3.3-70B,hard,1,1,1,1,1.0
+43,LLaMA-3.3-70B,hard,1,1,0,1,0.5
+44,LLaMA-3.3-70B,hard,1,1,0,1,0.5
+45,LLaMA-3.3-70B,hard,1,1,0,1,0.5
+46,LLaMA-3.3-70B,hard,1,1,1,1,1.0
+47,LLaMA-3.3-70B,hard,1,1,1,0,1.0
+48,LLaMA-3.3-70B,hard,1,1,1,1,1.0
+49,LLaMA-3.3-70B,hard,1,1,1,1,1.0
+50,LLaMA-3.3-70B,hard,1,1,1,1,1.0
+51,LLaMA-3.3-70B,hard,1,1,1,1,1.0
+52,LLaMA-3.3-70B,hard,1,1,0,1,0.5
+53,LLaMA-3.3-70B,hard,0,1,0,1,0.25
+54,LLaMA-3.3-70B,hard,1,1,1,1,1.0
+55,LLaMA-3.3-70B,hard,1,1,1,1,1.0

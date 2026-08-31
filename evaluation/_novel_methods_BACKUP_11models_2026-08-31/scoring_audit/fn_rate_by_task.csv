@@ -1,0 +1,5 @@
+task_type,false_negative_rate
+contradiction_detection,0.0
+numerical_reasoning,0.56
+regulatory_interpretation,0.52
+temporal_reasoning,0.32

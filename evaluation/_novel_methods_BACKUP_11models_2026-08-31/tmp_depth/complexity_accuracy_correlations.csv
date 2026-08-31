@@ -1,0 +1,12 @@
+model,spearman_r,p_value,significant
+Gemini 2.5 Flash,-0.107,0.3511,False
+GPT-OSS 20B,-0.093,0.4165,False
+Kimi K2,-0.082,0.4738,False
+Gemma 4 E4B,-0.071,0.5349,False
+LLaMA-3-8B,0.041,0.7234,False
+GPT-OSS 120B,0.043,0.7068,False
+LLaMA-3.3-70B,0.047,0.6811,False
+Mistral-7B,0.093,0.4198,False
+Llama 4 Scout 17B,0.153,0.1806,False
+DeepSeek R1 70B,0.212,0.0619,False
+Qwen3-32B,0.217,0.0563,False

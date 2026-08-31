@@ -1,0 +1,802 @@
+[
+  {
+    "model": "LLaMA-3.3-70B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "75",
+    "reference": "A part-time investment adviser shall not have more than seventy-five clients in total at any point i",
+    "llm_verdict": "CORRECT",
+    "reason": "The model prediction correctly extracts the numerical value for the maximum number of clients, which directly answers the question based on the reference."
+  },
+  {
+    "model": "Qwen3-32B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "The minimum average operating profit an issuer must have over the preceding three years to be eligib",
+    "reference": "At least fifteen crore rupees",
+    "llm_verdict": "CORRECT",
+    "reason": "The prediction accurately states \"fifteen crore rupees\" as the minimum, which is semantically equivalent to \"at least fifteen crore rupees\" in this context, and adds relevant, accurate regulatory detail."
+  },
+  {
+    "model": "GPT-OSS 120B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "75%",
+    "reference": "At least seventy five per cent.",
+    "llm_verdict": "CORRECT",
+    "reason": "In the context of the question asking what percentage \"must\" be offered, \"75%\" is semantically understood to mean \"at least 75%\", making it equivalent to the reference answer."
+  },
+  {
+    "model": "LLaMA-3-8B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "Ten percent.",
+    "reference": "Not more than ten per cent of any company's paid up capital carrying voting rights",
+    "llm_verdict": "PARTIAL",
+    "reason": "The model prediction states the percentage but misses the critical context of \"of any company's paid up capital carrying voting rights,\" which is essential for a complete understanding of the regulation."
+  },
+  {
+    "model": "LLaMA-3-8B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "Three years.",
+    "reference": "After three years have lapsed since the default ceased to subsist.",
+    "llm_verdict": "PARTIAL",
+    "reason": "The model prediction correctly identifies \"three years\" but omits the crucial condition \"after the default ceased to subsist\", which is essential for regulatory clarity regarding the starting point of the period."
+  },
+  {
+    "model": "Llama 4 Scout 17B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "2026-27.",
+    "reference": "Financial Year 2026-27",
+    "llm_verdict": "CORRECT",
+    "reason": "The model prediction '2026-27' is a standard and semantically equivalent way to refer to 'Financial Year 2026-27' in Indian financial contexts, where 'Financial Year' is often implied."
+  },
+  {
+    "model": "LLaMA-3.3-70B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "4",
+    "reference": "Not more than four",
+    "llm_verdict": "CORRECT",
+    "reason": "In the context of answering a question about a maximum limit (implied by \"Not more than four\"), \"4\" is a semantically equivalent and concise way of stating that maximum limit."
+  },
+  {
+    "model": "DeepSeek R1 70B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "The dual thresholds that trigger the mandatory transition are exceeding 300 clients or collecting fe",
+    "reference": "An individual investment adviser must transition to non-individual status when either: (i) the numbe",
+    "llm_verdict": "CORRECT",
+    "reason": "The model correctly identifies both dual thresholds for mandatory transition to non-individual status, which are exceeding 300 clients OR collecting fees over three crore rupees, thus completing the partial information in the reference answer."
+  },
+  {
+    "model": "LLaMA-3.3-70B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "75%",
+    "reference": "Seventy-five per cent of the unit holders",
+    "llm_verdict": "PARTIAL",
+    "reason": "The prediction provides the correct percentage but omits the crucial context \"of the unit holders\" which is essential for a complete answer in a regulatory context."
+  },
+  {
+    "model": "Gemma 4 E4B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "The activities undertaken must not be in conflict with the activities of the mutual fund.",
+    "reference": "The AMC shall not undertake any business activities other than management and advisory services prov",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction focuses on avoiding conflict of interest, while the reference answer specifies the narrow scope of permissible business activities for an AMC."
+  },
+  {
+    "model": "Mistral-7B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "3%",
+    "reference": "Three per cent of the applicable net asset value",
+    "llm_verdict": "CORRECT",
+    "reason": "The term \"exit load\" inherently implies it is a percentage of the Net Asset Value (NAV) in the context of mutual funds, making \"3%\" semantically equivalent to \"Three per cent of the applicable net asset value\" for stating the maximum load."
+  },
+  {
+    "model": "Qwen3-32B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "120 days.",
+    "reference": "One hundred and twenty days",
+    "llm_verdict": "CORRECT",
+    "reason": "The numerical representation \"120 days\" is semantically equivalent to the written-out form \"One hundred and twenty days.\""
+  },
+  {
+    "model": "Qwen3-32B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "25 lakh rupees.",
+    "reference": "Twenty five lakh rupees",
+    "llm_verdict": "CORRECT",
+    "reason": "The numerical representation \"25\" is semantically equivalent to the word representation \"Twenty five\" in the context of an amount in rupees."
+  },
+  {
+    "model": "LLaMA-3.3-70B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "One year.",
+    "reference": "One year from the date of expiry of the buyback period of the preceding offer.",
+    "llm_verdict": "PARTIAL",
+    "reason": "The model provides the duration but omits the crucial starting point (\"from the date of expiry of the buyback period of the preceding offer\"), making it incomplete in a regulatory context."
+  },
+  {
+    "model": "LLaMA-3-8B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "Ten per cent.",
+    "reference": "More than ten per cent of the paid-up share capital",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model omits \"More than\" which fundamentally changes the meaning from \"greater than 10%\" to \"exactly 10%\"."
+  },
+  {
+    "model": "LLaMA-3-8B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "ninety percent",
+    "reference": "Not less than ninety per cent",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction specifies an exact percentage, whereas the reference answer denotes a minimum threshold, which is a significant difference in regulatory text."
+  },
+  {
+    "model": "DeepSeek R1 70B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "The maximum shareholding percentage is fifteen percent for specific entities like stock exchanges, d",
+    "reference": "Five per cent of the paid-up equity share capital",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction states 15% for specific entities, while the reference answer states 5%, which are different percentages."
+  },
+  {
+    "model": "Gemma 4 E4B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "The three categories are:\n1.  **Category I AIF:** Invests in start-up or early stage ventures or soc",
+    "reference": "Under Regulation 3(4): Category I AIFs invest in start-ups, early stage ventures, social ventures, S",
+    "llm_verdict": "CORRECT",
+    "reason": "The model's definition of Category I AIF is semantically equivalent to the reference answer's partial definition of Category I AIF."
+  },
+  {
+    "model": "Qwen3-32B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "75%",
+    "reference": "At least seventy five per cent.",
+    "llm_verdict": "CORRECT",
+    "reason": "The model provides the correct numerical percentage, which, in the context of a regulatory requirement (\"must\"), implicitly refers to the minimum threshold, thus being semantically equivalent to \"at least seventy five per cent.\""
+  },
+  {
+    "model": "DeepSeek R1 70B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "The ongoing net worth requirement is 25 crore rupees. Existing CRAs have three years to meet this re",
+    "reference": "Under Regulation 9(d), a credit rating agency must at all times maintain a minimum net worth of Rs t",
+    "llm_verdict": "CORRECT",
+    "reason": "The model accurately states the core net worth requirement and provides a plausible and likely correct additional detail about existing CRAs, which aligns with the truncated reference."
+  },
+  {
+    "model": "Kimi K2",
+    "task_type": "regulatory_interpretation",
+    "prediction": "One crore rupees.  \nExceptions: employees/directors of the AIF or Manager may invest a minimum of tw",
+    "reference": "Under Regulation 10(c), the minimum investment by any investor in an AIF scheme is Rs one crore. Two",
+    "llm_verdict": "CORRECT",
+    "reason": "The model prediction accurately states the minimum investment and both exceptions in Indian financial terms (crore/lakh), semantically matching the core information in the reference answer, despite omitting the specific regulation number."
+  },
+  {
+    "model": "Mistral-7B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "5%",
+    "reference": "More than five per cent of the voting rights",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction \"5%\" is not semantically equivalent to \"More than five per cent,\" as the latter implies a threshold strictly greater than 5% while the former is an exact value."
+  },
+  {
+    "model": "LLaMA-3-8B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "One year.",
+    "reference": "One year from the date of rejection",
+    "llm_verdict": "PARTIAL",
+    "reason": "The model prediction correctly states the duration but omits the crucial starting point (\"from the date of rejection\"), which is essential for a complete understanding of the regulatory bar."
+  },
+  {
+    "model": "Mistral-7B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "365 days",
+    "reference": "The preceding three hundred and sixty five days",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction misses the crucial temporal qualifier \"The preceding\" which makes a significant semantic difference in a regulatory context."
+  },
+  {
+    "model": "Gemma 4 E4B",
+    "task_type": "regulatory_interpretation",
+    "prediction": "Ten per cent.",
+    "reference": "Not more than ten per cent of any company's paid up capital carrying voting rights",
+    "llm_verdict": "PARTIAL",
+    "reason": "The model prediction only states the percentage without specifying what it is a percentage of, which is crucial context provided in the reference answer."
+  },
+  {
+    "model": "LLaMA-3-8B",
+    "task_type": "numerical_reasoning",
+    "prediction": "10% + 2% = 12%\n\nThe single-issuer debt investment limit can be extended to a maximum of 12% of NAV. ",
+    "reference": "Up to 12% of NAV, with prior approval of both the Board of Trustees and the Board of Directors of th",
+    "llm_verdict": "CORRECT",
+    "reason": "The model prediction correctly states the maximum percentage and lists the required approvals, which is semantically equivalent to the reference answer, even adding helpful context with the 10%+2% breakdown."
+  },
+  {
+    "model": "Gemini 2.5 Flash",
+    "task_type": "numerical_reasoning",
+    "prediction": "1500 crore + 1500 crore + 900 crore = 3900 crore",
+    "reference": "\u20b93,900 crore. Calculation: \u20b91,500 + \u20b91,500 + \u20b9900 = \u20b93,900 crore.",
+    "llm_verdict": "CORRECT",
+    "reason": "The model prediction provides the exact same calculation and total amount as the reference answer, just without the rupee symbol, which is semantically equivalent given the 'crore' context."
+  },
+  {
+    "model": "Llama 4 Scout 17B",
+    "task_type": "numerical_reasoning",
+    "prediction": "March 5, 2025 + 21 calendar days:\n\nMarch: 5 to 31 = 26 days\nRemaining days needed: 21 - 26 = -5 (so ",
+    "reference": "Under Regulation 21(1), the investment adviser must redress the grievance not later than 21 calendar",
+    "llm_verdict": "PARTIAL",
+    "reason": "The model prediction correctly calculates the date but misses the crucial regulatory context (Regulation 21(1) and the obligation to redress) provided in the reference answer."
+  },
+  {
+    "model": "GPT-OSS 20B",
+    "task_type": "numerical_reasoning",
+    "prediction": "Borrowing limit: 20\u202f% of Rs\u202f500\u202fcrore\u202f=\u202f0.20\u202f\u00d7\u202f500\u202f=\u202fRs\u202f100\u202fcrore.  \nMaximum duration: 6\u202fmonths.",
+    "reference": "Rs100 crore (20% of Rs500 crore net assets); maximum duration of six months",
+    "llm_verdict": "CORRECT",
+    "reason": "The model prediction correctly states the borrowing limit (Rs100 crore or 20% of Rs500 crore net assets) and the maximum duration (6 months), which fully aligns with the reference answer."
+  },
+  {
+    "model": "GPT-OSS 120B",
+    "task_type": "numerical_reasoning",
+    "prediction": "Adjusted PAT =\u202f1,500\u202fcr\u202f\u2013\u202f50\u202f%\u202f\u00d7\u202f300\u202fcr\u202f=\u202f1,350\u202fcr  \nE\u202f=\u202f75\u202f%\u202f\u00d7\u202f1,500\u202fcr\u202f=\u202f1,125\u202fcr  \nF\u202f=\u202f100\u202f%\u202f\u00d7\u202f1,",
+    "reference": "Rs625 crore (maximum eligible dividend of Rs1,125 crore minus interim dividend already paid of Rs500",
+    "llm_verdict": "CORRECT",
+    "reason": "The model correctly calculates the 'maximum eligible dividend' (G = 1,125 cr) which matches the reference answer's intermediate value, and then provides the correct formula for the 'maximum final dividend' based on that value."
+  },
+  {
+    "model": "Llama 4 Scout 17B",
+    "task_type": "numerical_reasoning",
+    "prediction": "Current holding: 9.5%\nMaximum allowed: 10%\nAvailable headroom: 10% - 9.5% = 0.5%\n\nSince available he",
+    "reference": "No. The combined holding would reach 10.5%, exceeding the 10 per cent cap on ownership of any compan",
+    "llm_verdict": "CORRECT",
+    "reason": "The model's prediction correctly identifies the 10% cap and the current holding, calculates the available headroom, and correctly concludes \"No\" based on an implicit proposed acquisition of 1%, which aligns with the reference answer's calculation of 10.5% (9.5% + 1%)."
+  },
+  {
+    "model": "Kimi K2",
+    "task_type": "numerical_reasoning",
+    "prediction": "Calculation:  \nAdjusted PAT = PAT for the financial year \u2013 (0.5 \u00d7 Net NPA as on 31 March of that yea",
+    "reference": "PAT of the financial year minus 50 per cent of Net NPA as on March 31 of the financial year for whic",
+    "llm_verdict": "CORRECT",
+    "reason": "The model prediction accurately captures all elements of the reference definition using equivalent mathematical notation and phrasing."
+  },
+  {
+    "model": "GPT-OSS 120B",
+    "task_type": "numerical_reasoning",
+    "prediction": "**Adjusted Profit After Tax (PAT) = PAT\u202f(\u20b9)\u202f\u2212\u202f0.5\u202f\u00d7\u202fNet\u202fNPA\u202f(\u20b9)\u202f(as on\u202f31\u202fMar of the relevant FY)** ",
+    "reference": "PAT of the financial year minus 50 per cent of Net NPA as on March 31 of the financial year for whic",
+    "llm_verdict": "CORRECT",
+    "reason": "The model prediction accurately rephrases the reference answer into a clear formula, using '0.5' for '50 per cent' and '31 Mar' for 'March 31', which are semantically equivalent in the given context."
+  },
+  {
+    "model": "LLaMA-3.3-70B",
+    "task_type": "numerical_reasoning",
+    "prediction": "Current holding: 9.5%\nProposed acquisition: 1%\nTotal holding: 9.5% + 1% = 10.5%\nLimit: 10%\nSince 10.",
+    "reference": "No. The combined holding would reach 10.5%, exceeding the 10 per cent cap on ownership of any compan",
+    "llm_verdict": "CORRECT",
+    "reason": "The model prediction provides a detailed breakdown of the calculation and rationale, which leads to the exact same conclusion and reasoning as the reference answer."
+  },
+  {
+    "model": "LLaMA-3.3-70B",
+    "task_type": "numerical_reasoning",
+    "prediction": "Minimum networth = rupees ten crore \n= rupees 10,00,00,000\n= 10 crore rupees \n\n10 crore rupees",
+    "reference": "Not less than rupees ten crore",
+    "llm_verdict": "CORRECT",
+    "reason": "The model prediction accurately states the minimum value, which is semantically equivalent to \"not less than\" in this regulatory context."
+  },
+  {
+    "model": "GPT-OSS 20B",
+    "task_type": "numerical_reasoning",
+    "prediction": "nan",
+    "reference": "By 29 July of the same year (1 April + 120 days = 29 July)",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction \"nan\" provides no information and is not semantically equivalent to a specific date and calculation."
+  },
+  {
+    "model": "LLaMA-3.3-70B",
+    "task_type": "numerical_reasoning",
+    "prediction": "5% over a block of 3 months.",
+    "reference": "5 per cent of aggregate purchases and sales, measured for a block of any three months",
+    "llm_verdict": "PARTIAL",
+    "reason": "The model prediction omits the crucial detail that the 5% is \"of aggregate purchases and sales\", making it incomplete."
+  },
+  {
+    "model": "GPT-OSS 120B",
+    "task_type": "numerical_reasoning",
+    "prediction": "**Calculation**\n\n- Rating activities started:\u202fJuly\u202f2019  \n- Application date:\u202fDecember\u202f2025  \n\nPerio",
+    "reference": "The foreign CRA began rating securities from July 2019. By December 2025, it has had 6 years and 5 m",
+    "llm_verdict": "PARTIAL",
+    "reason": "The model prediction starts the calculation but does not complete the final number of months, making it incomplete compared to the reference answer."
+  },
+  {
+    "model": "GPT-OSS 120B",
+    "task_type": "numerical_reasoning",
+    "prediction": "**Calculation**\n\n- Original single\u2011issuer debt limit = 10\u202f% of NAV  \n- Extension allowed = up to 12\u202f",
+    "reference": "Up to 12% of NAV, with prior approval of both the Board of Trustees and the Board of Directors of th",
+    "llm_verdict": "PARTIAL",
+    "reason": "The model correctly identifies the 12% limit but omits the crucial detail about the necessary approvals from the Board of Trustees and Board of Directors of the AMC for this higher limit to apply."
+  },
+  {
+    "model": "Gemma 4 E4B",
+    "task_type": "numerical_reasoning",
+    "prediction": "nan",
+    "reference": "Rs5,500 crore (40% of Adjusted PAT of Rs13,750 crore, which is lower than 75% of PAT of Rs12,750 cro",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction \"nan\" is not semantically equivalent to a specific financial value and its calculation."
+  },
+  {
+    "model": "LLaMA-3-8B",
+    "task_type": "numerical_reasoning",
+    "prediction": "75% - 5% = 70%\n\nNo, it does not qualify.",
+    "reference": "No. The minimum threshold for government ownership is at least seventy-five per cent; seventy per ce",
+    "llm_verdict": "CORRECT",
+    "reason": "The model correctly identifies the 75% threshold and concludes that 70% does not qualify, which is semantically equivalent to the reference answer stating \"No\" because the minimum is 75%."
+  },
+  {
+    "model": "Qwen3-32B",
+    "task_type": "numerical_reasoning",
+    "prediction": "Calculation:\nGross turnover of the entity = 10 crore rupees\nTwo percent of gross turnover = 2% of 10",
+    "reference": "Twenty lakh rupees (two per cent of ten crore rupees, being lower than fifty lakh rupees \u00e2\u20ac\u201d the rul",
+    "llm_verdict": "CORRECT",
+    "reason": "The model prediction correctly calculates the value as twenty lakh rupees (2% of ten crore rupees), which is the final figure in the reference answer. While it doesn't explicitly state the \"whichever is lower than fifty lakh rupees\" clause, it provides the correct calculation that leads to the final answer in this specific scenario."
+  },
+  {
+    "model": "Mistral-7B",
+    "task_type": "numerical_reasoning",
+    "prediction": "The combined amount to be auctioned in the first two auction weeks is \u20b929,000 crore + \u20b934,000 crore ",
+    "reference": "\u20b963,000 crore. Calculation: \u20b929,000 (Week 1) + \u20b934,000 (Week 2) = \u20b963,000 crore.",
+    "llm_verdict": "CORRECT",
+    "reason": "The model prediction correctly states the final amount and shows the calculation, matching the reference answer exactly in content and numerical value."
+  },
+  {
+    "model": "DeepSeek R1 70B",
+    "task_type": "numerical_reasoning",
+    "prediction": "The trust deed had to be executed by 1 April 2018.\n\n1 April 2018",
+    "reference": "By 1 April 2018 (three months from the closure of the issue on 1 January 2018)",
+    "llm_verdict": "PARTIAL",
+    "reason": "The model prediction correctly identifies the deadline date but omits the explanation for its derivation provided in the reference answer."
+  },
+  {
+    "model": "Llama 4 Scout 17B",
+    "task_type": "numerical_reasoning",
+    "prediction": "\u20b917,000 crore + \u20b92,000 crore = \u20b919,000 crore \n\u20b912,000 crore + \u20b92,000 crore = \u20b914,000 crore \n\u20b919,000 ",
+    "reference": "\u20b933,000 crore. Calculation: Notified amount \u20b929,000 crore + greenshoe of \u20b92,000 crore per security \u00d7",
+    "llm_verdict": "CORRECT",
+    "reason": "The model prediction arrives at the same final maximum amount and its breakdown, while structured differently, is consistent with the components (notified amount and greenshoe per security) that lead to the reference answer."
+  },
+  {
+    "model": "GPT-OSS 20B",
+    "task_type": "numerical_reasoning",
+    "prediction": "nan",
+    "reference": "1 October 2025 (warrant tenure ends 18 months from allotment = 1 July 2025; exercise option within 3",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction \"nan\" provides no information and is not semantically equivalent to the reference answer."
+  },
+  {
+    "model": "LLaMA-3.3-70B",
+    "task_type": "numerical_reasoning",
+    "prediction": "2% of 10 crore rupees = 0.02 * 10,00,00,000 = 20,00,000 rupees. \nSince 20,00,000 rupees is greater t",
+    "reference": "Twenty lakh rupees (two per cent of ten crore rupees, being lower than fifty lakh rupees \u00e2\u20ac\u201d the rul",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model's explanation for the comparison with 50 lakh rupees contains factual errors and contradictory statements (e.g., \"50 lakh rupees is the lower amount\" is incorrect when comparing 20 lakh and 50 lakh)."
+  },
+  {
+    "model": "DeepSeek R1 70B",
+    "task_type": "numerical_reasoning",
+    "prediction": "The maximum initial issue expense ratio for a mutual fund scheme under the original Seventh Schedule",
+    "reference": "Six per cent of funds raised; the clause was omitted w.e.f. 16-4-2008",
+    "llm_verdict": "CORRECT",
+    "reason": "The model prediction accurately provides the 6% figure and the effective date of omission, using semantically equivalent phrasing and even adding correct regulatory context (\"original Seventh Schedule\")."
+  },
+  {
+    "model": "LLaMA-3-8B",
+    "task_type": "numerical_reasoning",
+    "prediction": "Rs 102 crore + Rs 110 crore + Rs 108 crore + Rs 115 crore = Rs 435 crore\n\nSince this is greater than",
+    "reference": "The requirement under Regulation 4(e) is a continuous net worth of at least Rs 100 crore per audited",
+    "llm_verdict": "PARTIAL",
+    "reason": "The model correctly identifies the Rs 100 crore threshold but omits specific regulatory details like \"Regulation 4(e)\", \"continuous net worth\", and \"per audited\" from the reference answer."
+  },
+  {
+    "model": "Gemma 4 E4B",
+    "task_type": "numerical_reasoning",
+    "prediction": "Calculation: October 15",
+    "reference": "The placement memorandum must be filed at least 30 days prior to the launch. Launch date: October 15",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction is incomplete and does not provide the required calculation or the correct filing date, unlike the reference which at least states the rule and sets up the calculation."
+  },
+  {
+    "model": "Mistral-7B",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes, both passages allow similar ranges of additional business activities for an AMC, including port",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction states \"Yes\" while the reference answer states \"No\", indicating a direct contradiction regarding whether the passages permit the same range of additional business activities."
+  },
+  {
+    "model": "Gemma 4 E4B",
+    "task_type": "contradiction_detection",
+    "prediction": "nan",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model predicted \"nan\" which is not a semantic equivalent to \"No\"; \"nan\" signifies an absence of an answer, not a negative one."
+  },
+  {
+    "model": "Gemma 4 E4B",
+    "task_type": "contradiction_detection",
+    "prediction": "nan",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The prediction \"nan\" indicates a lack of an answer, which is not semantically equivalent to a definitive \"No\"."
+  },
+  {
+    "model": "LLaMA-3-8B",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes, Passage A prescribes a timeline of \"within two trading days\" for all companies to notify trades",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction gives the opposite answer (\"Yes\") to the reference answer (\"No\") and then proceeds to explain the supposed difference, directly contradicting the reference answer's assertion that they do not prescribe different timelines."
+  },
+  {
+    "model": "Mistral-7B",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes, the passages contradict each other. While Passage A states that an applicant who withdraws an a",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction directly contradicts the reference answer regarding whether the passages contradict each other."
+  },
+  {
+    "model": "Qwen3-32B",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes \u2013 The original Regulation 22 (2013) permits individual investment advisers to provide both advis",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction starts with \"Yes\", implying both regulations permit it, which is contradicted by its own explanation that the 2020 amendment prohibits it, thus making the overall answer to the \"AND\" question \"No\", consistent with the reference answer."
+  },
+  {
+    "model": "DeepSeek R1 70B",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes. Passage B permits open-market buy-back through stock exchanges under the 2018 regulations, whil",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model's answer \"Yes\" directly contradicts the reference answer \"No\"."
+  },
+  {
+    "model": "Gemini 2.5 Flash",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes, Passage B explicitly states that a company may buy-back its shares from the open market through",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model's core answer \"Yes\" directly contradicts the reference answer \"No\"."
+  },
+  {
+    "model": "Gemini 2.5 Flash",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes, the two passages are contradictory. Passage A states that the bank shall not be under any expli",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model's prediction directly contradicts the reference answer's assessment of whether the passages are contradictory."
+  },
+  {
+    "model": "Mistral-7B",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes, they do not completely align. While Regulation 22(1) states that the acquisition cannot be comp",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction directly contradicts the reference answer by stating \"Yes, they do not completely align\" while the reference answer is \"No\"."
+  },
+  {
+    "model": "LLaMA-3.3-70B",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes. The threshold for recognised stock exchanges is 5% but can be up to 15% for certain entities, w",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model's answer (\"Yes\") directly contradicts the reference answer (\"No\") regarding whether different thresholds are imposed."
+  },
+  {
+    "model": "Gemma 4 E4B",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes: Passage A states the bank shall not be under any explicit restrictions, while Passage B reserve",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction directly contradicts the reference answer, as the passages are not contradictory in the context of regulatory authority where general operating freedom does not negate the regulator's power to impose restrictions for non-compliance."
+  },
+  {
+    "model": "Kimi K2",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes. Both passages initially set the threshold at 5% paid-up equity share capital that triggers mand",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model's initial answer \"Yes\" directly contradicts the reference answer \"No\"."
+  },
+  {
+    "model": "Gemini 2.5 Flash",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes. The main provision limits additional acquisition to five percent within any financial year with",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model incorrectly states \"Yes\" to an implied question of contradiction, when a legal proviso serves as an exception or modification to a main provision, rather than a contradiction."
+  },
+  {
+    "model": "Gemma 4 E4B",
+    "task_type": "contradiction_detection",
+    "prediction": "nan",
+    "reference": "Yes",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction \"nan\" is a missing or invalid value and does not convey the affirmative information given by the reference answer \"Yes\"."
+  },
+  {
+    "model": "Gemini 2.5 Flash",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes, Regulation 22(1) states the acquisition cannot be completed until the expiry of the offer perio",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model's primary answer (\"Yes\") directly contradicts the reference answer (\"No\"), indicating it provides wrong information regarding the existence of a contradiction."
+  },
+  {
+    "model": "LLaMA-3-8B",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes, Passage A implies that an intermediary can have a permanent certificate unless surrendered, sus",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model's prediction of \"Yes\" directly contradicts the reference answer \"No\" and only addresses one passage while the question asks about both."
+  },
+  {
+    "model": "Kimi K2",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes  \nBoth passages set the same maximum gap of one hundred and twenty days between consecutive meet",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction directly contradicts the reference answer regarding whether the passages prescribe different maximum permissible gaps."
+  },
+  {
+    "model": "GPT-OSS 20B",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes \u2013 Passage\u202fA sets a 15\u202f% threshold for stock exchanges (and similar entities), whereas Passage\u202fB ",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction directly contradicts the reference answer regarding whether the passages impose different thresholds."
+  },
+  {
+    "model": "Mistral-7B",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes, they do. In the case of a listed entity on Innovators Growth Platform, the shareholding thresho",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "Regulation 3(1) and 3(5) are both exemption provisions within the same regulation and do not contra-indicate each other; the model incorrectly states they do and misinterprets the function of Regulation 3(1)."
+  },
+  {
+    "model": "Gemma 4 E4B",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes: Regulation 3(5) modifies the threshold mentioned in Regulation 3(1) from twenty-five per cent t",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model incorrectly states \"Yes\" and provides a factually inaccurate reason regarding Regulation 3(5) modifying the threshold to \"forty per cent\"; Regulation 3(5) provides an exception for creeping acquisition by existing substantial shareholders, not a modification of the initial 25% trigger, and no \"forty per cent\" threshold is relevant in this context."
+  },
+  {
+    "model": "Qwen3-32B",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes - Passage A states there are no explicit restrictions, while Passage B indicates RBI can impose ",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model predicts \"Yes\" (contradictory) while the reference is \"No\" (not contradictory), and the model's reasoning for contradiction appears to misinterpret the likely meaning of \"no explicit restrictions\" in the context of a regulator's authority."
+  },
+  {
+    "model": "Gemma 4 E4B",
+    "task_type": "contradiction_detection",
+    "prediction": "nan",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction \"nan\" indicates a missing or null answer, which is not semantically equivalent to a direct negative answer \"No\"."
+  },
+  {
+    "model": "LLaMA-3-8B",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes, according to Passage A, the maximum time gap between board meetings is 120 days, whereas accord",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model's initial answer \"Yes\" directly contradicts the reference answer \"No\", even though its explanation implies the gaps are the same."
+  },
+  {
+    "model": "LLaMA-3.3-70B",
+    "task_type": "contradiction_detection",
+    "prediction": "Yes. The board meetings have a maximum time gap of 120 days that shall elapse, implying a minimum fr",
+    "reference": "No",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model's direct answer \"Yes\" contradicts the reference answer \"No\", and its explanation, which states both have a 120-day maximum gap, actually supports the \"No\" answer, creating an internal contradiction."
+  },
+  {
+    "model": "Gemma 4 E4B",
+    "task_type": "temporal_reasoning",
+    "prediction": "The Al-Nusrah Front was listed starting on 14 May 2014 and was removed per the UNSC press release da",
+    "reference": "Approximately 11 years and 9 months \u2014 from May 14, 2014 to February 27, 2026.",
+    "llm_verdict": "CORRECT",
+    "reason": "The model prediction provides the exact start and end dates which directly imply the duration stated in the reference answer, making it semantically equivalent."
+  },
+  {
+    "model": "LLaMA-3-8B",
+    "task_type": "temporal_reasoning",
+    "prediction": "The 2025 Directions.",
+    "reference": "The 2025 Directions (issued November 28, 2025) were in effect during FY 2025-26. The 2026 Directions",
+    "llm_verdict": "CORRECT",
+    "reason": "The prediction correctly identifies the primary set of directions, which is the core information conveyed by the reference answer. The reference provides additional context and an incomplete phrase, but the model's answer is accurate and concise."
+  },
+  {
+    "model": "Gemma 4 E4B",
+    "task_type": "temporal_reasoning",
+    "prediction": "The provided context does not state when the Corporate Debt Market Development Fund category was int",
+    "reference": "The Corporate Debt Market Development Fund was introduced by the Securities and Exchange Board of In",
+    "llm_verdict": "INCORRECT",
+    "reason": "The reference answer provides the regulatory instrument that introduced the fund, which implicitly answers 'how' and provides a direct path to finding 'when', whereas the model states the information is not available in the context."
+  },
+  {
+    "model": "Gemma 4 E4B",
+    "task_type": "temporal_reasoning",
+    "prediction": "nan",
+    "reference": "Under the original 2013 regulations, Regulation 7(1)(a) required a professional qualification or PG ",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction \"nan\" provides no information and is not semantically equivalent to the detailed reference answer."
+  },
+  {
+    "model": "Gemma 4 E4B",
+    "task_type": "temporal_reasoning",
+    "prediction": "nan",
+    "reference": "CO.FMRD.MIOD.No.8/11.01.057/2025-26 dated February 18, 2026, which is the most recent of the five su",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction \"nan\" provides no information and is entirely different from the specific circular details given in the reference answer."
+  },
+  {
+    "model": "LLaMA-3.3-70B",
+    "task_type": "temporal_reasoning",
+    "prediction": "25.07.2022.",
+    "reference": "25 July 2022, following the Third Amendment Regulations, 2022",
+    "llm_verdict": "CORRECT",
+    "reason": "The model prediction provides the exact date mentioned in the reference answer, which directly answers the question."
+  },
+  {
+    "model": "DeepSeek R1 70B",
+    "task_type": "temporal_reasoning",
+    "prediction": "The SEBI (AIF) (Amendment) Regulations, 2020, effective October 19, 2020, modified the eligibility c",
+    "reference": "The SEBI (Alternative Investment Funds) (Amendment) Regulations, 2020 (w.e.f. 19-10-2020) substitute",
+    "llm_verdict": "PARTIAL",
+    "reason": "The model prediction correctly identifies the regulations and effective date, and mentions a change in eligibility criteria, but misses the specific regulatory detail about the substitution of Regulation 4(g) and the explicit mention of replacing \"experience-based\" criteria as stated in the reference."
+  },
+  {
+    "model": "Gemma 4 E4B",
+    "task_type": "temporal_reasoning",
+    "prediction": "The context does not specify the SEBI Act under which the regulations were enacted.",
+    "reference": "The Securities and Exchange Board of India Act, 1992",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction states that the information is not specified in the context, whereas the reference answer directly provides the correct answer to the question."
+  },
+  {
+    "model": "Kimi K2",
+    "task_type": "temporal_reasoning",
+    "prediction": "No. The term 'Delisting Regulations' was inserted as a defined term only on 6 December 2021; it did ",
+    "reference": "No \u2014 the definition of 'Delisting Regulations' was only inserted by the Third Amendment Regulations,",
+    "llm_verdict": "CORRECT",
+    "reason": "The model prediction correctly states that the term was not originally defined and was inserted on the specified date, aligning with the reference answer."
+  },
+  {
+    "model": "DeepSeek R1 70B",
+    "task_type": "temporal_reasoning",
+    "prediction": "The SEBI (Merchant Bankers) Regulations, 1992 were enacted under the SEBI Act, 1992.\n\nAnswer: The SE",
+    "reference": "The Securities and Exchange Board of India Act, 1992",
+    "llm_verdict": "CORRECT",
+    "reason": "The model correctly identifies \"SEBI Act, 1992\" which is a common and semantically equivalent abbreviation for \"The Securities and Exchange Board of India Act, 1992\" in the Indian financial regulatory context."
+  },
+  {
+    "model": "LLaMA-3-8B",
+    "task_type": "temporal_reasoning",
+    "prediction": "Three years.",
+    "reference": "Three years from the date of commencement of commercial production or date of allotment, whichever i",
+    "llm_verdict": "PARTIAL",
+    "reason": "The prediction only provides the duration but omits the crucial starting point of the lock-in period, which is essential information in regulatory context."
+  },
+  {
+    "model": "Llama 4 Scout 17B",
+    "task_type": "temporal_reasoning",
+    "prediction": "4.07.2023.",
+    "reference": "The regulatory framework for ESG rating providers was introduced through the insertion of Chapter IV",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction provides a date, while the reference answer describes the regulatory mechanism (insertion of a new chapter/regulations) through which the framework was introduced, making them semantically different."
+  },
+  {
+    "model": "Mistral-7B",
+    "task_type": "temporal_reasoning",
+    "prediction": "The LEI framework was implemented first under the RBI Master Direction on Unique Identifiers in Fina",
+    "reference": "The LEI framework (Section A) was implemented first, coming into force with immediate effect from Ma",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model incorrectly states the year of the Master Direction as 2026, which is a future date and contradicts the \"implemented first\" context of the LEI framework."
+  },
+  {
+    "model": "GPT-OSS 20B",
+    "task_type": "temporal_reasoning",
+    "prediction": "Before the 2018 amendment (i.e., up to 10\u202fSeptember\u202f2018), the definition of \u201cfrequently traded shar",
+    "reference": "Is made",
+    "llm_verdict": "CORRECT",
+    "reason": "The model prediction correctly identifies the phrase \"is made\" and provides accurate, relevant context that enhances the answer without contradicting it."
+  },
+  {
+    "model": "LLaMA-3-8B",
+    "task_type": "temporal_reasoning",
+    "prediction": "Six months.",
+    "reference": "Two years plus up to six months extension, for a maximum of two and a half years from the commenceme",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model's predicted duration of six months is significantly different from the reference answer's two years plus up to six months extension."
+  },
+  {
+    "model": "Gemma 4 E4B",
+    "task_type": "temporal_reasoning",
+    "prediction": "The provision was inserted in 2018 by the SEBI (LODR) (Sixth Amendment) Regulations, 2018.",
+    "reference": "2018, effective from 16 November 2018",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model incorrectly attributes the first incorporation of the concept to SEBI (LODR) Regulations; the concept was first incorporated by the Fugitive Economic Offenders Act, 2018."
+  },
+  {
+    "model": "DeepSeek R1 70B",
+    "task_type": "temporal_reasoning",
+    "prediction": "The SEBI (Research Analysts) Regulations 2014 came into force on November 29, 2014.\n\nAnswer: Novembe",
+    "reference": "On the ninetieth day from September 1, 2014, which is approximately November 30, 2014.",
+    "llm_verdict": "INCORRECT",
+    "reason": "The reference answer states the effective date as \"approximately November 30, 2014\", whereas the model prediction and the actual effective date is November 29, 2014. A one-day difference for a regulatory effective date is significant and \"approximately\" does not make them equivalent in this context."
+  },
+  {
+    "model": "Kimi K2",
+    "task_type": "temporal_reasoning",
+    "prediction": "13-08-2021",
+    "reference": "The minimum investment threshold for venture capital funds was raised from two-thirds (approximately",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction provides a date, while the reference answer describes a change in percentage; these are not semantically equivalent."
+  },
+  {
+    "model": "GPT-OSS 120B",
+    "task_type": "temporal_reasoning",
+    "prediction": "-\u202f28\u202fMar\u202f2026 \u2013 GoI issues the notification (F.No.4(1)-B(W&M)/2026).  \n-\u202f30\u202fMar\u202f2026 \u2013 \u201cWhen Issued\u201d",
+    "reference": "March 28 (announcement), March 30 \u2013 April 02 ('When Issued' trading period), April 02 (auction day, ",
+    "llm_verdict": "PARTIAL",
+    "reason": "The model prediction omits the crucial settlement date (April 06), which is a key part of the GoI dated security lifecycle mentioned in the reference answer."
+  },
+  {
+    "model": "Qwen3-32B",
+    "task_type": "temporal_reasoning",
+    "prediction": "The regulatory sandbox exemption was introduced into SEBI Takeovers Regulations 2011 on 17-04-2020 t",
+    "reference": "The regulatory sandbox provision (Regulation 31A) was inserted by the SEBI (Regulatory Sandbox) (Ame",
+    "llm_verdict": "CORRECT",
+    "reason": "The model prediction accurately provides the date and the name of the amending regulation, which is semantically equivalent to the reference answer, and further clarifies the specific regulation it was introduced into, which was implied by the question."
+  },
+  {
+    "model": "Kimi K2",
+    "task_type": "temporal_reasoning",
+    "prediction": "Effective 19-11-2025, accredited investors are excluded when counting toward the 1,000-investor cap,",
+    "reference": "The SEBI (Alternative Investment Funds) (Third Amendment) Regulations, 2025 (w.e.f. 19-11-2025) amen",
+    "llm_verdict": "PARTIAL",
+    "reason": "The model prediction provides relevant context but omits the specific regulatory citation \"Regulation 10(f)\" mentioned in the reference answer."
+  },
+  {
+    "model": "Gemini 2.5 Flash",
+    "task_type": "temporal_reasoning",
+    "prediction": "FAIL: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high",
+    "reference": "In 2013, a basic Regulation 5A was inserted allowing an acquirer making an open offer to also delist",
+    "llm_verdict": "INCORRECT",
+    "reason": "The model prediction is an error message, not a response to the question."
+  },
+  {
+    "model": "GPT-OSS 120B",
+    "task_type": "temporal_reasoning",
+    "prediction": "The phrase used was **\u201cis made.\u201d** (This wording applied until the amendment that took effect on\u202f11\u202f",
+    "reference": "Is made",
+    "llm_verdict": "CORRECT",
+    "reason": "The model prediction accurately identifies the phrase \"is made\" and provides additional relevant context that does not contradict the reference answer."
+  },
+  {
+    "model": "GPT-OSS 20B",
+    "task_type": "temporal_reasoning",
+    "prediction": "December\u202f1,\u202f2014.",
+    "reference": "On the ninetieth day from September 1, 2014, which is approximately November 30, 2014.",
+    "llm_verdict": "INCORRECT",
+    "reason": "The ninetieth day from September 1, 2014, when excluding the start date as per common legal interpretation of \"from the date,\" is November 30, 2014, making the model's prediction of December 1, 2014, off by one day."
+  },
+  {
+    "model": "Gemma 4 E4B",
+    "task_type": "temporal_reasoning",
+    "prediction": "The higher 49% threshold was introduced by the SEBI (Substantial Acquisition of Shares and Takeovers",
+    "reference": "The Amendment Regulations, 2021, effective May 5, 2021, inserted Regulations 3(5) and 6(4) providing",
+    "llm_verdict": "PARTIAL",
+    "reason": "The model prediction correctly identifies the effective date and the amendment regulations, but it explicitly mentions the \"49% threshold\" which is not explicitly stated in the reference answer (which refers to the \"25% mandatory open offer threshold reads\"). Additionally, the model does not include the specific regulation numbers (3(5) and 6(4)) mentioned in the reference answer."
+  }
+]

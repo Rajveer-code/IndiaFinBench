@@ -1,0 +1,21 @@
+{
+  "ceiling_by_cutoff": {
+    "0.85": 213,
+    "0.9": 213,
+    "0.95": 143
+  },
+  "floor_by_cutoff": {
+    "0.05": 5,
+    "0.1": 7,
+    "0.15": 7
+  },
+  "discriminative_band_by_cutoff": {
+    "0.25-0.75": 83,
+    "0.3-0.8": 134,
+    "0.35-0.85": 168
+  },
+  "median_spread": 0.3056,
+  "paper_default_ceiling_0.90": 213,
+  "paper_default_floor_0.10": 7,
+  "paper_default_discriminative_0.3_0.8": 134
+}

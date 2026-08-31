@@ -523,3 +523,35 @@ is wasted work:
 **Action when the judge finishes:** rebuild the regime table/figure first, re-derive ρ/τ and the
 compression claim from that, apply the decision gate, then do one clean sweep of every draft file.
 Do not touch these numbers piecemeal before that point.
+
+---
+
+## 13. Full post-Gemma-fix sweep of draft_05/06 (2026-08-31) — strict-side only
+
+All strict-side (judge-independent) numbers in `draft_05_results_detail.tex` and
+`draft_06_discussion_conclusion.tex` corrected in one pass:
+
+| Claim | Was | Now | Source |
+|---|---|---|---|
+| Overall range | 70.4–89.7 (19.3pp) | **75.1–89.7 (14.6pp)** | direct computation |
+| CON, Gemma | 72.6% | **79.0%** | `evaluation/results/gemma4_e4b_results.csv` |
+| Human-subset, Gemma | 63.3% | **66.7%**, still sig. worse (p=0.020) | direct + clustered bootstrap |
+| Human-subset, best model p-value | (unstated) | **p=0.43** (item-clustered, §10) | `evaluation/clustered_bootstrap.json` pattern |
+| Bonferroni survivors | 19 of 66 | **15 of 66** | `evaluation/bootstrap_significance_results.json` |
+| Scout–70B / GPT-OSS pair p (3dp) | 0.793 / 0.907 | **0.786 / 0.912** | same file, precision fix |
+| Jaccard median | 0.270 | **0.274** | `error_jaccard_similarity.csv` (rerun with fixed Gemma) |
+| DeepSeek naming | "DeepSeek R1 70B" | **"DeepSeek-R1-Distill-Llama-70B"**, short form "DeepSeek-R1-Distill" after first use | `model_version` field is `deepseek/deepseek-r1-distill-llama-70b` |
+
+### Structural finding, not just a number change
+
+The difficulty-stratification subsection claimed "most models decline monotonically, as intended,"
+illustrated by a since-corrected Gemma "26.3-point collapse." **Recomputed from the fixed data: only
+3 of 12 models decline monotonically at all** (Gemini 2.5 Flash, Gemini 2.5 Pro, GPT-OSS 120B).
+Six models score *higher* on hard items than medium; Gemma and GPT-OSS 20B dip at medium and
+partially recover on hard. The subsection was rewritten, not patched — the dominant pattern in the
+data is not the one the paragraph originally described. New framing ties this to the effective-size
+argument already in the paper: nominal difficulty and empirical difficulty are different quantities,
+the same relationship as nominal vs. discriminative size.
+
+**Deliberately still stale (see §12):** the regime table, ρ/τ, and the "excluding Gemma" compression
+claim in `draft_01`/`draft_03`. Do not touch until the phi4-mini judge completes.

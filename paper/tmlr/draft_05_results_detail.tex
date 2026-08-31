@@ -7,9 +7,9 @@
 \label{sec:main-results}
 
 Table~\ref{tab:mainresults} reports strict accuracy for all twelve models on the full 406-item
-benchmark. Scores span 70.4\% (Gemma 4 E4B) to 89.7\% (Gemini 2.5 Flash), a 19.3-point range that
-is wide enough to separate the field but narrow enough that most adjacent pairs are not individually
-distinguishable.
+benchmark. Scores span 75.1\% (DeepSeek-R1-Distill) to 89.7\% (Gemini 2.5 Flash), a 14.6-point range
+that is wide enough to separate the field but narrow enough that most adjacent pairs are not
+individually distinguishable.
 
 The task means are more informative than the model means. Averaged across models, contradiction
 detection is highest at 91.0\%, followed by regulatory interpretation at 83.8\%, temporal reasoning
@@ -38,7 +38,7 @@ extraction \emph{and} correct execution, and failure at either stage produces a 
 \textbf{Contradiction detection discriminates least, despite the highest mean.} 53 of its 62 items
 carry the gold label `No', so a classifier that always answers `No' scores 85.5\%. Against that
 baseline the 91.0\% task mean is a 5.5-point margin, not a strong result, and 10 of 12 models
-exceed the baseline while Mistral-7B (80.6\%) and Gemma 4 E4B (72.6\%) fall below a trivial
+exceed the baseline while Mistral-7B (80.6\%) and Gemma 4 E4B (79.0\%) fall below a trivial
 majority classifier. High accuracy on an imbalanced binary task is close to uninformative, and we
 report balanced accuracy in Appendix~\ref{app:con} rather than leaning on the raw figure.
 
@@ -50,23 +50,29 @@ report balanced accuracy in Appendix~\ref{app:con} rather than leaning on the ra
 \label{sec:difficulty}
 
 Items were labelled easy (160), medium (182), or hard (64) at annotation time by the number of
-reasoning steps required. Model behaviour across those strata splits into three patterns.
+reasoning steps required. If that label tracked model difficulty as intended, accuracy should fall
+monotonically from easy to hard. It does, for exactly three of twelve models: Gemini 2.5 Flash
+(92.5\% $\to$ 84.4\%), GPT-OSS 120B (79.4\% $\to$ 73.4\%), and most sharply Gemini 2.5 Pro
+(83.1\% $\to$ 68.8\%, a 14.4-point decline). The other nine do not decline monotonically at all---
+the dominant pattern in this benchmark is not the one the difficulty label was designed to produce.
 
-Most models decline monotonically, as intended. Gemma 4 E4B declines steeply---82.5\% on easy items
-to 56.2\% on hard, a 26.3-point collapse---which is the profile of a model that has absorbed common
-regulatory patterns without the capacity to chain inference over them.
+Two non-monotonic shapes recur. Six models---Qwen3-32B, LLaMA-3.3-70B, Llama 4 Scout 17B, Kimi K2,
+LLaMA-3-8B, and DeepSeek-R1-Distill---score \emph{higher} on hard items than on medium ones, and for
+LLaMA-3.3-70B this extends further: hard items (90.6\%) outscore even the easy ones (79.4\%), an
+11.2-point inversion. Gemma 4 E4B and GPT-OSS 20B show the opposite shape, a dip at medium difficulty
+with partial recovery on hard (Gemma: 82.5\% easy $\to$ 74.7\% medium $\to$ 81.2\% hard). Neither
+shape is what "harder" was meant to produce.
 
-A second group is flat. Qwen3-32B and Kimi K2 vary by under three points across strata, and their
-robustness to item difficulty is more distinctive than their overall rank.
-
-The third pattern is inverted and initially looks like an error. LLaMA-3.3-70B \emph{improves} on
-hard items, from 79.4\% easy to 90.6\% hard. We take this as evidence about our difficulty labels
-rather than about the model: hard items in this benchmark are typically multi-instrument
-amendment-chain questions that state their cues explicitly in the text, whereas medium items more
-often turn on a single subtle qualifying clause. A model with strong long-context tracking finds the
-former easier than the latter. Reasoning-step count, the criterion we used, is evidently not the
-only axis of difficulty present, and we flag it as a limitation of the annotation scheme rather than
-adjusting the labels post hoc.
+We read this as evidence about the difficulty label, not about any individual model. Reasoning-step
+count was the criterion used to assign difficulty, but hard items in this benchmark are typically
+multi-instrument amendment-chain questions that state their cues explicitly in the text, whereas
+medium items more often turn on a single subtle qualifying clause---a property closer to
+\emph{ambiguity} than to \emph{reasoning depth}. A model with strong long-context tracking can find
+an explicit multi-step chain easier to follow than a terse single clause that hinges on one word. We
+flag this as a limitation of the annotation scheme (Section~\ref{sec:limitations}) rather than
+adjusting the labels post hoc, and note that it strengthens the case for the effective-size analysis
+in Section~\ref{sec:effsize}: nominal difficulty and empirical difficulty are visibly different
+quantities on this benchmark, in the same way nominal size and discriminative size are.
 
 \subsection{A Human Reference Point}
 \label{sec:human}
@@ -80,7 +86,8 @@ The evaluator scored 80.0\% (48/60; 95\% Wilson CI [68.2\%, 88.2\%]), with a tas
 REG 100\% (11/11), TMP 87.5\% (14/16), CON 82.4\% (14/17), and NUM 56.2\% (9/16). On the same 60
 items, five of the twelve models score above the evaluator and seven below. The best, Gemini 2.5
 Flash, reaches 85.0\% against the evaluator's 80.0\%, a difference that is not statistically
-significant; the weakest, Gemma 4 E4B at 63.3\%, is significantly worse.
+significant (paired bootstrap $p = 0.43$); the weakest, Gemma 4 E4B at 66.7\%, is significantly
+worse ($p = 0.020$).
 
 We state the limits of this comparison plainly, because they are severe. It is one evaluator on 60
 items. It supports no population-level claim about human performance, and a domain specialist would

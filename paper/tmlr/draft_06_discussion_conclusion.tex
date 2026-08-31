@@ -16,7 +16,7 @@ unnoticed. For a model that narrates its reasoning, they differ by twenty points
 
 The practical consequence is that a leaderboard cannot be read without knowing which question it
 answers. If the intended use is an automated compliance pipeline that parses model output
-mechanically, the strict number is the relevant one and DeepSeek R1 70B really is a poor choice. If
+mechanically, the strict number is the relevant one and DeepSeek-R1-Distill really is a poor choice. If
 the question is which model reasons most reliably about Indian regulatory text, the strict number is
 actively misleading about that same model. Benchmarks that report one figure force the reader to
 guess which of these they are looking at.
@@ -31,15 +31,15 @@ statement of what is known.
 
 \subsection{Scale Does Not Explain These Results}
 
-Across 66 pairwise comparisons, 41 differ at $p < 0.05$ and 19 survive Bonferroni correction
+Across 66 pairwise comparisons, 36 differ at $p < 0.05$ and 15 survive Bonferroni correction
 ($\alpha = 0.05/66 \approx 0.00076$). The surviving differences separate the top of the table from
 the bottom; the middle is largely undifferentiated, and two comparisons make the point sharply.
 
 Llama 4 Scout 17B and LLaMA-3.3-70B are statistically indistinguishable (83.3\% vs 83.7\%,
-$p = 0.793$) across a four-fold parameter difference. GPT-OSS 120B and GPT-OSS 20B are likewise
-indistinguishable (77.1\% vs 76.8\%, $p = 0.907$) across a six-fold difference within a single model
+$p = 0.786$) across a four-fold parameter difference. GPT-OSS 120B and GPT-OSS 20B are likewise
+indistinguishable (77.1\% vs 76.8\%, $p = 0.912$) across a six-fold difference within a single model
 family. The second case admits a stronger statement than equal accuracy: the two GPT-OSS models have
-the highest error overlap of any pair in the study (Jaccard 0.427 against a median of 0.270 across
+the highest error overlap of any pair in the study (Jaccard 0.427 against a median of 0.274 across
 all 66 pairs). They do not merely score alike---they fail on substantially the same items. Whatever
 limits them on this benchmark is a property the additional parameters did not address.
 

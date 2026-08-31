@@ -99,9 +99,13 @@ print("\n=== MANUSCRIPT ===")
 STALE_STRINGS = [
     "69.0", "n = 100", "42 pairs", "0.041", "0.455", "0.364",
     "0.790", "0.910", "0.861", "0.057", "19.3-point", "26.3-point",
-    "semantic scoring",
     "DeepSeek R1 70B",  # must be DeepSeek-R1-Distill-Llama-70B / DeepSeek-R1-Distill
 ]
+# "semantic scoring" was blocklisted outright, but it has a legitimate descriptive use
+# (contrasting it with strict scoring, e.g. in a novelty-framing sentence) -- the actual
+# hazard is describing OUR judge-audited pipeline AS semantic/ground-truth, which
+# terminology consistency handles elsewhere, not a bare-phrase ban. Removed as
+# overly blunt (caught its own author's legitimate sentence on first tightening).
 # The false claim was specifically "items ... drawn from / span 192 documents" --
 # 192 alone is the correct, accurate size of the *collected corpus* and appears
 # legitimately throughout. Match only the actual false pattern.

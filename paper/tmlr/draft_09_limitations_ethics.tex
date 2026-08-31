@@ -15,10 +15,11 @@
 Several limitations should be noted. The automated four-stage scoring pipeline penalizes
 semantically correct predictions that differ in number format (`50\%' vs `fifty per cent') or
 verbosity; the primary LLM-as-judge audit (Appendix~\ref{app:judge}) reclassifies 78.4\% of flagged
-items as correct. Neither strict nor judge-audited scoring is ground truth: strict scores
-under-count (format false negatives), while judge-audited scores likely over-count, since the
+items as correct. Neither strict nor judge-audited scoring is treated as ground truth; they have
+different and opposing error profiles: strict scoring under-counts, since the cross-model judge
+overturns many strict failures to correct, while judge-audited scoring likely over-counts, since the
 judge's confirmed error mode is over-crediting correct intermediate reasoning that reaches a wrong
-final answer (3 of 28 audited verdicts). True accuracy lies between the two bounds we report. A
+final answer (3 of 28 audited verdicts). A
 second, cross-model judge (Section~\ref{sec:judge}) partially addresses this: because the two judges
 share no model family, correlated judge error is no longer the only explanation available for a
 disputed verdict, though it does not eliminate the possibility that both judges share a bias human

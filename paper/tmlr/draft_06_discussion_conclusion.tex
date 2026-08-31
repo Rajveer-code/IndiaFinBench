@@ -68,8 +68,8 @@ Benchmark accuracy is reported as a property of a model. It is a property of a m
 rule together, and on IndiaFinBench those two contributions are separable and large. Scoring twelve
 LLMs under strict string matching and under an item-level judge audit of every flagged error
 produces two rankings that agree only weakly: the model placed last under strict scoring places
-first under judge-audited scoring, because 93.9\% of its strict errors are format non-compliance rather
-than incorrect reasoning. Neither regime is wrong. They answer different questions, and reporting
+first under judge-audited scoring, because 93.9\% of its strict errors are reclassified as correct
+by the cross-model judge, primarily reflecting format differences rather than incorrect reasoning. Neither regime is wrong. They answer different questions, and reporting
 one alone leaves the reader unable to tell which.
 
 Underneath that, half the benchmark carries no discriminative signal: 213 of 406 items are answered

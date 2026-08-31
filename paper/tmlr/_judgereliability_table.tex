@@ -2,7 +2,7 @@
 \centering\small
 \begin{tabular}{lrrr}
 \toprule
-Model & Strict FN\% & Strict FP\% & 406-item judge-audited acc. \\
+Model & Overturn \% & Rejection \% & 406-item judge-audited acc. \\
 \midrule
 Gemini 2.5 Flash & 80.0 & 9.1 & 96.5 \\
 Qwen3-32B & 88.7 & 6.2 & 97.0 \\
@@ -19,6 +19,9 @@ DeepSeek-R1-Distill & 93.9 & 9.4 & 98.0 \\
 \bottomrule
 \end{tabular}
 \caption{Cross-model judge (phi4-mini) reliability by model, full REG/NUM/TMP coverage (344 items
-each). FN/FP rates relative to strict scoring; final column is 406-item accuracy including CON.}
+each). Overturn \% is the strict-to-judge overturn rate (strict-wrong items the judge marks
+correct); Rejection \% is the judge's rejection rate of strict-correct predictions. Neither is a
+false-negative/false-positive rate against ground truth---phi4-mini is not treated as one (see
+Section~\ref{sec:judge}). Final column is 406-item accuracy including CON.}
 \label{tab:judgereliability}
 \end{table}

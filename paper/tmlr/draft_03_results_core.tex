@@ -54,10 +54,12 @@ capability gap.
 
 The clearest case is DeepSeek-R1-Distill, which ranks 12th of twelve---last place---under strict
 scoring and reaches an exact tie for 1st with LLaMA-3.3-70B under judge-audited scoring (both
-398/406, 98.0\%). Of its 99 strict errors on REG/NUM/TMP, 93 are reclassified as correct---93.9\%---
-leaving 6 genuine failures, the fewest of any model in the study. Its strict score is not a
-measurement of its regulatory reasoning. It is a measurement of how far its output format sits from
-the reference format, and the two happen to be far apart because the model narrates its working. The
+398/406, 98.0\%). Of its 99 strict errors on REG/NUM/TMP, 93 are reclassified as correct by the
+cross-model judge---93.9\%---leaving 6 residual failures, the fewest of any model in the study. Its
+strict score is a measurement under a particular operational definition---exact and near-exact
+string match against a reference format---not a direct measurement of its regulatory reasoning.
+Under that definition its output sits far from the reference, primarily because the model narrates
+its working. The
 system prompt asked for an answer with no preamble; a model whose signature behaviour is visible
 reasoning is penalised for exactly that behaviour, under a rule that cannot tell narration from
 error.

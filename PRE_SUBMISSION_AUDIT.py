@@ -196,6 +196,12 @@ STALE_STRINGS = [
     "11th of twelve", "11th to 1st", "strict-11th",
     "remaining eleven span",  # the removed "excluding Gemma" compression framing
     "86\\% reclassified", "86.1\\% reclassified",  # pre-phi4 DeepSeek reclassification figure
+    "format non-compliance rather than",  # overclaims the judge verdict as fact, not "reclassified by the judge"
+    "true accuracy lies between",  # neither regime is ground truth; there is no "true accuracy" to bound
+    "near-chance",  # no defined chance baseline for open-ended numeric answers
+    "genuine failures",  # judge-confirmed residual is not "genuine" (judge isn't ground truth either)
+    "strict false-negative rate", "strict false-positive rate", "Strict FN", "Strict FP",
+    # ^ presuppose phi4-mini is ground truth; use "overturn rate" / "judge rejection rate" instead
 ]
 # "semantic scoring" was blocklisted outright, but it has a legitimate descriptive use
 # (contrasting it with strict scoring, e.g. in a novelty-framing sentence) -- the actual

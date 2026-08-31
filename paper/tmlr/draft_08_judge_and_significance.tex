@@ -20,8 +20,8 @@ why we pair it with human adjudication rather than treating its verdict as final
 
 The cross-model pass covers \textbf{every} REG/NUM/TMP prediction---344 items $\times$ 12 models
 $=$ 4{,}128 judgements---not only the items strict scoring marks wrong. Full coverage is what makes
-a strict \emph{false-positive} rate estimable for the first time: the original audit design, by
-construction, could only characterise false negatives. CON is excluded from both judges, matching
+a \emph{judge rejection rate of strict-correct predictions} estimable for the first time: the
+original audit design, by construction, could only characterise strict-to-judge overturns. CON is excluded from both judges, matching
 the pipeline's existing rationale (Section~\ref{sec:scoring}): it is scored by exact Yes/No match
 against an unambiguous binary label, which does not benefit from semantic review. Excluding it is
 conservative for the disagreement rates we report below, not convenient: CON is the one task where
@@ -37,10 +37,12 @@ the answer)---and correctly held the eighth as incorrect, where the model's pred
 (``ten per cent'') simply did not match the reference (``twenty per cent''). The judge discriminates
 rather than rubber-stamping either the strict score or a blanket verdict.
 
-Table~\ref{tab:judgereliability} reports, for every model, the strict false-negative rate (items
-strict scoring marked wrong that phi4-mini marks correct), the strict false-positive rate (the
-reverse---estimable for the first time because this pass covers every item, not only strict
-failures), and the resulting 406-item judge-audited accuracy. On the 874 items Gemini 2.5 Flash
+Table~\ref{tab:judgereliability} reports, for every model, the strict-to-judge overturn rate (items
+strict scoring marked wrong that phi4-mini marks correct), the judge rejection rate of strict-correct
+predictions (the reverse---estimable for the first time because this pass covers every item, not
+only strict failures), and the resulting 406-item judge-audited accuracy. We avoid ``false
+negative''/``false positive'' here: those terms presuppose the judge is ground truth, which it is
+not (Section~\ref{sec:judge} reports its own error rate against human adjudication). On the 874 items Gemini 2.5 Flash
 originally judged, phi4-mini agrees with it on 700 (\textbf{80.1\% raw agreement}). This is neither
 suspiciously high (which would suggest one judge merely rubber-stamping the other) nor low enough to
 call either judge unreliable outright; it indicates real, bounded disagreement between two models

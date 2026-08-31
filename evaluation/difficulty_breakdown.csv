@@ -1,5 +1,6 @@
 model,easy_acc,easy_n,medium_acc,medium_n,hard_acc,hard_n
 Gemini 2.5 Flash,92.5,160,89.0,182,84.4,64
+Gemini 2.5 Pro,83.1,160,72.5,182,68.8,64
 Qwen3-32B,81.9,160,87.9,182,87.5,64
 LLaMA-3.3-70B,79.4,160,85.2,182,90.6,64
 Llama 4 Scout 17B,82.5,160,81.9,182,89.1,64

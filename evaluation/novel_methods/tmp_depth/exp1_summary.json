@@ -28,12 +28,6 @@
       "significant": false
     },
     {
-      "model": "Gemma 4 E4B",
-      "spearman_r": -0.071,
-      "p_value": 0.5349,
-      "significant": false
-    },
-    {
       "model": "LLaMA-3-8B",
       "spearman_r": 0.041,
       "p_value": 0.7234,
@@ -61,6 +55,12 @@
       "model": "Mistral-7B",
       "spearman_r": 0.093,
       "p_value": 0.4198,
+      "significant": false
+    },
+    {
+      "model": "Gemma 4 E4B",
+      "spearman_r": 0.109,
+      "p_value": 0.3426,
       "significant": false
     },
     {

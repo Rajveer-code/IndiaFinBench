@@ -3,5 +3,5 @@
   "max_DI": 0.1868,
   "min_dissociation_model": "Qwen3-32B",
   "min_DI": -0.0109,
-  "mean_DI": 0.0842
+  "mean_DI": 0.0822
 }

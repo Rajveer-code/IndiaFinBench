@@ -51,6 +51,7 @@ os.makedirs(EVAL_OUT, exist_ok=True)
 # Ordered by overall accuracy (highest first)
 MODEL_FILES = {
     'Gemini 2.5 Flash':    'gemini_results.csv',
+    'Gemini 2.5 Pro':      'gemini25_pro_results.csv',
     'Qwen3-32B':           'qwen3_32b_results.csv',
     'LLaMA-3.3-70B':       'groq70b_results.csv',
     'Llama 4 Scout 17B':   'llama4scout_results.csv',
@@ -331,7 +332,7 @@ for i, model in enumerate(MODELS):
 
 # Shorten model names for y-axis
 short_names = [
-    'Gemini 2.5 Flash', 'Qwen3-32B', 'LLaMA-3.3-70B', 'Llama 4 Scout',
+    'Gemini 2.5 Flash', 'Gemini 2.5 Pro', 'Qwen3-32B', 'LLaMA-3.3-70B', 'Llama 4 Scout',
     'Kimi K2', 'LLaMA-3-8B', 'GPT-OSS 120B', 'GPT-OSS 20B',
     'Mistral-7B', 'DeepSeek R1', 'Gemma 4 E4B',
 ]

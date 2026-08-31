@@ -1,7 +1,7 @@
 {
-  "highly_discriminative": 116,
-  "ceiling_items": 215,
-  "floor_items": 7,
-  "mean_discrimination": 0.427,
-  "median_accuracy": 0.909
+  "highly_discriminative": 137,
+  "ceiling_items": 203,
+  "floor_items": 6,
+  "mean_discrimination": 0.44,
+  "median_accuracy": 0.875
 }

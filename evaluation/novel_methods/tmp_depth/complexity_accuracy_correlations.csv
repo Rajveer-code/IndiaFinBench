@@ -6,6 +6,7 @@ Gemma 4 E4B,-0.071,0.5349,False
 LLaMA-3-8B,0.041,0.7234,False
 GPT-OSS 120B,0.043,0.7068,False
 LLaMA-3.3-70B,0.047,0.6811,False
+Gemini 2.5 Pro,0.056,0.6237,False
 Mistral-7B,0.093,0.4198,False
 Llama 4 Scout 17B,0.153,0.1806,False
 DeepSeek R1 70B,0.212,0.0619,False

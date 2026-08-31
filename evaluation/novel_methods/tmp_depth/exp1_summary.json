@@ -52,6 +52,12 @@
       "significant": false
     },
     {
+      "model": "Gemini 2.5 Pro",
+      "spearman_r": 0.056,
+      "p_value": 0.6237,
+      "significant": false
+    },
+    {
       "model": "Mistral-7B",
       "spearman_r": 0.093,
       "p_value": 0.4198,

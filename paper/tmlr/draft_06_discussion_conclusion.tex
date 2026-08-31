@@ -1,0 +1,85 @@
+% DRAFT 6 — Discussion and Conclusion, split (were merged at 235 words).
+% All p-values from the REGENERATED 12-model bootstrap (66 pairs).
+% Parameter-efficiency comparisons appear HERE ONCE and nowhere else.
+
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{What a Single Accuracy Number Hides}
+
+The strict and corrected regimes rank the same twelve models on the same 406 items, and they
+disagree about the ordering. That disagreement is not noise to be averaged away; it is the
+measurement telling us that two distinct quantities have been collapsed into one. Strict accuracy
+measures what a format-sensitive pipeline can extract. Corrected accuracy measures what the model
+appears to know. For most models the two are close, which is why the conflation usually goes
+unnoticed. For a model that narrates its reasoning, they differ by twenty points and eleven ranks.
+
+The practical consequence is that a leaderboard cannot be read without knowing which question it
+answers. If the intended use is an automated compliance pipeline that parses model output
+mechanically, the strict number is the relevant one and DeepSeek R1 70B really is a poor choice. If
+the question is which model reasons most reliably about Indian regulatory text, the strict number is
+actively misleading about that same model. Benchmarks that report one figure force the reader to
+guess which of these they are looking at.
+
+We would not argue for replacing string matching with judge-based scoring. Judges have their own
+failure modes, and ours is no exception: our manual audit found the judge correct on 25 of 28 items,
+and all three errors ran the same direction---over-crediting a model that showed sound intermediate
+work but reached a wrong final answer. That bias inflates corrected scores for exactly the verbose,
+reasoning-heavy models that strict scoring penalises. The two regimes err in opposite directions,
+which is the argument for reporting both and treating the interval between them as the honest
+statement of what is known.
+
+\subsection{Scale Does Not Explain These Results}
+
+Across 66 pairwise comparisons, 41 differ at $p < 0.05$ and 19 survive Bonferroni correction
+($\alpha = 0.05/66 \approx 0.00076$). The surviving differences separate the top of the table from
+the bottom; the middle is largely undifferentiated, and two comparisons make the point sharply.
+
+Llama 4 Scout 17B and LLaMA-3.3-70B are statistically indistinguishable (83.3\% vs 83.7\%,
+$p = 0.793$) across a four-fold parameter difference. GPT-OSS 120B and GPT-OSS 20B are likewise
+indistinguishable (77.1\% vs 76.8\%, $p = 0.907$) across a six-fold difference within a single model
+family. The second case admits a stronger statement than equal accuracy: the two GPT-OSS models have
+the highest error overlap of any pair in the study (Jaccard 0.427 against a median of 0.270 across
+all 66 pairs). They do not merely score alike---they fail on substantially the same items. Whatever
+limits them on this benchmark is a property the additional parameters did not address.
+
+\subsection{What This Means for Benchmark Construction}
+
+Two findings here were not things we set out to measure, and both concern the benchmark rather than
+the models.
+
+The first is that half our items do not discriminate. 203 of 406 are answered correctly by at least
+11 of 12 models. We built the benchmark for coverage of a regulatory domain, which is a reasonable
+objective, but coverage and discrimination are different targets and expert annotation effort spent
+on one does not buy the other. A benchmark reporting only nominal size overstates the evidence
+behind any leaderboard gap it produces.
+
+The second concerns our difficulty labels. We assigned difficulty by counting reasoning steps, and
+LLaMA-3.3-70B performs \emph{better} on our hard items than our easy ones. The likeliest reading is
+that reasoning-step count captures one axis of difficulty while missing another---hard items here
+tend to state their amendment-chain cues explicitly, whereas medium items turn on a single subtle
+qualifier. We report the label scheme's failure rather than repairing it after the fact, because the
+inversion is informative about what makes regulatory text hard.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+Benchmark accuracy is reported as a property of a model. It is a property of a model and a scoring
+rule together, and on IndiaFinBench those two contributions are separable and large. Scoring twelve
+LLMs under strict string matching and under an item-level judge audit of every flagged error
+produces two rankings that agree only weakly: the model placed last under strict scoring places
+first under corrected scoring, because 86\% of its strict errors are format non-compliance rather
+than incorrect reasoning. Neither regime is wrong. They answer different questions, and reporting
+one alone leaves the reader unable to tell which.
+
+Underneath that, half the benchmark carries no discriminative signal: 203 of 406 items are answered
+correctly by at least 11 of the 12 models, leaving 137 that separate systems. Nominal size and
+effective size are different quantities, and the difference bounds how much weight any reported gap
+can carry.
+
+IndiaFinBench is released in full---406 expert-annotated items over 192 SEBI and RBI documents,
+the evaluation harness, per-item judge verdicts, and all model predictions---so that both regimes
+can be reproduced and both claims contested. The Indian regulatory setting made these effects
+visible because it denies models the option of recalling an answer they were trained on. We expect
+the effects themselves to generalise well beyond it, and the cheapest way to find out is for other
+benchmarks to report the same two numbers.

@@ -1,0 +1,40 @@
+% DRAFT 4 — Related Work. Former 2.1 (130w) + 2.2 (75w) merged per Law 6.
+% Reframed: the gap is now BOTH geographic and methodological.
+
+\section{Related Work}
+\label{sec:related}
+
+\paragraph{Financial and regulatory benchmarks.}
+The financial NLP community has built substantial evaluation infrastructure, anchored almost
+entirely in Western text. FinQA \citep{chen2021finqa} and ConvFinQA \citep{chen2022convfinqa} test
+numerical reasoning over SEC filings; FiNER-139 \citep{loukas2022finer} targets entity recognition
+in the same filings; FLUE \citep{shah2022flue} packages several such tasks into a multi-task suite.
+PIXIU/FLARE \citep{xie2023pixiu} and FinBen \citep{xie2024finben} push toward breadth, the latter
+spanning 42 datasets across 24 tasks. FinanceBench \citep{islam2023financebench} is closest to our
+own construction---expert-verified gold answers over financial documents---but covers publicly
+listed US companies only. Legal NLP contributes adjacent structure without the financial content:
+CUAD \citep{hendrycks2021cuad} for contract clauses, LexGLUE \citep{chalkidis2022lexglue} for
+European legal text, ILDC \citep{malik2021ildc} for Indian court judgments. Across this literature
+the binding constraint is geography rather than task diversity, and no benchmark we are aware of
+defines amendment-chain supersession as a task type.
+
+\paragraph{How benchmarks are scored.}
+The methodological gap matters more to this paper. Extractive QA evaluation inherits its scoring
+conventions from SQuAD \citep{rajpurkar2016squad} and DROP \citep{dua2019drop}: exact match and
+token-overlap F1 against a reference string. Those conventions were designed for short spans copied
+from a passage, where the space of correct surface forms is small. Applied to open-ended
+quantitative answers---where \texttt{Rs.\ 19,000 crore}, \texttt{19,000 crore}, and
+\texttt{nineteen thousand crore} are the same answer---they measure formatting as much as
+correctness. LLM-as-judge evaluation has emerged as the usual alternative, and its biases are by now
+well documented, including a tendency to over-credit fluent or elaborated reasoning. Our position is
+not that one regime is correct. It is that the two regimes answer different questions, that the
+difference is large enough to reorder a leaderboard, and that reporting either one alone leaves the
+reader unable to tell capability from format compliance. Holistic frameworks such as HELM
+\citep{liang2022helm} argue for multi-metric reporting on related grounds; we supply a concrete case
+where the metric choice, not the metric count, is what moves the ranking.
+
+\paragraph{What a benchmark reports about itself.}
+Benchmarks are commonly described by nominal item count. Whether those items discriminate between
+the systems being ranked is rarely stated, though the psychometrics literature has long treated item
+difficulty and discrimination as basic descriptive properties of a test. Section~\ref{sec:effsize}
+reports them for IndiaFinBench.

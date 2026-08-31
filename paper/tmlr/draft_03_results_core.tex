@@ -1,0 +1,125 @@
+% ---------------------------------------------------------------------------
+% DRAFT 3 — Core results: scoring regime (hero) + effective size
+% All figures verified against paper/tmlr/NUMBERS.md §3b and §2.
+% NOTE: the error-geometry "dissociation index" is deliberately NOT used here
+% until scripts/exp8_error_geometry.py has been read and its metric described
+% accurately. Do not add it on the strength of its name.
+% ---------------------------------------------------------------------------
+
+\section{The Scoring Regime Reorders the Leaderboard}
+\label{sec:regime}
+
+Every model was scored twice over identical predictions. The strict regime is the four-stage
+string-matching pipeline of Section~\ref{sec:scoring}. The corrected regime takes every prediction
+the strict pipeline marked wrong on REG, NUM, and TMP---874 items across the twelve models---and
+submits it to an item-level judge that sees the question, the reference answer, and the prediction,
+and returns a verdict with a one-sentence rationale. Contradiction-detection items use exact Yes/No
+matching and need no semantic review. The judge reclassified 685 of the 874 flagged predictions as
+correct, an overall flip rate of 78.4\% (REG 261/327, NUM 272/348, TMP 152/199). A stratified
+28-item manual audit of the judge's own verdicts confirmed 25 of 28, or 89.3\%.
+
+Nothing about the models changed between the two regimes. Only the rule changed.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.86\linewidth]{figures/figure_regime_shift.png}
+\caption{Model rank under strict string matching (left) and under the item-level judge audit
+(right), over identical predictions. Coloured lines move by two or more positions. DeepSeek R1 70B
+(red) moves from 11th to 1st. Tied scores share a rank.}
+\label{fig:regime}
+\end{figure}
+
+\begin{table}[t]
+\centering
+\caption{Accuracy and rank under both scoring regimes. Strict is the automated string-matching
+pipeline; corrected applies the item-level judge verdict. Ranks are competition ranks, so tied
+scores share the better rank. Generated from the released per-item judge verdicts by
+\texttt{scripts/generate\_regime\_figure.py}.}
+\label{tab:regime}
+\input{tables/table_regime.tex}
+\end{table}
+
+The regimes disagree about who is best. Strict accuracy spans 70.4--89.7\%, corrected accuracy
+79.8--96.6\%, and the two orderings are only weakly related: Spearman $\rho = 0.413$ ($p = 0.18$),
+Kendall $\tau = 0.313$ ($p = 0.17$). With twelve models these tests have little power, so we do not
+claim the rankings are independent---we claim the strict ranking is a poor predictor of the
+corrected one, which Figure~\ref{fig:regime} and Table~\ref{tab:regime} show directly. Eight of the
+twelve models move by two or more positions.
+
+A second effect is visible in the accuracies rather than the ranks. Setting aside Gemma 4 E4B, the
+weakest model and the only one whose errors survive the audit in bulk, the remaining eleven models
+span 14.6 points under strict scoring (75.1--89.7) and 6.0 points under corrected scoring
+(90.6--96.6). Correcting for format compliance compresses the field to a little over a third of its
+apparent spread, and three models tie outright at 95.6. Most of what a strict leaderboard displays
+as a capability gap between mid-table models is not a capability gap.
+
+The clearest case is DeepSeek R1 70B, which ranks 11th of twelve under strict scoring and 1st under
+corrected scoring. Of its 101 strict errors, 87 are reclassified as correct---86.1\%---leaving 14
+genuine failures, the fewest of any model in the study. Its strict score is not a measurement of
+its regulatory reasoning. It is a measurement of how far its output format sits from the reference
+format, and the two happen to be far apart because the model narrates its working. The system
+prompt asked for an answer with no preamble; a model whose signature behaviour is visible reasoning
+is penalised for exactly that behaviour, under a rule that cannot tell narration from error.
+
+This has a practical reading that is not a criticism of string matching. A compliance workflow that
+consumes model output through a format-sensitive parser really would fail on those 87 items, and
+for that deployment question the strict number is the honest one. What the strict number cannot do
+is answer the capability question, and the two are routinely reported as if they were the same
+quantity. A leaderboard that reports one accuracy figure has silently chosen which question to
+answer, without saying so.
+
+\section{Effective Size: How Many Items Actually Discriminate}
+\label{sec:effsize}
+
+A benchmark's nominal size is the number of items it contains. Its effective size, for the purpose
+of separating systems, is the number of items on which systems actually differ. An item that every
+model answers correctly contributes to reported accuracy but distinguishes no pair of models.
+
+For each item we take $p$, the fraction of the twelve models answering it correctly, and summarise
+its spread as $s = 4p(1-p)$, which is maximised at $p = 0.5$ and zero when every model agrees. This
+is a descriptive statistic over our twelve-model panel, not a fitted item-response model: we make no
+latent-ability assumptions and estimate no per-item slope parameters. It answers only the question
+we are asking---how much does this item separate the systems we ran?
+
+\begin{table}[t]
+\centering
+\caption{Item categories by the fraction of models answering correctly ($p$). Ceiling items are
+answered correctly by at least 11 of 12 models; floor items by at most 1 of 12.}
+\label{tab:effsize}
+\begin{tabular}{lrrl}
+\toprule
+Category & Items & \% & Criterion \\
+\midrule
+Ceiling            & 203 & 50.0 & $p \ge 0.9$ \\
+Discriminative     & 137 & 33.7 & $0.3 < p < 0.8$, $s$ above median \\
+Intermediate       & 60  & 14.8 & remainder \\
+Floor              & 6   & 1.5  & $p \le 0.1$ \\
+\midrule
+Total              & 406 & 100  & \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Half the benchmark sits at ceiling. 203 of 406 items are answered correctly by at least 11 of the
+12 models, and 6 more are answered correctly by at most one, so 209 items---slightly over half---
+carry almost no information about the relative ordering of these systems. The median item is
+answered correctly by 87.5\% of models, and mean spread across all items is 0.44. By the criterion
+in Table~\ref{tab:effsize}, 137 items do the discriminating.
+
+An independent route gives the same count. Analysing consensus rather than spread, 203 items are
+answered correctly by more than 90\% of models and 11 items by fewer than 20\%. The ceiling count
+of 203 is reached by two calculations that share no threshold, which is the reassurance we can
+offer that it is not an artifact of where the cut was placed.
+
+We report this about our own benchmark deliberately. It bears directly on how the results above
+should be read: a gap of a few points between two mid-table models rests on a subset of 137 items,
+not 406, and confidence intervals computed over the full item count understate that. It also
+suggests a construction lesson we did not anticipate when building the benchmark---annotating for
+coverage of a domain and annotating for discrimination between systems are different objectives,
+and expert effort spent on items that every competent model answers correctly buys descriptive
+completeness rather than measurement power.
+
+We do not claim this ratio is unusual. We claim it is unmeasured: we are not aware of comparable
+benchmarks in this literature that report what fraction of their items separate the systems they
+rank, and without that figure a reported accuracy gap cannot be sized against the evidence
+supporting it.

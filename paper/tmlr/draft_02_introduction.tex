@@ -1,0 +1,82 @@
+% ---------------------------------------------------------------------------
+% DRAFT 2 — Introduction, TMLR rebuild
+% Spine: strict -> corrected -> discriminative -> human (canonical order).
+% Repeated facts removed: the Llama-Scout/70B and GPT-OSS 120B/20B comparisons
+% now appear once, in Results, not here.
+% ---------------------------------------------------------------------------
+
+\section{Introduction}
+
+A benchmark leaderboard reports one number per model, and the field reads that number as a property
+of the model. It is not. Accuracy is a joint product of what the model produced and what the scoring
+rule was willing to accept, and for open-ended tasks those two things come apart. A model that
+computes the right dividend and writes it as \texttt{19,000 crore} where the reference says
+\texttt{Rs.\ 19,000 crore} has reasoned correctly and scored zero. Under string-matching evaluation
+this is indistinguishable from not knowing the answer.
+
+The usual response is to treat such cases as noise---a small, uniform tax on every model that leaves
+rankings intact. We show that this assumption fails, and that it fails hardest for exactly the models
+whose output style diverges most from the reference format. Reasoning-oriented models, which
+narrate their working, are penalised not for reasoning worse but for reasoning visibly.
+
+Testing this needs a domain where models cannot recover a correct answer from memorised training
+text, so that scoring effects are not confounded with recall. Indian financial regulation supplies
+one. SEBI and RBI instruments embed numerical thresholds directly in prose, chain amendments across
+decades so that resolving a question requires tracking which circular superseded which, and use
+jurisdiction-specific terminology (LODR, PMLA, SFB, AIF, FEMA) that models trained predominantly on
+US and European financial corpora have little reason to have learned. Existing financial NLP
+benchmarks---FinQA, FinanceBench, PIXIU/FLARE, FinBen---are built almost entirely from US or
+European sources, so this setting is also unmeasured on its own terms.
+
+We introduce \textbf{IndiaFinBench}, 406 expert-annotated items drawn from 192 SEBI and RBI
+documents spanning 1992--2026, across four task types: regulatory interpretation, numerical
+reasoning, contradiction detection, and temporal reasoning. Annotation quality is validated by a
+model-based secondary pass (90.7\% agreement, 150 items) and an independent human
+inter-annotator study (180 items, 44.3\% of the benchmark; $\kappa = 0.645$ on the binary
+contradiction task). The benchmark is the instrument for the measurement question, and we release
+it so the measurement can be repeated elsewhere.
+
+Evaluating twelve contemporary LLMs zero-shot under two scoring regimes produces the paper's central
+result. Under a strict four-stage string-matching pipeline, accuracy spans 70.4--89.7\%. Under an
+item-level judge audit of all 874 flagged errors---validated against manual review at 89.3\%
+agreement---accuracy spans 79.8--96.6\%. The two regimes do not merely shift scores; they reorder
+the leaderboard. DeepSeek R1 70B ranks 11th of twelve under strict scoring and 1st under corrected
+scoring, because 86\% of its strict errors are format non-compliance rather than wrong reasoning.
+Across all twelve models the two rankings are weakly concordant at best (Spearman $\rho = 0.455$,
+$p = 0.14$). A strict leaderboard, in other words, is a poor guide to which model reasons better---
+though it remains the right measurement if what you care about is deployment behaviour under a
+format-sensitive pipeline. Those are different questions, and accuracy alone does not distinguish
+them.
+
+A second measurement problem sits underneath the first. Counting items is not the same as counting
+evidence: 203 of the 406 items are answered correctly by at least 11 of the 12 models and therefore
+separate almost no pair of systems, leaving 137 items carrying the benchmark's discriminative
+signal. We report this for our own benchmark because it is the kind of quantity benchmarks
+generally do not report, and because effective size, not nominal size, determines how much a
+leaderboard difference can be trusted.
+
+Our contributions, in the order the paper reports them:
+
+\begin{enumerate}
+\item \textbf{A two-regime evaluation of twelve LLMs} under strict string matching and an item-level
+judge audit of every flagged error, showing that the choice of scoring rule reorders the leaderboard
+rather than shifting it uniformly.
+
+\item \textbf{A characterisation of who pays the format tax}: the penalty is concentrated in models
+whose output style diverges from the reference format, which separates extractable capability from
+capability itself.
+
+\item \textbf{An effective-size analysis} distinguishing the 137 items that discriminate between
+systems from the 203 that do not, and a statement of what this implies for reading small differences
+on any benchmark of this scale.
+
+\item \textbf{IndiaFinBench}: 406 expert-annotated items over 192 SEBI and RBI documents across four
+task types, with a validated annotation protocol and published agreement statistics.
+
+\item \textbf{A human reference point} on a 60-item medium-and-hard subset, reported with its limits
+stated: a single non-specialist evaluator, used to anchor the scale rather than to estimate human
+performance.
+
+\item \textbf{Full public release} of the dataset, evaluation harness, per-item judge verdicts, and
+all model predictions, so that both scoring regimes can be reproduced and contested.
+\end{enumerate}

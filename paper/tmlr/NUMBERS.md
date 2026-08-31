@@ -332,3 +332,108 @@ and §regime.
 **Note:** `evaluation/results_judged/pipeline_comparison.csv` disagrees slightly (Gemini 2.5 Flash
 89.9 at n=405, Qwen3-32B 85.9 at n=404) because it was computed over subsets. The per-item
 recomputation over all 406 rows matches §1 exactly and is authoritative.
+
+---
+
+## 8. MAJOR FINDING — Gemma was mislabelled; corrected model reshuffles the leaderboard (2026-08-31)
+
+The original `evaluation/results/gemma4_e4b_results.csv` was produced by a script requesting Ollama
+tag `"gemma4"` — not a real Google release; no surviving log confirms what it actually resolved to.
+Its own `hf_id` field read `google/gemma-4-e4b`, a model Google never released. Re-run from scratch
+on **`gemma3:4b`**, confirmed via `/api/show`: family `gemma3`, **4,299,915,632 params**, Q4_K_M —
+matching the paper's own methods text and the real `google/gemma-3-4b` release.
+
+| Task | Old (`gemma4`, ambiguous) | New (`gemma3:4b`, confirmed) | Δ |
+|---|---|---|---|
+| REG | 83.9 | 86.2 | +2.3 |
+| NUM | 50.0 | 70.7 | **+20.7** |
+| CON | 72.6 | 79.0 | +6.5 |
+| TMP | 62.8 | 71.8 | +9.0 |
+| **Overall** | **70.4** | **78.8** | **+8.4** |
+
+**Gemma moves from 12th of 12 (isolated "Tier 3," the paper's floor) to 6th of 12** — now above
+LLaMA-3-8B, both GPT-OSS variants, Gemini 2.5 Pro, Mistral-7B, and **DeepSeek-R1-Distill-Llama-70B**.
+
+**Every claim keyed to Gemma being the weakest/outlier model is now false and must not be reused:**
+- Abstract range "70.4% (Gemma 4 E4B) to 89.7%" — floor is now DeepSeek at 75.1%
+- "Gemma 4 E4B stands alone" / Tier 3 framing — gone; Gemma is mid-pack
+- "near-chance numerical reasoning" for Gemma (was 50.0%) — now 70.7%, nowhere near chance
+- "only Gemma is significantly worse than the human baseline" — must be recomputed
+- Difficulty-collapse claim ("82.5%→56.2%") — must be recomputed from the new predictions
+- The abstract's compression finding ("excluding Gemma, remaining eleven span...") — the premise
+  that Gemma is the outlier no longer holds; must be recomputed or reframed
+
+Backup of the ambiguous-identity original:
+`evaluation/results/_gemma4_e4b_results_AMBIGUOUS-IDENTITY_BACKUP_2026-08-31.csv`.
+New rerun driver: `scripts/rerun_gemma3_4b.py`.
+
+### Full pipeline refresh triggered by this fix
+
+Re-ran, in order: the 8 free `evaluation/novel_methods/` analyses (second time — their first
+12-model run, committed earlier today, still used the ambiguous Gemma file), then the canonical
+`scripts/generate_figures.py` (writes `bootstrap_significance_results.json`,
+`wilson_ci_results.json`, `difficulty_breakdown.csv`, `task_accuracy_matrix.csv`).
+
+**Bootstrap significance: 36 of 66 pairs significant at p<0.05** (was 41 with the wrong Gemma, 42 in
+the stale submitted paper). Fewer significant pairs is the expected, correct consequence of Gemma no
+longer being a dramatic outlier — it now sits close enough to several mid-table models that fewer
+comparisons clear p<0.05.
+
+**Caution — a wrong tool was nearly used here.** `scripts/bootstrap_significance.py` (legacy,
+separate from `generate_figures.py`) outputs to `evaluation/error_analysis/` and includes a phantom
+**"Claude 3 Haiku"** entry that is not one of the 12 benchmarked models and was evaluated (per
+`evaluate_v7_models.py`'s dead code) on a different 150-item subset. Running it was reverted via
+`git checkout` before anything was staged. **Do not use `scripts/bootstrap_significance.py` or
+anything under `evaluation/error_analysis/` for this paper — `generate_figures.py` is the canonical
+source for `bootstrap_significance_results.json` and `wilson_ci_results.json`.**
+
+### Still stale, not yet fixed
+
+`evaluation/results_judged/gemma4_e4b_results.csv` — the Gemini-as-judge audit of Gemma's OLD,
+wrong predictions. Superseded by the Phase 2 full-coverage local judge (§9) rather than patched,
+since the judge methodology itself was being replaced regardless.
+
+---
+
+## 9. Phase 2 — cross-model judge (phi4-mini), full coverage
+
+Closes the objection that the original judge (Gemini 2.5 Flash) is also one of the 12 evaluated
+models. `phi4-mini` (Microsoft Phi, 3.8B, local via Ollama) shares no family with any benchmarked
+model and costs nothing to run.
+
+**Scope: all REG/NUM/TMP items for all 12 models = 344 × 12 = 4,128 judged predictions** — full
+coverage, not only strict failures, so this is the first point at which a strict **false-positive**
+rate becomes estimable. CON excluded, matching the paper's existing rationale (exact Yes/No against
+an unambiguous binary label; no semantic review needed) — a pre-existing principled choice, not a
+new gap.
+
+Reuses `JUDGE_PROMPT` and `JUDGE_TASKS` verbatim from `scripts/scorer_with_judge_gemini.py` — same
+rubric, different judge, so the standard being applied doesn't change, only who applies it.
+
+**Validated before committing to the full run:**
+- 8-item pilot on Gemini's own strict-correct REG items: 8/8 judge-agrees (sanity check, not
+  informative on its own).
+- 8-item stress test on DeepSeek-R1-Distill-Llama-70B's strict-*incorrect* REG items: **7/8 flipped
+  to correct** (genuine format mismatches — digit vs. written-out numbers, extra preamble text before
+  the answer) and **1/8 correctly stayed incorrect** (REG_003: predicted "ten per cent" against a
+  reference of "twenty per cent" — a real error). This confirms the judge discriminates rather than
+  rubber-stamping either the strict score or a blanket "correct".
+- Timing: 3.29s/call measured → **projected ~226 min (≈3.75h)** for full coverage.
+
+**Launched in background** (`scripts/judge_phi4_crossmodel.py` → `evaluation/results_judged_phi4/`),
+checkpointing every 10 items per model. Output columns: `id, task_type, difficulty, question,
+ref_answer, prediction, strict_correct, judge_verdict, judge_reason`.
+
+**Decision gate (committed before results are seen, per the approved plan):** if the phi4-mini
+judge supports DeepSeek's strict-11th → corrected-1st reversal, it stays as the hero result. If not,
+the paper's spine becomes the discriminative-coverage / compression finding instead.
+
+**Known limitation, to be stated plainly in the paper:** phi4-mini is a 3.8B model. Disagreement
+with Gemini's verdicts is ambiguous between "Gemini is biased" and "phi4-mini lacks the capacity for
+this task" — only human adjudication (oversampling exactly these disagreement cases) can resolve
+which. That adjudication sheet is built once the full phi4-mini pass completes, so disagreement
+cases are known.
+
+**Correction to the master plan's own estimate:** the plan said "4,872 predictions (12×406)". The
+real full-coverage scope under the existing JUDGE_TASKS design is **4,128** (12×344, CON excluded),
+not 4,872.

@@ -1,0 +1,55 @@
+\documentclass[10pt]{article} % For LaTeX2e
+\usepackage{tmlr}
+% Double-blind submission: no [accepted] or [preprint] option. tmlr.sty
+% inserts "Anonymous authors / Paper under double-blind review" automatically.
+
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{multirow}
+% tmlr.sty already loads natbib with its own options -- do not load it again.
+
+\title{Strict versus Judge-Audited Scoring Changes LLM Leaderboards:\\
+A Measurement Study on Indian Financial Regulatory Text}
+
+% No \author block -- anonymous submission.
+
+\begin{document}
+
+\maketitle
+
+\footnotetext[0]{\textbf{Use of AI assistance.} Portions of this manuscript's drafting, data
+verification, and code were produced with the assistance of a large language model (Claude, by
+Anthropic), used under the authors' direction and review throughout. All claims, numerical results,
+and experimental designs were verified by the authors against the underlying data before inclusion,
+per TMLR's policy on LLM-assisted submissions.}
+
+\input{../draft_01_abstract_only.tex}
+
+\input{../draft_02_introduction.tex}
+
+\input{../draft_04_related_work.tex}
+
+\input{../draft_07_dataset_and_setup.tex}
+
+\input{../draft_03_results_core.tex}
+
+\input{../draft_05_results_detail.tex}
+
+\input{../draft_08_judge_and_significance.tex}
+
+\input{../_error_analysis_raw.tex}
+
+\input{../draft_06_discussion_conclusion.tex}
+
+\input{../draft_09_limitations_ethics.tex}
+
+\bibliography{indiafinbench}
+\bibliographystyle{tmlr}
+
+\input{../draft_10_appendix_provenance.tex}
+
+\input{../_appendix_raw.tex}
+
+\end{document}

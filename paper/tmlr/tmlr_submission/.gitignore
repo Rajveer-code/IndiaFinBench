@@ -1,0 +1,13 @@
+*.aux
+*.log
+*.out
+*.bbl
+*.blg
+*.pdf
+*.fls
+*.fdb_latexmk
+tmlr-style.zip
+compile*.log
+c[0-9]*.log
+b[0-9]*.log
+bibtex*.log

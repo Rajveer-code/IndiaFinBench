@@ -1,0 +1,57 @@
+{
+  "n_disagreement": 174,
+  "gemini_matched_only": 99,
+  "phi4_matched_only": 75,
+  "both_matched": 0,
+  "neither_matched": 0,
+  "disagreement_by_task": {
+    "numerical_reasoning": {
+      "gemini_only": 44,
+      "phi4_only": 24
+    },
+    "temporal_reasoning": {
+      "phi4_only": 22,
+      "gemini_only": 25
+    },
+    "regulatory_interpretation": {
+      "phi4_only": 29,
+      "gemini_only": 30
+    }
+  },
+  "n_control": 64,
+  "control_agree_with_consensus": 57,
+  "control_by_stratum": {
+    "CON_strict_correct_no_judge": {
+      "agree": 8,
+      "total": 8
+    },
+    "CON_strict_incorrect_no_judge": {
+      "agree": 8,
+      "total": 8
+    },
+    "NUM_strict_correct_phi4_agrees": {
+      "agree": 7,
+      "total": 8
+    },
+    "NUM_strict_incorrect_judges_agree": {
+      "agree": 6,
+      "total": 8
+    },
+    "REG_strict_correct_phi4_agrees": {
+      "agree": 8,
+      "total": 8
+    },
+    "REG_strict_incorrect_judges_agree": {
+      "agree": 7,
+      "total": 8
+    },
+    "TMP_strict_correct_phi4_agrees": {
+      "agree": 6,
+      "total": 8
+    },
+    "TMP_strict_incorrect_judges_agree": {
+      "agree": 7,
+      "total": 8
+    }
+  }
+}

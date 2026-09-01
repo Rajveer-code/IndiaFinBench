@@ -141,7 +141,7 @@ LLaMA-3-8B,REG_024,regulatory_interpretation,0,0,1,"Under SEBI Credit Rating Age
 LLaMA-3-8B,NUM_005,numerical_reasoning,0,0,1,"If a mutual fund scheme with net assets of 500 crore rupees borrows the maximum permissible amount for the maximum permissible duration, what is the interest liability at the penalty rate of 15% per annum for the maximum 6-month borrowing period?",7.5 crore rupees (20% of 500 = 100 crore borrowed; 15% per annum for 6 months = 7.5% of 100 = 7.5 crore),"20% of 500 crore = 0.2 x 500,000,000 = 100,000,000
 Interest liability = Principal x Rate x Time
 = 100,000,000 x 15/100 x 6/12
-= 7,500,000",FALSE,disagreement,NUM_disagreement,CORRECT,
+= 7,500,000",FALSE,disagreement,NUM_disagreement,INCORRECT,"[Corrected 2026-09-02: prediction has a 10x unit-conversion error (writes 500 crore as 500,000,000, should be 5,000,000,000); final stated answer is 0.75 crore, not the correct 7.5 crore.]"
 LLaMA-3-8B,TMP_002,temporal_reasoning,0,0,1,Which lock-in regime for minimum promoters' contribution applied before 13 August 2021 — three years or eighteen months?,"Three years from the date of commencement of commercial production or date of allotment, whichever is later",Three years.,FALSE,disagreement,TMP_disagreement,CORRECT,
 LLaMA-3-8B,REG_070,regulatory_interpretation,0,0,1,For how long is an applicant barred from making a fresh registration application if their application is rejected for containing false or misleading information?,One year from the date of rejection,One year.,FALSE,disagreement,REG_disagreement,CORRECT,
 LLaMA-3-8B,REG_077,regulatory_interpretation,0,0,1,"Under SEBI (Buy-Back of Securities) Regulations 2018, how long must a company wait after the expiry of a preceding buy-back period before making another buy-back offer?",One year from the date of expiry of the buyback period of the preceding offer.,One year.,FALSE,disagreement,REG_disagreement,CORRECT,
@@ -262,7 +262,7 @@ GPT-OSS 20B,NUM_005,numerical_reasoning,0,0,1,"If a mutual fund scheme with net 
    = 7.5\text{ crore}
    \]
 
-**Answer:** ₹7",FALSE,disagreement,NUM_disagreement,INCORRECT,Wrong/incomplete final amount: the correct interest liability is Rs 7.5 crore; the response ends at '₹7'.
+**Answer:** ₹7",FALSE,disagreement,NUM_disagreement,CORRECT,"Wrong/incomplete final amount: the correct interest liability is Rs 7.5 crore; the response ends at '₹7'. [Corrected 2026-09-02: calculation is fully correct (100 crore x 15% x 6/12 = 7.5 crore); response is truncated one character after stating the correct answer, not wrong.]"
 GPT-OSS 20B,TMP_012,temporal_reasoning,0,0,1,The SEBI (Merchant Bankers) Regulations 1992 were enacted under which SEBI Act and year?,"The Securities and Exchange Board of India Act, 1992",Information not provided in the context.,FALSE,disagreement,TMP_disagreement,INCORRECT,No answer provided.
 GPT-OSS 20B,REG_070,regulatory_interpretation,0,0,1,For how long is an applicant barred from making a fresh registration application if their application is rejected for containing false or misleading information?,One year from the date of rejection,One year.,FALSE,disagreement,REG_disagreement,CORRECT,
 GPT-OSS 20B,REG_077,regulatory_interpretation,0,0,1,"Under SEBI (Buy-Back of Securities) Regulations 2018, how long must a company wait after the expiry of a preceding buy-back period before making another buy-back offer?",One year from the date of expiry of the buyback period of the preceding offer.,One year.,FALSE,disagreement,REG_disagreement,CORRECT,

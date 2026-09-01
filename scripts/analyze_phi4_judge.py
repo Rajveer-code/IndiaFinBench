@@ -74,14 +74,27 @@ for label, d in per_model.items():
                        "strict_accuracy_406": round(strict_full, 2),
                        "phi4_corrected_accuracy_406": round(phi4_full, 2)}
 
-# Rank + decision gate
+# Rank + decision gate. Competition ranking (ties share the better rank) -- plain
+# positional/enumerate ranking has silently broken a genuine tie here twice before
+# in this project (once on the Gemini-based regime figure, once on an earlier pass
+# of this exact script, patched only in the output JSON and never fixed at the
+# source -- which is why the bug was still here to trip on a third time).
+def competition_rank(vals: dict) -> dict:
+    order = sorted(set(vals.values()), reverse=True)
+    rank_of = {v: i + 1 for i, v in enumerate(order)}
+    return {k: rank_of[v] for k, v in vals.items()}
+
+
+strict_vals = {label: d["strict_accuracy_406"] for label, d in results.items()}
+phi4_vals = {label: d["phi4_corrected_accuracy_406"] for label, d in results.items()}
+strict_rank = competition_rank(strict_vals)
+phi4_rank = competition_rank(phi4_vals)
 ranked_strict = sorted(results.items(), key=lambda x: -x[1]["strict_accuracy_406"])
-ranked_phi4 = sorted(results.items(), key=lambda x: -x[1]["phi4_corrected_accuracy_406"])
-strict_rank = {label: i + 1 for i, (label, _) in enumerate(ranked_strict)}
-phi4_rank = {label: i + 1 for i, (label, _) in enumerate(ranked_phi4)}
 
 deepseek_strict_rank = strict_rank["DeepSeek-R1-Distill"]
 deepseek_phi4_rank = phi4_rank["DeepSeek-R1-Distill"]
+tied_at_phi4_rank_1 = sorted(label for label, r in phi4_rank.items() if r == 1)
+models_moved_2plus = sum(1 for label in results if abs(strict_rank[label] - phi4_rank[label]) >= 2)
 
 print("=== Strict vs phi4-corrected accuracy (406-item basis) ===")
 print(f"{'Model':22s} {'Strict':>8s} {'SRank':>6s} {'phi4-corr':>10s} {'PRank':>6s} {'FN%':>6s} {'FP%':>6s}")
@@ -92,10 +105,13 @@ for label, _ in ranked_strict:
           f"{100*d['fn_rate']:6.1f} {100*d['fp_rate']:6.1f}")
 
 print(f"\nDeepSeek-R1-Distill: strict rank {deepseek_strict_rank} -> phi4-corrected rank {deepseek_phi4_rank}")
+print(f"Tied at phi4 rank 1: {tied_at_phi4_rank_1}")
+print(f"Models moved >=2 ranks: {models_moved_2plus}")
 print(f"DECISION GATE: {'REVERSAL CONFIRMED' if deepseek_phi4_rank <= 2 and deepseek_strict_rank >= 10 else 'NOT CONFIRMED -- reassess spine'}")
 
 json.dump({"per_model": results, "strict_rank": strict_rank, "phi4_rank": phi4_rank,
-           "deepseek_strict_rank": deepseek_strict_rank, "deepseek_phi4_rank": deepseek_phi4_rank},
+           "deepseek_strict_rank": deepseek_strict_rank, "deepseek_phi4_rank": deepseek_phi4_rank,
+           "tied_at_phi4_rank_1": tied_at_phi4_rank_1, "models_moved_2plus": models_moved_2plus},
           open("evaluation/phi4_regime_table.json", "w"), indent=2)
 print("\nSaved evaluation/phi4_regime_table.json")
 

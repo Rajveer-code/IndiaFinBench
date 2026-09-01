@@ -1,8 +1,8 @@
 {
-  "agree": 700,
-  "disagree": 174,
+  "agree": 703,
+  "disagree": 171,
   "total": 874,
-  "raw_agreement_pct": 80.1,
+  "raw_agreement_pct": 80.4,
   "disagreement_ids_sample": [
     "NUM_005",
     "TMP_009",

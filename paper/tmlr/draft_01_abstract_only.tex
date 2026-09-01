@@ -10,16 +10,16 @@ judge---sharing no model family with any evaluated system---reviews every regula
 numerical-reasoning, and temporal-reasoning prediction, not only the ones strict scoring marks wrong.
 
 The regimes disagree, and the disagreement is not cosmetic. Strict accuracy spans 75.1--89.7\%;
-judge-audited accuracy spans 93.6--98.0\%. DeepSeek-R1-Distill-Llama-70B, a reasoning-distilled model, ranks
+judge-audited accuracy spans 94.1--98.0\%. DeepSeek-R1-Distill-Llama-70B, a reasoning-distilled model, ranks
 12th of twelve (last place) under strict scoring and reaches an exact tie for 1st under judge-audited
 scoring (both DeepSeek-R1-Distill-Llama-70B and LLaMA-3.3-70B at 398/406, 98.0\%), because
 93.9\% of its strict errors are reclassified as correct by the cross-model judge, primarily
-reflecting format differences. Ten of the
+reflecting format differences. Eleven of the
 twelve models move by two or more ranks, and the two orderings are essentially uncorrelated (Spearman
-$\rho = 0.113$,
-$p = 0.73$), so a strict leaderboard says little about which model reasons better. Judge auditing
+$\rho = 0.067$,
+$p = 0.84$), so a strict leaderboard says little about which model reasons better. Judge auditing
 also compresses the field: the twelve-model spread narrows from 14.5 points under strict scoring to
-4.4 under judge-audited scoring. Most of the apparent capability gap across the field is format
+3.9 under judge-audited scoring. Most of the apparent capability gap across the field is format
 compliance, not reasoning.
 
 Item-level analysis compounds the problem. At least 11 of the 12 models answer 213 of the 406 items

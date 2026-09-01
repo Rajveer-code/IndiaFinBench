@@ -50,13 +50,13 @@ it so the measurement can be repeated elsewhere.
 Evaluating twelve contemporary LLMs zero-shot under two scoring regimes produces the paper's central
 result. Under a strict four-stage string-matching pipeline, accuracy spans 75.1--89.7\%. Under a
 full-coverage cross-model judge audit (Section~\ref{sec:judge})---every REG/NUM/TMP prediction, not
-only the ones strict scoring flagged---accuracy spans 93.6--98.0\%. The two regimes do not merely
+only the ones strict scoring flagged---accuracy spans 94.1--98.0\%. The two regimes do not merely
 shift scores; they reorder the leaderboard. DeepSeek-R1-Distill-Llama-70B (hereafter
 DeepSeek-R1-Distill) ranks 12th of twelve (last) under strict scoring and 1st under judge-audited
 scoring, because 93.9\% of its strict errors are reclassified as correct by the cross-model judge,
 primarily reflecting format differences.
-Across all twelve models the two rankings are essentially uncorrelated (Spearman $\rho = 0.113$,
-$p = 0.73$). A strict leaderboard, in other words, is a poor guide to which model reasons better---
+Across all twelve models the two rankings are essentially uncorrelated (Spearman $\rho = 0.067$,
+$p = 0.84$). A strict leaderboard, in other words, is a poor guide to which model reasons better---
 though it remains the right measurement if what you care about is deployment behaviour under a
 format-sensitive pipeline. Those are different questions, and accuracy alone does not distinguish
 them.

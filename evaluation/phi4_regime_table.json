@@ -99,14 +99,14 @@
     "LLaMA-3-8B": {
       "n_judged_reg_num_tmp": 344,
       "strict_correct_344": 259,
-      "phi4_corrected_344": 327,
-      "fn_count": 68,
-      "fn_rate": 0.8,
-      "fp_count": 25,
-      "fp_rate": 0.0965,
+      "phi4_corrected_344": 334,
+      "fn_count": 75,
+      "fn_rate": 0.8824,
+      "fp_count": 6,
+      "fp_rate": 0.0232,
       "con_correct_62": 58,
       "strict_accuracy_406": 78.08,
-      "phi4_corrected_accuracy_406": 94.83
+      "phi4_corrected_accuracy_406": 96.55
     },
     "Llama 4 Scout 17B": {
       "n_judged_reg_num_tmp": 344,
@@ -123,14 +123,14 @@
     "Mistral-7B": {
       "n_judged_reg_num_tmp": 344,
       "strict_correct_344": 258,
-      "phi4_corrected_344": 330,
-      "fn_count": 72,
-      "fn_rate": 0.8372,
-      "fp_count": 31,
-      "fp_rate": 0.1202,
+      "phi4_corrected_344": 340,
+      "fn_count": 82,
+      "fn_rate": 0.9535,
+      "fp_count": 13,
+      "fp_rate": 0.0504,
       "con_correct_62": 50,
       "strict_accuracy_406": 75.86,
-      "phi4_corrected_accuracy_406": 93.6
+      "phi4_corrected_accuracy_406": 96.06
     },
     "Qwen3-32B": {
       "n_judged_reg_num_tmp": 344,
@@ -168,9 +168,9 @@
     "GPT-OSS 20B": 3,
     "LLaMA-3.3-70B": 1,
     "Kimi K2": 2,
-    "LLaMA-3-8B": 6,
+    "LLaMA-3-8B": 5,
     "Llama 4 Scout 17B": 2,
-    "Mistral-7B": 8,
+    "Mistral-7B": 6,
     "Qwen3-32B": 4
   },
   "deepseek_strict_rank": 12,
@@ -179,5 +179,5 @@
     "DeepSeek-R1-Distill",
     "LLaMA-3.3-70B"
   ],
-  "models_moved_2plus": 10
+  "models_moved_2plus": 11
 }

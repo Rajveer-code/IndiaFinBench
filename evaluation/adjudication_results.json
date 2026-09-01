@@ -1,21 +1,26 @@
 {
   "n_disagreement": 174,
-  "gemini_matched_only": 99,
-  "phi4_matched_only": 75,
-  "both_matched": 0,
-  "neither_matched": 0,
+  "gemini_matched_only": 87,
+  "phi4_matched_only": 71,
+  "both_matched": 12,
+  "neither_matched": 4,
   "disagreement_by_task": {
     "numerical_reasoning": {
-      "gemini_only": 44,
-      "phi4_only": 24
+      "gemini_only": 35,
+      "phi4_only": 21,
+      "both": 9,
+      "neither": 3
     },
     "temporal_reasoning": {
-      "phi4_only": 22,
-      "gemini_only": 25
+      "phi4_only": 21,
+      "gemini_only": 24,
+      "neither": 1,
+      "both": 1
     },
     "regulatory_interpretation": {
       "phi4_only": 29,
-      "gemini_only": 30
+      "gemini_only": 28,
+      "both": 2
     }
   },
   "n_control": 64,

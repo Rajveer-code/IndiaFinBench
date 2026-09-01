@@ -43,7 +43,7 @@ predictions (the reverse---estimable for the first time because this pass covers
 only strict failures), and the resulting 406-item judge-audited accuracy. We avoid ``false
 negative''/``false positive'' here: those terms presuppose the judge is ground truth, which it is
 not (Section~\ref{sec:judge} reports its own error rate against human adjudication). On the 874 items Gemini 2.5 Flash
-originally judged, phi4-mini agrees with it on 700 (\textbf{80.1\% raw agreement}). This is neither
+originally judged, phi4-mini agrees with it on 703 (\textbf{80.4\% raw agreement}). This is neither
 suspiciously high (which would suggest one judge merely rubber-stamping the other) nor low enough to
 call either judge unreliable outright; it indicates real, bounded disagreement between two models
 neither of which we treat as ground truth. To resolve genuine disagreement between judges and check
@@ -58,12 +58,16 @@ Appendix~\ref{app:judge} reports the full sampling protocol and per-item results
 adjudication of all 238 items is complete. On the 64 control-agreement items---cases where the
 available methods already agreed---the human adjudicator concurred with that consensus 57 of 64
 times (89.1\%): a base rate for how often agreement between methods tracks a human reader's
-judgment on this benchmark. On the 174 disagreement items, where the human's verdict must by
-construction side with exactly one judge, the human agreed with Gemini 99 times (56.9\%) and with
-phi4-mini 75 times (43.1\%); the gap is widest on numerical reasoning (Gemini preferred 44 of 68
-times, 64.7\%) and narrows to near-even on regulatory interpretation (30 of 59, 50.8\%) and
-temporal reasoning (25 of 47, 53.2\%). Neither judge is right often enough on these disputed cases
-to be treated as ground truth, and phi4-mini's lower share here does not by itself argue against
+judgment on this benchmark. On the 174 items sampled for disagreement between Gemini and phi4-mini,
+the human's verdict matched Gemini's on 99 (56.9\%) and phi4-mini's on 83 (47.7\%)---these overlap
+(12 items where both verdicts happened to match the human's; 4 where neither did), since a small
+number of these items were rejudged with corrected reference text after the disagreement sample was
+drawn (Section~\ref{sec:models}), and are no longer disagreements in the current data even though
+the item remains in the sample. The gap is widest on numerical reasoning (Gemini matched 44 of 68,
+64.7\%, against phi4-mini's 30, 44.1\%) and narrows to near-even on regulatory interpretation (30 of
+59 vs.\ 31 of 59) and temporal reasoning (25 of 47 vs.\ 22 of 47). Neither judge is right often enough
+on these disputed cases to be treated as ground truth, and phi4-mini's lower share here does not by
+itself argue against
 using it as this paper's primary judge: that choice rests on full coverage (Section~\ref{sec:judge}
 could estimate false positives for the first time only because of it), not on a claim that
 phi4-mini is more accurate than Gemini. We report the gap rather than smoothing over it; Section~

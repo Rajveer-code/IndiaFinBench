@@ -22,18 +22,18 @@ actively misleading about that same model. Benchmarks that report one figure for
 guess which of these they are looking at.
 
 We would not argue for replacing string matching with judge-based scoring. Judges have their own
-failure modes, and ours is no exception: our manual audit found the judge correct on 25 of 28 items,
-and all three errors ran the same direction---over-crediting a model that showed sound intermediate
-work but reached a wrong final answer. That bias inflates judge-audited scores for exactly the verbose,
-reasoning-heavy models that strict scoring penalises. The two regimes err in opposite directions,
-which is the argument for reporting both and treating the interval between them as the honest
-statement of what is known.
+failure modes, and ours is no exception: the Gemini pilot's 28-item manual audit found every error
+running the same direction (Appendix~\ref{app:judge})---over-crediting a model that showed sound
+intermediate work but reached a wrong final answer. That bias inflates judge-audited scores for
+exactly the verbose, reasoning-heavy models that strict scoring penalises. The two regimes err in
+opposite directions, which is the argument for reporting both and treating the interval between them
+as the honest statement of what is known.
 
 \subsection{Scale Does Not Explain These Results}
 
-Across 66 pairwise comparisons, 36 differ at $p < 0.05$ and 15 survive Bonferroni correction
-($\alpha = 0.05/66 \approx 0.00076$). The surviving differences separate the top of the table from
-the bottom; the middle is largely undifferentiated, and two comparisons make the point sharply.
+Of the 66 pairwise comparisons, 15 survive Bonferroni correction (Section~\ref{sec:significance}).
+The surviving differences separate the top of the table from the bottom; the middle is largely
+undifferentiated, and two comparisons make the point sharply.
 
 Llama 4 Scout 17B and LLaMA-3.3-70B are statistically indistinguishable (83.3\% vs 83.7\%,
 $p = 0.786$) across a four-fold parameter difference. GPT-OSS 120B and GPT-OSS 20B are likewise

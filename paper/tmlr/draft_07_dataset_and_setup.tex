@@ -85,10 +85,9 @@ three of the twelve evaluated models.
 
 \textbf{Annotation scale rationale.} The 406-item scale is a deliberate quality-over-quantity
 decision: each item requires domain knowledge of SEBI circulars, RBI master directions, and their
-decade-spanning amendment chains, which is structurally incompatible with crowdsourcing. For context,
-FinanceBench released 150 expert-verified items \citep{islam2023financebench}. IndiaFinBench's 406
-items span four task types across 34 source documents (Section~\ref{app:provenance}), and the IAA
-study (Section~\ref{sec:iaa}) independently validates 44.3\% of all items.
+decade-spanning amendment chains, structurally incompatible with crowdsourcing (cf.\ FinanceBench's
+150 expert-verified items, Section~\ref{sec:related}). The IAA study (Section~\ref{sec:iaa})
+independently validates 44.3\% of all items.
 
 Every item was individually reviewed to ensure: (1) the answer is unambiguously derivable from the
 provided context; (2) the question has exactly one correct answer; and (3) the context is sufficient
@@ -96,16 +95,13 @@ without external knowledge.
 
 \subsection{Model-Based Secondary Validation}
 
-To confirm that items are unambiguously answerable from context, a secondary validation pass was
-conducted using LLaMA-3.3-70B-Versatile (via Groq API) as an independent quality-checker under a
-context-only, zero-shot prompt (temperature = 0). Although LLaMA-3.3-70B also appears in the main
-evaluation, the two uses are functionally distinct: the validation pass asks whether a question is
-unambiguously answerable from its context passage---a different task from the evaluation's
-open-ended QA. The validation endpoint was accessed in isolation from the evaluation pipeline,
-preventing cross-contamination of outputs.
-
-Using a model-based validator as a tractability check follows established benchmark construction
-practice \citep{islam2023financebench, hendrycks2021cuad}.
+To confirm that items are unambiguously answerable from context, a secondary validation pass used
+LLaMA-3.3-70B (via Groq API) as an independent quality-checker under a context-only, zero-shot
+prompt (temperature = 0), accessed in isolation from the evaluation pipeline. Although LLaMA-3.3-70B
+also appears in the main evaluation, the two uses are functionally distinct: this pass asks whether a
+question is unambiguously answerable from its context passage, a different task from the
+evaluation's open-ended QA, following established benchmark construction practice
+\citep{islam2023financebench, hendrycks2021cuad}.
 
 \begin{table}[t]
 \centering\small

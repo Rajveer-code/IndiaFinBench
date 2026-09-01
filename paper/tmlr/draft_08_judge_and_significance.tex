@@ -28,14 +28,13 @@ conservative for the disagreement rates we report below, not convenient: CON is 
 strict and judge-based scoring would agree almost by construction, so its absence removes a source
 of trivial agreement rather than manufacturing disagreement elsewhere.
 
-Before committing to the full pass we validated the judge on two small, targeted samples. On eight
-items Gemini 2.5 Flash itself answered correctly under strict scoring, phi4-mini agreed on all
-eight---a sanity check, not evidence of discrimination. On eight items DeepSeek-R1-Distill answered
-incorrectly under strict scoring, phi4-mini flipped seven to correct---in every case a genuine
-format mismatch (a digit where the reference used a written-out number, or a short preamble before
-the answer)---and correctly held the eighth as incorrect, where the model's predicted figure
-(``ten per cent'') simply did not match the reference (``twenty per cent''). The pilot showed that phi4-mini both overturned strict failures and retained
-cases where the substantive answer remained incorrect.
+Before committing to the full pass we validated the judge on two small, targeted samples: phi4-mini
+agreed with all eight items Gemini 2.5 Flash itself answered correctly under strict scoring (a
+sanity check, not evidence of discrimination), and on eight DeepSeek-R1-Distill items marked
+incorrect under strict scoring, flipped seven to correct---each a genuine format mismatch---while
+correctly holding the eighth, where the predicted figure simply did not match the reference. The
+pilot showed that phi4-mini both overturned strict failures and retained cases where the substantive
+answer remained incorrect.
 
 Table~\ref{tab:judgereliability} reports, for every model, the strict-to-judge overturn rate (items
 strict scoring marked wrong that phi4-mini marks correct), the judge rejection rate of strict-correct
@@ -46,35 +45,22 @@ not (Section~\ref{sec:judge} reports its own error rate against human adjudicati
 originally judged, phi4-mini agrees with it on 703 (\textbf{80.4\% raw agreement}). This is neither
 suspiciously high (which would suggest one judge merely rubber-stamping the other) nor low enough to
 call either judge unreliable outright; it indicates real, bounded disagreement between two models
-neither of which we treat as ground truth. To resolve genuine disagreement between judges and check
-whether agreement between methods also tracks human judgment, we hand-adjudicate 238 items: the 174
-REG/NUM/TMP items where Gemini and phi4-mini disagree---the only cases informative about which judge
-is right---plus a stratified control sample of 64 items (8 per stratum) spanning judge-agreement
-cases across strict-correct/incorrect status and all four task types, including two
-contradiction-detection strata that spot-check the exact-match scorer directly, since CON is never
-judge-reviewed by either model. The control sample is evidence about specific, informative cases, not
-a random draw sized to estimate a population-level judge error rate, and we do not report it as one.
-Appendix~\ref{app:judge} reports the full sampling protocol and per-item results. Human
-adjudication of all 238 items is complete, scored against the judge verdicts as they stood when the
-sample was drawn and handed to the adjudicator---the state the human actually read and judged
-against, not a later-updated one---so every disagreement item resolves to exactly one judge by
-construction. (A subsequent data-quality fix, Section~\ref{sec:models}, later corrected truncated
-reference text for a small number of REG/NUM/TMP items across two models and changed phi4-mini's
-verdict on some of them; this adjudication reports against the pre-fix state deliberately, since
-that is what the human was shown, and the fix is reported and verified independently on its own
-terms rather than folded into this analysis.) On the 64 control-agreement items---cases where the
-available methods already agreed---the human adjudicator concurred with that consensus 57 of 64
-times (89.1\%): a base rate for how often agreement between methods tracks a human reader's
-judgment on this benchmark. On the 174 disagreement items, the human's verdict matched Gemini's on
-99 (56.9\%) and phi4-mini's on 75 (43.1\%). The gap is widest on numerical reasoning (Gemini
-matched 44 of 68, 64.7\%, against phi4-mini's 24, 35.3\%) and narrows to near-even on regulatory
-interpretation (30 of 59 vs.\ 29 of 59) and temporal reasoning (25 of 47 vs.\ 22 of 47). Neither
-judge is right often enough on these disputed cases to be treated as ground truth, and phi4-mini's
-lower share here does not by itself argue against
-using it as this paper's primary judge: that choice rests on full coverage (Section~\ref{sec:judge}
-could estimate false positives for the first time only because of it), not on a claim that
-phi4-mini is more accurate than Gemini. We report the gap rather than smoothing over it; Section~
-\ref{sec:limitations} returns to it as a limitation of the cross-model judge design.
+neither of which we treat as ground truth. To resolve genuine disagreement between judges and check whether agreement between methods also
+tracks human judgment, we hand-adjudicate 238 items: the 174 REG/NUM/TMP items where Gemini and
+phi4-mini disagree, plus a stratified 64-item control sample where they agree (Appendix~\ref{app:judge}
+reports the full sampling protocol). Adjudication is scored against the judge verdicts as they stood
+when the sample was drawn and handed to the adjudicator---not a later-updated state---so every
+disagreement item resolves to exactly one judge by construction; a subsequent data-quality fix
+(Section~\ref{sec:models}) that later corrected truncated reference text for a few items is reported
+independently rather than folded into this analysis. On the 64 control items the adjudicator
+concurred with the existing consensus 89.1\% of the time. On the 174 disagreement items, the human's
+verdict matched Gemini's on 56.9\% and phi4-mini's on 43.1\%, widest on numerical reasoning
+(Appendix~\ref{app:judge} reports the full per-task breakdown). Neither judge is right often enough
+on these disputed cases to be treated as ground truth, and phi4-mini's lower share here does not
+argue against using it as this paper's primary judge: that choice rests on full coverage
+(Section~\ref{sec:judge} could estimate false positives for the first time only because of it), not
+on a claim that phi4-mini is more accurate than Gemini. Section~\ref{sec:limitations} returns to this
+as a limitation of the cross-model judge design.
 
 \textbf{Decision rule, stated before the results were examined.} If the cross-model judge supports
 DeepSeek-R1-Distill's strict-12th-to-judge-audited-1st reversal (Section~\ref{sec:regime}), we report it
@@ -82,6 +68,16 @@ as the paper's central finding. If it does not, we report the discrepancy plainl
 central finding becomes the effective-size result (Section~\ref{sec:effsize}) instead. We commit to
 this rule here, before running the full pass, specifically so that the choice of headline result is
 not made after seeing which one looks better.
+
+\textbf{What survives the judge audit.} Classifying every strict failure into four error types
+(domain-knowledge, numerical, temporal, or context-grounding; Appendix~\ref{sec:errortax-sub}) shows
+the reclassification is uneven, not uniform. Temporal-supersession failures dominate every profiled
+model's residual, judge-retained errors (50--62\%), while numerical and domain-knowledge format
+mismatches are cleared consistently. DeepSeek-R1-Distill's 101 strict failures collapse to 8
+residual---the largest correction of any model and the basis for its rank reversal---while Gemma
+3~4B, despite a comparable 72.1\% reclassification rate, keeps a residual error rate 1.7--3$\times$
+every other profiled model's. Appendix~\ref{sec:errortax-sub} reports the full per-model breakdown
+and representative failure examples.
 
 \subsection{Statistical Significance and Performance Tiers}
 \label{sec:significance}

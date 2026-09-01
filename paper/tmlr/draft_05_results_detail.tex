@@ -85,17 +85,16 @@ report balanced accuracy in Appendix~\ref{app:con} rather than leaning on the ra
 
 Items were labelled easy (160), medium (182), or hard (64) at annotation time by the number of
 reasoning steps required. If that label tracked model difficulty as intended, accuracy should fall
-monotonically from easy to hard. It does, for exactly three of twelve models: Gemini 2.5 Flash
-(92.5\% $\to$ 84.4\%), GPT-OSS 120B (79.4\% $\to$ 73.4\%), and most sharply Gemini 2.5 Pro
-(83.1\% $\to$ 68.8\%, a 14.4-point decline). The other nine do not decline monotonically at all---
-the dominant pattern in this benchmark is not the one the difficulty label was designed to produce.
+monotonically from easy to hard. It does, for exactly three of twelve models, most sharply Gemini 2.5
+Pro (83.1\% $\to$ 68.8\%, a 14.4-point decline). The other nine do not decline monotonically at
+all---the dominant pattern in this benchmark is not the one the difficulty label was designed to
+produce. Appendix~\ref{app:difficulty} tabulates every model's easy/medium/hard breakdown and plots
+the full trajectories.
 
-Two non-monotonic shapes recur. Six models---Qwen3-32B, LLaMA-3.3-70B, Llama 4 Scout 17B, Kimi K2,
-LLaMA-3-8B, and DeepSeek-R1-Distill---score \emph{higher} on hard items than on medium ones, and for
-LLaMA-3.3-70B this extends further: hard items (90.6\%) outscore even the easy ones (79.4\%), an
-11.2-point inversion. Gemma 3 4B and GPT-OSS 20B show the opposite shape, a dip at medium difficulty
-with partial recovery on hard (Gemma: 82.5\% easy $\to$ 74.7\% medium $\to$ 81.2\% hard). Neither
-shape is what "harder" was meant to produce.
+The most striking case is LLaMA-3.3-70B, which scores \emph{higher} on hard items (90.6\%) than easy
+ones (79.4\%), an 11.2-point inversion; five other models show the same higher-on-hard shape to a
+lesser degree, and two show the opposite, a dip at medium difficulty with partial recovery on hard.
+Neither shape is what "harder" was meant to produce.
 
 We read this as evidence about the difficulty label, not about any individual model. Reasoning-step
 count was the criterion used to assign difficulty, but hard items in this benchmark are typically

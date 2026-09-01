@@ -28,15 +28,8 @@ Nothing about the models changed between the two regimes. Only the rule changed.
 \label{fig:regime}
 \end{figure}
 
-\begin{table}[t]
-\centering
-\caption{Accuracy and rank under both scoring regimes. Strict is the automated string-matching
-pipeline; judge-audited applies the cross-model judge verdict. Ranks are competition ranks, so tied
-scores share the better rank. Generated from the released per-item judge verdicts by
-\texttt{scripts/generate\_regime\_figure.py}.}
-\label{tab:regime}
-\input{tables/table_regime.tex}
-\end{table}
+Appendix~\ref{app:regimetable} tabulates exact strict and judge-audited accuracy, rank, and
+$\Delta$rank for all twelve models; the discussion below states the comparisons that matter.
 
 The regimes disagree about who is best. Strict accuracy spans 75.1--89.7\%, judge-audited accuracy
 94.1--98.0\%, and the two orderings are essentially uncorrelated: Spearman $\rho = 0.067$

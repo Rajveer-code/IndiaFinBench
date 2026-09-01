@@ -13,29 +13,21 @@
 \label{sec:limitations}
 
 Several limitations should be noted. The automated four-stage scoring pipeline penalizes
-semantically correct predictions that differ in number format (`50\%' vs `fifty per cent') or
-verbosity; the primary LLM-as-judge audit (Appendix~\ref{app:judge}) reclassifies 78.4\% of flagged
-items as correct. Neither strict nor judge-audited scoring is treated as ground truth; they have
-different and opposing error profiles: strict scoring under-counts, since the cross-model judge
-overturns many strict failures to correct, while judge-audited scoring likely over-counts, since the
-judge's confirmed error mode is over-crediting correct intermediate reasoning that reaches a wrong
-final answer (3 of 28 audited verdicts). A
-second, cross-model judge (Section~\ref{sec:judge}) partially addresses this: because the two judges
-share no model family, correlated judge error is no longer the only explanation available for a
-disputed verdict, though it does not eliminate the possibility that both judges share a bias human
-adjudicators would not. Human adjudication of the 174 disputed items (Section~\ref{sec:judge})
-found the two judges do not share a bias in the same direction on these cases: the human sided with
-Gemini on 56.9\% and with phi4-mini on 43.1\%, so phi4-mini---this paper's primary judge, chosen for
-full coverage, not for higher accuracy on disputed cases---is the less accurate of the two
-specifically where they disagree. DeepSeek-R1-Distill has 14 items in this disputed sample (of its
-99 strict REG/NUM/TMP errors); phi4-mini reclassified 10 of these 14 as correct, and human review
-disagreed with 7 of those 10. This is a small, disagreement-selected subsample---not a random draw
-from DeepSeek-R1-Distill's full reclassified set, and not sized to estimate what fraction of its
-93.9\% reclassification rate would survive full human review---but it is a genuine limitation of
-the cross-model judge design worth stating plainly rather than only reporting the control-agreement
-rate (89.1\%, Section~\ref{sec:judge}), which looks more favourable. The benchmark
-also does not cover Hindi--English code-switched regulatory
-text that appears in some official documents.
+semantically correct predictions that differ in number format or verbosity; the primary LLM-as-judge
+audit (Appendix~\ref{app:judge}) reclassifies 78.4\% of flagged items as correct. Neither strict nor
+judge-audited scoring is ground truth: they have opposing error profiles, and a second, cross-model
+judge (Section~\ref{sec:judge}) only partially addresses this, since sharing no model family does not
+rule out both judges sharing a bias human adjudicators would not. Human adjudication
+(Section~\ref{sec:judge}) confirms this concern is not hypothetical: on the 174 disputed items,
+phi4-mini---this paper's primary judge, chosen for full coverage rather than higher accuracy on
+disputed cases---is the less accurate of the two judges specifically where they disagree.
+DeepSeek-R1-Distill has 14 items in this disputed sample (of its 99 strict REG/NUM/TMP errors);
+phi4-mini reclassified 10 of these 14 as correct, and human review disagreed with 7 of those 10. This
+is a small, disagreement-selected subsample---not sized to estimate what fraction of DeepSeek's
+93.9\% reclassification rate would survive full human review---but it is a genuine limitation of the
+cross-model judge design worth stating plainly rather than only reporting the more favourable
+control-agreement rate (89.1\%). The benchmark also does not cover Hindi--English code-switched
+regulatory text that appears in some official documents.
 
 The human reference study involves a single non-specialist evaluator on 60 medium-and-hard items; it
 anchors the harder half of the benchmark but supports no population-level claims about human

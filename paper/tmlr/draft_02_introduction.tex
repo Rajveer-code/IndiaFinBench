@@ -34,8 +34,8 @@ one. SEBI and RBI instruments embed numerical thresholds directly in prose, chai
 decades so that resolving a question requires tracking which circular superseded which, and use
 jurisdiction-specific terminology (LODR, PMLA, SFB, AIF, FEMA) that models trained predominantly on
 US and European financial corpora have little reason to have learned. Existing financial NLP
-benchmarks---FinQA, FinanceBench, PIXIU/FLARE, FinBen---are built almost entirely from US or
-European sources, so this setting is also unmeasured on its own terms.
+benchmarks are built almost entirely from US or European sources (Section~\ref{sec:related}), so
+this setting is also unmeasured on its own terms.
 
 We introduce \textbf{IndiaFinBench}\footnote{Dataset, evaluation harness, and all model
 predictions: \url{https://anonymous.4open.science/r/IndiaFinBench-322D/}. De-anonymized upon
@@ -68,28 +68,10 @@ signal. We report this for our own benchmark because it is the kind of quantity 
 generally do not report, and because effective size, not nominal size, determines how much a
 leaderboard difference can be trusted.
 
-Our contributions, in the order the paper reports them:
-
-\begin{enumerate}
-\item \textbf{A two-regime evaluation of twelve LLMs} under strict string matching and a full-coverage
-cross-model judge audit of every REG/NUM/TMP prediction, showing that the choice of scoring rule
-reorders the leaderboard rather than shifting it uniformly.
-
-\item \textbf{A characterisation of who pays the format tax}: the penalty is concentrated in models
-whose output style diverges from the reference format, which separates extractable capability from
-capability itself.
-
-\item \textbf{An effective-size analysis} distinguishing the 134 items that discriminate between
-systems from the 213 that do not, and a statement of what this implies for reading small differences
-on any benchmark of this scale.
-
-\item \textbf{IndiaFinBench}: 406 expert-annotated items over 34 of 192 collected SEBI and RBI documents across four
-task types, with a validated annotation protocol and published agreement statistics.
-
-\item \textbf{A human reference point} on a 60-item medium-and-hard subset, reported with its limits
-stated: a single non-specialist evaluator, used to anchor the scale rather than to estimate human
-performance.
-
-\item \textbf{Full public release} of the dataset, evaluation harness, per-item judge verdicts, and
-all model predictions, so that both scoring regimes can be reproduced and contested.
-\end{enumerate}
+Our contributions, in the order the paper reports them: (1) a two-regime evaluation of twelve LLMs
+showing that the scoring rule reorders the leaderboard rather than shifting it uniformly; (2) a
+characterisation of who pays the format tax, concentrated in models whose output style diverges from
+the reference; (3) an effective-size analysis distinguishing the 134 discriminating items from the
+213 that are not; (4) IndiaFinBench itself, with a validated annotation protocol and published
+agreement statistics; (5) a human reference point reported with its limits stated; and (6) full
+public release of the dataset, harness, per-item judge verdicts, and all model predictions.

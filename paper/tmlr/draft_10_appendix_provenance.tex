@@ -2,6 +2,23 @@
 \label{app:provenance}
 \label{app:clustering}
 
+\subsection{Full Scoring-Regime Comparison}
+\label{app:regimetable}
+
+Table~\ref{tab:regime} tabulates exact strict and judge-audited accuracy, rank, and $\Delta$rank for
+all twelve models; Section~\ref{sec:regime} and Figure~\ref{fig:regime} discuss the comparisons that
+matter.
+
+\begin{table}[h]
+\centering
+\caption{Accuracy and rank under both scoring regimes. Strict is the automated string-matching
+pipeline; judge-audited applies the cross-model judge verdict. Ranks are competition ranks, so tied
+scores share the better rank. Generated from the released per-item judge verdicts by
+\texttt{scripts/build\_phi4\_regime\_outputs.py}.}
+\label{tab:regime}
+\input{tables/table_regime.tex}
+\end{table}
+
 \subsection{Document Provenance}
 
 The 192 documents listed in Appendix~\ref{app:sourcedocs} are the full collected corpus. The 406

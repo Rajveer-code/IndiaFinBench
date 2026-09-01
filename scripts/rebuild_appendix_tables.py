@@ -34,7 +34,7 @@ MODEL_FILES = {
     "Gemini 2.5 Pro": "gemini25_pro_results.csv",
     "Mistral-7B": "mistral_results.csv",
     "DeepSeek-R1-Distill-Llama-70B": "deepseek_r1_70b_results.csv",
-    "Gemma 4 E4B": "gemma4_e4b_results.csv",
+    "Gemma 3 4B": "gemma4_e4b_results.csv",
 }
 
 # Errortax table: the 5 models the manuscript profiles (top / bottom / three
@@ -44,7 +44,7 @@ ERRORTAX_MODELS = [
     ("Qwen3-32B", "qwen3_32b_results.csv"),
     ("LLaMA-3.3-70B", "groq70b_results.csv"),
     ("DeepSeek-R1-Distill-Llama-70B", "deepseek_r1_70b_results.csv"),
-    ("Gemma 4 E4B", "gemma4_e4b_results.csv"),
+    ("Gemma 3 4B", "gemma4_e4b_results.csv"),
 ]
 
 # Reused verbatim from scripts/error_analysis.py -- the deterministic mapping

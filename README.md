@@ -52,13 +52,13 @@ The benchmark reveals that **strict string-matching and semantic (LLM-judge-corr
 
 ## Key Findings
 
-> **No model significantly beats a careful non-specialist human on the benchmark's harder half.** On the 60 shared medium-and-hard items the human scores 80.0%; the best model reaches 85.0% (paired bootstrap p = 0.48, not significant) and only Gemma 4 E4B is significantly worse (63.3%, p = 0.011). Models decisively exceed the human only on multi-step numerical reasoning (best model 84.8% vs human 56.2%).
+> **No model significantly beats a careful non-specialist human on the benchmark's harder half.** On the 60 shared medium-and-hard items the human scores 80.0% (48/60); the best model reaches 85.0% (Gemini 2.5 Flash, paired bootstrap p = 0.44, not significant). Gemma 3 4B is the closest to a significant gap (66.7%, p = 0.02 uncorrected) but does not survive Bonferroni correction across the twelve-model family (α = 0.05/12); no model differs significantly from the human reader in either direction. Models decisively exceed the human only on multi-step numerical reasoning (best model 84.8% vs human 56.2%).
 
 > **NUM is the most discriminating task type.** A 35.9 percentage-point spread between best (Gemini 2.5 Flash: 84.8%) and worst (Gemini 2.5 Pro: 48.9%) on numerical reasoning — versus only ~13pp on regulatory interpretation — identifies NUM as the primary capability differentiator.
 
-> **DeepSeek R1 extractability gap.** The reasoning-specialised DeepSeek R1 70B ranks 11th under strict scoring, yet the item-level judge audit reclassifies 86% of its 101 errors as format non-compliance; its judge-corrected accuracy (96.6%) is statistically tied with the top cluster. Reasoning-style output fails deployment-style extractive pipelines — a capability-vs-extractable-capability distinction that single-metric evaluation conflates.
+> **DeepSeek-R1-Distill extractability gap.** The reasoning-distilled DeepSeek-R1-Distill-Llama-70B ranks 12th (last) under strict scoring, yet the full-coverage cross-model judge audit (phi4-mini) reclassifies 93.9% of its 101 REG/NUM/TMP errors as format non-compliance; its judge-audited accuracy (98.0%) reaches an exact tie for 1st with LLaMA-3.3-70B. Reasoning-style output fails deployment-style extractive pipelines — a capability-vs-extractable-capability distinction that single-metric evaluation conflates.
 
-> **Three descriptive performance clusters under strict scoring.** Tier 1 = Gemini 2.5 Flash, Qwen3-32B, LLaMA-3.3-70B, Llama 4 Scout 17B, Kimi K2 (81.5–89.7%); Tier 2 = LLaMA-3-8B through DeepSeek R1 70B (75–79%); Tier 3 = Gemma 4 E4B (70.4%). The top-versus-bottom separation is Bonferroni-robust; the middle boundaries are graded, not categorical (e.g., Gemma vs Mistral p = 0.072). Under judge-corrected scoring, 11 of 12 models converge to 90.6–96.6% and only Gemma remains separable.
+> **No clean tier structure under strict scoring.** Tier 1 = Gemini 2.5 Flash, Qwen3-32B, LLaMA-3.3-70B, Llama 4 Scout 17B, Kimi K2 (81.5–89.7%), separated from the rest by a Bonferroni-robust gap. The remaining seven models (75.1–78.8%) form a plateau rather than a clean second/third tier: Gemma 3 4B (78.8%) is significantly below only the five Tier 1 models and is statistically indistinguishable from every other model in that plateau. Under judge-audited scoring the field compresses to 94.1–98.0%, and eleven of twelve models move by two or more ranks.
 
 > **Task-type performance is highly dissociated.** Gemini 2.5 Pro ranks 1st on REG (89.7%) but last on NUM (48.9%) within the same model. Aggregate accuracy misrepresents deployment suitability for specific regulatory tasks.
 
@@ -99,8 +99,8 @@ Zero-shot, closed-book evaluation on the full 406-item benchmark. All prompts pr
 | 8 | GPT-OSS 20B | 79.9% | 58.7% | 95.2% | 76.9% | 76.8% | [72.5%, 80.7%] |
 | 9 | Gemini 2.5 Pro | 89.7% | 48.9% | 93.5% | 64.1% | 76.1% | [71.8%, 80.0%] |
 | 10 | Mistral-7B | 79.9% | 66.3% | 80.6% | 74.4% | 75.9% | [71.5%, 79.8%] |
-| 11 | DeepSeek R1 70B | 72.4% | 69.6% | **96.8%** | 70.5% | 75.1% | [70.7%, 79.1%] |
-| 12 | Gemma 4 E4B | 83.9% | 50.0% | 72.6% | 62.8% | 70.4% | [65.8%, 74.7%] |
+| 11 | Gemma 3 4B | 86.2% | 70.7% | 79.0% | 71.8% | 78.8% | [74.6%, 82.5%] |
+| 12 | DeepSeek R1 70B | 72.4% | 69.6% | **96.8%** | 70.5% | 75.1% | [70.7%, 79.1%] |
 | — | **Human (non-specialist)** *(n=60, med+hard)* | 100.0 | 56.2 | 82.4 | 87.5 | 80.0% | [68.2%, 88.2%] |
 
 95% Wilson score confidence intervals. Paired bootstrap significance (10,000 resamples) across all 66 model pairs confirms three statistically distinct performance tiers. Full significance matrix: `evaluation/bootstrap_significance_results.json`.

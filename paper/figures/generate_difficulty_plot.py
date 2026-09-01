@@ -28,7 +28,7 @@ tier3_color = '#d6604d'
 
 tier1 = ['Gemini 2.5 Flash', 'Qwen3-32B', 'LLaMA-3.3-70B',
          'Llama 4 Scout 17B', 'Kimi K2']
-tier3 = ['Gemma 4 E4B']
+tier3 = ['Gemma 3 4B']
 
 fig, ax = plt.subplots(figsize=(8, 6))
 
@@ -46,7 +46,7 @@ for model, vals in accuracy_by_difficulty.items():
             alpha=0.85 if color != tier2_color else 0.5)
 
 # Label endpoints for key models
-key_labels = ['Gemini 2.5 Flash', 'Gemma 4 E4B', 'LLaMA-3.3-70B', 'Gemini 2.5 Pro']
+key_labels = ['Gemini 2.5 Flash', 'Gemma 3 4B', 'LLaMA-3.3-70B', 'Gemini 2.5 Pro']
 for model in key_labels:
     vals = accuracy_by_difficulty[model]
     ax.annotate(DISPLAY.get(model, model), xy=(2, vals[2]), xytext=(2.05, vals[2]),

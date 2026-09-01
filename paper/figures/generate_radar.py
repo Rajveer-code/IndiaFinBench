@@ -24,7 +24,7 @@ highlight = {
     'Gemini 2.5 Flash': ('#2166ac', 2.5, '-'),
     'Qwen3-32B':        ('#d6604d', 2.0, '-'),
     'LLaMA-3.3-70B':    ('#4dac26', 1.8, '-'),
-    'Gemma 4 E4B':      ('#7b3294', 1.5, '--'),
+    'Gemma 3 4B':       ('#7b3294', 1.5, '--'),
 }
 
 fig, ax = plt.subplots(figsize=(7, 7), subplot_kw=dict(polar=True))

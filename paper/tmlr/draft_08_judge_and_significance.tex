@@ -34,8 +34,8 @@ eight---a sanity check, not evidence of discrimination. On eight items DeepSeek-
 incorrectly under strict scoring, phi4-mini flipped seven to correct---in every case a genuine
 format mismatch (a digit where the reference used a written-out number, or a short preamble before
 the answer)---and correctly held the eighth as incorrect, where the model's predicted figure
-(``ten per cent'') simply did not match the reference (``twenty per cent''). The judge discriminates
-rather than rubber-stamping either the strict score or a blanket verdict.
+(``ten per cent'') simply did not match the reference (``twenty per cent''). The pilot showed that phi4-mini both overturned strict failures and retained
+cases where the substantive answer remained incorrect.
 
 Table~\ref{tab:judgereliability} reports, for every model, the strict-to-judge overturn rate (items
 strict scoring marked wrong that phi4-mini marks correct), the judge rejection rate of strict-correct
@@ -96,7 +96,7 @@ statistical, not categorical, in the middle.
 Llama 4 Scout 17B, and Kimi K2, all four of the latter statistically indistinguishable from one
 another ($p$ = 0.06--0.79), forming a genuine plateau rather than a fine-grained ranking.
 \textbf{The remaining seven models (70--79\%)} do not separate into a clean second and third tier:
-Gemma 4 E4B (78.8\%) is significantly below only the five Tier 1 models and is statistically
+Gemma 3 4B (78.8\%) is significantly below only the five Tier 1 models and is statistically
 indistinguishable from every other model in the field ($p$ = 0.21--0.73), including
 DeepSeek-R1-Distill, Mistral-7B, Gemini 2.5 Pro, and both GPT-OSS variants. Under strict scoring the
 bottom seven models form one broad, largely undifferentiated cluster rather than the two-tier

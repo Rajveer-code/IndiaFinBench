@@ -61,7 +61,7 @@ MODEL_FILES = {
     'GPT-OSS 20B':         'gpt_oss_20b_results.csv',
     'Mistral-7B':          'mistral_results.csv',
     'DeepSeek R1 70B':     'deepseek_r1_70b_results.csv',
-    'Gemma 4 E4B':         'gemma4_e4b_results.csv',
+    'Gemma 3 4B':          'gemma4_e4b_results.csv',
 }
 
 # Claude 3 Haiku evaluated on the initial 150-item subset (kept separate)
@@ -89,7 +89,7 @@ COLORS = [
     '#283593',  # GPT-OSS 20B          — navy
     '#4E342E',  # Mistral-7B           — brown
     '#37474F',  # DeepSeek R1 70B      — blue-grey
-    '#BF360C',  # Gemma 4 E4B          — deep red-orange
+    '#BF360C',  # Gemma 3 4B           — deep red-orange
 ]
 MARKERS = ['o', 's', '^', 'D', 'P', 'v', 'h', 'X', '*', '<', '>']
 
@@ -334,7 +334,7 @@ for i, model in enumerate(MODELS):
 short_names = [
     'Gemini 2.5 Flash', 'Gemini 2.5 Pro', 'Qwen3-32B', 'LLaMA-3.3-70B', 'Llama 4 Scout',
     'Kimi K2', 'LLaMA-3-8B', 'GPT-OSS 120B', 'GPT-OSS 20B',
-    'Mistral-7B', 'DeepSeek R1', 'Gemma 4 E4B',
+    'Mistral-7B', 'DeepSeek R1', 'Gemma 3 4B',
 ]
 
 fig, ax = plt.subplots(figsize=(10, 6))

@@ -5,7 +5,7 @@ import numpy as np
 models = [
     'Gemini 2.5 Flash', 'Qwen3-32B', 'LLaMA-3.3-70B', 'Llama 4 Scout 17B',
     'Kimi K2', 'LLaMA-3-8B', 'GPT-OSS 120B', 'GPT-OSS 20B',
-    'Gemini 2.5 Pro', 'Mistral-7B', 'DeepSeek R1 70B', 'Gemma 4 E4B'
+    'Gemini 2.5 Pro', 'Mistral-7B', 'DeepSeek R1 70B', 'Gemma 3 4B'
 ]
 # Display label only -- MODEL_FILES' internal key stays 'DeepSeek R1 70B' for
 # CSV lookups elsewhere; this is what actually renders on the axis.

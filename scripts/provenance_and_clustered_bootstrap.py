@@ -204,11 +204,11 @@ def bootstrap_cluster(a: np.ndarray, b: np.ndarray, n=N_RESAMPLES) -> float:
 
 HEADLINE_PAIRS = [
     ("Gemini 2.5 Flash", "Qwen3-32B"),
-    ("Gemini 2.5 Flash", "Gemma 4 E4B"),
+    ("Gemini 2.5 Flash", "Gemma 3 4B"),
     ("Llama 4 Scout 17B", "LLaMA-3.3-70B"),
     ("GPT-OSS 120B", "GPT-OSS 20B"),
-    ("Gemma 4 E4B", "DeepSeek R1 70B"),
-    ("Gemma 4 E4B", "Mistral-7B"),
+    ("Gemma 3 4B", "DeepSeek R1 70B"),
+    ("Gemma 3 4B", "Mistral-7B"),
 ]
 
 results = {}

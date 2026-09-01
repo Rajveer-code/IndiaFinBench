@@ -35,7 +35,7 @@ MODEL_FILES = {
     "GPT-OSS 20B":         "gpt_oss_20b_results.csv",
     "Mistral-7B":          "mistral_results.csv",
     "DeepSeek R1 70B":     "deepseek_r1_70b_results.csv",
-    "Gemma 4 E4B":         "gemma4_e4b_results.csv",
+    "Gemma 3 4B":          "gemma4_e4b_results.csv",
 }
 
 

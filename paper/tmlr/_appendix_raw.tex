@@ -17,7 +17,7 @@
 \section{CON Task: Majority-Class Baseline and Balanced Accuracy}
 \label{app:con}
 
-The contradiction detection task (CON) has a class-imbalanced label distribution: 53 of 62 items (85.5\%) carry the gold label `No' (no contradiction exists), yielding a majority-class baseline accuracy of 85.5\%. Table~\ref{tab:c1} reports raw CON accuracy, margin over that baseline, and balanced accuracy (mean of sensitivity and specificity) computed from each model's per-item predictions. All models except Gemma 4 E4B and Mistral-7B exceed the majority-class baseline. Balanced accuracy preserves the raw-accuracy ordering; notably, most models detect the nine true contradictions perfectly (sensitivity 100\%) and differ mainly in false-positive rate on the 53 `No' items.
+The contradiction detection task (CON) has a class-imbalanced label distribution: 53 of 62 items (85.5\%) carry the gold label `No' (no contradiction exists), yielding a majority-class baseline accuracy of 85.5\%. Table~\ref{tab:c1} reports raw CON accuracy, margin over that baseline, and balanced accuracy (mean of sensitivity and specificity) computed from each model's per-item predictions. All models except Gemma 3 4B and Mistral-7B exceed the majority-class baseline. Balanced accuracy preserves the raw-accuracy ordering; notably, most models detect the nine true contradictions perfectly (sensitivity 100\%) and differ mainly in false-positive rate on the 53 `No' items.
 
 \begin{table}[t]
 \centering\small
@@ -36,7 +36,7 @@ GPT-OSS 20B & 95.2 & +9.7 & 97.2 \\
 Gemini 2.5 Pro & 93.5 & +8.0 & 91.6 \\
 Mistral-7B & 80.6 & $-$4.9 & 88.7 \\
 DeepSeek-R1-Distill-Llama-70B & 96.8 & +11.3 & 98.1 \\
-Gemma 4 E4B & 79.0 & $-$6.5 & 87.7 \\
+Gemma 3 4B & 79.0 & $-$6.5 & 87.7 \\
 \midrule
 Majority baseline & 85.5 & --- & 50.0 \\
 \bottomrule
@@ -102,7 +102,7 @@ GPT-OSS 120B\textdaggerdbl{} & OpenAI (open-weight, Groq API) & 120B \\
 GPT-OSS 20B\textdaggerdbl{} & OpenAI (open-weight, Groq API) & 20B \\
 Mistral-7B & Mistral AI (Ollama, local) & 7B \\
 DeepSeek-R1-Distill-Llama-70B & DeepSeek (Groq API) & 70B \\
-Gemma 4 E4B & Google (Ollama, local) & 4B \\
+Gemma 3 4B & Google (Ollama, local) & 4B \\
 \bottomrule
 \end{tabular}
 \caption{Models evaluated in this study. \textdaggerdbl{}OpenAI open-weight models accessed via the Groq inference API. Local models ran on an Intel i7-13650HX CPU with an NVIDIA RTX 4060 GPU (8~GB VRAM); exact identifiers were \texttt{llama3:8b}, \texttt{mistral:7b}, and \texttt{gemma3:4b}, with temperature 0.0 via the Ollama REST API.}
@@ -137,7 +137,7 @@ Figure~\ref{fig:pipeline} illustrates the dataset construction pipeline. Figure~
 
 \paragraph{Representative failure examples.}
 
-\textbf{Domain Knowledge Failure (Gemma 4 E4B, Temporal Reasoning, item TMP\_039).} Asked whether a December~15, 2026 OTC derivative transaction is subject to Unique Transaction Identifier requirements that take effect January~1, 2027, the model answers ``Yes,'' misapplying the forward-looking effective date to a transaction entered into before it; the reference answer is ``No,'' since the requirements do not yet apply. (Hard temporal-reasoning items map to DKF under the taxonomy of Appendix~\ref{sec:errortax-sub}, since the failure is a substantive misunderstanding of when a rule takes effect, not a surface mismatch.)
+\textbf{Domain Knowledge Failure (Gemma 3 4B, Temporal Reasoning, item TMP\_039).} Asked whether a December~15, 2026 OTC derivative transaction is subject to Unique Transaction Identifier requirements that take effect January~1, 2027, the model answers ``Yes,'' misapplying the forward-looking effective date to a transaction entered into before it; the reference answer is ``No,'' since the requirements do not yet apply. (Hard temporal-reasoning items map to DKF under the taxonomy of Appendix~\ref{sec:errortax-sub}, since the failure is a substantive misunderstanding of when a rule takes effect, not a surface mismatch.)
 
 \textbf{Numerical Reasoning Failure (GPT-OSS 120B, Numerical Reasoning).} Given an RBI calculation requiring the maximum eligible dividend as a percentage of adjusted PAT, the model correctly identifies the relevant table but applies the wrong conditional threshold, computing the dividend at a higher rate than is warranted by the given capital ratio.
 
@@ -175,7 +175,7 @@ GPT-OSS 20B & 75.0 & 79.7 & 73.4 \\
 Gemini 2.5 Pro\textdagger{} & 83.1 & 72.5 & 68.8 \\
 Mistral-7B & 74.4 & 76.9 & 76.6 \\
 DeepSeek-R1-Distill-Llama-70B & 72.5 & 77.5 & 75.0 \\
-Gemma 4 E4B & 82.5 & 74.7 & 81.2 \\
+Gemma 3 4B & 82.5 & 74.7 & 81.2 \\
 \bottomrule
 \end{tabular}
 \caption{Accuracy (\%) by difficulty level (full 406-item evaluation, strict pipeline). \textdagger{}Verbose-output scoring artifact; see Appendix~\ref{app:judge}.}

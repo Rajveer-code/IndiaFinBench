@@ -40,7 +40,7 @@
       "sig_item_level": false,
       "sig_cluster": false
     },
-    "Gemini 2.5 Flash vs Gemma 4 E4B": {
+    "Gemini 2.5 Flash vs Gemma 3 4B": {
       "acc_a": 89.7,
       "acc_b": 78.8,
       "p_item_level": 0.0,
@@ -64,7 +64,7 @@
       "sig_item_level": false,
       "sig_cluster": false
     },
-    "Gemma 4 E4B vs DeepSeek R1 70B": {
+    "Gemma 3 4B vs DeepSeek R1 70B": {
       "acc_a": 78.8,
       "acc_b": 75.1,
       "p_item_level": 0.1856,
@@ -72,7 +72,7 @@
       "sig_item_level": false,
       "sig_cluster": false
     },
-    "Gemma 4 E4B vs Mistral-7B": {
+    "Gemma 3 4B vs Mistral-7B": {
       "acc_a": 78.8,
       "acc_b": 75.9,
       "p_item_level": 0.254,

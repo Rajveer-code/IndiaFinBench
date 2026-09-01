@@ -3,8 +3,9 @@ A benchmark leaderboard reports one accuracy number, but that number is produced
 as much as by a model. We ask what changes when only the rule changes. IndiaFinBench, introduced
 here, is a 406-item expert-annotated benchmark over SEBI and RBI regulatory text covering
 regulatory interpretation, numerical reasoning, contradiction detection, and temporal reasoning; it
-is built on a corpus where models cannot fall back on memorised Western financial text, which makes
-the comparison sharper. We evaluate twelve contemporary LLMs zero-shot under two scoring regimes: a
+is built on jurisdiction-specific regulatory text that is less represented in common Western
+financial benchmarks, reducing the likelihood that performance is explained by benchmark-specific
+familiarity. We evaluate twelve contemporary LLMs zero-shot under two scoring regimes: a
 strict four-stage string-matching pipeline, and a judge-audited regime in which a cross-model
 judge---sharing no model family with any evaluated system---reviews every regulatory-interpretation,
 numerical-reasoning, and temporal-reasoning prediction, not only the ones strict scoring marks wrong.
@@ -17,7 +18,8 @@ scoring (both DeepSeek-R1-Distill-Llama-70B and LLaMA-3.3-70B at 398/406, 98.0\%
 reflecting format differences. Eleven of the
 twelve models move by two or more ranks, and the two orderings are essentially uncorrelated (Spearman
 $\rho = 0.067$,
-$p = 0.84$), so a strict leaderboard says little about which model reasons better. Judge auditing
+$p = 0.84$); in this 12-model sample, the strict and judge-audited rankings show weak correspondence,
+illustrating how ranking can depend strongly on the scoring regime. Judge auditing
 also compresses the field: the twelve-model spread narrows from 14.5 points under strict scoring to
 3.9 under judge-audited scoring. A substantial portion of the observed spread is attributable to
 format-sensitive scoring rather than reasoning differences, under our judge-audited analysis.

@@ -8,6 +8,19 @@ Paths are relative to `D:\Projects\IndiaFinBench\`.
 
 ---
 
+## ⚠⚠ THIS LEDGER IS STALE AS OF 2026-09-02 — DO NOT REWRITE PAPER NUMBERS FROM IT
+
+This file was last regenerated 2026-08-31. Substantial correction work landed **after** that date
+and is not reflected here: the judge-truncation fix for 4 models, the adjudication-sheet resync back
+to its frozen adjudication-time state, the full 12-model (not 2-model) human-vs-model Bonferroni
+correction, the Gemma identity fix (`Gemma 4 E4B` → `Gemma 3 4B`), and the resulting figure/table
+regenerations. The current PDF plus the current `evaluation/` outputs are canonical. If a number here
+disagrees with the current manuscript, **trust the manuscript and the live evaluation outputs, not
+this file.** Do not use this ledger as a source to "correct" the paper — that direction of correction
+is backwards and will reintroduce already-fixed errors.
+
+---
+
 ## 0. ⚠ SOURCE-OF-TRUTH CORRECTION — read before using any draft
 
 **`P5_IndiaFinBench_V8_..._Submitted.docx` is NOT what was submitted, and it contains a human

@@ -1,7 +1,7 @@
 % DRAFT 5 — Expanded results. Replaces four subsections totalling 195 words.
 % Every number verified: NUMBERS.md §1 (main table), §2 (Kendall W), plus
 % direct recomputation of the CON baseline count (10/12) and the 60-item
-% human subset (Gemini 2.5 Flash 85.0, Gemma 4 E4B 63.3).
+% human subset (Gemini 2.5 Flash 85.0, Gemma 3 4B 63.3).
 
 \subsection{Overall Performance}
 \label{sec:main-results}
@@ -18,7 +18,7 @@ Qwen3-32B & 85.1 & 77.2 & 90.3 & 92.3 & 85.5 & [81.7\%, 88.6\%] \\
 LLaMA-3.3-70B & 86.2 & 75.0 & 95.2 & 79.5 & 83.7 & [79.8\%, 87.0\%] \\
 Llama 4 Scout 17B & 86.2 & 66.3 & 98.4 & 84.6 & 83.3 & [79.3\%, 86.6\%] \\
 Kimi K2 & 89.1 & 65.2 & 91.9 & 75.6 & 81.5 & [77.5\%, 85.0\%] \\
-Gemma 4 E4B & 86.2 & 70.7 & 79.0 & 71.8 & 78.8 & [74.6\%, 82.5\%] \\
+Gemma 3 4B & 86.2 & 70.7 & 79.0 & 71.8 & 78.8 & [74.6\%, 82.5\%] \\
 LLaMA-3-8B & 79.9 & 64.1 & 93.5 & 78.2 & 78.1 & [73.8\%, 81.8\%] \\
 GPT-OSS 120B & 79.9 & 59.8 & 95.2 & 76.9 & 77.1 & [72.8\%, 80.9\%] \\
 GPT-OSS 20B & 79.9 & 58.7 & 95.2 & 76.9 & 76.8 & [72.5\%, 80.7\%] \\
@@ -31,7 +31,9 @@ DeepSeek-R1-Distill & 72.4 & 69.6 & 96.8 & 70.5 & 75.1 & [70.7\%, 79.1\%] \\
 \end{tabular}
 \caption{IndiaFinBench results --- accuracy (\%) by task type under the strict string-matching
 pipeline. All twelve models evaluated on the full 406-item benchmark. 95\% Wilson score
-\citep{wilson1927} confidence intervals shown for overall accuracy. \textdagger{}Gemini 2.5 Pro
+\citep{wilson1927} confidence intervals shown for overall accuracy; these are descriptive item-level
+intervals, and pairwise significance is assessed separately with the document-clustered bootstrap
+robustness analysis (Appendix~\ref{app:provenance}). \textdagger{}Gemini 2.5 Pro
 evaluated via Vertex AI; lower NUM/TMP scores are a scoring artifact of its verbose output style
 (Section~\ref{sec:regime}). Judge-audited accuracies are in Section~\ref{sec:regime} and
 Appendix~\ref{app:judge}.}
@@ -70,7 +72,7 @@ answer.
 \textbf{Contradiction detection discriminates least, despite the highest mean.} 53 of its 62 items
 carry the gold label `No', so a classifier that always answers `No' scores 85.5\%. Against that
 baseline the 91.0\% task mean is a 5.5-point margin, not a strong result, and 10 of 12 models
-exceed the baseline while Mistral-7B (80.6\%) and Gemma 4 E4B (79.0\%) fall below a trivial
+exceed the baseline while Mistral-7B (80.6\%) and Gemma 3 4B (79.0\%) fall below a trivial
 majority classifier. High accuracy on an imbalanced binary task is close to uninformative, and we
 report balanced accuracy in Appendix~\ref{app:con} rather than leaning on the raw figure.
 
@@ -91,7 +93,7 @@ the dominant pattern in this benchmark is not the one the difficulty label was d
 Two non-monotonic shapes recur. Six models---Qwen3-32B, LLaMA-3.3-70B, Llama 4 Scout 17B, Kimi K2,
 LLaMA-3-8B, and DeepSeek-R1-Distill---score \emph{higher} on hard items than on medium ones, and for
 LLaMA-3.3-70B this extends further: hard items (90.6\%) outscore even the easy ones (79.4\%), an
-11.2-point inversion. Gemma 4 E4B and GPT-OSS 20B show the opposite shape, a dip at medium difficulty
+11.2-point inversion. Gemma 3 4B and GPT-OSS 20B show the opposite shape, a dip at medium difficulty
 with partial recovery on hard (Gemma: 82.5\% easy $\to$ 74.7\% medium $\to$ 81.2\% hard). Neither
 shape is what "harder" was meant to produce.
 
@@ -118,8 +120,8 @@ The evaluator scored 80.0\% (48/60; 95\% Wilson CI [68.2\%, 88.2\%]), with a tas
 REG 100\% (11/11), TMP 87.5\% (14/16), CON 82.4\% (14/17), and NUM 56.2\% (9/16). On the same 60
 items, five of the twelve models score above the evaluator and seven below. We ran a paired
 bootstrap test against the evaluator for all twelve models, not only the extremes, since reporting
-only the best and worst comparison raises its own multiplicity concern. One model, Gemma 4 E4B at
-66.7\%, is nominally significant at $p = 0.02$ uncorrected; none---including Gemma 4 E4B---survives
+only the best and worst comparison raises its own multiplicity concern. One model, Gemma 3 4B at
+66.7\%, is nominally significant at $p = 0.02$ uncorrected; none---including Gemma 3 4B---survives
 Bonferroni correction across the twelve-test family ($\alpha = 0.05/12 \approx 0.0042$). The honest
 reading is that this single-evaluator comparison cannot statistically distinguish any of the twelve
 models from the human reader on this subset, in either direction; the best model, Gemini 2.5 Flash

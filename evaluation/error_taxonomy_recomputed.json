@@ -63,7 +63,7 @@
     },
     "residual_total": 8
   },
-  "Gemma 4 E4B": {
+  "Gemma 3 4B": {
     "strict": {
       "DKF": 25,
       "NRF": 27,

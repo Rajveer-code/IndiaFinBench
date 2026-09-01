@@ -36,7 +36,7 @@
       "strict_accuracy_406": 89.66,
       "phi4_corrected_accuracy_406": 96.55
     },
-    "Gemma 4 E4B": {
+    "Gemma 3 4B": {
       "n_judged_reg_num_tmp": 344,
       "strict_correct_344": 271,
       "phi4_corrected_344": 333,
@@ -149,7 +149,7 @@
     "DeepSeek-R1-Distill": 12,
     "Gemini 2.5 Pro": 10,
     "Gemini 2.5 Flash": 1,
-    "Gemma 4 E4B": 6,
+    "Gemma 3 4B": 6,
     "GPT-OSS 120B": 8,
     "GPT-OSS 20B": 9,
     "LLaMA-3.3-70B": 3,
@@ -163,7 +163,7 @@
     "DeepSeek-R1-Distill": 1,
     "Gemini 2.5 Pro": 5,
     "Gemini 2.5 Flash": 5,
-    "Gemma 4 E4B": 7,
+    "Gemma 3 4B": 7,
     "GPT-OSS 120B": 3,
     "GPT-OSS 20B": 3,
     "LLaMA-3.3-70B": 1,

@@ -20,7 +20,7 @@ MODEL_KEY_TO_LABEL = {
     "gemini": "Gemini 2.5 Flash", "gemini25_pro": "Gemini 2.5 Pro", "qwen3_32b": "Qwen3-32B",
     "groq70b": "LLaMA-3.3-70B", "llama4scout": "Llama 4 Scout 17B", "kimi_k2": "Kimi K2",
     "llama3": "LLaMA-3-8B", "gpt_oss_120b": "GPT-OSS 120B", "gpt_oss_20b": "GPT-OSS 20B",
-    "mistral": "Mistral-7B", "deepseek_r1_70b": "DeepSeek-R1-Distill", "gemma4_e4b": "Gemma 4 E4B",
+    "mistral": "Mistral-7B", "deepseek_r1_70b": "DeepSeek-R1-Distill", "gemma4_e4b": "Gemma 3 4B",
 }
 
 per_model = {}

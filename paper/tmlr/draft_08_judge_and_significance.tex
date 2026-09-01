@@ -55,19 +55,22 @@ contradiction-detection strata that spot-check the exact-match scorer directly, 
 judge-reviewed by either model. The control sample is evidence about specific, informative cases, not
 a random draw sized to estimate a population-level judge error rate, and we do not report it as one.
 Appendix~\ref{app:judge} reports the full sampling protocol and per-item results. Human
-adjudication of all 238 items is complete. On the 64 control-agreement items---cases where the
+adjudication of all 238 items is complete, scored against the judge verdicts as they stood when the
+sample was drawn and handed to the adjudicator---the state the human actually read and judged
+against, not a later-updated one---so every disagreement item resolves to exactly one judge by
+construction. (A subsequent data-quality fix, Section~\ref{sec:models}, later corrected truncated
+reference text for a small number of REG/NUM/TMP items across two models and changed phi4-mini's
+verdict on some of them; this adjudication reports against the pre-fix state deliberately, since
+that is what the human was shown, and the fix is reported and verified independently on its own
+terms rather than folded into this analysis.) On the 64 control-agreement items---cases where the
 available methods already agreed---the human adjudicator concurred with that consensus 57 of 64
 times (89.1\%): a base rate for how often agreement between methods tracks a human reader's
-judgment on this benchmark. On the 174 items sampled for disagreement between Gemini and phi4-mini,
-the human's verdict matched Gemini's on 99 (56.9\%) and phi4-mini's on 83 (47.7\%)---these overlap
-(12 items where both verdicts happened to match the human's; 4 where neither did), since a small
-number of these items were rejudged with corrected reference text after the disagreement sample was
-drawn (Section~\ref{sec:models}), and are no longer disagreements in the current data even though
-the item remains in the sample. The gap is widest on numerical reasoning (Gemini matched 44 of 68,
-64.7\%, against phi4-mini's 30, 44.1\%) and narrows to near-even on regulatory interpretation (30 of
-59 vs.\ 31 of 59) and temporal reasoning (25 of 47 vs.\ 22 of 47). Neither judge is right often enough
-on these disputed cases to be treated as ground truth, and phi4-mini's lower share here does not by
-itself argue against
+judgment on this benchmark. On the 174 disagreement items, the human's verdict matched Gemini's on
+99 (56.9\%) and phi4-mini's on 75 (43.1\%). The gap is widest on numerical reasoning (Gemini
+matched 44 of 68, 64.7\%, against phi4-mini's 24, 35.3\%) and narrows to near-even on regulatory
+interpretation (30 of 59 vs.\ 29 of 59) and temporal reasoning (25 of 47 vs.\ 22 of 47). Neither
+judge is right often enough on these disputed cases to be treated as ground truth, and phi4-mini's
+lower share here does not by itself argue against
 using it as this paper's primary judge: that choice rests on full coverage (Section~\ref{sec:judge}
 could estimate false positives for the first time only because of it), not on a claim that
 phi4-mini is more accurate than Gemini. We report the gap rather than smoothing over it; Section~

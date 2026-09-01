@@ -1,0 +1,93 @@
+{
+  "human_acc_60item": 80.0,
+  "n_tests": 12,
+  "bonferroni_alpha": 0.00417,
+  "per_model": {
+    "Gemini 2.5 Flash": {
+      "model_acc_60item": 85.0,
+      "human_acc_60item": 80.0,
+      "p_value": 0.4376,
+      "sig_p05": false,
+      "sig_bonferroni": false
+    },
+    "Gemini 2.5 Pro": {
+      "model_acc_60item": 76.7,
+      "human_acc_60item": 80.0,
+      "p_value": 0.6173,
+      "sig_p05": false,
+      "sig_bonferroni": false
+    },
+    "Qwen3-32B": {
+      "model_acc_60item": 83.3,
+      "human_acc_60item": 80.0,
+      "p_value": 0.6159,
+      "sig_p05": false,
+      "sig_bonferroni": false
+    },
+    "LLaMA-3.3-70B": {
+      "model_acc_60item": 81.7,
+      "human_acc_60item": 80.0,
+      "p_value": 0.8077,
+      "sig_p05": false,
+      "sig_bonferroni": false
+    },
+    "Llama 4 Scout 17B": {
+      "model_acc_60item": 83.3,
+      "human_acc_60item": 80.0,
+      "p_value": 0.621,
+      "sig_p05": false,
+      "sig_bonferroni": false
+    },
+    "Kimi K2": {
+      "model_acc_60item": 81.7,
+      "human_acc_60item": 80.0,
+      "p_value": 0.7963,
+      "sig_p05": false,
+      "sig_bonferroni": false
+    },
+    "LLaMA-3-8B": {
+      "model_acc_60item": 71.7,
+      "human_acc_60item": 80.0,
+      "p_value": 0.2732,
+      "sig_p05": false,
+      "sig_bonferroni": false
+    },
+    "GPT-OSS 120B": {
+      "model_acc_60item": 73.3,
+      "human_acc_60item": 80.0,
+      "p_value": 0.3635,
+      "sig_p05": false,
+      "sig_bonferroni": false
+    },
+    "GPT-OSS 20B": {
+      "model_acc_60item": 73.3,
+      "human_acc_60item": 80.0,
+      "p_value": 0.3867,
+      "sig_p05": false,
+      "sig_bonferroni": false
+    },
+    "Mistral-7B": {
+      "model_acc_60item": 71.7,
+      "human_acc_60item": 80.0,
+      "p_value": 0.2298,
+      "sig_p05": false,
+      "sig_bonferroni": false
+    },
+    "DeepSeek R1 70B": {
+      "model_acc_60item": 70.0,
+      "human_acc_60item": 80.0,
+      "p_value": 0.2097,
+      "sig_p05": false,
+      "sig_bonferroni": false
+    },
+    "Gemma 4 E4B": {
+      "model_acc_60item": 66.7,
+      "human_acc_60item": 80.0,
+      "p_value": 0.0202,
+      "sig_p05": true,
+      "sig_bonferroni": false
+    }
+  },
+  "n_sig_uncorrected": 1,
+  "n_sig_bonferroni": 0
+}

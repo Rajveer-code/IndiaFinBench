@@ -39,7 +39,7 @@ Appendix~\ref{app:judge}.}
 \end{table*}
 
 Table~\ref{tab:mainresults} reports strict accuracy for all twelve models on the full 406-item
-benchmark. Scores span 75.1\% (DeepSeek-R1-Distill) to 89.7\% (Gemini 2.5 Flash), a 14.6-point range
+benchmark. Scores span 75.1\% (DeepSeek-R1-Distill) to 89.7\% (Gemini 2.5 Flash), a 14.5-point range
 that is wide enough to separate the field but narrow enough that most adjacent pairs are not
 individually distinguishable.
 
@@ -116,10 +116,14 @@ pipeline.
 
 The evaluator scored 80.0\% (48/60; 95\% Wilson CI [68.2\%, 88.2\%]), with a task profile of
 REG 100\% (11/11), TMP 87.5\% (14/16), CON 82.4\% (14/17), and NUM 56.2\% (9/16). On the same 60
-items, five of the twelve models score above the evaluator and seven below. The best, Gemini 2.5
-Flash, reaches 85.0\% against the evaluator's 80.0\%, a difference that is not statistically
-significant (paired bootstrap $p = 0.43$); the weakest, Gemma 4 E4B at 66.7\%, is significantly
-worse ($p = 0.020$).
+items, five of the twelve models score above the evaluator and seven below. We ran a paired
+bootstrap test against the evaluator for all twelve models, not only the extremes, since reporting
+only the best and worst comparison raises its own multiplicity concern. One model, Gemma 4 E4B at
+66.7\%, is nominally significant at $p = 0.02$ uncorrected; none---including Gemma 4 E4B---survives
+Bonferroni correction across the twelve-test family ($\alpha = 0.05/12 \approx 0.0042$). The honest
+reading is that this single-evaluator comparison cannot statistically distinguish any of the twelve
+models from the human reader on this subset, in either direction; the best model, Gemini 2.5 Flash
+at 85.0\% against the evaluator's 80.0\%, is furthest from significant ($p = 0.44$).
 
 We state the limits of this comparison plainly, because they are severe. It is one evaluator on 60
 items. It supports no population-level claim about human performance, and a domain specialist would

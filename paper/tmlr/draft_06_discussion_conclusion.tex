@@ -66,8 +66,8 @@ inversion is informative about what makes regulatory text hard.
 
 Benchmark accuracy is reported as a property of a model. It is a property of a model and a scoring
 rule together, and on IndiaFinBench those two contributions are separable and large. Scoring twelve
-LLMs under strict string matching and under an item-level judge audit of every flagged error
-produces two rankings that agree only weakly: the model placed last under strict scoring places
+LLMs under strict string matching and under a full-coverage cross-model judge audit of every
+REG/NUM/TMP prediction produces two rankings that agree only weakly: the model placed last under strict scoring places
 first under judge-audited scoring, because 93.9\% of its strict errors are reclassified as correct
 by the cross-model judge, primarily reflecting format differences rather than incorrect reasoning. Neither regime is wrong. They answer different questions, and reporting
 one alone leaves the reader unable to tell which.
@@ -79,7 +79,10 @@ can carry.
 
 IndiaFinBench is released in full---406 expert-annotated items over 34 of 192 collected SEBI and RBI documents,
 the evaluation harness, per-item judge verdicts, and all model predictions---so that both regimes
-can be reproduced and both claims contested. The Indian regulatory setting made these effects
-visible because it denies models the option of recalling an answer they were trained on. We expect
-the effects themselves to generalise well beyond it, and the cheapest way to find out is for other
-benchmarks to report the same two numbers.
+can be reproduced and both claims contested. The context-only setup isolates inference over supplied
+regulatory passages from recall of memorised training text, although it cannot rule out training-data
+exposure to the underlying documents; the Indian regulatory setting makes this isolation meaningful
+because the source text is jurisdiction-specific and less likely to dominate pretraining corpora than
+US or European financial text. We expect the scoring-regime effects themselves to generalise well
+beyond this setting, and the cheapest way to find out is for other benchmarks to report the same two
+numbers.

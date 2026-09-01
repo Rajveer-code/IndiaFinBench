@@ -202,6 +202,18 @@ STALE_STRINGS = [
     "genuine failures",  # judge-confirmed residual is not "genuine" (judge isn't ground truth either)
     "strict false-negative rate", "strict false-positive rate", "Strict FN", "Strict FP",
     # ^ presuppose phi4-mini is ground truth; use "overturn rate" / "judge rejection rate" instead
+    "93.6--98.0", "0.113", "4.4 under judge-audited", "14.6-point",
+    # ^ pre-llama3/mistral-truncation-fix headline stats, superseded by 94.1-98.0 / 0.067 / 3.9 /
+    # 14.5-point (14.6-point was also independently wrong: 89.66-75.12=14.54, rounds to 14.5)
+    "Ten of the twelve models move",  # superseded by "Eleven" once llama3's rank crossed the >=2 threshold
+    "returns an independent verdict",  # phi4-mini is explicitly not independent/ground-truth (Section 6.5)
+    "judge-confirmed",  # judge is not ground truth; use "judge-retained"
+    "judge audit of every flagged error",  # the real methodology judges every REG/NUM/TMP prediction, not only flagged errors
+    "is not a capability gap",  # overclaims beyond what judge-audited scoring (itself imperfect) establishes
+    "denies models the option of recalling",  # unestablished training-data-contamination claim
+    "only the weakest is significantly worse",  # superseded once Bonferroni was applied to the full 12-test family
+    "12 items where both verdicts happened to match",  # the messy pre-freeze adjudication bookkeeping ChatGPT flagged
+    "47.7\\%",  # the pre-freeze phi4-mini disagreement-match rate; frozen analysis uses 43.1%
 ]
 # "semantic scoring" was blocklisted outright, but it has a legitimate descriptive use
 # (contrasting it with strict scoring, e.g. in a novelty-framing sentence) -- the actual

@@ -19,8 +19,8 @@ twelve models move by two or more ranks, and the two orderings are essentially u
 $\rho = 0.067$,
 $p = 0.84$), so a strict leaderboard says little about which model reasons better. Judge auditing
 also compresses the field: the twelve-model spread narrows from 14.5 points under strict scoring to
-3.9 under judge-audited scoring. Most of the apparent capability gap across the field is format
-compliance, not reasoning.
+3.9 under judge-audited scoring. A substantial portion of the observed spread is attributable to
+format-sensitive scoring rather than reasoning differences, under our judge-audited analysis.
 
 Item-level analysis compounds the problem. At least 11 of the 12 models answer 213 of the 406 items
 correctly, so those items separate almost no pair of systems; the benchmark's discriminative signal
@@ -29,7 +29,8 @@ rarely report the difference.
 
 We also anchor the scale against a person. On a 60-item subset drawn from the medium and hard
 strata, one non-specialist evaluator scored 80.0\% (48/60; 95\% Wilson CI [68.2, 88.2]). This is a
-single evaluator and a reference point, not a population estimate: no model is significantly better,
-and only the weakest is significantly worse. Dataset, evaluation harness, per-item judge verdicts,
+single evaluator and a reference point, not a population estimate: paired bootstrap tests against
+all twelve models find no significant difference in either direction once corrected for the
+twelve-test family. Dataset, evaluation harness, per-item judge verdicts,
 and all model predictions are released.
 \end{abstract}

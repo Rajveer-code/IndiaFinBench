@@ -185,6 +185,34 @@ for out in GENERATED_OUTPUTS:
     else:
         check(f"{out.name} exists", False)
 
+print("\n=== THREE-REGIME CONSISTENCY (Plan v3 Phase 0) ===")
+regime_path = ROOT / "evaluation" / "regime_three_way.json"
+if regime_path.exists():
+    regime = json.loads(regime_path.read_text(encoding="utf-8"))
+    check("regime_three_way.json: 12 models", regime.get("n_models") == 12,
+          f"found {regime.get('n_models')}")
+    pm = regime.get("per_model", {})
+    # Regression guard: judge_augmented is what earlier drafts computed as
+    # "judge-audited" -- these numbers must not silently drift when
+    # regime_table.py is rerun, independent of what the manuscript prose calls it.
+    checks = [
+        ("DeepSeek-R1-Distill", "strict_pct", 75.12), ("DeepSeek-R1-Distill", "judge_augmented_pct", 98.03),
+        ("Gemini 2.5 Flash", "strict_pct", 89.66), ("Gemini 2.5 Flash", "judge_augmented_pct", 96.55),
+        ("LLaMA-3.3-70B", "judge_augmented_pct", 98.03),
+    ]
+    for model, field, expected in checks:
+        actual = pm.get(model, {}).get(field)
+        check(f"regime: {model} {field} == {expected}", actual == expected,
+              f"found {actual}")
+    check("regime: strict spread == 14.5 pp (see F11 -- NOT 14.6, do not 'fix' this)",
+          regime.get("spread", {}).get("strict_pp") == 14.54, f"found {regime.get('spread')}")
+    corr = regime.get("correlations", {}).get("strict_vs_judge_only", {})
+    check("regime: strict vs judge-only Spearman rho == -0.2238 (paper reports as -0.224, the new headline number)",
+          corr.get("spearman_rho") == -0.2238, f"found {corr}")
+else:
+    check("evaluation/regime_three_way.json exists", False,
+          "run scripts/regime_table.py first")
+
 print("\n=== MANUSCRIPT ===")
 
 STALE_STRINGS = [
@@ -214,6 +242,17 @@ STALE_STRINGS = [
     "only the weakest is significantly worse",  # superseded once Bonferroni was applied to the full 12-test family
     "12 items where both verdicts happened to match",  # the messy pre-freeze adjudication bookkeeping ChatGPT flagged
     "47.7\\%",  # the pre-freeze phi4-mini disagreement-match rate; frozen analysis uses 43.1%
+    # --- Plan v3 (2026-09-02) retirements. These are EXPECTED to fail until Phase 1-4 land;
+    # that is the point -- this blocklist is what makes "Phase 1 done" checkable rather than
+    # a matter of opinion. See paper/tmlr/../../../../.claude/plans/... Plan v3 Section 1 (F1-F10).
+    "judge-audited accuracy",  # F1: "judge-audited" retired -- ambiguous between judge-only and
+    # judge-augmented (strict OR judge), which the paper never previously disclosed as a union.
+    # Use "judge-only accuracy" or "judge-augmented accuracy" explicitly instead.
+    "identical prompting and decoding",  # F3: false -- budgets are 200/300/512/1024/2048/unset
+    "completion budget shared by every model",  # F3: same false claim, second location
+    "exact identifier used for",  # F4: appendix table has no checkpoint strings for 9 of 12 models
+    "80\\% threshold",  # F10: uncited "commonly used" benchmark-quality claim
+    "share no threshold",  # F9: false -- p>=0.9 and p>0.90 are the same set on a 12-model panel
 ]
 # "semantic scoring" was blocklisted outright, but it has a legitimate descriptive use
 # (contrasting it with strict scoring, e.g. in a novelty-framing sentence) -- the actual

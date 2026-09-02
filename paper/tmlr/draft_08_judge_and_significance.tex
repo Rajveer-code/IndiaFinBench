@@ -81,8 +81,10 @@ fallback triggered by the gate's failure.
 \textbf{What survives the judge audit.} Attributing every strict failure to a task-conditioned
 category (domain-knowledge, numerical, temporal, or context-grounding; Appendix~\ref{sec:errortax-sub})
 shows the reclassification is uneven across models, not uniform. DeepSeek-R1-Distill's 101 strict
-failures collapse to 8 residual---the largest correction of any model and the basis for its
-judge-augmented reversal---while Gemma 3~4B, despite a comparable 72.1\% reclassification rate,
+failures across all four tasks (99 on REG/NUM/TMP, the figure behind the 93.9\% reclassification rate
+in Section~\ref{sec:regime}, plus 2 on CON, which is never judge-reviewed) collapse to 8 residual---the
+largest correction of any model and the basis for its judge-augmented reversal---while Gemma 3~4B,
+despite a comparable 72.1\% reclassification rate,
 keeps a residual error rate 1.7--3$\times$ every other profiled model's. Appendix~\ref{sec:errortax-sub}
 reports the full per-model breakdown
 and representative failure examples.

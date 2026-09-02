@@ -1,0 +1,95 @@
+{
+  "n_judged_rows_total": 4128,
+  "n_rows_at_cap": 554,
+  "pct_rows_at_cap": 13.4,
+  "per_model_caps": {
+    "deepseek_r1_70b": {
+      "n": 344,
+      "cap": 300,
+      "n_at_cap": 67,
+      "pct_at_cap": 19.5
+    },
+    "gemini25_pro": {
+      "n": 344,
+      "cap": 500,
+      "n_at_cap": 14,
+      "pct_at_cap": 4.1
+    },
+    "gemini": {
+      "n": 344,
+      "cap": 200,
+      "n_at_cap": 107,
+      "pct_at_cap": 31.1
+    },
+    "gemma4_e4b": {
+      "n": 344,
+      "cap": 300,
+      "n_at_cap": 14,
+      "pct_at_cap": 4.1
+    },
+    "gpt_oss_120b": {
+      "n": 344,
+      "cap": 300,
+      "n_at_cap": 69,
+      "pct_at_cap": 20.1
+    },
+    "gpt_oss_20b": {
+      "n": 344,
+      "cap": 300,
+      "n_at_cap": 48,
+      "pct_at_cap": 14.0
+    },
+    "groq70b": {
+      "n": 344,
+      "cap": 200,
+      "n_at_cap": 66,
+      "pct_at_cap": 19.2
+    },
+    "kimi_k2": {
+      "n": 344,
+      "cap": 300,
+      "n_at_cap": 26,
+      "pct_at_cap": 7.6
+    },
+    "llama3": {
+      "n": 344,
+      "cap": 579,
+      "n_at_cap": 1,
+      "pct_at_cap": 0.3
+    },
+    "llama4scout": {
+      "n": 344,
+      "cap": 300,
+      "n_at_cap": 59,
+      "pct_at_cap": 17.2
+    },
+    "mistral": {
+      "n": 344,
+      "cap": 815,
+      "n_at_cap": 1,
+      "pct_at_cap": 0.3
+    },
+    "qwen3_32b": {
+      "n": 344,
+      "cap": 300,
+      "n_at_cap": 82,
+      "pct_at_cap": 23.8
+    }
+  },
+  "judge_own_input_caps": {
+    "question": 600,
+    "reference": 300,
+    "prediction": 500,
+    "judge_reason_output": 200,
+    "source": "scripts/judge_phi4_crossmodel.py:56,70"
+  },
+  "no_generation_truncation_record": true,
+  "truncation_free_sensitivity": {
+    "n_clean_items": 190,
+    "n_total_items": 344,
+    "deepseek_strict_pct": 70.0,
+    "deepseek_strict_rank": 12,
+    "deepseek_augmented_pct": 98.4,
+    "deepseek_augmented_rank": 5
+  }
+}

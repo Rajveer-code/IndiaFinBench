@@ -172,7 +172,14 @@ design choice, and Gemini 2.5 Pro received no explicit cap at all. Budget hetero
 plausible confound for any format-sensitivity claim this paper makes, and we treat it as one rather
 than assuming it away. Appendix~\ref{app:models} reports the exact provider, API model identifier or
 Ollama tag, and completion budget used for every model, drawn directly from the evaluation harness
-rather than restated from memory.
+rather than restated from memory; Appendix~\ref{app:truncation} separately quantifies how much of the
+logged prediction text this budget heterogeneity, and the harness's own logging limits, actually
+truncate, and reports the paper's headline result restricted to the truncation-free item subset.
+Three additional models --- Claude 3 Haiku (150 items), NVIDIA Nemotron 3 Super 120B (140 items),
+and Qwen3-235B (120 items) --- were evaluated on partial subsets during earlier exploratory passes
+and are excluded from every result in this paper because they were never run on the full 406-item
+benchmark; their raw predictions remain in the public release for transparency, unused for any
+reported number.
 % TODO(Plan v3 Phase 2.5): once the matched-budget re-run lands, add a sentence here pointing to its
 % results section and quantifying how much of the strict-score spread budget alone explains.
 

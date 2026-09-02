@@ -72,6 +72,29 @@ Because Gemini is itself one of the evaluated models and this pilot covered only
 
 Three systematic causes, identified during the Gemini pilot and consistent with the phi4-mini overturn cases, account for the majority of strict-to-judge overturns: (1) \textit{Numeric format differences} --- models frequently use digits (`50\%', `365 days') while references use written numbers (`fifty per cent', `three hundred and sixty-five days'). (2) \textit{Verbose answers} --- models prefix the correct answer with calculation steps or regulatory citations. (3) \textit{Abbreviated answers} --- models give a shorter but correct version of the reference (e.g., ref = `Six months after completion of the open offer'; pred = `Six months').
 
+\subsection{Logging Truncation}
+\label{app:truncation}
+
+Predictions are character-capped at write time by the evaluation harness, at a limit that varies by
+which script produced the row (200, 300, or 500 characters). 554 of the 4{,}128 judged REG/NUM/TMP
+rows (13.4\%) sit exactly at their model's cap, ranging from 31.1\% (Gemini 2.5 Flash, 200-char cap)
+to 0.3\% (LLaMA-3-8B and Mistral-7B, both repaired to a higher effective cap during the truncation
+fix described below). The judge itself imposes a second layer of truncation on its own inputs
+(\texttt{scripts/judge\_phi4\_crossmodel.py}: question capped at 600 characters, reference at 300,
+prediction at 500), independent of the logging cap. No response includes a provider-reported
+finish-reason, stop-reason, or token-usage field anywhere in the released data, so generation-level
+truncation---as opposed to the logging truncation quantified here---cannot be measured from the
+released artifacts at all; Section~\ref{sec:models} discloses the completion budgets that bound it
+and reports why a matched-budget re-run is the direct way to close this gap.
+
+Restricting to the 190 of 344 REG/NUM/TMP items where every one of the twelve models' predictions is
+strictly below its own cap---so no model's prediction on that item could possibly be a truncation
+artifact---DeepSeek-R1-Distill-Llama-70B remains last of twelve under strict scoring (70.0\%) and
+reaches the top tier under the judge-augmented sensitivity regime (98.4\%, 5-way tie for the top
+rank). The qualitative pattern this paper reports is not an artifact of logging truncation, though
+the exact ranks and margins on the truncation-free subset differ modestly from the full-sample
+figures, as expected with a smaller item count.
+
 \subsection{Human Adjudication Protocol}
 
 To check both judges against a human reader, we built a 238-item adjudication sheet (\texttt{annotation/judge\_audit/adjudication\_sheet.csv}, \texttt{scripts/build\_adjudication\_control\_sample.py}): the 174 REG/NUM/TMP items where Gemini and phi4-mini disagree---the only cases informative about which judge is right---plus a stratified control sample of 64 items (8 per stratum, fixed random seed) spanning cases where the available methods \emph{agree}: \texttt{\{REG,NUM,TMP\}\_strict\_incorrect\_judges\_agree} (both judges concur an item is wrong), \texttt{\{REG,NUM,TMP\}\_strict\_correct\_phi4\_agrees} (phi4-mini does not dispute a strict-correct item; no Gemini verdict exists for these, since Gemini only ever judged strict failures), and two CON strata (\texttt{CON\_strict\_correct\_no\_judge}, \texttt{CON\_strict\_incorrect\_no\_judge}) that spot-check the exact-match scorer directly, since CON is never judge-reviewed by either model. This sample is evidence about specific, informative cases, not a random draw sized to estimate a population-level judge error rate, and Section~\ref{sec:judge} reports it as such.

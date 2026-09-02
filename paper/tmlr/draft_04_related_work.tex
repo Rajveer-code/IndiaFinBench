@@ -25,13 +25,19 @@ token-overlap F1 against a reference string. Those conventions were designed for
 from a passage, where the space of correct surface forms is small. Applied to open-ended
 quantitative answers---where \texttt{Rs.\ 19,000 crore}, \texttt{19,000 crore}, and
 \texttt{nineteen thousand crore} are the same answer---they measure formatting as much as
-correctness. LLM-as-judge evaluation has emerged as the usual alternative, and its biases are by now
-well documented, including a tendency to over-credit fluent or elaborated reasoning. Our position is
-not that one regime is correct. It is that the two regimes answer different questions, that the
-difference is large enough to reorder a leaderboard, and that reporting either one alone leaves the
-reader unable to tell capability from format compliance. Holistic frameworks such as HELM
-\citep{liang2022helm} argue for multi-metric reporting on related grounds; we supply a concrete case
-where the metric choice, not the metric count, is what moves the ranking.
+correctness. LLM-as-judge evaluation has emerged as the usual alternative
+\citep{zheng2023judging,gu2024survey}, and its own failure modes are documented: position, verbosity,
+and self-enhancement biases \citep{zheng2023judging}, familiarity and anchoring effects
+\citep{wang2024fairevaluators}, and a preference for a judge's own family's outputs
+\citep{wataoka2024selfpreference}. We are not claiming to discover that judges can be biased; that is
+established. Our contribution is measuring, on one benchmark, how large the disagreement between a
+string-matching pipeline and a cross-model judge actually is, in both directions, and how much that
+disagreement alone---independent of which specific bias produces it---can move a twelve-model
+leaderboard. Our position is not that one regime is correct. It is that the two regimes answer
+different questions, that the difference is large enough to reorder a leaderboard, and that reporting
+either one alone leaves the reader unable to tell capability from format compliance. Holistic
+frameworks such as HELM \citep{liang2022helm} argue for multi-metric reporting on related grounds;
+we supply a concrete case where the metric choice, not the metric count, is what moves the ranking.
 
 \paragraph{What a benchmark reports about itself.}
 Benchmarks are commonly described by nominal item count. Whether those items discriminate between

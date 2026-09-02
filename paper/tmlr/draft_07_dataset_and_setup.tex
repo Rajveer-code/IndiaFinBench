@@ -147,10 +147,13 @@ The $\kappa$ = 0.645 for contradiction detection falls in the `substantial agree
 binary contradiction detection tasks in legal NLP. The lower numerical reasoning agreement (59.1\%)
 reflects formatting conventions rather than substantive disagreement: reference answers often
 included intermediate calculation steps (e.g., `Rs.~19,000 crore maximum per Table~1 of the
-Directions'), whereas the second annotator provided only final values (`19,000 crore'). Post-hoc
-review of every discordant numerical item confirmed the computed values were equivalent in all
-cases; disagreements arose solely from intermediate-step presence, currency symbol style, and comma
-placement.
+Directions'), whereas the second annotator provided only final values (`19,000 crore'). We manually
+reviewed and independently re-verified the arithmetic of all four discordant numerical items and
+recorded the review, item by item, in
+\texttt{annotation/iaa/num\_discordance\_review.csv} (released with the benchmark): every case's
+computed values were equivalent; disagreements arose solely from intermediate-step presence,
+currency symbol style, unit labelling, and date format, never from a numeric or reasoning
+discrepancy.
 
 \section{Experimental Setup}
 
@@ -158,15 +161,20 @@ placement.
 \label{sec:models}
 
 We evaluate twelve models spanning a wide range of sizes, providers, and access modes on the full
-406-item benchmark (Table~\ref{tab:models}, Appendix~\ref{app:models}): Gemini 2.5 Flash and Gemini
-2.5 Pro (Google APIs); Qwen3-32B, LLaMA-3.3-70B, Llama 4 Scout 17B, Kimi K2, GPT-OSS 120B, GPT-OSS
-20B, and DeepSeek-R1-Distill-Llama-70B (Groq API); and LLaMA-3-8B, Mistral-7B, and Gemma 3 4B
-run locally via Ollama v0.6.5 in 4-bit quantization (Q4\_K\_M) on
-an RTX 4060 (8~GB). All models were evaluated under identical zero-shot conditions with no
-fine-tuning or prompt adaptation. Appendix~\ref{app:models} lists the exact identifier used for
-every model, drawn directly from the evaluation harness rather than restated from memory: the Groq
-and Google API identifiers passed to each provider's API, and for the three locally-run models, the
-Ollama tag pulled and its reported parameter count.
+406-item benchmark (Table~\ref{tab:models}, Appendix~\ref{app:models}): Gemini 2.5 Flash (Google AI
+Studio) and Gemini 2.5 Pro (Google Vertex AI); Qwen3-32B, LLaMA-3.3-70B, Llama 4 Scout 17B, Kimi K2,
+GPT-OSS 120B, and GPT-OSS 20B (Groq API); DeepSeek-R1-Distill-Llama-70B (OpenRouter); and
+LLaMA-3-8B, Mistral-7B, and Gemma 3 4B run locally via Ollama v0.6.5 in 4-bit quantization
+(Q4\_K\_M) on an RTX 4060 (8~GB). All models were evaluated zero-shot with no fine-tuning or prompt
+adaptation, at temperature 0.0 --- but \textbf{not} under a shared completion budget: the harness set
+per-provider generation limits (200--2048 tokens) for cost reasons unrelated to any experimental
+design choice, and Gemini 2.5 Pro received no explicit cap at all. Budget heterogeneity is a
+plausible confound for any format-sensitivity claim this paper makes, and we treat it as one rather
+than assuming it away. Appendix~\ref{app:models} reports the exact provider, API model identifier or
+Ollama tag, and completion budget used for every model, drawn directly from the evaluation harness
+rather than restated from memory.
+% TODO(Plan v3 Phase 2.5): once the matched-budget re-run lands, add a sentence here pointing to its
+% results section and quantifying how much of the strict-score spread budget alone explains.
 
 \subsection{Prompting Strategy}
 
@@ -184,9 +192,10 @@ Task-specific user prompts provided appropriate formatting instructions for each
 contradiction detection, both passages were labelled explicitly as `Passage A / Passage B'. For
 numerical reasoning, models were instructed to show calculation steps and include units---an
 instruction in tension with the system prompt's ``no preamble'' constraint, which is one source of
-the format-versus-content gap that Section~\ref{sec:regime} measures directly. All models were
-evaluated under identical prompting and decoding settings (temperature = 0.0; completion budget 200
-tokens for API models, 300 for local models).
+the format-versus-content gap that Section~\ref{sec:regime} measures directly. All models received
+the identical prompts described above at temperature 0.0; they did \textbf{not} share a completion
+budget (Appendix~\ref{app:models} reports each model's exact value), which is a separate,
+independently disclosed source of output-length variation from the prompting tension just described.
 
 We evaluate exclusively under zero-shot conditions, as this most closely reflects practical
 deployment where users query models without domain-specific priming, and because it eliminates
@@ -213,7 +222,9 @@ TMP---not only the ones strict scoring marks wrong---and returns a judge verdict
 measurement (Section~\ref{sec:judge} reports its own error rate against human adjudication), not a
 ground truth that strict scoring falls short of.
 
-DeepSeek-R1-Distill-Llama-70B was accessed through an endpoint that returns final answers without
-exposed reasoning traces; its stored predictions contain no chain-of-thought markup, so we make no
-claim about the content of its internal deliberation, only about its final output under the fixed
-completion budget shared by every model in the study.
+DeepSeek-R1-Distill-Llama-70B was accessed via OpenRouter through an endpoint that returns final
+answers without exposed reasoning traces; its stored predictions contain no chain-of-thought markup,
+so we make no claim about the content of its internal deliberation, only about its final output
+under its own completion budget (2048 tokens, the largest of any model in the study --- see
+Appendix~\ref{app:models}), which rules out output-budget truncation as an explanation for its
+strict-scoring behaviour specifically.

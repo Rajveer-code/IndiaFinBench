@@ -83,29 +83,42 @@ All 238 items were adjudicated by the author, scored against the judge verdicts 
 \section{Evaluated Models}
 \label{app:models}
 
-\begin{table}[t]
+\begin{table*}[t]
 \centering\footnotesize
-\begin{tabular}{lp{2.4cm}p{1.5cm}}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllrr}
 \toprule
-\textbf{Model} & \textbf{Provider / Access} & \textbf{Params} \\
+\textbf{Model} & \textbf{Provider} & \textbf{API model / Ollama tag} & \textbf{Params} & \textbf{Budget} \\
 \midrule
-Gemini 2.5 Flash & Google (AI Studio API) & --- \\
-Gemini 2.5 Pro & Google (Vertex AI) & --- \\
-Qwen3-32B & Alibaba (Groq API) & 32B \\
-LLaMA-3.3-70B & Meta (Groq API) & 70B \\
-Llama 4 Scout 17B & Meta (Groq API) & 17B \\
-Kimi K2 & Moonshot AI (Groq API) & 1T total, 32B active (MoE) \\
-LLaMA-3-8B & Meta (Ollama, local) & 8B \\
-GPT-OSS 120B\textdaggerdbl{} & OpenAI (open-weight, Groq API) & 120B \\
-GPT-OSS 20B\textdaggerdbl{} & OpenAI (open-weight, Groq API) & 20B \\
-Mistral-7B & Mistral AI (Ollama, local) & 7B \\
-DeepSeek-R1-Distill-Llama-70B & DeepSeek (Groq API) & 70B \\
-Gemma 3 4B & Google (Ollama, local) & 4B \\
+Gemini 2.5 Flash & Google (AI Studio API) & \texttt{gemini-2.5-flash} & --- & 200 \\
+Gemini 2.5 Pro & Google (Vertex AI) & \texttt{gemini-2.5-pro} & --- & none\textsuperscript{a} \\
+Qwen3-32B & Groq API & \texttt{qwen/qwen3-32b} & 32B & 1024 \\
+LLaMA-3.3-70B & Groq API & \texttt{llama-3.3-70b-versatile} & 70B & 200 \\
+Llama 4 Scout 17B & Groq API & \texttt{meta-llama/llama-4-scout-17b-16e-instruct} & 17B & 1024 \\
+Kimi K2 & Groq API & \texttt{moonshotai/kimi-k2-instruct} & 1T total, 32B active (MoE) & 512 \\
+LLaMA-3-8B & Ollama, local & \texttt{llama3}\textsuperscript{b} & 8B & 300 \\
+GPT-OSS 120B\textdaggerdbl{} & Groq API & \texttt{openai/gpt-oss-120b} & 120B & 512 \\
+GPT-OSS 20B\textdaggerdbl{} & Groq API & \texttt{openai/gpt-oss-20b} & 20B & 512 \\
+Mistral-7B & Ollama, local & \texttt{mistral}\textsuperscript{b} & 7B & 300 \\
+DeepSeek-R1-Distill-Llama-70B & OpenRouter & \texttt{deepseek/deepseek-r1-distill-llama-70b} & 70B & 2048 \\
+Gemma 3 4B & Ollama, local & \texttt{gemma3:4b} & 4B & 512 \\
 \bottomrule
-\end{tabular}
-\caption{Models evaluated in this study. \textdaggerdbl{}OpenAI open-weight models accessed via the Groq inference API. Local models ran on an Intel i7-13650HX CPU with an NVIDIA RTX 4060 GPU (8~GB VRAM); exact identifiers were \texttt{llama3:8b}, \texttt{mistral:7b}, and \texttt{gemma3:4b}, with temperature 0.0 via the Ollama REST API.}
+\end{tabular}%
+}
+\caption{Models evaluated in this study, with the exact API model identifier or Ollama tag passed
+to each provider and the generation completion budget (tokens) set for it, both read directly from
+the evaluation harness (\texttt{scripts/evaluate*.py}). Budgets were set per script for cost reasons
+and are \textbf{not} uniform across models; Section~\ref{sec:models} discusses this as a covariate.
+\textdaggerdbl{}OpenAI open-weight models accessed via the Groq inference API. Local models ran on
+an Intel i7-13650HX CPU with an NVIDIA RTX 4060 GPU (8~GB VRAM) via the Ollama REST API, temperature
+0.0. \textsuperscript{a}Vertex AI's default for this model; the harness set no explicit cap.
+\textsuperscript{b}The harness calls the bare Ollama tags \texttt{llama3} and \texttt{mistral}, which
+resolved to the \texttt{llama3:8b} and \texttt{mistral:7b} weights via a local \texttt{:latest}
+alias; the released result files separately record these as
+\texttt{meta-llama/Meta-Llama-3-8B-Instruct} and \texttt{mistralai/Mistral-7B-Instruct-v0.3}, a
+manually-assigned display label for the same weights, not a different model.}
 \label{tab:models}
-\end{table}
+\end{table*}
 
 \section{Task Examples, Pipeline, and Failure Cases}
 \label{app:examples}

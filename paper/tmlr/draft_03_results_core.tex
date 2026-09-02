@@ -65,30 +65,37 @@ is answer the capability question, and the two are routinely reported as if they
 quantity. A leaderboard that reports one accuracy figure has silently chosen which question to
 answer, without saying so.
 
-\section{Effective Size: How Many Items Actually Discriminate}
+\section{Discriminative Coverage: How Many Items Actually Discriminate}
 \label{sec:effsize}
 
-A benchmark's nominal size is the number of items it contains. Its effective size, for the purpose
-of separating systems, is the number of items on which systems actually differ. An item that every
-model answers correctly contributes to reported accuracy but distinguishes no pair of models.
+A benchmark's nominal size is the number of items it contains. Its \textbf{discriminative
+coverage}, for the purpose of separating systems, is the number of items on which systems actually
+differ. An item that every model answers correctly contributes to reported accuracy but
+distinguishes no pair of models. (We avoid ``effective size'': it invites confusion with
+effective-sample-size, a distinct and more specific statistical quantity we do not compute.)
 
-For each item we take $p$, the fraction of the twelve models answering it correctly, and summarise
-its spread as $s = 4p(1-p)$, which is maximised at $p = 0.5$ and zero when every model agrees. This
-is a descriptive statistic over our twelve-model panel, not a fitted item-response model: we make no
-latent-ability assumptions and estimate no per-item slope parameters. It answers only the question
-we are asking---how much does this item separate the systems we ran?
+For each item we take $p$, the fraction of the twelve models answering it correctly. The
+threshold-light fact is the most robust one: 213 of 406 items (52.5\%) are answered correctly by at
+least 11 of the 12 models --- the ceiling category. At $n=12$ models, $p$ only takes values
+$k/12$ for integer $k$, and the single achievable value in $(0.9, 1]$ below 1 itself is $11/12
+\approx 0.917$; consequently ``$p \ge 0.9$'' and ``$p > 0.90$'' pick out the identical set of items
+by construction, not because two independent checks happened to agree. We note this to be precise
+about what does and does not constitute corroboration here, not to claim a stronger result than the
+arithmetic supports.
 
 \begin{table}[t]
 \centering
 \caption{Item categories by the fraction of models answering correctly ($p$). Ceiling items are
-answered correctly by at least 11 of 12 models; floor items by at most 1 of 12.}
+answered correctly by at least 11 of 12 models; floor items by at most 1 of 12. The discriminative
+band is defined by $p$ alone; see the text for why an additional spread threshold on
+$s=4p(1-p)$ would not change this category's membership.}
 \label{tab:effsize}
 \begin{tabular}{lrrl}
 \toprule
 Category & Items & \% & Criterion \\
 \midrule
 Ceiling            & 213 & 52.5 & $p \ge 0.9$ \\
-Discriminative     & 134 & 33.0 & $0.3 < p < 0.8$, $s$ above median \\
+Discriminative     & 134 & 33.0 & $0.3 < p < 0.8$ \\
 Intermediate       & 52  & 12.8 & remainder \\
 Floor              & 7   & 1.7  & $p \le 0.1$ \\
 \midrule
@@ -97,24 +104,24 @@ Total              & 406 & 100  & \\
 \end{tabular}
 \end{table}
 
-Half the benchmark sits at ceiling. 213 of 406 items are answered correctly by at least 11 of the
-12 models, and 7 more are answered correctly by at most one, so 220 items---slightly over half---
-carry almost no information about the relative ordering of these systems. The median item is
-answered correctly by 91.7\% of models, and mean spread across all items is 0.419. By the criterion
-in Table~\ref{tab:effsize}, 134 items do the discriminating.
+The discriminative band in Table~\ref{tab:effsize} is defined by $p$ alone: $0.3 < p < 0.8$, i.e.\
+$k \in \{4,\ldots,9\}$ of 12 models correct. An earlier version of this criterion also required
+$s=4p(1-p)$ above the sample median; at $n=12$ that second condition never binds within this
+$p$-range (its minimum there, at $k=9$, is $s=0.75$, already above the median item's $s=0.306$ at
+$k=11$), so it added no information and we removed it rather than retain a criterion that reads as
+more selective than it is. 134 items meet the $p$-range criterion.
 
-An independent route gives the same count. Analysing consensus rather than spread, 213 items are
-answered correctly by more than 90\% of models and 11 items by fewer than 20\%. The ceiling count
-of 213 is reached by two calculations that share no threshold, which is the reassurance we can
-offer that it is not an artifact of where the cut was placed.
+Half the benchmark sits at ceiling. 213 of 406 items are answered correctly by at least 11 of the
+12 models, and 7 more are answered correctly by at most one, so 220 items---slightly over
+half---carry almost no information about the relative ordering of these systems. The median item is
+answered correctly by 91.7\% of models.
 
 We report this about our own benchmark deliberately. It bears directly on how the results above
 should be read: a gap of a few points between two mid-table models rests on a subset of 134 items,
-not 406, and confidence intervals computed over the full item count understate that. It also
-suggests a construction lesson we did not anticipate when building the benchmark---annotating for
-coverage of a domain and annotating for discrimination between systems are different objectives,
-and expert effort spent on items that every competent model answers correctly buys descriptive
-completeness rather than measurement power.
+not 406. It also suggests a construction lesson we did not anticipate when building the
+benchmark---annotating for coverage of a domain and annotating for discrimination between systems
+are different objectives, and expert effort spent on items that every competent model answers
+correctly buys descriptive completeness rather than measurement power.
 
 We do not claim this ratio is unusual. We claim it is unmeasured: we are not aware of comparable
 benchmarks in this literature that report what fraction of their items separate the systems they

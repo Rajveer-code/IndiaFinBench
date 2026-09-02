@@ -1,9 +1,24 @@
 \section{Error Analysis}
 \label{sec:errortax-sub}
 
-\subsection{Error Taxonomy}
+\subsection{Task-Aligned Error Attribution}
 
-We classify model failures into four interpretable error types via a deterministic mapping from item task type and difficulty (released with the evaluation code): \textbf{Domain Knowledge Failure (DKF)}: unfamiliarity with Indian regulatory concepts, terminology, or thresholds. \textbf{Numerical Reasoning Failure (NRF)}: arithmetic errors---wrong calculation, unit conversion, or formula application despite the formula appearing in context. \textbf{Temporal Reasoning Failure (TRF)}: mis-ordering regulatory events, misidentifying the circular in force at a given time, or failing to track supersession. \textbf{Context Grounding Failure (CGF)}: using external knowledge instead of the passage, or failing to extract a span clearly present in context. Contradiction-detection errors on medium and hard items map to TRF, since the task probes supersession tracking; easy CON items and hard REG items both map to CGF.
+We attribute model failures to four categories via a deterministic mapping from each item's task
+type and difficulty (released with the evaluation code): \textbf{Domain Knowledge Failure (DKF)}:
+unfamiliarity with Indian regulatory concepts, terminology, or thresholds. \textbf{Numerical
+Reasoning Failure (NRF)}: arithmetic errors---wrong calculation, unit conversion, or formula
+application despite the formula appearing in context. \textbf{Temporal Reasoning Failure (TRF)}:
+mis-ordering regulatory events, misidentifying the circular in force at a given time, or failing to
+track supersession. \textbf{Context Grounding Failure (CGF)}: using external knowledge instead of
+the passage, or failing to extract a span clearly present in context. Contradiction-detection errors
+on medium and hard items map to TRF, since the task probes supersession tracking; easy CON items and
+hard REG items both map to CGF. \textbf{These labels are task-conditioned categories, not
+diagnoses of a model's internal failure mechanism}: because the mapping is deterministic in task
+type and difficulty, an error's label carries no information beyond which task and difficulty tier
+it occurred in. A pattern stated purely in terms of these labels (e.g.\ ``TRF is common'') is a
+restatement of which task the errors fall in, not an independent finding about that task; the
+findings below that carry independent information are the ones stated in terms of per-model
+\emph{reclassification rates}, not error-type composition.
 
 Table~\ref{tab:errortax} shows error distributions for five key models under both scoring regimes: strict-pipeline errors, and residual errors that survive the cross-model judge audit (phi4-mini, Section~\ref{sec:judge}, Appendix~\ref{app:judge}). The distinction matters because strict errors mix true failures with format mismatches, whereas residual errors are judge-retained.
 
@@ -14,6 +29,32 @@ Table~\ref{tab:errortax} shows error distributions for five key models under bot
 \label{tab:errortax}
 \end{table*}
 
-Four patterns emerge. First, temporal-supersession failures (TRF) dominate the residual, judge-retained error set for every profiled model---from 50\% (Gemini 2.5 Flash: 7/14) to 62\% (LLaMA-3.3-70B: 5/8, DeepSeek-R1-Distill-Llama-70B: 5/8, Gemma 3 4B: 15/24)---regardless of overall model tier: the judge audit consistently clears numerical and domain-knowledge format mismatches while leaving supersession-tracking errors largely intact. Second, DeepSeek-R1-Distill-Llama-70B shows the largest correction: 101 strict failures (across REG, NUM, TMP, and CON) collapse to 8 residual---6 of which are the REG/NUM/TMP residual failures behind the 93.9\% reclassification figure in Section~\ref{sec:regime}, the remaining 2 are CON errors, which are never judge-reviewed---the largest reclassification of any profiled model and the basis for its rank reversal. Third, Gemma 3 4B's errors also fall substantially under judging (86 $\rightarrow$ 24, a 72.1\% reclassification rate), so its strict-error count no longer supports a claim that its errors are format-invariant; what does survive is its residual \emph{rate}: at 24/406 = 5.9\% of all items, it remains 1.7--3$\times$ every other profiled model's residual rate (2.0--3.4\%), concentrated in numerical reasoning (6 residual NRF errors, the largest absolute NRF count of the five). Fourth, Gemini 2.5 Flash---the top strict performer---has the \emph{lowest} reclassification rate of the five (66.7\%): proportionally more of its strict failures are judge-retained as genuine, consistent with its output already being well-formatted under strict scoring, leaving fewer format artifacts available to reclassify in the first place. Context Grounding Failure is rare under both regimes for every model.
+Three patterns carry independent information, stated as per-model reclassification rates rather
+than error-type composition. First, DeepSeek-R1-Distill-Llama-70B shows the largest correction: 101
+strict failures (across REG, NUM, TMP, and CON) collapse to 8 residual---6 of which are the
+REG/NUM/TMP residual failures behind the 93.9\% reclassification figure in
+Section~\ref{sec:regime}, the remaining 2 are CON errors, which are never judge-reviewed---the
+largest reclassification of any profiled model and the basis for its rank reversal. Second, Gemma
+3 4B's errors also fall substantially under judging (86 $\rightarrow$ 24, a 72.1\% reclassification
+rate), so its strict-error count no longer supports a claim that its errors are format-invariant;
+what does survive is its residual \emph{rate}: at 24/406 = 5.9\% of all items, it remains
+1.7--3$\times$ every other profiled model's residual rate (2.0--3.4\%). Third, Gemini
+2.5 Flash---the top strict performer---has the \emph{lowest} reclassification rate of the five
+(66.7\%): proportionally more of its strict failures are judge-retained as genuine, consistent with
+its output already being well-formatted under strict scoring, leaving fewer format artifacts
+available to reclassify in the first place.
+
+A task-level pattern is also visible in the residual composition, with the caveat above that it
+restates task and difficulty rather than adding independent information: items whose deterministic
+label is TRF (chiefly temporal-reasoning items, plus medium/hard contradiction-detection items) make
+up 50\% (Gemini 2.5 Flash: 7/14) to 62\% (LLaMA-3.3-70B: 5/8, DeepSeek-R1-Distill-Llama-70B: 5/8,
+Gemma 3 4B: 15/24) of every profiled model's residual, judge-retained errors, while items labelled
+NRF or DKF are cleared at a substantially higher rate under judging. Read as a task-level fact rather
+than a mechanistic one, this says supersession-tracking items resist the judge's format-tolerance
+more than numerical or domain-knowledge items do, for every model profiled here --- not that models
+share a specific ``temporal reasoning'' failure mode. Gemma 3 4B's residual concentration noted above
+is, by the same deterministic mapping, concentrated in items labelled NRF (6 of its 24 residual
+errors, the largest absolute NRF count of the five). Context Grounding Failure is rare under both
+regimes for every model.
 
 Representative failure examples for each error type are given in Appendix~\ref{app:examples}.

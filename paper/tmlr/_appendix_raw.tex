@@ -239,10 +239,10 @@ To assess whether zero-shot evaluation represents a conservative lower bound on 
 \label{tab:e1}
 \end{table*}
 
-3-shot prompting improves numerical reasoning by 2.1--16.3 percentage points across all four models, with Llama 4 Scout 17B showing the largest NUM gain (+16.3 pp, from 66.3\% to 82.6\%). LLaMA-3.3-70B gains +7.7 pp on temporal reasoning under 3-shot. These improvements confirm the direction of the zero-shot conservatism claimed in Section~\ref{sec:main-results-text} without altering comparative structure.
+3-shot prompting improves numerical reasoning by 2.1--16.3 percentage points across all four models, with Llama 4 Scout 17B showing the largest NUM gain (+16.3 pp, from 66.3\% to 82.6\%). LLaMA-3.3-70B gains +7.7 pp on temporal reasoning under 3-shot. These improvements are consistent with the direction of the zero-shot conservatism claimed in Section~\ref{sec:main-results-text}; with four models and one prompting configuration, this is suggestive rather than a controlled test of that claim.
 
 CON performance is mixed: Llama 4 Scout 17B declines 12.9 pp (from near-ceiling 98.4\% to 85.5\%), while Gemini 2.5 Flash improves +3.2 pp. Performance degradation under 3-shot on tasks with near-ceiling zero-shot accuracy is consistent with in-context example interference, where the few-shot prefix biases the model away from clear Yes/No responses on straightforward contradiction items. Qwen3-32B is unaffected on CON and TMP (0.0 pp), suggesting its zero-shot behavior is already well-calibrated for these task types.
 
-Overall, the performance tier ordering is preserved under 3-shot prompting (Gemini 2.5 Flash $\geq$ Qwen3-32B $\geq$ LLaMA-3.3-70B $\approx$ Llama 4 Scout 17B), confirming that the tier structure observed in zero-shot evaluation reflects genuine model capability differences rather than prompting strategy sensitivity.
+Overall, the broad performance tier ordering is preserved under 3-shot prompting (Gemini 2.5 Flash $\geq$ Qwen3-32B $\geq$ LLaMA-3.3-70B $\approx$ Llama 4 Scout 17B). We do not read this as establishing that the tier structure reflects genuine capability differences rather than prompting sensitivity: the same four models show a 12.9-point CON decline for Llama 4 Scout 17B under the identical 3-shot condition, which is itself a prompting-sensitivity effect. The evidence supports only the narrower claim that overall ordering is not obviously disrupted by this one alternative prompting configuration.
 
 \end{document}

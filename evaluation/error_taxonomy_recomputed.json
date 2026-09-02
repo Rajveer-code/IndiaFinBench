@@ -26,10 +26,10 @@
     "residual": {
       "DKF": 1,
       "NRF": 3,
-      "TRF": 7,
+      "TRF": 6,
       "CGF": 1
     },
-    "residual_total": 12
+    "residual_total": 11
   },
   "LLaMA-3.3-70B": {
     "strict": {

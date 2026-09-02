@@ -6,23 +6,23 @@
   "logistic_regression": {
     "formula": "rescued ~ log_len + C(task_type) + C(model)",
     "n_obs": 905,
-    "log_len_coef": -0.1203,
-    "log_len_se": 0.1062,
-    "log_len_p": 0.2575,
+    "log_len_coef": -0.0903,
+    "log_len_se": 0.1044,
+    "log_len_p": 0.3875,
     "log_len_95ci": [
-      -0.3284,
-      0.0879
+      -0.2949,
+      0.1144
     ],
     "direction": "negative (longer predictions less likely to be rescued)",
     "significant_at_05": false,
-    "pseudo_r2": 0.0757
+    "pseudo_r2": 0.0727
   },
   "per_task_direction": {
     "numerical_reasoning": {
-      "n_overturned": 319,
-      "n_retained": 43,
-      "median_len_overturned": 159.0,
-      "median_len_retained": 165.0
+      "n_overturned": 314,
+      "n_retained": 48,
+      "median_len_overturned": 157.5,
+      "median_len_retained": 180.0
     },
     "regulatory_interpretation": {
       "n_overturned": 324,
@@ -31,15 +31,15 @@
       "median_len_retained": 99.0
     },
     "temporal_reasoning": {
-      "n_overturned": 177,
-      "n_retained": 31,
-      "median_len_overturned": 116.0,
-      "median_len_retained": 111.0
+      "n_overturned": 179,
+      "n_retained": 29,
+      "median_len_overturned": 119.0,
+      "median_len_retained": 84.0
     }
   },
   "censoring": {
-    "pct_overturned_rows_at_cap": 7.4,
-    "pct_retained_rows_at_cap": 16.5,
+    "pct_overturned_rows_at_cap": 7.6,
+    "pct_retained_rows_at_cap": 14.8,
     "caveat": "prediction length is right-censored by the logging pipeline; this biases the retained-group median down more than the overturned group's (higher censoring rate in retained), which if anything understates the true gap in this direction -- see Plan v3 F6/F2. A confirmatory analysis on untruncated Phase 2 re-run data is still required before this is reported as a final result."
   }
 }

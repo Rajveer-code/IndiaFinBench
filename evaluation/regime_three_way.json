@@ -15,41 +15,41 @@
       "judge_only_pct": 89.66,
       "judge_augmented_pct": 96.55,
       "strict_rank": 1,
-      "judge_only_rank": 10,
+      "judge_only_rank": 9,
       "judge_augmented_rank": 5
     },
     "Gemini 2.5 Pro": {
       "key": "gemini25_pro",
       "n_344": 344,
       "strict_344": 251,
-      "judge_only_344": 324,
+      "judge_only_344": 327,
       "judge_augmented_344": 334,
       "con_correct_62": 58,
       "strict_406": 309,
-      "judge_only_406": 382,
+      "judge_only_406": 385,
       "judge_augmented_406": 392,
       "strict_pct": 76.11,
-      "judge_only_pct": 94.09,
+      "judge_only_pct": 94.83,
       "judge_augmented_pct": 96.55,
       "strict_rank": 10,
-      "judge_only_rank": 3,
+      "judge_only_rank": 1,
       "judge_augmented_rank": 5
     },
     "Qwen3-32B": {
       "key": "qwen3_32b",
       "n_344": 344,
       "strict_344": 291,
-      "judge_only_344": 320,
-      "judge_augmented_344": 338,
+      "judge_only_344": 319,
+      "judge_augmented_344": 339,
       "con_correct_62": 56,
       "strict_406": 347,
-      "judge_only_406": 376,
-      "judge_augmented_406": 394,
+      "judge_only_406": 375,
+      "judge_augmented_406": 395,
       "strict_pct": 85.47,
-      "judge_only_pct": 92.61,
-      "judge_augmented_pct": 97.04,
+      "judge_only_pct": 92.36,
+      "judge_augmented_pct": 97.29,
       "strict_rank": 2,
-      "judge_only_rank": 8,
+      "judge_only_rank": 7,
       "judge_augmented_rank": 4
     },
     "LLaMA-3.3-70B": {
@@ -66,25 +66,25 @@
       "judge_only_pct": 88.67,
       "judge_augmented_pct": 98.03,
       "strict_rank": 3,
-      "judge_only_rank": 11,
+      "judge_only_rank": 10,
       "judge_augmented_rank": 1
     },
     "Llama 4 Scout 17B": {
       "key": "llama4scout",
       "n_344": 344,
       "strict_344": 277,
-      "judge_only_344": 326,
-      "judge_augmented_344": 336,
+      "judge_only_344": 322,
+      "judge_augmented_344": 335,
       "con_correct_62": 61,
       "strict_406": 338,
-      "judge_only_406": 387,
-      "judge_augmented_406": 397,
+      "judge_only_406": 383,
+      "judge_augmented_406": 396,
       "strict_pct": 83.25,
-      "judge_only_pct": 95.32,
-      "judge_augmented_pct": 97.78,
+      "judge_only_pct": 94.33,
+      "judge_augmented_pct": 97.54,
       "strict_rank": 4,
-      "judge_only_rank": 1,
-      "judge_augmented_rank": 2
+      "judge_only_rank": 2,
+      "judge_augmented_rank": 3
     },
     "Kimi K2": {
       "key": "kimi_k2",
@@ -107,18 +107,18 @@
       "key": "llama3",
       "n_344": 344,
       "strict_344": 259,
-      "judge_only_344": 328,
-      "judge_augmented_344": 334,
+      "judge_only_344": 322,
+      "judge_augmented_344": 333,
       "con_correct_62": 58,
       "strict_406": 317,
-      "judge_only_406": 386,
-      "judge_augmented_406": 392,
+      "judge_only_406": 380,
+      "judge_augmented_406": 391,
       "strict_pct": 78.08,
-      "judge_only_pct": 95.07,
-      "judge_augmented_pct": 96.55,
+      "judge_only_pct": 93.6,
+      "judge_augmented_pct": 96.31,
       "strict_rank": 7,
-      "judge_only_rank": 2,
-      "judge_augmented_rank": 5
+      "judge_only_rank": 4,
+      "judge_augmented_rank": 6
     },
     "GPT-OSS 120B": {
       "key": "gpt_oss_120b",
@@ -134,7 +134,7 @@
       "judge_only_pct": 93.84,
       "judge_augmented_pct": 97.54,
       "strict_rank": 8,
-      "judge_only_rank": 4,
+      "judge_only_rank": 3,
       "judge_augmented_rank": 3
     },
     "GPT-OSS 20B": {
@@ -158,18 +158,18 @@
       "key": "mistral",
       "n_344": 344,
       "strict_344": 258,
-      "judge_only_344": 327,
-      "judge_augmented_344": 340,
+      "judge_only_344": 321,
+      "judge_augmented_344": 338,
       "con_correct_62": 50,
       "strict_406": 308,
-      "judge_only_406": 377,
-      "judge_augmented_406": 390,
+      "judge_only_406": 371,
+      "judge_augmented_406": 388,
       "strict_pct": 75.86,
-      "judge_only_pct": 92.86,
-      "judge_augmented_pct": 96.06,
+      "judge_only_pct": 91.38,
+      "judge_augmented_pct": 95.57,
       "strict_rank": 11,
-      "judge_only_rank": 7,
-      "judge_augmented_rank": 6
+      "judge_only_rank": 8,
+      "judge_augmented_rank": 7
     },
     "DeepSeek-R1-Distill": {
       "key": "deepseek_r1_70b",
@@ -185,7 +185,7 @@
       "judge_only_pct": 92.36,
       "judge_augmented_pct": 98.03,
       "strict_rank": 12,
-      "judge_only_rank": 9,
+      "judge_only_rank": 7,
       "judge_augmented_rank": 1
     },
     "Gemma 3 4B": {
@@ -202,33 +202,33 @@
       "judge_only_pct": 87.19,
       "judge_augmented_pct": 94.09,
       "strict_rank": 6,
-      "judge_only_rank": 12,
-      "judge_augmented_rank": 7
+      "judge_only_rank": 11,
+      "judge_augmented_rank": 8
     }
   },
   "spread": {
     "strict_pp": 14.54,
-    "judge_only_pp": 8.13,
+    "judge_only_pp": 7.64,
     "judge_augmented_pp": 3.94
   },
   "correlations": {
     "strict_vs_judge_only": {
-      "spearman_rho": -0.2238,
-      "spearman_p": 0.4845,
-      "kendall_tau": -0.0606,
-      "kendall_p": 0.8406
+      "spearman_rho": -0.2732,
+      "spearman_p": 0.3902,
+      "kendall_tau": -0.1679,
+      "kendall_p": 0.4496
     },
     "strict_vs_judge_augmented": {
-      "spearman_rho": 0.0673,
-      "spearman_p": 0.8355,
-      "kendall_tau": 0.0636,
-      "kendall_p": 0.7805
+      "spearman_rho": 0.0424,
+      "spearman_p": 0.8959,
+      "kendall_tau": 0.0158,
+      "kendall_p": 0.9446
     },
     "judge_only_vs_judge_augmented": {
-      "spearman_rho": 0.0779,
-      "spearman_p": 0.8099,
-      "kendall_tau": 0.0636,
-      "kendall_p": 0.7805
+      "spearman_rho": 0.1398,
+      "spearman_p": 0.6647,
+      "kendall_tau": 0.0953,
+      "kendall_p": 0.676
     }
   },
   "note": "judge_augmented is an asymmetric operational composite (strict OR judge), not a primary regime -- see plan v3 Section 3."

@@ -1,0 +1,17 @@
+{
+  "num_ctx": 2048,
+  "corpus_rows_scanned": 4804,
+  "max_triple_chars": 1729,
+  "max_triple_source": [
+    "mistral_results.csv",
+    "TMP_060"
+  ],
+  "worst_case_prompt_tokens_est": 787,
+  "num_predict": 150,
+  "chars_per_token_assumed": 3.0,
+  "safety_margin": 1.25,
+  "judge_model": "phi4-mini",
+  "run_timestamp": "2026-09-02T18:23:53.414421+00:00",
+  "models_processed": 12,
+  "rows_flagged_judge_input_truncated": 0
+}

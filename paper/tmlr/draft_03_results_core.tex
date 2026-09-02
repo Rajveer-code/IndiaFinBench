@@ -39,13 +39,13 @@ Appendix~\ref{app:regimetable} tabulates exact accuracy and rank for all twelve 
 three regimes; the discussion below states the comparisons that matter.
 
 \textbf{Strict and judge-only show no positive rank correspondence.} Strict accuracy spans
-75.12--89.66\%; judge-only accuracy spans 87.19--95.32\%, with a different leader (Llama 4 Scout 17B)
+75.12--89.66\%; judge-only accuracy spans 87.19--94.83\%, with a different leader (Gemini 2.5 Pro)
 and a different trailer (Gemma 3 4B) than strict scoring's (Gemini 2.5 Flash, DeepSeek-R1-Distill).
-Across the twelve models, Spearman $\rho = -0.224$ ($p = 0.48$), Kendall $\tau = -0.061$ ($p = 0.84$).
+Across the twelve models, Spearman $\rho = -0.273$ ($p = 0.39$), Kendall $\tau = -0.168$ ($p = 0.45$).
 With twelve models these tests have little power, so we do not claim the rankings are negatively
 correlated in a strict statistical sense---we claim they show no positive correspondence, which
-Figure~\ref{fig:regime} and Appendix~\ref{app:regimetable} show directly: no model holds the same
-rank under both. Neither regime is more correct than the other; each answers a different question
+Figure~\ref{fig:regime} and Appendix~\ref{app:regimetable} show directly: only one of twelve models
+(Kimi K2, rank 5 under each) holds the same rank under both. Neither regime is more correct than the other; each answers a different question
 (exact reproduction of a reference format, versus a second model's judgment of substantive
 correctness), and a benchmark that reports only one has silently chosen which question to answer.
 
@@ -54,7 +54,8 @@ move a model.} Under strict-OR-judge, DeepSeek-R1-Distill---12th of twelve, last
 strict scoring---reaches an exact tie for 1st with LLaMA-3.3-70B (both 398/406, 98.0\%). Of its 99
 strict errors on REG/NUM/TMP, 93 are reclassified as correct by the cross-model judge---93.9\%---
 leaving 6 residual failures, the fewest of any model in the study. Under the judge's own verdict
-alone (judge-only, not augmented), DeepSeek-R1-Distill ranks 9th of twelve (92.4\%): the judge
+alone (judge-only, not augmented), DeepSeek-R1-Distill ranks 7th of twelve, tied with Qwen3-32B
+(92.4\%): the judge
 recovers most of its strict failures but also disputes some of its strict successes, and the
 augmented regime's asymmetric rule---rescue but never reject---is what produces the 1st-place tie.
 We report this as what it is: a real, measured consequence of one specific, defensible-but-partial
@@ -71,7 +72,7 @@ fully resolve.
 
 A second effect is visible in the accuracies rather than the ranks. The full field spans 14.5 points
 under strict scoring (75.12--89.66) and just 3.9 points under judge-augmented scoring (94.1--98.0);
-judge-only compresses it to 8.1 points (87.19--95.32). Compression under either judge-involving
+judge-only compresses it to 7.6 points (87.19--94.83). Compression under either judge-involving
 regime is real, but the size of the effect depends on which one: judge-augmented's asymmetric rule
 compresses roughly twice as much as judge-only's symmetric one, because it can only ever move scores
 upward.

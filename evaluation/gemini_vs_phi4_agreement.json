@@ -1,8 +1,8 @@
 {
-  "agree": 703,
-  "disagree": 171,
+  "agree": 698,
+  "disagree": 176,
   "total": 874,
-  "raw_agreement_pct": 80.4,
+  "raw_agreement_pct": 79.9,
   "disagreement_ids_sample": [
     "NUM_005",
     "TMP_009",
@@ -15,7 +15,10 @@
     "REG_079",
     "REG_060",
     "REG_124",
+    "NUM_107",
     "NUM_114",
+    "TMP_059",
+    "NUM_118",
     "TMP_069",
     "TMP_075",
     "TMP_077",
@@ -23,6 +26,7 @@
     "TMP_079",
     "REG_192",
     "REG_202",
+    "TMP_081",
     "TMP_087",
     "REG_008",
     "REG_015",
@@ -30,7 +34,6 @@
     "REG_077",
     "NUM_033",
     "NUM_114",
-    "TMP_081",
     "REG_008",
     "REG_023",
     "REG_024",
@@ -50,9 +53,6 @@
     "TMP_002",
     "REG_077",
     "REG_079",
-    "TMP_044",
-    "NUM_096",
-    "NUM_113",
-    "NUM_114"
+    "TMP_044"
   ]
 }

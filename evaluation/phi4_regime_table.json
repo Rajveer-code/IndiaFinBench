@@ -18,8 +18,8 @@
       "phi4_corrected_344": 334,
       "fn_count": 83,
       "fn_rate": 0.8925,
-      "fp_count": 10,
-      "fp_rate": 0.0398,
+      "fp_count": 7,
+      "fp_rate": 0.0279,
       "con_correct_62": 58,
       "strict_accuracy_406": 76.11,
       "phi4_corrected_accuracy_406": 96.55
@@ -99,50 +99,50 @@
     "LLaMA-3-8B": {
       "n_judged_reg_num_tmp": 344,
       "strict_correct_344": 259,
-      "phi4_corrected_344": 334,
-      "fn_count": 75,
-      "fn_rate": 0.8824,
-      "fp_count": 6,
-      "fp_rate": 0.0232,
+      "phi4_corrected_344": 333,
+      "fn_count": 74,
+      "fn_rate": 0.8706,
+      "fp_count": 11,
+      "fp_rate": 0.0425,
       "con_correct_62": 58,
       "strict_accuracy_406": 78.08,
-      "phi4_corrected_accuracy_406": 96.55
+      "phi4_corrected_accuracy_406": 96.31
     },
     "Llama 4 Scout 17B": {
       "n_judged_reg_num_tmp": 344,
       "strict_correct_344": 277,
-      "phi4_corrected_344": 336,
-      "fn_count": 59,
-      "fn_rate": 0.8806,
-      "fp_count": 10,
-      "fp_rate": 0.0361,
+      "phi4_corrected_344": 335,
+      "fn_count": 58,
+      "fn_rate": 0.8657,
+      "fp_count": 13,
+      "fp_rate": 0.0469,
       "con_correct_62": 61,
       "strict_accuracy_406": 83.25,
-      "phi4_corrected_accuracy_406": 97.78
+      "phi4_corrected_accuracy_406": 97.54
     },
     "Mistral-7B": {
       "n_judged_reg_num_tmp": 344,
       "strict_correct_344": 258,
-      "phi4_corrected_344": 340,
-      "fn_count": 82,
-      "fn_rate": 0.9535,
-      "fp_count": 13,
-      "fp_rate": 0.0504,
+      "phi4_corrected_344": 338,
+      "fn_count": 80,
+      "fn_rate": 0.9302,
+      "fp_count": 17,
+      "fp_rate": 0.0659,
       "con_correct_62": 50,
       "strict_accuracy_406": 75.86,
-      "phi4_corrected_accuracy_406": 96.06
+      "phi4_corrected_accuracy_406": 95.57
     },
     "Qwen3-32B": {
       "n_judged_reg_num_tmp": 344,
       "strict_correct_344": 291,
-      "phi4_corrected_344": 338,
-      "fn_count": 47,
-      "fn_rate": 0.8868,
-      "fp_count": 18,
-      "fp_rate": 0.0619,
+      "phi4_corrected_344": 339,
+      "fn_count": 48,
+      "fn_rate": 0.9057,
+      "fp_count": 20,
+      "fp_rate": 0.0687,
       "con_correct_62": 56,
       "strict_accuracy_406": 85.47,
-      "phi4_corrected_accuracy_406": 97.04
+      "phi4_corrected_accuracy_406": 97.29
     }
   },
   "strict_rank": {
@@ -163,14 +163,14 @@
     "DeepSeek-R1-Distill": 1,
     "Gemini 2.5 Pro": 5,
     "Gemini 2.5 Flash": 5,
-    "Gemma 3 4B": 7,
+    "Gemma 3 4B": 8,
     "GPT-OSS 120B": 3,
     "GPT-OSS 20B": 3,
     "LLaMA-3.3-70B": 1,
     "Kimi K2": 2,
-    "LLaMA-3-8B": 5,
-    "Llama 4 Scout 17B": 2,
-    "Mistral-7B": 6,
+    "LLaMA-3-8B": 6,
+    "Llama 4 Scout 17B": 3,
+    "Mistral-7B": 7,
     "Qwen3-32B": 4
   },
   "deepseek_strict_rank": 12,
@@ -179,5 +179,5 @@
     "DeepSeek-R1-Distill",
     "LLaMA-3.3-70B"
   ],
-  "models_moved_2plus": 11
+  "models_moved_2plus": 10
 }

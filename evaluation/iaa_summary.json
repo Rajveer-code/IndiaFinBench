@@ -1,0 +1,51 @@
+{
+  "round1": {
+    "n": 60,
+    "overall_agreement": 0.85,
+    "per_task_agreement": {
+      "CON": 0.8235294117647058,
+      "NUM": 0.75,
+      "REG": 1.0,
+      "TMP": 0.875
+    },
+    "con_kappa": 0.6106870229007633,
+    "con_kappa_n": 17
+  },
+  "round2": {
+    "n": 60,
+    "overall_agreement": 0.85,
+    "per_task_agreement": {
+      "REG": 0.8076923076923077,
+      "TMP": 0.8181818181818182,
+      "CON": 1.0,
+      "NUM": 0.8571428571428571
+    },
+    "con_kappa": 1.0,
+    "con_kappa_n": 9
+  },
+  "round3": {
+    "n": 60,
+    "overall_agreement": 0.8833333333333333,
+    "per_task_agreement": {
+      "REG": 1.0,
+      "NUM": 0.8571428571428571,
+      "CON": 0.5555555555555556,
+      "TMP": 0.9090909090909091
+    },
+    "con_kappa": null,
+    "con_kappa_n": 5
+  },
+  "pooled_180": {
+    "n": 180,
+    "overall_agreement": 0.8611111111111112,
+    "per_task_agreement": {
+      "CON": 0.8,
+      "NUM": 0.8181818181818182,
+      "REG": 0.9206349206349206,
+      "TMP": 0.868421052631579
+    },
+    "con_kappa": 0.7120743034055728,
+    "con_kappa_n": 31
+  },
+  "methodology_note": "Round 1's `agree` column (annotation/iaa/iaa_60item_sample.csv) is frozen prior work that does not exactly reproduce under scripts/evaluate.py::score_answer alone (46/60=76.7% under the plain four-stage scorer vs. the published 85.0%): round 1 additionally applied scripts/fix_num_iaa.py, a NUM-specific regex normalizer, on top of the base scorer. Rounds 2 and 3 (this script) are scored with the plain four-stage scorer only, with no post-hoc normalization pass. The pooled 180-item figure below therefore combines two passes that are close but not identical in method; this is disclosed rather than papered over, consistent with how this paper treats scoring-rule sensitivity everywhere else."
+}

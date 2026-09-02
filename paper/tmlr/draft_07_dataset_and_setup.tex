@@ -110,12 +110,12 @@ evaluation's open-ended QA, following established benchmark construction practic
  & \multicolumn{2}{c}{\textbf{Model-based}} & \multicolumn{2}{c}{\textbf{Human IAA}} \\
 \textbf{Task} & \textbf{Items} & \textbf{Agr.} & \textbf{Items} & \textbf{Agr.} \\
 \midrule
-REG & 53 & 85.7\% & 63 & 85.7\% \\
-NUM & 32 & 84.4\% & 44 & 59.1\% \\
-CON & 30 & 96.7\%\textsuperscript{$\kappa$=.918} & 35 & 88.6\%\textsuperscript{$\kappa$=.645} \\
-TMP & 35 & 77.1\% & 38 & 73.7\% \\
+REG & 53 & 85.7\% & 63 & 92.1\% \\
+NUM & 32 & 84.4\% & 44 & 81.8\% \\
+CON & 30 & 96.7\%\textsuperscript{$\kappa$=.918} & 35 & 80.0\%\textsuperscript{$\kappa$=.712} \\
+TMP & 35 & 77.1\% & 38 & 86.8\% \\
 \midrule
-\textbf{All} & \textbf{150} & \textbf{90.7\%} & \textbf{180} & \textbf{77.2\%} \\
+\textbf{All} & \textbf{150} & \textbf{90.7\%} & \textbf{180} & \textbf{86.1\%} \\
 \bottomrule
 \end{tabular}
 \caption{Annotation validation: model-based secondary pass (150-item subset) and human
@@ -142,18 +142,19 @@ Agreement was then computed between the primary annotator's reference answers an
 annotator's responses, using the same four-stage scoring procedure applied to model predictions
 (Section~\ref{sec:scoring}); results are in Table~\ref{tab:validation} (right).
 
-The $\kappa$ = 0.645 for contradiction detection falls in the `substantial agreement' band by
+The $\kappa$ = 0.712 for contradiction detection falls in the `substantial agreement' band by
 \citet{landiskoch1977} conventions, and is comparable to human agreement rates reported for similar
-binary contradiction detection tasks in legal NLP. The lower numerical reasoning agreement (59.1\%)
-reflects formatting conventions rather than substantive disagreement: reference answers often
-included intermediate calculation steps (e.g., `Rs.~19,000 crore maximum per Table~1 of the
-Directions'), whereas the second annotator provided only final values (`19,000 crore'). We manually
-reviewed and independently re-verified the arithmetic of all four discordant numerical items and
-recorded the review, item by item, in
+binary contradiction detection tasks in legal NLP. Numerical reasoning (81.8\%) and contradiction
+detection (80.0\%) are the two lowest task-level agreement rates, both driven by the same mechanism:
+reference answers are often terse final values, while the second annotator's answers frequently embed
+a full derivation or restate the question context around the same number, so the strict scorer's
+exact and numeric-set matching stages can miss an answer that is substantively identical but longer.
+We manually reviewed and independently re-verified the arithmetic or logic of all eight discordant
+numerical-reasoning items across the three rounds and recorded the review, item by item, in
 \texttt{annotation/iaa/num\_discordance\_review.csv} (released with the benchmark): every case's
-computed values were equivalent; disagreements arose solely from intermediate-step presence,
-currency symbol style, unit labelling, and date format, never from a numeric or reasoning
-discrepancy.
+computed values or final conclusions were equivalent; disagreements arose solely from intermediate-step
+presence, currency symbol style, unit labelling, date format, or reasoning-path verbosity, never from a
+numeric or substantive-conclusion discrepancy.
 
 \section{Experimental Setup}
 

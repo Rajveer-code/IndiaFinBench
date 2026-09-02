@@ -213,6 +213,24 @@ else:
     check("evaluation/regime_three_way.json exists", False,
           "run scripts/regime_table.py first")
 
+print("\n=== IAA CONSISTENCY (cleanup item 8: rounds 2-3 scored for real) ===")
+iaa_path = ROOT / "evaluation" / "iaa_summary.json"
+if iaa_path.exists():
+    iaa = json.loads(iaa_path.read_text(encoding="utf-8"))
+    pooled = iaa.get("pooled_180", {})
+    check("iaa_summary.json: pooled n == 180", pooled.get("n") == 180, f"found {pooled.get('n')}")
+    check("iaa: pooled overall agreement == 86.1% (155/180)",
+          round(pooled.get("overall_agreement", 0) * 100, 1) == 86.1,
+          f"found {pooled.get('overall_agreement')}")
+    check("iaa: pooled CON kappa == 0.712 (regression guard)",
+          round(pooled.get("con_kappa", 0), 3) == 0.712, f"found {pooled.get('con_kappa')}")
+    r1 = iaa.get("round1", {})
+    check("iaa: round 1 unchanged at 85.0% (frozen prior work, never overwritten)",
+          round(r1.get("overall_agreement", 0) * 100, 1) == 85.0, f"found {r1.get('overall_agreement')}")
+else:
+    check("evaluation/iaa_summary.json exists", False,
+          "run scripts/score_iaa_rounds.py first")
+
 print("\n=== MANUSCRIPT ===")
 
 STALE_STRINGS = [
@@ -262,6 +280,14 @@ STALE_STRINGS = [
     "primary LLM-as-judge audit",  # mislabels the 874-item Gemini pilot as "the primary" audit
     "effective-size analysis",  # retired term; use "discriminative-coverage analysis"
     "discriminative size",  # malformed hybrid of the two competing terms
+    # --- IAA rounds 2-3 scored for real (scripts/score_iaa_rounds.py, cleanup item 8).
+    # These were premature/assumed numbers written before rounds 2-3 existed on disk.
+    "0.645",  # superseded pooled-180 CON kappa; real value is 0.712 (evaluation/iaa_summary.json)
+    "59.1\\%",  # superseded NUM IAA agreement (round-1-only estimate); real pooled value is 81.8%
+    # NOTE: "77.2%" (superseded pooled-180 overall IAA agreement) is deliberately NOT
+    # blocklisted as a bare string -- Qwen3-32B's real, correct NUM accuracy is coincidentally
+    # 77.2% and appears legitimately elsewhere (draft_05 main table, appendix few-shot table).
+    # "0.645" above is the reliable regression guard for this retirement.
 ]
 # "semantic scoring" was blocklisted outright, but it has a legitimate descriptive use
 # (contrasting it with strict scoring, e.g. in a novelty-framing sentence) -- the actual

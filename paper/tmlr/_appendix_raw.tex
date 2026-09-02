@@ -70,7 +70,7 @@ Because Gemini is itself one of the evaluated models and this pilot covered only
 
 \subsection{Root Causes}
 
-Three systematic causes, identified during the Gemini pilot and consistent with the phi4-mini overturn cases, account for the majority of strict-to-judge overturns: (1) \textit{Numeric format differences} --- models frequently use digits (`50\%', `365 days') while references use written numbers (`fifty per cent', `three hundred and sixty-five days'). (2) \textit{Verbose answers} --- models prefix the correct answer with calculation steps or regulatory citations. (3) \textit{Abbreviated answers} --- models give a shorter but correct version of the reference (e.g., ref = `Six months after completion of the open offer'; pred = `Six months').
+Reading a sample of overturned items during the Gemini pilot surfaces three recurring surface-form patterns. This is a qualitative description of what these items look like, not a quantified account of what predicts reclassification in general---Section~\ref{sec:regime} tests output length directly and finds no association that survives adjustment for task and model composition, so none of the three should be read as an established mechanism. (1) \textit{Numeric format differences} --- models frequently use digits (`50\%', `365 days') while references use written numbers (`fifty per cent', `three hundred and sixty-five days'). (2) \textit{Explanatory prefixes} --- models prepend calculation steps or regulatory citations before stating the final value. (3) \textit{Abbreviated answers} --- models give a shorter but correct version of the reference (e.g., ref = `Six months after completion of the open offer'; pred = `Six months').
 
 \subsection{Logging Truncation}
 \label{app:truncation}
@@ -212,7 +212,7 @@ DeepSeek-R1-Distill-Llama-70B & 72.5 & 77.5 & 75.0 \\
 Gemma 3 4B & 82.5 & 74.7 & 81.2 \\
 \bottomrule
 \end{tabular}
-\caption{Accuracy (\%) by difficulty level (full 406-item evaluation, strict pipeline). \textdagger{}Verbose-output scoring artifact; see Appendix~\ref{app:judge}.}
+\caption{Accuracy (\%) by difficulty level (full 406-item evaluation, strict pipeline). \textdagger{}Gemini 2.5 Pro's decline is a scoring-regime artifact, not a measured verbosity effect; see Appendix~\ref{app:judge} and Section~\ref{sec:regime}.}
 \label{tab:difficulty}
 \end{table}
 

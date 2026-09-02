@@ -34,8 +34,9 @@ pipeline. All twelve models evaluated on the full 406-item benchmark. 95\% Wilso
 \citep{wilson1927} confidence intervals shown for overall accuracy; these are descriptive item-level
 intervals, and pairwise significance is assessed separately with the document-clustered bootstrap
 robustness analysis (Appendix~\ref{app:provenance}). \textdagger{}Gemini 2.5 Pro
-evaluated via Vertex AI; lower NUM/TMP scores are a scoring artifact of its verbose output style
-(Section~\ref{sec:regime}). Judge-audited accuracies are in Section~\ref{sec:regime} and
+evaluated via Vertex AI; its lower NUM/TMP scores narrow sharply under either judge-involving
+regime (Section~\ref{sec:regime}), a scoring-rule effect rather than a measured verbosity
+mechanism. Judge-only and judge-augmented accuracies are in Section~\ref{sec:regime} and
 Appendix~\ref{app:judge}.}
 \label{tab:mainresults}
 \end{table*}
@@ -104,9 +105,9 @@ medium items more often turn on a single subtle qualifying clause---a property c
 \emph{ambiguity} than to \emph{reasoning depth}. A model with strong long-context tracking can find
 an explicit multi-step chain easier to follow than a terse single clause that hinges on one word. We
 flag this as a limitation of the annotation scheme (Section~\ref{sec:limitations}) rather than
-adjusting the labels post hoc, and note that it strengthens the case for the effective-size analysis
-in Section~\ref{sec:effsize}: nominal difficulty and empirical difficulty are visibly different
-quantities on this benchmark, in the same way nominal size and discriminative size are.
+adjusting the labels post hoc, and note that it strengthens the case for the discriminative-coverage
+analysis in Section~\ref{sec:effsize}: nominal difficulty and empirical difficulty are visibly different
+quantities on this benchmark, in the same way nominal size and discriminative coverage are.
 
 \subsection{A Human Reference Point}
 \label{sec:human}

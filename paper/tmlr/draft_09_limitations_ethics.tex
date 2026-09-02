@@ -13,8 +13,9 @@
 \label{sec:limitations}
 
 Several limitations should be noted. The automated four-stage scoring pipeline penalizes
-semantically correct predictions that differ in number format or verbosity; the primary LLM-as-judge
-audit (Appendix~\ref{app:judge}) reclassifies 78.4\% of flagged items as correct. None of strict,
+semantically correct predictions that differ in number format or surface phrasing; an early
+single-judge pilot (Gemini 2.5 Flash, 874 items, Appendix~\ref{app:judge}) reclassified 78.4\% of
+flagged items as correct. None of strict,
 judge-only, or judge-augmented scoring is ground truth: strict and the judge's own verdict have
 opposing error profiles, and a second, cross-model
 judge (Section~\ref{sec:judge}) only partially addresses this, since sharing no model family does not
@@ -34,7 +35,7 @@ The human reference study involves a single non-specialist evaluator on 60 mediu
 anchors the harder half of the benchmark but supports no population-level claims about human
 performance, and a domain specialist would likely score higher. The IAA study covers 180 of 406
 items (44.3\%) across three rounds with CON agreement stable at $\kappa$ = 0.645; agreement on
-open-ended tasks reflects the same verbosity artifact documented in Appendix~\ref{app:judge}.
+open-ended tasks reflects the same surface-form scoring sensitivity documented in Appendix~\ref{app:judge}.
 Few-shot evaluation was conducted on only four top-performing models (Appendix~\ref{app:fewshot}).
 
 One checkpoint identity rests on inference rather than a surviving primary record: Gemma's local

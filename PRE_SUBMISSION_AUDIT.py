@@ -253,6 +253,15 @@ STALE_STRINGS = [
     "exact identifier used for",  # F4: appendix table has no checkpoint strings for 9 of 12 models
     "80\\% threshold",  # F10: uncited "commonly used" benchmark-quality claim
     "share no threshold",  # F9: false -- p>=0.9 and p>0.90 are the same set on a 12-model panel
+    # --- 2026-09-02 source/PDF consistency cleanup (post-Phase-8, pre-Phase-2).
+    "mildly opposite",  # unsupported at p=0.48 (not significant) -- "show no positive rank correspondence"
+    "verbose output style",  # F2 doesn't survive adjustment -- no verbosity mechanism is established
+    "Verbose-output scoring artifact",  # same claim, table-footnote location
+    "verbosity artifact",  # same claim, IAA-agreement location
+    "Verbose answers",  # appendix "Root Causes" bullet asserting verbosity as a named mechanism
+    "primary LLM-as-judge audit",  # mislabels the 874-item Gemini pilot as "the primary" audit
+    "effective-size analysis",  # retired term; use "discriminative-coverage analysis"
+    "discriminative size",  # malformed hybrid of the two competing terms
 ]
 # "semantic scoring" was blocklisted outright, but it has a legitimate descriptive use
 # (contrasting it with strict scoring, e.g. in a novelty-framing sentence) -- the actual

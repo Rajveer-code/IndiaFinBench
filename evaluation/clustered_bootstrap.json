@@ -1,6 +1,6 @@
 {
-  "n_resamples": 10000,
-  "seed": 42,
+  "n_resamples": 100000,
+  "seed": 99999,
   "n_components": 27,
   "component_sizes": [
     68,
@@ -35,8 +35,8 @@
     "Gemini 2.5 Flash vs Qwen3-32B": {
       "acc_a": 89.7,
       "acc_b": 85.5,
-      "p_item_level": 0.0517,
-      "p_cluster": 0.06,
+      "p_item_level": 0.0508,
+      "p_cluster": 0.0602,
       "sig_item_level": false,
       "sig_cluster": false
     },
@@ -51,32 +51,32 @@
     "Llama 4 Scout 17B vs LLaMA-3.3-70B": {
       "acc_a": 83.3,
       "acc_b": 83.7,
-      "p_item_level": 0.7878,
-      "p_cluster": 0.8251,
+      "p_item_level": 0.7911,
+      "p_cluster": 0.8289,
       "sig_item_level": false,
       "sig_cluster": false
     },
     "GPT-OSS 120B vs GPT-OSS 20B": {
       "acc_a": 77.1,
       "acc_b": 76.8,
-      "p_item_level": 0.9037,
-      "p_cluster": 0.9355,
+      "p_item_level": 0.9091,
+      "p_cluster": 0.9336,
       "sig_item_level": false,
       "sig_cluster": false
     },
     "Gemma 3 4B vs DeepSeek R1 70B": {
       "acc_a": 78.8,
       "acc_b": 75.1,
-      "p_item_level": 0.1856,
-      "p_cluster": 0.4242,
+      "p_item_level": 0.1863,
+      "p_cluster": 0.4245,
       "sig_item_level": false,
       "sig_cluster": false
     },
     "Gemma 3 4B vs Mistral-7B": {
       "acc_a": 78.8,
       "acc_b": 75.9,
-      "p_item_level": 0.254,
-      "p_cluster": 0.4307,
+      "p_item_level": 0.2562,
+      "p_cluster": 0.4358,
       "sig_item_level": false,
       "sig_cluster": false
     }

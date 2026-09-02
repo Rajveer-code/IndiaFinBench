@@ -14,8 +14,9 @@
 
 Several limitations should be noted. The automated four-stage scoring pipeline penalizes
 semantically correct predictions that differ in number format or verbosity; the primary LLM-as-judge
-audit (Appendix~\ref{app:judge}) reclassifies 78.4\% of flagged items as correct. Neither strict nor
-judge-audited scoring is ground truth: they have opposing error profiles, and a second, cross-model
+audit (Appendix~\ref{app:judge}) reclassifies 78.4\% of flagged items as correct. None of strict,
+judge-only, or judge-augmented scoring is ground truth: strict and the judge's own verdict have
+opposing error profiles, and a second, cross-model
 judge (Section~\ref{sec:judge}) only partially addresses this, since sharing no model family does not
 rule out both judges sharing a bias human adjudicators would not. Human adjudication
 (Section~\ref{sec:judge}) confirms this concern is not hypothetical: on the 174 disputed items,

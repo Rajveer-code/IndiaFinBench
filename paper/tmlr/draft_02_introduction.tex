@@ -1,6 +1,7 @@
 % ---------------------------------------------------------------------------
 % DRAFT 2 — Introduction, TMLR rebuild
-% Spine: strict -> judge-audited -> discriminative -> human (canonical order).
+% Spine: strict + judge-only (primary regimes) -> judge-augmented (sensitivity regime,
+% illustrated via DeepSeek) -> discriminative coverage -> human (canonical order).
 % Repeated facts removed: the Llama-Scout/70B and GPT-OSS 120B/20B comparisons
 % now appear once, in Results, not here.
 % ---------------------------------------------------------------------------
@@ -23,10 +24,13 @@ compression to a third of its apparent spread, and an independent finding that r
 items carrying that leaderboard don't discriminate between the systems on it at all.
 
 The usual response is to treat such cases as noise---a small, uniform tax on every model that leaves
-rankings intact. We show that this assumption fails, and that it fails hardest for exactly the models
-whose output style diverges most from the reference format. Verbose outputs can therefore incur
-strict-scoring penalties even when the substantive answer is acceptable, and reasoning-oriented
-models that narrate their working are disproportionately exposed to this effect.
+rankings intact. We show that this assumption fails: strict and judge-based scoring diverge sharply
+for some models and barely at all for others. It is tempting to attribute this to output verbosity,
+and we tested that explanation directly rather than asserting it: once task type and model identity
+are accounted for, response length does not predict which strict failures a judge reclassifies
+(Section~\ref{sec:regime}). The disagreement is real and large enough to reorder the leaderboard; what
+drives it item by item is not yet established, and we report that as an open question rather than
+papering over it with an intuitive but untested mechanism.
 
 Testing this needs a domain less likely to be dominated by memorised recall, so that scoring effects
 are not confounded with familiarity. Indian financial regulation supplies
@@ -47,19 +51,21 @@ inter-annotator study (180 items, 44.3\% of the benchmark; $\kappa = 0.645$ on t
 contradiction task). The benchmark is the instrument for the measurement question, and we release
 it so the measurement can be repeated elsewhere.
 
-Evaluating twelve contemporary LLMs zero-shot under two scoring regimes produces the paper's central
-result. Under a strict four-stage string-matching pipeline, accuracy spans 75.12--89.66\%. Under a
-full-coverage cross-model judge audit (Section~\ref{sec:judge})---every REG/NUM/TMP prediction, not
-only the ones strict scoring flagged---accuracy spans 94.1--98.0\%. The two regimes do not merely
-shift scores; they reorder the leaderboard. DeepSeek-R1-Distill-Llama-70B (hereafter
-DeepSeek-R1-Distill) ranks 12th of twelve (last) under strict scoring and 1st under judge-audited
-scoring, because 93.9\% of its strict errors are reclassified as correct by the cross-model judge,
-primarily reflecting format differences.
-Across all twelve models the two rankings are essentially uncorrelated (Spearman $\rho = 0.067$,
-$p = 0.84$). A strict leaderboard, in other words, is a poor guide to which model reasons better---
-though it remains the right measurement if what you care about is deployment behaviour under a
-format-sensitive pipeline. Those are different questions, and accuracy alone does not distinguish
-them.
+Evaluating twelve contemporary LLMs zero-shot under a full-coverage cross-model judge audit
+(Section~\ref{sec:judge})---every REG/NUM/TMP prediction, not only the ones strict scoring
+flagged---produces the paper's central result. Scoring the same predictions under strict string
+matching (75.12--89.66\%) and under the judge's own verdict (87.19--95.32\%) ranks the field in
+mildly opposite directions: Spearman $\rho = -0.224$ ($p = 0.48$) across the twelve models, and no
+model holds its rank under both. A third, operational regime---strict-or-judge, accepting either
+verdict---compresses the field further (94.1--98.0\%) and produces a third ordering again; under it,
+DeepSeek-R1-Distill-Llama-70B (hereafter DeepSeek-R1-Distill), 12th of twelve under strict scoring,
+ties for 1st, because 93.9\% of its strict errors are reclassified as correct by the cross-model
+judge. That reversal illustrates how far a single asymmetric scoring choice can move a model, but
+the paper's core claim does not rest on it: strict scoring and the judge's own verdict already
+disagree enough, on their own, that neither is a reliable guide to which model reasons
+better---though strict scoring remains the right measurement if what you care about is deployment
+behaviour under a format-sensitive pipeline. Those are different questions, and accuracy alone does
+not distinguish them.
 
 A second measurement problem sits underneath the first. Counting items is not the same as counting
 evidence: 213 of the 406 items are answered correctly by at least 11 of the 12 models and therefore
@@ -68,10 +74,13 @@ signal. We report this for our own benchmark because it is the kind of quantity 
 generally do not report, and because effective size, not nominal size, determines how much a
 leaderboard difference can be trusted.
 
-Our contributions, in the order the paper reports them: (1) a two-regime evaluation of twelve LLMs
-showing that the scoring rule reorders the leaderboard rather than shifting it uniformly; (2) a
-characterisation of who pays the format tax, concentrated in models whose output style diverges from
-the reference; (3) an effective-size analysis distinguishing the 134 discriminating items from the
-213 that are not; (4) IndiaFinBench itself, with a validated annotation protocol and published
-agreement statistics; (5) a human reference point reported with its limits stated; and (6) full
-public release of the dataset, harness, per-item judge verdicts, and all model predictions.
+Our contributions, in the order the paper reports them: (1) a comparison of twelve LLMs under two
+primary scoring regimes and one operational composite, showing the primary regimes rank the field in
+mildly opposite directions and that no model holds its rank across all three; (2) a direct test, not
+an assumption, of whether output length explains which strict failures a judge reclassifies --- it
+does not survive adjustment for task and model composition, a negative result we report as such
+rather than the intuitive but untested mechanism it replaces; (3) a discriminative-coverage analysis
+distinguishing the 134 items that separate systems from the 213 that do not; (4) IndiaFinBench
+itself, with a validated annotation protocol and published agreement statistics; (5) a human
+reference point reported with its limits stated; and (6) full public release of the dataset, harness,
+per-item judge verdicts, and all model predictions.

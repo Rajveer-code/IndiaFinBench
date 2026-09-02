@@ -7,31 +7,38 @@
 
 \subsection{What a Single Accuracy Number Hides}
 
-The strict and judge-audited regimes rank the same twelve models on the same 406 items, and they
-disagree about the ordering. That disagreement is not noise to be averaged away; it is the
-measurement telling us that two distinct quantities have been collapsed into one. Strict accuracy
-measures what a format-sensitive pipeline can extract. Judge-audited accuracy measures what the model
-appears to know. For most models the two are close, which is why the conflation usually goes
-unnoticed. For a model that narrates its reasoning, they differ by twenty-three points and eleven ranks.
+Strict and judge-only rank the same twelve models on the same 406 items, and they disagree about the
+ordering in both directions, not just one. Gemini 2.5 Pro moves from 10th under strict scoring to
+3rd under the judge's own verdict (+18 points, 7 ranks). LLaMA-3.3-70B moves the other way, from 3rd
+to 11th (a 4.9-point gain that costs it 8 ranks, because every other model gained more). Gemini 2.5
+Flash's raw score is identical under both regimes (89.7\% either way) yet it still falls from 1st to
+10th, because the rest of the field moved past it. That disagreement is not noise to be averaged
+away; it is the measurement telling us that two distinct quantities have been collapsed into one.
+Strict accuracy measures what a format-sensitive pipeline can extract. The judge's verdict measures
+a second model's judgment of substantive correctness, which is its own imperfect measurement, not a
+ground truth the strict number falls short of.
 
 The practical consequence is that a leaderboard cannot be read without knowing which question it
 answers. If the intended use is an automated compliance pipeline that parses model output
-mechanically, the strict number is the relevant one and DeepSeek-R1-Distill really is a poor choice. If
-the question is which model reasons most reliably about Indian regulatory text, the strict number is
-actively misleading about that same model. Benchmarks that report one figure force the reader to
-guess which of these they are looking at.
+mechanically, the strict number is the relevant one. If the question is which model a second,
+independent-family model judges most likely to be substantively correct, the judge-only number is
+the relevant one, and for several models in this study the two rankings point in different
+directions. Benchmarks that report one figure force the reader to guess which of these they are
+looking at.
 
 We would not argue for replacing string matching with judge-based scoring. Judges have their own
 failure modes, and ours is no exception: the Gemini pilot's 28-item manual audit found every error
 running the same direction (Appendix~\ref{app:judge})---over-crediting a model that showed sound
-intermediate work but reached a wrong final answer. That bias inflates judge-audited scores for
-exactly the verbose, reasoning-heavy models that strict scoring penalises. The two regimes err in
-opposite directions, which is the argument for reporting both and treating the interval between them
-as the honest statement of what is known.
+intermediate work but reached a wrong final answer. Whether that bias systematically favours verbose
+or reasoning-heavy models specifically is a claim we tested rather than asserted (Section~\ref{sec:regime}),
+and it does not survive adjustment for task and model composition. What we can say is only that the
+two regimes disagree, sometimes sharply, in both directions, which is the argument for reporting
+both and treating the interval between them as the honest statement of what is known.
 
 \subsection{Scale Does Not Explain These Results}
 
-Of the 66 pairwise comparisons, 15 survive Bonferroni correction (Section~\ref{sec:significance}).
+Of the 66 pairwise comparisons, 15--16 survive Bonferroni correction, seed-sweep-verified
+(Section~\ref{sec:significance}).
 The surviving differences separate the top of the table from the bottom; the middle is largely
 undifferentiated, and two comparisons make the point sharply.
 
@@ -65,24 +72,28 @@ inversion is informative about what makes regulatory text hard.
 \label{sec:conclusion}
 
 Benchmark accuracy is reported as a property of a model. It is a property of a model and a scoring
-rule together, and on IndiaFinBench those two contributions are separable and large. Scoring twelve
-LLMs under strict string matching and under a full-coverage cross-model judge audit of every
-REG/NUM/TMP prediction produces two rankings that agree only weakly: the model placed last under strict scoring places
-first under judge-audited scoring, because 93.9\% of its strict errors are reclassified as correct
-by the cross-model judge, primarily reflecting format differences rather than incorrect reasoning. Neither regime is wrong. They answer different questions, and reporting
-one alone leaves the reader unable to tell which.
+rule together, and on IndiaFinBench that joint dependence is large enough to change which model looks
+best. Scoring twelve LLMs under strict string matching and under a full-coverage cross-model judge's
+own verdict, over the same predictions, produces two rankings with no positive correspondence
+(Spearman $\rho = -0.224$): some models score higher under the judge and rank higher, some score
+higher under the judge and rank \emph{lower} because the field moved past them, and one model's raw
+score does not move at all yet its rank falls by nine places. Applying the judge asymmetrically---to
+rescue strict failures but never to challenge strict successes---produces a third ranking again,
+under which the model placed last under strict scoring ties for first, because 93.9\% of its strict
+errors are reclassified as correct. Neither regime is wrong. They answer different questions, and
+reporting one alone leaves the reader unable to tell which.
 
 Underneath that, half the benchmark carries no discriminative signal: 213 of 406 items are answered
 correctly by at least 11 of the 12 models, leaving 134 that separate systems. Nominal size and
-effective size are different quantities, and the difference bounds how much weight any reported gap
-can carry.
+discriminative coverage are different quantities, and the difference bounds how much weight any
+reported gap can carry.
 
 IndiaFinBench is released in full---406 expert-annotated items over 34 of 192 collected SEBI and RBI documents,
-the evaluation harness, per-item judge verdicts, and all model predictions---so that both regimes
-can be reproduced and both claims contested. The context-only setup isolates inference over supplied
-regulatory passages from recall of memorised training text, although it cannot rule out training-data
-exposure to the underlying documents; the Indian regulatory setting makes this isolation meaningful
-because the source text is jurisdiction-specific and less likely to dominate pretraining corpora than
-US or European financial text. Whether these scoring-regime effects generalize beyond Indian
-financial regulation is an empirical question for future evaluations; our results motivate reporting
-both regimes on other benchmarks.
+the evaluation harness, per-item judge verdicts, and all model predictions---so that all three
+regimes can be reproduced and any of their claims contested. The context-only setup isolates
+inference over supplied regulatory passages from recall of memorised training text, although it
+cannot rule out training-data exposure to the underlying documents; the Indian regulatory setting
+makes this isolation meaningful because the source text is jurisdiction-specific and less likely to
+dominate pretraining corpora than US or European financial text. Whether this degree of
+scoring-regime sensitivity generalizes beyond Indian financial regulation is an empirical question
+for future evaluations; our results motivate reporting more than one regime on other benchmarks.

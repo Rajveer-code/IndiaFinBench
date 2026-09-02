@@ -215,12 +215,18 @@ comma separators, and units); and (4) Yes/No match for contradiction detection, 
 leading word of the prediction to the reference. We refer to accuracy under this procedure as
 \textbf{strict} accuracy throughout.
 
-Section~\ref{sec:regime} evaluates a second, \textbf{judge-audited} regime over the same
-predictions: a cross-model judge (Section~\ref{sec:judge}) reviews every prediction on REG, NUM, and
-TMP---not only the ones strict scoring marks wrong---and returns a judge verdict. We use
-``judge-audited,'' not ``corrected'' or ``semantic,'' throughout: the judge is itself an imperfect
-measurement (Section~\ref{sec:judge} reports its own error rate against human adjudication), not a
-ground truth that strict scoring falls short of.
+Section~\ref{sec:regime} evaluates the same predictions under two further regimes, built from a
+cross-model judge (Section~\ref{sec:judge}) that reviews every prediction on REG, NUM, and TMP---not
+only the ones strict scoring marks wrong: \textbf{judge-only}, in which the judge's verdict is final
+in both directions, and \textbf{judge-augmented}, the asymmetric composite strict-OR-judge (a
+strict-correct answer counts even if the judge disputes it; a strict-wrong answer counts if the judge
+accepts it). Judge-only and strict are the paper's two primary regimes; judge-augmented is an
+operational sensitivity regime, included to quantify what happens when a judge is applied only to
+overturn strict failures and never to reject strict-correct ones, not because we consider it
+authoritative. We avoid ``corrected,'' ``semantic,'' or unqualified ``judge-audited'' throughout:
+the judge is itself an imperfect measurement (Section~\ref{sec:judge} reports its own error rate
+against human adjudication), not a ground truth that strict scoring falls short of, and each of the
+three regimes needs its own name because they can and do disagree.
 
 DeepSeek-R1-Distill-Llama-70B was accessed via OpenRouter through an endpoint that returns final
 answers without exposed reasoning traces; its stored predictions contain no chain-of-thought markup,

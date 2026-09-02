@@ -56,7 +56,8 @@ across the resampling unit boundary. This produced \textbf{27} connected compone
 46, 41, 41, 35, 20, 13, 12, 11, 11, 10, 9, 7, 6, 4, 4, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1); four are singleton
 documents that appear in no contradiction pair.
 
-We re-ran paired-bootstrap significance testing (10,000 resamples) at the document-cluster level for
+We re-ran paired-bootstrap significance testing (100,000 resamples, stable across 5 seeds --
+scripts/bootstrap\_seed\_sweep.py) at the document-cluster level for
 \textbf{all 66 pairwise comparisons}, plus the human-reference comparison separately: resampling
 clusters with replacement, and including every item in each drawn cluster's data, rather than
 resampling items directly. Table~\ref{tab:clustered} reports the seven comparisons discussed in the

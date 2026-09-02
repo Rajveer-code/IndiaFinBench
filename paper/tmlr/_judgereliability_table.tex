@@ -2,7 +2,7 @@
 \centering\small
 \begin{tabular}{lrrr}
 \toprule
-Model & Overturn \% & Rejection \% & 406-item judge-audited acc. \\
+Model & Overturn \% & Rejection \% & 406-item judge-augmented acc. \\
 \midrule
 Gemini 2.5 Flash & 80.0 & 9.1 & 96.5 \\
 Qwen3-32B & 88.7 & 6.2 & 97.0 \\
@@ -22,6 +22,9 @@ DeepSeek-R1-Distill & 93.9 & 9.4 & 98.0 \\
 each). Overturn \% is the strict-to-judge overturn rate (strict-wrong items the judge marks
 correct); Rejection \% is the judge's rejection rate of strict-correct predictions. Neither is a
 false-negative/false-positive rate against ground truth---phi4-mini is not treated as one (see
-Section~\ref{sec:judge}). Final column is 406-item accuracy including CON.}
+Section~\ref{sec:judge}). Final column is 406-item accuracy including CON, under the
+judge-augmented (strict-OR-judge) regime; Appendix~\ref{app:regimetable} reports the same models'
+406-item accuracy under the judge-only regime, where the judge's verdict is final in both
+directions.}
 \label{tab:judgereliability}
 \end{table}

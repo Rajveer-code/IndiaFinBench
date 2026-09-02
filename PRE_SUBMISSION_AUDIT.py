@@ -245,9 +245,9 @@ STALE_STRINGS = [
     # --- Plan v3 (2026-09-02) retirements. These are EXPECTED to fail until Phase 1-4 land;
     # that is the point -- this blocklist is what makes "Phase 1 done" checkable rather than
     # a matter of opinion. See paper/tmlr/../../../../.claude/plans/... Plan v3 Section 1 (F1-F10).
-    "judge-audited accuracy",  # F1: "judge-audited" retired -- ambiguous between judge-only and
-    # judge-augmented (strict OR judge), which the paper never previously disclosed as a union.
-    # Use "judge-only accuracy" or "judge-augmented accuracy" explicitly instead.
+    # "judge-audited accuracy" (narrow substring) checked here originally; replaced by a regex in
+    # STALE_PATTERNS below because that narrow form silently missed "judge-audited scoring/regime/
+    # scores" -- 5 real instances survived a first pass and were only caught by a manual grep.
     "identical prompting and decoding",  # F3: false -- budgets are 200/300/512/1024/2048/unset
     "completion budget shared by every model",  # F3: same false claim, second location
     "exact identifier used for",  # F4: appendix table has no checkpoint strings for 9 of 12 models
@@ -265,6 +265,15 @@ STALE_PATTERNS = [
     # via a negative lookahead rather than trying to match the bad case directly.
     (r"\bitems?\s+.{0,15}?(?:drawn from|span(?:ning)?)\s+(?!34\b)192\b",
      "items drawn from/span 192 without the '34 of' correction (false -- should be 34)"),
+    # F1: "judge-audited" is retired -- ambiguous between judge-only (verdict final, both
+    # directions) and judge-augmented (strict OR judge, a one-directional composite the paper
+    # never previously disclosed as such). The one legitimate remaining use is the terminology
+    # rule itself stating the word is avoided, always rendered as the quoted meta-reference
+    # ``judge-audited'' (closing quote immediately after, no intervening noun) -- exclude only
+    # that exact form. A narrow substring check ("judge-audited accuracy") missed "judge-audited
+    # scoring/regime/scores" and let 5 real instances survive a first pass; catch the general form.
+    (r"judge-audited(?!'')", "'judge-audited' used outside its own quoted terminology-rule mention "
+     "-- use 'judge-only' or 'judge-augmented' explicitly"),
 ]
 
 main_tex = SUB_DIR / "main.tex"

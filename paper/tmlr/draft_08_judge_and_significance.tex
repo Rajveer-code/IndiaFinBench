@@ -10,8 +10,8 @@
 \label{sec:judge}
 
 An LLM-as-judge audit is only as convincing as the judge's independence from what it is judging.
-The item-level judge used to compute judge-audited accuracy is Gemini 2.5 Flash---one of the twelve
-evaluated models. To assess whether this affects the audit, we additionally judge every REG/NUM/TMP
+The judge used in our initial pilot (Appendix~\ref{app:judge}) was Gemini 2.5 Flash---one of the
+twelve evaluated models. To assess whether this affects the audit, we additionally judge every REG/NUM/TMP
 prediction with \textbf{phi4-mini} (Microsoft Phi, 3.8B parameters), run locally via Ollama at zero
 cost. Phi shares no model family with any of the twelve benchmarked systems. We call this a
 \textbf{cross-model} judge, not an independent or ground-truth one: phi4-mini is a small model, and
@@ -39,7 +39,9 @@ answer remained incorrect.
 Table~\ref{tab:judgereliability} reports, for every model, the strict-to-judge overturn rate (items
 strict scoring marked wrong that phi4-mini marks correct), the judge rejection rate of strict-correct
 predictions (the reverse---estimable for the first time because this pass covers every item, not
-only strict failures), and the resulting 406-item judge-audited accuracy. We avoid ``false
+only strict failures), and the resulting 406-item judge-augmented accuracy (Appendix~\ref{app:regimetable}
+also reports the judge-only figure for every model, where the judge's verdict is taken as final
+rather than only ever overturning). We avoid ``false
 negative''/``false positive'' here: those terms presuppose the judge is ground truth, which it is
 not (Section~\ref{sec:judge} reports its own error rate against human adjudication). On the 874 items Gemini 2.5 Flash
 originally judged, phi4-mini agrees with it on 703 (\textbf{80.4\% raw agreement}). This is neither
@@ -62,31 +64,41 @@ argue against using it as this paper's primary judge: that choice rests on full 
 on a claim that phi4-mini is more accurate than Gemini. Section~\ref{sec:limitations} returns to this
 as a limitation of the cross-model judge design.
 
-\textbf{Decision rule, stated before the results were examined.} If the cross-model judge supports
-DeepSeek-R1-Distill's strict-12th-to-judge-audited-1st reversal (Section~\ref{sec:regime}), we report it
-as the paper's central finding. If it does not, we report the discrepancy plainly and the paper's
-central finding becomes the effective-size result (Section~\ref{sec:effsize}) instead. We commit to
-this rule here, before running the full pass, specifically so that the choice of headline result is
-not made after seeing which one looks better.
+\textbf{Decision rule, stated before the results were examined, and an ambiguity it did not
+anticipate.} We committed, before running the full pass, to a rule: if the cross-model judge
+supports DeepSeek-R1-Distill's strict-to-top reversal, report it as a central finding; if not, report
+the discrepancy plainly and let the discriminative-coverage result (Section~\ref{sec:effsize}) carry
+more of the paper's weight instead. The rule as written presupposed a single judge regime. It was not:
+the judge-augmented regime (Section~\ref{sec:regime}) satisfies it exactly---DeepSeek ties for 1st---
+while the judge-only regime, where the same judge's verdict is taken as final rather than only ever
+overturning strict failures, does not---DeepSeek ranks 9th of twelve there. We report both rather than
+choosing the reading the original rule anticipated: the reversal is real under judge-augmented
+scoring and is itself evidence for this paper's actual thesis, that the scoring rule---not only
+strict-versus-judge, but which of two defensible ways of applying a judge---materially changes the
+answer. Discriminative coverage (Section~\ref{sec:effsize}) is reported as a coequal finding, not a
+fallback triggered by the gate's failure.
 
-\textbf{What survives the judge audit.} Classifying every strict failure into four error types
-(domain-knowledge, numerical, temporal, or context-grounding; Appendix~\ref{sec:errortax-sub}) shows
-the reclassification is uneven, not uniform. Temporal-supersession failures dominate every profiled
-model's residual, judge-retained errors (50--62\%), while numerical and domain-knowledge format
-mismatches are cleared consistently. DeepSeek-R1-Distill's 101 strict failures collapse to 8
-residual---the largest correction of any model and the basis for its rank reversal---while Gemma
-3~4B, despite a comparable 72.1\% reclassification rate, keeps a residual error rate 1.7--3$\times$
-every other profiled model's. Appendix~\ref{sec:errortax-sub} reports the full per-model breakdown
+\textbf{What survives the judge audit.} Attributing every strict failure to a task-conditioned
+category (domain-knowledge, numerical, temporal, or context-grounding; Appendix~\ref{sec:errortax-sub})
+shows the reclassification is uneven across models, not uniform. DeepSeek-R1-Distill's 101 strict
+failures collapse to 8 residual---the largest correction of any model and the basis for its
+judge-augmented reversal---while Gemma 3~4B, despite a comparable 72.1\% reclassification rate,
+keeps a residual error rate 1.7--3$\times$ every other profiled model's. Appendix~\ref{sec:errortax-sub}
+reports the full per-model breakdown
 and representative failure examples.
 
 \subsection{Statistical Significance and Performance Tiers}
 \label{sec:significance}
 
-Paired bootstrap significance testing (10,000 resamples) across all 66 model pairs finds 36 pairs
-significantly different at $p < 0.05$, of which 15 survive Bonferroni correction
-($\alpha = 0.05/66 \approx 0.00076$). Three descriptive performance clusters organize the results
-under strict scoring; their boundaries are robust at the top and bottom of the ranking but
-statistical, not categorical, in the middle.
+Paired bootstrap significance testing (100,000 resamples, verified stable across 5 independent
+seeds) across all 66 model pairs finds 36 pairs significantly different at $p < 0.05$, of which
+15--16 survive Bonferroni correction ($\alpha = 0.05/66 \approx 0.00076$): the count is 16 under 4
+of 5 seeds and 15 under the fifth, because one pair (DeepSeek-R1-Distill vs.\ Llama 4 Scout 17B) sits
+within Monte Carlo noise of the threshold itself ($p \approx 0.0007$--$0.0008$ across seeds). We
+report the range rather than a single seed's count, since a point estimate here would understate how
+close that one comparison sits to the correction boundary. Three descriptive performance clusters
+organize the results under strict scoring; their boundaries are robust at the top and bottom of the
+ranking but statistical, not categorical, in the middle.
 
 \textbf{Tier 1 --- strong performers (81.5--89.7\%):} Gemini 2.5 Flash, Qwen3-32B, LLaMA-3.3-70B,
 Llama 4 Scout 17B, and Kimi K2, all four of the latter statistically indistinguishable from one

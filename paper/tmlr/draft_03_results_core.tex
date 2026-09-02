@@ -8,62 +8,79 @@
 
 \section{The Scoring Regime Reorders the Leaderboard}
 \label{sec:regime}
+\label{sec:budget}
 
-Every model was scored twice over identical predictions. The strict regime is the four-stage
-string-matching pipeline of Section~\ref{sec:scoring}. The judge-audited regime submits every
+Every model was scored three times over identical predictions. The \textbf{strict} regime is the
+four-stage string-matching pipeline of Section~\ref{sec:scoring}. The \textbf{judge-only} regime
+takes the verdict of a cross-model judge (phi4-mini, Section~\ref{sec:judge}, sharing no model
+family with any of the twelve evaluated systems) as final, in both directions, on every
 regulatory-interpretation, numerical-reasoning, and temporal-reasoning prediction---not only the
-ones strict scoring marked wrong---to a cross-model judge (phi4-mini, Section~\ref{sec:judge}) that
-shares no model family with any of the twelve evaluated systems, and returns a verdict with a
-one-sentence rationale. Contradiction-detection items use exact Yes/No matching and need no semantic
-review.
+ones strict scoring marked wrong. The \textbf{judge-augmented} regime instead takes
+strict-OR-judge: a strict-correct answer counts even if the judge disputes it, and a strict-wrong
+answer counts if the judge accepts it. Strict and judge-only are this paper's two primary regimes;
+judge-augmented is an operational sensitivity regime, included because a practitioner who applies a
+judge only to rescue strict failures---never to challenge strict successes---is applying exactly
+this asymmetric rule, not because we consider it authoritative. Contradiction-detection items use
+exact Yes/No matching in all three regimes and need no judge review.
 
-Nothing about the models changed between the two regimes. Only the rule changed.
+Nothing about the models changed between regimes. Only the rule changed.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.86\linewidth]{figures/figure_regime_shift.png}
-\caption{Model rank under strict string matching (left) and under the item-level judge audit
-(right), over identical predictions. Coloured lines move by two or more positions. DeepSeek-R1-Distill
-(red) moves from 12th to 1st. Tied scores share a rank.}
+\includegraphics[width=0.95\linewidth]{figures/figure_regime_shift.png}
+\caption{Model rank under strict string matching (left), the judge's own verdict (centre), and the
+judge-augmented composite (right), over identical predictions. The centre column is this paper's
+second primary regime; the right column is a sensitivity regime, shown in a lighter tone. Coloured
+lines move by two or more positions between strict and judge-only. Tied scores share a rank.}
 \label{fig:regime}
 \end{figure}
 
-% INTERIM (Plan v3 Phase 0) -- see Phase 4.2 for the real rewrite of this section.
 Appendix~\ref{app:regimetable} tabulates exact accuracy and rank for all twelve models under all
-three scoring regimes; the discussion below states the comparisons that matter.
+three regimes; the discussion below states the comparisons that matter.
 
-The regimes disagree about who is best. Strict accuracy spans 75.12--89.66\%, judge-audited accuracy
-94.1--98.0\%, and the two orderings are essentially uncorrelated: Spearman $\rho = 0.067$
-($p = 0.84$), Kendall $\tau = 0.064$ ($p = 0.78$). With twelve models these tests have little power,
-so we do not claim the rankings are independent in a strict statistical sense---we claim the strict
-ranking is a poor predictor of the judge-audited one, which Figure~\ref{fig:regime} and
-Table~\ref{tab:regime} show directly. Eleven of the twelve models move by two or more positions under
-competition ranking (ties share the better rank).
+\textbf{Strict and judge-only rank the field in mildly opposite directions.} Strict accuracy spans
+75.12--89.66\%; judge-only accuracy spans 87.19--95.32\%, with a different leader (Llama 4 Scout 17B)
+and a different trailer (Gemma 3 4B) than strict scoring's (Gemini 2.5 Flash, DeepSeek-R1-Distill).
+Across the twelve models, Spearman $\rho = -0.224$ ($p = 0.48$), Kendall $\tau = -0.061$ ($p = 0.84$).
+With twelve models these tests have little power, so we do not claim the rankings are negatively
+correlated in a strict statistical sense---we claim they show no positive correspondence, which
+Figure~\ref{fig:regime} and Appendix~\ref{app:regimetable} show directly: no model holds the same
+rank under both. Neither regime is more correct than the other; each answers a different question
+(exact reproduction of a reference format, versus a second model's judgment of substantive
+correctness), and a benchmark that reports only one has silently chosen which question to answer.
+
+\textbf{The judge-augmented sensitivity regime illustrates how far a single asymmetric choice can
+move a model.} Under strict-OR-judge, DeepSeek-R1-Distill---12th of twelve, last place, under
+strict scoring---reaches an exact tie for 1st with LLaMA-3.3-70B (both 398/406, 98.0\%). Of its 99
+strict errors on REG/NUM/TMP, 93 are reclassified as correct by the cross-model judge---93.9\%---
+leaving 6 residual failures, the fewest of any model in the study. Under the judge's own verdict
+alone (judge-only, not augmented), DeepSeek-R1-Distill ranks 9th of twelve (92.4\%): the judge
+recovers most of its strict failures but also disputes some of its strict successes, and the
+augmented regime's asymmetric rule---rescue but never reject---is what produces the 1st-place tie.
+We report this as what it is: a real, measured consequence of one specific, defensible-but-partial
+way of combining two scores, not evidence that DeepSeek-R1-Distill's regulatory reasoning is
+best-in-field. Its strict score is a measurement under a particular operational
+definition---exact and near-exact string match against a reference format---not a direct measurement
+of its regulatory reasoning; under that definition its output sits far from the reference, and the
+model narrates its working where the system prompt asked for an answer with no preamble. We tested,
+rather than assumed, whether output length itself explains which strict failures get reclassified
+(Section~\ref{sec:discussion}); it does not survive adjustment for task and model composition, so we
+do not claim narration or verbosity as the mechanism---only that the judge and strict scoring
+disagree on this model's output more than on any other's, for reasons this paper's evidence does not
+fully resolve.
 
 A second effect is visible in the accuracies rather than the ranks. The full field spans 14.5 points
-under strict scoring (75.12--89.66) and just 3.9 points under judge-audited scoring (94.1--98.0).
-Judge auditing compresses the field to under a third of its apparent spread. A substantial portion
-of what a strict leaderboard displays as a capability gap between mid-table models is attributable
-to format-sensitive scoring rather than reasoning differences, under our judge-audited analysis.
-
-The clearest case is DeepSeek-R1-Distill, which ranks 12th of twelve---last place---under strict
-scoring and reaches an exact tie for 1st with LLaMA-3.3-70B under judge-audited scoring (both
-398/406, 98.0\%). Of its 99 strict errors on REG/NUM/TMP, 93 are reclassified as correct by the
-cross-model judge---93.9\%---leaving 6 residual failures, the fewest of any model in the study. Its
-strict score is a measurement under a particular operational definition---exact and near-exact
-string match against a reference format---not a direct measurement of its regulatory reasoning.
-Under that definition its output sits far from the reference, primarily because the model narrates
-its working. The
-system prompt asked for an answer with no preamble; a model whose signature behaviour is visible
-reasoning is penalised for exactly that behaviour, under a rule that cannot tell narration from
-error.
+under strict scoring (75.12--89.66) and just 3.9 points under judge-augmented scoring (94.1--98.0);
+judge-only compresses it to 8.1 points (87.19--95.32). Compression under either judge-involving
+regime is real, but the size of the effect depends on which one: judge-augmented's asymmetric rule
+compresses roughly twice as much as judge-only's symmetric one, because it can only ever move scores
+upward.
 
 This has a practical reading that is not a criticism of string matching. A compliance workflow that
-consumes model output through a format-sensitive parser really would fail on those 93 items, and
-for that deployment question the strict number is the honest one. What the strict number cannot do
-is answer the capability question, and the two are routinely reported as if they were the same
-quantity. A leaderboard that reports one accuracy figure has silently chosen which question to
-answer, without saying so.
+consumes model output through a format-sensitive parser really would fail on DeepSeek-R1-Distill's
+93 reclassified items, and for that deployment question the strict number is the honest one. What
+the strict number cannot do is answer which model reasons best about the underlying regulatory
+content, and the two questions are routinely reported as if they were the same quantity.
 
 \section{Discriminative Coverage: How Many Items Actually Discriminate}
 \label{sec:effsize}

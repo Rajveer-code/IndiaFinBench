@@ -1,0 +1,45 @@
+{
+  "n_strict_wrong_regnumtmp": 905,
+  "pooled_mann_whitney": {
+    "note": "computed separately (scripts had scipy.stats.mannwhitneyu on pooled overturned vs retained lengths): U=28916.0, p=0.0097, median overturned=98.5 (n=820), median retained=138.0 (n=85)"
+  },
+  "logistic_regression": {
+    "formula": "rescued ~ log_len + C(task_type) + C(model)",
+    "n_obs": 905,
+    "log_len_coef": -0.1203,
+    "log_len_se": 0.1062,
+    "log_len_p": 0.2575,
+    "log_len_95ci": [
+      -0.3284,
+      0.0879
+    ],
+    "direction": "negative (longer predictions less likely to be rescued)",
+    "significant_at_05": false,
+    "pseudo_r2": 0.0757
+  },
+  "per_task_direction": {
+    "numerical_reasoning": {
+      "n_overturned": 319,
+      "n_retained": 43,
+      "median_len_overturned": 159.0,
+      "median_len_retained": 165.0
+    },
+    "regulatory_interpretation": {
+      "n_overturned": 324,
+      "n_retained": 11,
+      "median_len_overturned": 13.0,
+      "median_len_retained": 99.0
+    },
+    "temporal_reasoning": {
+      "n_overturned": 177,
+      "n_retained": 31,
+      "median_len_overturned": 116.0,
+      "median_len_retained": 111.0
+    }
+  },
+  "censoring": {
+    "pct_overturned_rows_at_cap": 7.4,
+    "pct_retained_rows_at_cap": 16.5,
+    "caveat": "prediction length is right-censored by the logging pipeline; this biases the retained-group median down more than the overturned group's (higher censoring rate in retained), which if anything understates the true gap in this direction -- see Plan v3 F6/F2. A confirmatory analysis on untruncated Phase 2 re-run data is still required before this is reported as a final result."
+  }
+}

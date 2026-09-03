@@ -11,9 +11,15 @@ and evaluate_v7_models.py (Plan v3 F3 table) -- does not reimplement scoring or
 prompt construction, only adds budget parameterisation and finish-reason logging,
 which none of the original callers have.
 
-Gemini 2.5 Flash / Gemini 2.5 Pro are excluded: no GEMINI_API_KEY / GOOGLE_API_KEY
-or Vertex ADC credentials are available in this environment. Reported, not silently
-skipped -- see the summary printed at the end.
+2026-09-03 update: fresh Groq/OpenRouter/Gemini keys supplied. Groq deprecated 4 of the
+6 models this benchmark originally used there (llama-3.3-70b-versatile, Llama 4 Scout,
+Qwen3-32B, Kimi K2 all 404 now -- confirmed via a live models.list() call, only the two
+GPT-OSS models survive on Groq); moved those 4 to OpenRouter, where their open-weight
+checkpoints are still hosted (verified live). Qwen3-32B on OpenRouter's default route
+(Nebius) answers in thinking mode by default, which burns the budget on invisible
+reasoning tokens before any visible answer -- suppressed via the documented "/no_think"
+directive, matching the original benchmark's direct-answer, no-preamble system prompt.
+Gemini 2.5 Flash/Pro added via Google AI Studio (google-genai SDK).
 
 Usage:
   python scripts/matched_budget_pilot.py                 # run the pilot (resumable)
@@ -22,6 +28,11 @@ Usage:
 
 import json, os, re, time, random, argparse, sys, io
 from pathlib import Path
+
+import truststore
+truststore.inject_into_ssl()  # Avast's HTTPS-scanning AV intercepts TLS otherwise (documented
+# earlier in this project); without this, Groq/OpenRouter/Gemini calls fail with a raw
+# "Connection error" (SSL: CERTIFICATE_VERIFY_FAILED) that looks like a network/key problem.
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", line_buffering=True)
 
@@ -43,29 +54,37 @@ if _env_path.exists():
 
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEYS", os.environ.get("GOOGLE_API_KEY", "")).split(",")[0].strip()
 
 SYSTEM_PROMPT = """You are an expert in Indian financial regulation and policy.
 Answer questions using ONLY the provided context passage.
 Do not use any external knowledge.
 Be concise and precise. Give only the answer — no preamble."""
 
-# model_id / provider pairs verified against evaluate.py, evaluate_new_models.py,
-# evaluate_v7_models.py -- see Plan v3 F3 table. Gemini 2.5 Flash/Pro omitted (no creds).
+# model_id / provider pairs verified live 2026-09-03. Groq's own models.list() no longer
+# includes llama-3.3-70b-versatile / llama-4-scout / qwen3-32b / kimi-k2-instruct -- moved
+# to OpenRouter, confirmed reachable there under these exact IDs. Qwen3-32B gets a
+# prompt_suffix to suppress OpenRouter/Nebius's default thinking mode (see module docstring).
 MODELS = {
     "LLaMA-3-8B":          {"provider": "ollama",     "model_id": "llama3"},
     "Mistral-7B":          {"provider": "ollama",     "model_id": "mistral"},
     "Gemma 3 4B":          {"provider": "ollama",     "model_id": "gemma3:4b"},
-    "LLaMA-3.3-70B":       {"provider": "groq",       "model_id": "llama-3.3-70b-versatile"},
-    "Llama 4 Scout 17B":   {"provider": "groq",       "model_id": "meta-llama/llama-4-scout-17b-16e-instruct"},
-    "Qwen3-32B":           {"provider": "groq",       "model_id": "qwen/qwen3-32b"},
     "GPT-OSS 120B":        {"provider": "groq",       "model_id": "openai/gpt-oss-120b"},
     "GPT-OSS 20B":         {"provider": "groq",       "model_id": "openai/gpt-oss-20b"},
-    "Kimi K2":             {"provider": "groq",       "model_id": "moonshotai/kimi-k2-instruct"},
     "DeepSeek-R1-Distill": {"provider": "openrouter", "model_id": "deepseek/deepseek-r1-distill-llama-70b"},
+    "LLaMA-3.3-70B":       {"provider": "openrouter", "model_id": "meta-llama/llama-3.3-70b-instruct"},
+    "Llama 4 Scout 17B":   {"provider": "openrouter", "model_id": "meta-llama/llama-4-scout"},
+    "Kimi K2":             {"provider": "openrouter", "model_id": "moonshotai/kimi-k2"},
+    "Qwen3-32B":           {"provider": "openrouter", "model_id": "qwen/qwen3-32b", "prompt_suffix": " /no_think"},
+    "Gemini 2.5 Flash":    {"provider": "gemini",     "model_id": "gemini-2.5-flash"},
 }
+# Gemini 2.5 Pro: confirmed unreachable with this fresh key -- live API error is explicit:
+# "This model models/gemini-2.5-pro is no longer available to new users. Please update your
+# code to use models/gemini-3.1-pro-preview." A different model generation is not a matched
+# re-run of the same checkpoint, so it is excluded rather than substituted.
 EXCLUDED = {
-    "Gemini 2.5 Flash": "no GEMINI_API_KEY / GOOGLE_API_KEY in this environment",
-    "Gemini 2.5 Pro":   "no Vertex AI ADC credentials in this environment",
+    "Gemini 2.5 Pro": "no longer available to new AI Studio API keys (platform restriction, "
+                       "confirmed via live 404 from the Gemini API itself, not a credentials problem)",
 }
 
 
@@ -181,7 +200,41 @@ def call_ollama(model_id: str, prompt: str, budget: int) -> dict:
         return {"text": "", "finish_reason": None, "completion_tokens": None, "error": str(e)[:200]}
 
 
-CALLERS = {"groq": call_groq, "openrouter": call_openrouter, "ollama": call_ollama}
+def call_gemini(model_id: str, prompt: str, budget: int) -> dict:
+    if not GEMINI_API_KEY:
+        return {"text": "", "finish_reason": None, "completion_tokens": None, "error": "GEMINI_API_KEYS/GOOGLE_API_KEY not set"}
+    from google import genai
+    for attempt in range(5):
+        try:
+            client = genai.Client(api_key=GEMINI_API_KEY)
+            resp = client.models.generate_content(
+                model=model_id,
+                contents=f"{SYSTEM_PROMPT}\n\n{prompt}",
+                config={
+                    "temperature": 0.0,
+                    "max_output_tokens": budget,
+                    "thinking_config": {"thinking_budget": 0},
+                },
+            )
+            cand = resp.candidates[0] if resp.candidates else None
+            usage = getattr(resp, "usage_metadata", None)
+            return {
+                "text": (resp.text or "").strip() if resp.text else "",
+                "finish_reason": getattr(cand, "finish_reason", None).name if cand and getattr(cand, "finish_reason", None) else None,
+                "completion_tokens": getattr(usage, "candidates_token_count", None) if usage else None,
+                "error": None,
+            }
+        except Exception as e:
+            err = str(e)
+            if "429" in err or "quota" in err.lower() or "rate" in err.lower() or "exhausted" in err.lower():
+                wait = min(2 ** attempt * 10, 90)
+                time.sleep(wait)
+                continue
+            return {"text": "", "finish_reason": None, "completion_tokens": None, "error": err[:200]}
+    return {"text": "", "finish_reason": None, "completion_tokens": None, "error": "retries exhausted"}
+
+
+CALLERS = {"groq": call_groq, "openrouter": call_openrouter, "ollama": call_ollama, "gemini": call_gemini}
 
 
 def is_truncated(result: dict, budget: int) -> bool:
@@ -204,10 +257,15 @@ def run_pilot():
     results = []
     if OUT_PATH.exists():
         results = json.loads(OUT_PATH.read_text(encoding="utf-8")).get("runs", [])
+    # Errored rows do NOT count as done -- a resume should retry them, not freeze a transient
+    # failure into the record forever. Drop them from both the in-memory results and done_keys.
+    results = [r for r in results if not r.get("error")]
     done_keys = {(r["model"], r["item_id"], r["budget"]) for r in results}
 
     total = len(MODELS) * len(sample) * len(BUDGETS)
     done_n = len(done_keys)
+
+    delay_map = {"ollama": 0.2, "groq": 1.5, "openrouter": 2.0, "gemini": 4.5}
 
     for model_label, cfg in MODELS.items():
         caller = CALLERS[cfg["provider"]]
@@ -216,7 +274,7 @@ def run_pilot():
                 key = (model_label, item["id"], budget)
                 if key in done_keys:
                     continue
-                prompt = build_prompt(item)
+                prompt = build_prompt(item) + cfg.get("prompt_suffix", "")
                 out = caller(cfg["model_id"], prompt, budget)
                 row = {
                     "model": model_label, "provider": cfg["provider"], "item_id": item["id"],
@@ -234,7 +292,7 @@ def run_pilot():
                 print(f"  [{done_n:4d}/{total}] {model_label:<20} budget={budget:<5} {item['id']:<10} {status}")
                 if done_n % 15 == 0:
                     OUT_PATH.write_text(json.dumps({"runs": results}, indent=2), encoding="utf-8")
-                time.sleep(1.5 if cfg["provider"] != "ollama" else 0.2)
+                time.sleep(delay_map.get(cfg["provider"], 2.0))
 
     OUT_PATH.write_text(json.dumps({"runs": results}, indent=2), encoding="utf-8")
     print(f"\nSaved {len(results)} runs -> {OUT_PATH}")

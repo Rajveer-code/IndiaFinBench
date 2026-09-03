@@ -149,7 +149,12 @@ an Intel i7-13650HX CPU with an NVIDIA RTX 4060 GPU (8~GB VRAM) via the Ollama R
 resolved to the \texttt{llama3:8b} and \texttt{mistral:7b} weights via a local \texttt{:latest}
 alias; the released result files separately record these as
 \texttt{meta-llama/Meta-Llama-3-8B-Instruct} and \texttt{mistralai/Mistral-7B-Instruct-v0.3}, a
-manually-assigned display label for the same weights, not a different model.}
+manually-assigned display label for the same weights, not a different model. Local weight identity
+is pinned by Ollama's own content digest (\texttt{ollama show}/\texttt{/api/tags}, SHA-256 of the
+GGUF blob, re-confirmed 2026-09-03): \texttt{llama3:latest} = \texttt{365c0bd3c000}\ldots{} (Q4\_0,
+8.0B params, 8192-token context); \texttt{mistral:latest} = \texttt{6577803aa9a0}\ldots{} (Q4\_K\_M,
+7.2B params, 32768-token context); \texttt{gemma3:4b} = \texttt{a2af6cc3eb7f}\ldots{} (Q4\_K\_M,
+4.3B params). Full 64-character digests are released with the evaluation code.}
 \label{tab:models}
 \end{table*}
 

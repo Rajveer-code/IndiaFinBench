@@ -1,0 +1,63 @@
+item_id,task,direction,strict_status,length_bucket,truncated,model,strict_correct,gemini_verdict,phi4_verdict,author_verdict
+TMP_088,TEM,phi4_correct,strict_incorrect,short,untruncated,LLaMA-3.3-70B,0,0,1,CORRECT
+NUM_096,NUM,phi4_correct,strict_incorrect,long,truncated,LLaMA-3-8B,0,0,1,INCORRECT
+REG_022,REG,phi4_correct,strict_incorrect,short,untruncated,GPT-OSS 120B,0,0,1,CORRECT
+NUM_117,NUM,gemini_correct,strict_incorrect,long,untruncated,LLaMA-3-8B,0,1,0,CORRECT
+NUM_132,NUM,phi4_correct,strict_incorrect,long,untruncated,LLaMA-3-8B,0,0,1,INCORRECT
+REG_124,REG,phi4_correct,strict_correct,long,untruncated,Gemma 4 E4B,1,0,1,CORRECT
+NUM_120,NUM,phi4_correct,strict_incorrect,short,untruncated,LLaMA-3.3-70B,0,0,1,INCORRECT
+TMP_030,TEM,phi4_correct,strict_incorrect,short,untruncated,LLaMA-3.3-70B,0,0,1,CORRECT
+NUM_033,NUM,phi4_correct,strict_incorrect,long,truncated,LLaMA-3.3-70B,0,0,1,CORRECT
+REG_102,REG,phi4_correct,strict_incorrect,long,untruncated,GPT-OSS 120B,0,0,1,INCORRECT
+NUM_086,NUM,phi4_correct,strict_incorrect,long,truncated,LLaMA-3-8B,0,0,1,INCORRECT
+NUM_038,NUM,phi4_correct,strict_incorrect,long,untruncated,Mistral-7B,0,0,1,INCORRECT
+TMP_084,TEM,phi4_correct,strict_incorrect,long,untruncated,Kimi K2,0,0,1,INCORRECT
+NUM_136,NUM,phi4_correct,strict_incorrect,short,untruncated,Gemma 4 E4B,0,0,1,CORRECT
+REG_023,REG,phi4_correct,strict_correct,short,untruncated,Gemma 4 E4B,1,0,1,CORRECT
+TMP_081,TEM,gemini_correct,strict_incorrect,long,untruncated,Qwen3-32B,0,1,0,INCORRECT
+NUM_097,NUM,gemini_correct,strict_incorrect,long,untruncated,GPT-OSS 20B,0,1,0,INCORRECT
+REG_182,REG,phi4_correct,strict_incorrect,long,untruncated,DeepSeek-R1-Distill,0,0,1,INCORRECT
+REG_023,REG,phi4_correct,strict_incorrect,short,untruncated,Mistral-7B,0,0,1,INCORRECT
+NUM_092,NUM,phi4_correct,strict_incorrect,short,untruncated,LLaMA-3.3-70B,0,0,1,CORRECT
+TMP_081,TEM,gemini_correct,strict_incorrect,long,truncated,LLaMA-3.3-70B,0,1,0,INCORRECT
+REG_008,REG,phi4_correct,strict_incorrect,short,untruncated,Qwen3-32B,0,0,1,INCORRECT
+REG_008,REG,phi4_correct,strict_incorrect,short,untruncated,GPT-OSS 20B,0,0,1,INCORRECT
+REG_060,REG,phi4_correct,strict_incorrect,short,untruncated,LLaMA-3-8B,0,0,1,INCORRECT
+NUM_091,NUM,phi4_correct,strict_incorrect,long,untruncated,LLaMA-3.3-70B,0,0,1,CORRECT
+REG_082,REG,phi4_correct,strict_incorrect,short,untruncated,LLaMA-3-8B,0,0,1,CORRECT
+NUM_127,NUM,phi4_correct,strict_incorrect,long,untruncated,Mistral-7B,0,0,1,INCORRECT
+REG_185,REG,phi4_correct,strict_incorrect,short,untruncated,Gemma 4 E4B,0,0,1,CORRECT
+REG_190,REG,phi4_correct,strict_incorrect,short,untruncated,Llama 4 Scout 17B,0,0,1,CORRECT
+TMP_030,TEM,phi4_correct,strict_incorrect,short,untruncated,LLaMA-3-8B,0,0,1,CORRECT
+NUM_118,NUM,gemini_correct,strict_incorrect,long,truncated,Mistral-7B,0,1,0,INCORRECT
+TMP_009,TEM,phi4_correct,strict_incorrect,short,untruncated,Kimi K2,0,0,1,CORRECT
+NUM_082,NUM,phi4_correct,strict_incorrect,long,untruncated,Mistral-7B,0,0,1,CORRECT
+NUM_103,NUM,gemini_correct,strict_incorrect,short,untruncated,LLaMA-3-8B,0,1,0,INCORRECT
+NUM_113,NUM,phi4_correct,strict_incorrect,long,untruncated,Llama 4 Scout 17B,0,0,1,INCORRECT
+NUM_124,NUM,phi4_correct,strict_incorrect,long,untruncated,LLaMA-3-8B,0,0,1,INCORRECT
+REG_124,REG,phi4_correct,strict_incorrect,long,untruncated,GPT-OSS 20B,0,0,1,CORRECT
+TMP_031,TEM,phi4_correct,strict_incorrect,long,untruncated,LLaMA-3-8B,0,0,1,INCORRECT
+NUM_083,NUM,gemini_correct,strict_incorrect,long,untruncated,GPT-OSS 20B,0,1,0,CORRECT
+NUM_109,NUM,phi4_correct,strict_correct,long,untruncated,Gemma 4 E4B,1,0,1,INCORRECT
+TMP_069,TEM,gemini_correct,strict_incorrect,short,untruncated,Gemini 2.5 Pro,0,1,0,CORRECT
+TMP_059,TEM,phi4_correct,strict_incorrect,long,untruncated,Llama 4 Scout 17B,0,0,1,INCORRECT
+NUM_037,NUM,gemini_correct,strict_incorrect,short,untruncated,LLaMA-3-8B,0,1,0,CORRECT
+REG_023,REG,phi4_correct,strict_incorrect,long,truncated,DeepSeek-R1-Distill,0,0,1,INCORRECT
+REG_008,REG,phi4_correct,strict_incorrect,short,untruncated,LLaMA-3.3-70B,0,0,1,INCORRECT
+NUM_005,NUM,phi4_correct,strict_incorrect,short,untruncated,Gemma 4 E4B,0,0,1,INCORRECT
+REG_192,REG,phi4_correct,strict_incorrect,short,untruncated,Gemini 2.5 Pro,0,0,1,CORRECT
+TMP_002,TEM,phi4_correct,strict_incorrect,short,untruncated,LLaMA-3-8B,0,0,1,CORRECT
+TMP_062,TEM,gemini_correct,strict_incorrect,long,untruncated,DeepSeek-R1-Distill,0,1,0,CORRECT
+TMP_002,TEM,phi4_correct,strict_incorrect,short,untruncated,Llama 4 Scout 17B,0,0,1,CORRECT
+NUM_114,NUM,gemini_correct,strict_incorrect,long,untruncated,Llama 4 Scout 17B,0,1,0,CORRECT
+REG_015,REG,phi4_correct,strict_incorrect,short,untruncated,GPT-OSS 20B,0,0,1,INCORRECT
+TMP_036,TEM,gemini_correct,strict_incorrect,long,untruncated,DeepSeek-R1-Distill,0,1,0,INCORRECT
+TMP_044,TEM,gemini_correct,strict_correct,short,untruncated,Gemma 4 E4B,1,1,0,INCORRECT
+NUM_124,NUM,phi4_correct,strict_incorrect,long,truncated,Mistral-7B,0,0,1,INCORRECT
+REG_153,REG,gemini_correct,strict_incorrect,long,untruncated,Mistral-7B,0,1,0,CORRECT
+TMP_012,TEM,phi4_correct,strict_correct,short,untruncated,Gemma 4 E4B,1,0,1,INCORRECT
+NUM_001,NUM,gemini_correct,strict_correct,short,untruncated,Gemma 4 E4B,1,1,0,INCORRECT
+NUM_005,NUM,phi4_correct,strict_incorrect,long,untruncated,GPT-OSS 20B,0,0,1,CORRECT
+REG_134,REG,phi4_correct,strict_incorrect,long,untruncated,LLaMA-3-8B,0,0,1,INCORRECT
+REG_014,REG,phi4_correct,strict_incorrect,short,untruncated,GPT-OSS 20B,0,0,1,CORRECT
+REG_178,REG,phi4_correct,strict_incorrect,short,untruncated,LLaMA-3-8B,0,0,1,CORRECT

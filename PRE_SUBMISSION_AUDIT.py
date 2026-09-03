@@ -322,6 +322,8 @@ STALE_STRINGS = [
     # was never swept for the new value.
     "703 (\\textbf{80.4\\% raw agreement})",
     "80.4\\% raw agreement",
+    "3rd under the judge's own verdict",  # stale: Gemini 2.5 Pro's judge-only rank is 1st, not 3rd
+    "costs it 8 ranks",  # stale: LLaMA-3.3-70B's judge-only rank is 10th (7 ranks), not 11th (8 ranks)
     # NOTE: "77.2%" (superseded pooled-180 overall IAA agreement) is deliberately NOT
     # blocklisted as a bare string -- Qwen3-32B's real, correct NUM accuracy is coincidentally
     # 77.2% and appears legitimately elsewhere (draft_05 main table, appendix few-shot table).

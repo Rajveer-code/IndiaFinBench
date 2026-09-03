@@ -236,6 +236,17 @@ else:
     check("evaluation/iaa_summary.json exists", False,
           "run scripts/score_iaa_rounds.py first")
 
+print("\n=== GEMINI-VS-PHI4 AGREEMENT CONSISTENCY ===")
+gvp_path = ROOT / "evaluation" / "gemini_vs_phi4_agreement.json"
+if gvp_path.exists():
+    gvp = json.loads(gvp_path.read_text(encoding="utf-8"))
+    check("gemini_vs_phi4_agreement.json: total == 874", gvp.get("total") == 874, f"found {gvp.get('total')}")
+    check("gemini_vs_phi4_agreement.json: agree == 698 (regression guard -- was 703 pre-truncation-fix)",
+          gvp.get("agree") == 698, f"found {gvp.get('agree')}")
+else:
+    check("evaluation/gemini_vs_phi4_agreement.json exists", False,
+          "run scripts/analyze_phi4_judge.py first")
+
 print("\n=== MANUSCRIPT ===")
 
 STALE_STRINGS = [

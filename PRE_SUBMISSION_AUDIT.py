@@ -305,6 +305,12 @@ STALE_STRINGS = [
     "reducing the likelihood that performance is explained by benchmark-specific familiarity",
     # ^ implied the domain choice addresses contamination; softened to "lowers but does not rule out"
     "less likely to be dominated by memorised recall",  # old unhedged claim; see "reasonable candidate" framing now
+    # --- 2026-09-03: caught during a page-by-page visual re-check (item 9 continued), not source
+    # grep -- the judge-truncation-fix regeneration (52 verdict flips, earlier this pass) updated
+    # evaluation/gemini_vs_phi4_agreement.json (703->698, 80.4%->79.9%) but one manuscript sentence
+    # was never swept for the new value.
+    "703 (\\textbf{80.4\\% raw agreement})",
+    "80.4\\% raw agreement",
     # NOTE: "77.2%" (superseded pooled-180 overall IAA agreement) is deliberately NOT
     # blocklisted as a bare string -- Qwen3-32B's real, correct NUM accuracy is coincidentally
     # 77.2% and appears legitimately elsewhere (draft_05 main table, appendix few-shot table).

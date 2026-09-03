@@ -174,18 +174,31 @@ by default, consuming budget on invisible reasoning before any visible answer; e
 in the matched-budget re-run appends the model's own documented \texttt{/no\_think} directive to
 suppress this, matching the direct-answer, no-preamble system prompt used throughout. DeepSeek-R1-
 Distill-Llama-70B was already OpenRouter-hosted in the original run and uses the same identifier,
-\texttt{deepseek/deepseek-r1-distill-llama-70b}, unchanged. Gemini 2.5 Flash uses the AI Studio
-identifier \texttt{gemini-2.5-flash}, unchanged from the original run. Gemini 2.5 Pro is excluded
-from the matched-budget re-run: a live call against \texttt{gemini-2.5-pro} on a fresh API key
-returns \texttt{404 NOT\_FOUND}, ``This model \ldots{} is no longer available to new users''
---- a platform access restriction, not a credentials problem, and not something a different model
-generation (e.g. \texttt{gemini-3.1-pro-preview}) can substitute for without re-running a different
-model than the one this paper reports on. Gemini 2.5 Flash's own re-run is not yet complete: this
-fresh AI Studio key's free-tier quota for \texttt{gemini-2.5-flash} throttles after roughly 20
-requests regardless of request spacing (confirmed at 8s and 15s spacing, and via the exact
-\texttt{generate\_content\_free\_tier\_requests} quota-exceeded message returned), well below the
-model's documented rate limit, consistent with a new-project ramp-up restriction rather than a key
-or billing problem; the re-run resumes automatically once the quota window clears.
+\texttt{deepseek/deepseek-r1-distill-llama-70b}, unchanged. Gemini 2.5 Pro is excluded from the
+matched-budget re-run: a live call against \texttt{gemini-2.5-pro} on a fresh API key returns
+\texttt{404 NOT\_FOUND}, ``This model \ldots{} is no longer available to new users'' --- a platform
+access restriction, not a credentials problem, and not something a different model generation (e.g.
+\texttt{gemini-3.1-pro-preview}) can substitute for without re-running a different model than the
+one this paper reports on.
+
+Gemini 2.5 Flash's direct Google AI Studio route throttled after roughly 20 requests regardless of
+request spacing (confirmed at 8s and 15s spacing, via the exact
+\texttt{generate\_content\_free\_tier\_requests} quota-exceeded message, well below the model's
+documented rate limit, consistent with a new-project ramp-up restriction), and did not clear across
+several hours of intermittent checking. We re-ran it instead through OpenRouter's routing to the
+same model (\texttt{google/gemini-2.5-flash}), with the request explicitly restricted to Google AI
+Studio as the serving provider (\texttt{provider.only=["google-ai-studio"]}) at its discounted
+Flex service tier (\$0.15/M prompt, \$1.25/M completion tokens, verified live against OpenRouter's
+own endpoint-pricing listing before running), a price cap set to prevent any silent fallback to a
+costlier tier, and \texttt{reasoning.max\_tokens=0} to disable Gemini's hidden-thinking mode (the
+same failure class that required Qwen3-32B's \texttt{/no\_think} directive above). A mandatory cost
+probe (8 items, then a 12-item sample stratified across all four task types) confirmed zero
+reasoning tokens on every item and projected a full-406-item cost of roughly \$0.02 before the full
+run was authorized. All 406 items completed with zero errors at a total cost of \$0.0243, confirmed
+served entirely by Google AI Studio at the Flex tier throughout
+(\texttt{evaluation/gemini\_flash\_openrouter\_manifest.json}). This is a transport change, not a
+model substitution: the same Gemini 2.5 Flash weights, reached through a different request path
+after the direct route proved unusable within a practical time budget.
 
 \subsection{Budget Selection and the DeepSeek-R1-Distill Outlier}
 \label{app:budget-outlier}
@@ -203,18 +216,21 @@ candidate contributors are on the table, neither ruled in or out. First, logging
 DeepSeek's original release had 19.5\% of its REG/NUM/TMP rows sitting at the old 300-character
 write-time cap (Appendix~\ref{app:truncation}), the highest rate of any model with a comparably small
 delta, so removing that cap plausibly recovers some of the swing---but a Pearson correlation between
-each model's original at-cap rate and its matched-budget delta, computed across the other nine
-models (\texttt{scripts/matched\_budget\_correlation.py}), is $r = -0.67$: models with a
+each model's original at-cap rate and its matched-budget delta, computed across the other ten
+models (\texttt{scripts/matched\_budget\_correlation.py}), is $r = -0.77$: models with a
 \emph{higher} original truncation rate tend to show a \emph{smaller or negative} delta, the opposite
-of what a truncation-driven recovery story predicts. The two largest positive deltas among the nine
-(LLaMA-3-8B, $+4.19$pp; Mistral-7B, $+1.97$pp) belong to the only two models run locally via Ollama,
-with unchanged serving between the original run and the re-run and near-zero original truncation
-(0.3\% each); every remaining, provider-hosted model---whether it stayed on its original provider
-(GPT-OSS 120B/20B, Gemma 3 4B) or moved to OpenRouter for the re-run (LLaMA-3.3-70B, Llama 4 Scout
-17B, Qwen3-32B, Kimi K2)---shows a flat or negative delta regardless of its original truncation rate.
-This pattern argues against logging-truncation removal as the dominant driver of the matched-budget
-deltas generally, and toward the second candidate below, though neither explains on its own why
-DeepSeek specifically moved as far as it did. Second, output-style or serving variance: a direct probe of the same OpenRouter
+of what a truncation-driven recovery story predicts, and the single most truncated model in the
+original release (Gemini 2.5 Flash, 31.1\%) shows the most negative delta of the ten ($-3.70$pp).
+The two largest positive deltas among the ten (LLaMA-3-8B, $+4.19$pp; Mistral-7B, $+1.97$pp) belong
+to the only two models run locally via Ollama, with unchanged serving between the original run and
+the re-run and near-zero original truncation (0.3\% each); every remaining, transport-changed
+model---whether it stayed on its original provider (GPT-OSS 120B/20B, Gemma 3 4B), moved to
+OpenRouter for the re-run (LLaMA-3.3-70B, Llama 4 Scout 17B, Qwen3-32B, Kimi K2), or moved from
+direct access to OpenRouter-routed access to the same provider (Gemini 2.5 Flash)---shows a flat or
+negative delta regardless of its original truncation rate. This pattern argues against
+logging-truncation removal as the dominant driver of the matched-budget deltas generally, and toward
+the second candidate below, though neither explains on its own why DeepSeek specifically moved as
+far as it did. Second, output-style or serving variance: a direct probe of the same OpenRouter
 endpoint (\texttt{deepseek/deepseek-r1-distill-llama-70b}) made while preparing this analysis
 returned \texttt{provider: Novita} with the response's \texttt{content} field empty and a
 \texttt{reasoning} field populated instead---the same budget-consumed-by-hidden-reasoning failure

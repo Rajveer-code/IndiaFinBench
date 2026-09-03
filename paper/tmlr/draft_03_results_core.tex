@@ -91,43 +91,48 @@ that were not uniform (200--2048 tokens, chosen per provider for cost reasons) a
 logging separately capped stored predictions at 200--500 characters regardless of what the model
 generated (Appendix~\ref{app:truncation}). Both are operational choices, not properties of the
 models, and both can depress a model's strict score independently of its underlying answer. We
-re-ran the 10 of 12 models reachable under current API credentials at a single uniform completion
+re-ran the 11 of 12 models reachable under current API credentials at a single uniform completion
 budget of 512 tokens---selected by pilot (Appendix~\ref{app:matched-budget-ids})---logging the
 complete prediction plus provider finish-reason and completion-token count for every item, neither of
-which the original release records for any model. Gemini 2.5 Pro is unreachable on any fresh API key;
-Gemini 2.5 Flash's re-run is not yet complete (Appendix~\ref{app:matched-budget-ids} gives both
-reasons in full).
+which the original release records for any model. Gemini 2.5 Pro is permanently unreachable on any
+fresh API key (Appendix~\ref{app:matched-budget-ids} gives the exact platform error).
 
 \begin{table}[t]
 \centering\small
 \input{tables/table_matched_budget.tex}
 \caption{Strict accuracy under the archived original release (per-model budget, original provider)
 versus a re-run at a uniform 512-token budget, same four-stage scorer, same items. The two columns
-differ in budget, logging cap, and---for four models---inference provider (text below), so
-$\Delta$pp is a joint evaluation-configuration effect, not an isolated budget effect; it is bolded
-where $|\Delta| \geq 5$. ``Trunc.\ @512'' is the fraction of matched-run predictions that hit the
-512-token cap (\texttt{finish\_reason=length}). Original completion budgets and truncation rates:
-Appendix~\ref{app:truncation}.}
+differ in budget, logging cap, and---for five models---transport (four moved from Groq to
+OpenRouter; Gemini 2.5 Flash moved from direct Google AI Studio access to the same model routed
+through OpenRouter; text below), so $\Delta$pp is a joint evaluation-configuration effect, not an
+isolated budget effect; it is bolded where $|\Delta| \geq 5$. ``Trunc.\ @512'' is the fraction of
+matched-run predictions that hit the 512-token cap (\texttt{finish\_reason=length}). Original
+completion budgets and truncation rates: Appendix~\ref{app:truncation}.}
 \label{tab:matchedbudget}
 \end{table}
 
 This re-run changes several things relative to the original release at once---completion budget, the
-removal of the write-time logging cap, and, for four of the ten models, a change of inference
-provider (Groq to OpenRouter, forced by Groq's deprecation of those model endpoints;
-Appendix~\ref{app:matched-budget-ids})---so a per-model $\Delta$ here is their joint effect, not an
-isolated budget effect; the individual contributions cannot be separated post hoc from released data
-that never recorded generation-level truncation in the first place. We therefore treat this as a
-test of joint sensitivity to evaluation configuration, not a controlled budget experiment. Nine of
-the ten models shift by at most 4.2 points in either direction ($-2.46$ to $+4.19$pp), consistent
-with a modest, mixed-sign operational effect on top of measurement noise---and, as Appendix
-G.2 details, the two largest positive shifts among those nine belong specifically to the two models
-whose serving configuration did not change at all (the local Ollama models), suggesting provider
-variance contributes at least as much as budget itself. DeepSeek-R1-Distill is an outlier at
-$+10.59$pp; we report it without endorsing a single explanation, since it does not positively
-correlate with each model's original write-time-cap rate (Pearson $r = -0.67$ across the other nine,
-if anything in the opposite direction from a truncation-recovery story) and at least one competing
-explanation, unrelated to budget, remains live (Appendix~\ref{app:matched-budget-ids} gives both
-candidates and the evidence for each in full). What the re-run supports without qualification is the
+removal of the write-time logging cap, and, for five of the eleven models, a change of transport
+(four moved from Groq to OpenRouter, forced by Groq's deprecation of those model endpoints; Gemini
+2.5 Flash moved from direct Google AI Studio access to the same model routed through OpenRouter's
+Google AI Studio integration, a transport change made to reach a usable quota after the direct
+route stalled for hours; Appendix~\ref{app:matched-budget-ids})---so a per-model $\Delta$ here is
+their joint effect, not an isolated budget effect; the individual contributions cannot be separated
+post hoc from released data that never recorded generation-level truncation in the first place. We
+therefore treat this as a test of joint sensitivity to evaluation configuration, not a controlled
+budget experiment. Ten of the eleven models shift by at most 4.2 points in either direction
+($-3.70$ to $+4.19$pp), consistent with a modest, mixed-sign operational effect on top of
+measurement noise---and, as Appendix G.2 details, the two largest positive shifts among those ten
+belong specifically to the two models whose serving configuration did not change at all (the local
+Ollama models), while Gemini 2.5 Flash---originally the highest-truncation model in the study at
+31.1\% and now also transport-changed---shows the largest negative shift among the ten, consistent
+with serving/transport variance contributing at least as much as budget itself. DeepSeek-R1-Distill
+is an outlier at $+10.59$pp; we report it without endorsing a single explanation, since it does not
+positively correlate with each model's original write-time-cap rate (Pearson $r = -0.77$ across the
+other ten, if anything in the opposite direction from a truncation-recovery story) and at least one
+competing explanation, unrelated to budget, remains live (Appendix~\ref{app:matched-budget-ids}
+gives both candidates and the evidence for each in full). What the re-run supports without
+qualification is the
 general point: strict accuracy is sensitive to completion budget, logging configuration, and serving
 provider, sometimes by several points---further evidence, alongside the scoring-regime result, that a
 single leaderboard number is a property of the measurement protocol as much as of the model.

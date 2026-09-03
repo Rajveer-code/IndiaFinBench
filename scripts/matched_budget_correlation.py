@@ -25,8 +25,9 @@ LABEL_TO_TRUNC_KEY = {
     "LLaMA-3.3-70B": "groq70b", "GPT-OSS 120B": "gpt_oss_120b", "GPT-OSS 20B": "gpt_oss_20b",
     "Kimi K2": "kimi_k2", "LLaMA-3-8B": "llama3", "Llama 4 Scout 17B": "llama4scout",
     "Mistral-7B": "mistral", "Qwen3-32B": "qwen3_32b", "Gemma 3 4B": "gemma4_e4b",
+    "Gemini 2.5 Flash": "gemini",
     # DeepSeek-R1-Distill deliberately excluded -- it's the outlier being investigated,
-    # not one of the "other nine models" the correlation is computed across.
+    # not one of the "other models" the correlation is computed across.
 }
 
 pairs = {}

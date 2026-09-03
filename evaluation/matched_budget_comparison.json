@@ -189,9 +189,26 @@
       "delta_pp": -1.48,
       "orig_budget": 1024,
       "matched_truncation_pct": 0.0
+    },
+    "Gemini 2.5 Flash": {
+      "original": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 364,
+        "pct": 89.66
+      },
+      "matched_budget_512": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 349,
+        "pct": 85.96
+      },
+      "delta_pp": -3.7,
+      "orig_budget": 200,
+      "matched_truncation_pct": 0.0
     }
   },
-  "not_yet_complete": [
-    "Gemini 2.5 Flash (incomplete: 95/160 scored, 65 errors)"
-  ]
+  "not_yet_complete": []
 }

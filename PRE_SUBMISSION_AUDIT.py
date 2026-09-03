@@ -251,8 +251,11 @@ print("\n=== MATCHED-BUDGET COMPARISON CONSISTENCY (bug found+fixed 2026-09-03) 
 mbc_path = ROOT / "evaluation" / "matched_budget_comparison.json"
 if mbc_path.exists():
     mbc = json.loads(mbc_path.read_text(encoding="utf-8"))["results"]
-    check("matched_budget_comparison.json: 10 models present",
-          len(mbc) == 10, f"found {len(mbc)}")
+    check("matched_budget_comparison.json: 11 models present",
+          len(mbc) == 11, f"found {len(mbc)}")
+    gf = mbc.get("Gemini 2.5 Flash", {})
+    check("Gemini 2.5 Flash matched-512 delta == -3.70pp (OpenRouter rerun, regression guard)",
+          gf.get("delta_pp") == -3.7, f"found {gf.get('delta_pp')}")
     ds = mbc.get("DeepSeek-R1-Distill", {})
     check("DeepSeek-R1-Distill original == 305/406 (75.12%%) -- must match regime_three_way.json, "
           "not a truncated-text rescore", ds.get("original", {}).get("n_correct") == 305,
@@ -324,6 +327,12 @@ STALE_STRINGS = [
     "213 of 406 are answered correctly by at least",
     "213 of 406 items are answered\ncorrectly by at least",
     "so those items separate almost no pair", "213 that do not",
+    # --- Gemini 2.5 Flash OpenRouter rerun (2026-09-04): completes the matched-budget set at
+    # 11/12 models (Gemini 2.5 Pro stays permanently excluded). Retired "still incomplete" framing:
+    "re-ran the 10 of 12 models", "Nine of\nthe ten models", "Nine of the ten models",
+    "r = -0.67", "across the other nine\nmodels", "across the other nine models",
+    "the two largest positive shifts among those nine",
+    "Gemini 2.5 Flash's re-run is not yet complete", "for four of the ten models",
     # --- Plan v3 (2026-09-02) retirements. These are EXPECTED to fail until Phase 1-4 land;
     # that is the point -- this blocklist is what makes "Phase 1 done" checkable rather than
     # a matter of opinion. See paper/tmlr/../../../../.claude/plans/... Plan v3 Section 1 (F1-F10).

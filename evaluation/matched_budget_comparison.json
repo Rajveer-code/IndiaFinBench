@@ -5,8 +5,8 @@
         "n_total": 406,
         "n_scored": 406,
         "n_errors": 0,
-        "n_correct": 318,
-        "pct": 78.33
+        "n_correct": 317,
+        "pct": 78.08
       },
       "matched_budget_512": {
         "n_total": 406,
@@ -15,7 +15,7 @@
         "n_correct": 334,
         "pct": 82.27
       },
-      "delta_pp": 3.94,
+      "delta_pp": 4.19,
       "orig_budget": 300,
       "matched_truncation_pct": 0.0
     },
@@ -24,8 +24,8 @@
         "n_total": 406,
         "n_scored": 406,
         "n_errors": 0,
-        "n_correct": 306,
-        "pct": 75.37
+        "n_correct": 308,
+        "pct": 75.86
       },
       "matched_budget_512": {
         "n_total": 406,
@@ -34,7 +34,7 @@
         "n_correct": 316,
         "pct": 77.83
       },
-      "delta_pp": 2.46,
+      "delta_pp": 1.97,
       "orig_budget": 300,
       "matched_truncation_pct": 0.0
     },
@@ -43,8 +43,8 @@
         "n_total": 406,
         "n_scored": 406,
         "n_errors": 0,
-        "n_correct": 321,
-        "pct": 79.06
+        "n_correct": 320,
+        "pct": 78.82
       },
       "matched_budget_512": {
         "n_total": 406,
@@ -53,7 +53,7 @@
         "n_correct": 320,
         "pct": 78.82
       },
-      "delta_pp": -0.24,
+      "delta_pp": 0.0,
       "orig_budget": 512,
       "matched_truncation_pct": 0.0
     },
@@ -62,8 +62,8 @@
         "n_total": 406,
         "n_scored": 406,
         "n_errors": 0,
-        "n_correct": 307,
-        "pct": 75.62
+        "n_correct": 313,
+        "pct": 77.09
       },
       "matched_budget_512": {
         "n_total": 406,
@@ -72,7 +72,7 @@
         "n_correct": 312,
         "pct": 76.85
       },
-      "delta_pp": 1.23,
+      "delta_pp": -0.24,
       "orig_budget": 512,
       "matched_truncation_pct": 1.7
     },
@@ -81,8 +81,8 @@
         "n_total": 406,
         "n_scored": 406,
         "n_errors": 0,
-        "n_correct": 307,
-        "pct": 75.62
+        "n_correct": 312,
+        "pct": 76.85
       },
       "matched_budget_512": {
         "n_total": 406,
@@ -91,7 +91,7 @@
         "n_correct": 304,
         "pct": 74.88
       },
-      "delta_pp": -0.74,
+      "delta_pp": -1.97,
       "orig_budget": 512,
       "matched_truncation_pct": 5.2
     },
@@ -100,8 +100,8 @@
         "n_total": 406,
         "n_scored": 406,
         "n_errors": 0,
-        "n_correct": 304,
-        "pct": 74.88
+        "n_correct": 305,
+        "pct": 75.12
       },
       "matched_budget_512": {
         "n_total": 406,
@@ -110,7 +110,7 @@
         "n_correct": 348,
         "pct": 85.71
       },
-      "delta_pp": 10.83,
+      "delta_pp": 10.59,
       "orig_budget": 2048,
       "matched_truncation_pct": 1.2
     },
@@ -119,8 +119,8 @@
         "n_total": 406,
         "n_scored": 406,
         "n_errors": 0,
-        "n_correct": 329,
-        "pct": 81.03
+        "n_correct": 340,
+        "pct": 83.74
       },
       "matched_budget_512": {
         "n_total": 406,
@@ -129,7 +129,7 @@
         "n_correct": 344,
         "pct": 84.73
       },
-      "delta_pp": 3.7,
+      "delta_pp": 0.99,
       "orig_budget": 200,
       "matched_truncation_pct": 0.2
     },
@@ -138,8 +138,8 @@
         "n_total": 406,
         "n_scored": 406,
         "n_errors": 0,
-        "n_correct": 331,
-        "pct": 81.53
+        "n_correct": 338,
+        "pct": 83.25
       },
       "matched_budget_512": {
         "n_total": 406,
@@ -148,7 +148,7 @@
         "n_correct": 328,
         "pct": 80.79
       },
-      "delta_pp": -0.74,
+      "delta_pp": -2.46,
       "orig_budget": 1024,
       "matched_truncation_pct": 0.0
     },
@@ -176,8 +176,8 @@
         "n_total": 406,
         "n_scored": 406,
         "n_errors": 0,
-        "n_correct": 342,
-        "pct": 84.24
+        "n_correct": 347,
+        "pct": 85.47
       },
       "matched_budget_512": {
         "n_total": 406,
@@ -186,7 +186,7 @@
         "n_correct": 341,
         "pct": 83.99
       },
-      "delta_pp": -0.25,
+      "delta_pp": -1.48,
       "orig_budget": 1024,
       "matched_truncation_pct": 0.0
     }

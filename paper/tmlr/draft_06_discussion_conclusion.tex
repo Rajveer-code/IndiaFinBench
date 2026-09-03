@@ -56,8 +56,8 @@ limits them on this benchmark is a property the additional parameters did not ad
 Two findings here were not things we set out to measure, and both concern the benchmark rather than
 the models.
 
-The first is that half our items do not discriminate. 213 of 406 are answered correctly by at least
-11 of 12 models. We built the benchmark for coverage of a regulatory domain, which is a reasonable
+The first is that over a third of our items do not discriminate at all. 148 of 406 (36.5\%) are
+answered identically by all twelve models. We built the benchmark for coverage of a regulatory domain, which is a reasonable
 objective, but coverage and discrimination are different targets and expert annotation effort spent
 on one does not buy the other. A benchmark reporting only nominal size overstates the evidence
 behind any leaderboard gap it produces.
@@ -85,10 +85,11 @@ errors are reclassified as correct. Neither regime is ground truth, and neither 
 preferable; they answer different questions, and
 reporting one alone leaves the reader unable to tell which.
 
-Underneath that, half the benchmark carries no discriminative signal: 213 of 406 items are answered
-correctly by at least 11 of the 12 models, leaving 134 that separate systems. Nominal size and
-discriminative coverage are different quantities, and the difference bounds how much weight any
-reported gap can carry.
+Underneath that, over a third of the benchmark carries no discriminative signal: 148 of 406 items
+(36.5\%) are answered identically by all twelve models, while a predefined higher-discrimination
+band captures 134 items that separate systems more sharply. Nominal size and discriminative
+coverage are different quantities, and the difference bounds how much weight any reported gap can
+carry.
 
 IndiaFinBench is released in full---406 expert-annotated items over 34 of 192 collected SEBI and RBI documents,
 the evaluation harness, per-item judge verdicts, and all model predictions---so that all three

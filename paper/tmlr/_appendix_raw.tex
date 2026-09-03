@@ -197,15 +197,24 @@ a stratified 24-item subset (8 each of REG/NUM/TMP) across all reachable models
 already-negligible rate, so 512 was taken as the lowest budget that does not materially change
 truncation relative to the higher candidates.
 
-DeepSeek-R1-Distill's $+10.83$pp delta (Table~\ref{tab:matchedbudget}) is the one result in this
+DeepSeek-R1-Distill's $+10.59$pp delta (Table~\ref{tab:matchedbudget}) is the one result in this
 re-run we could not fully explain and report as such rather than resolving it into a clean story. Two
 candidate contributors are on the table, neither ruled in or out. First, logging truncation:
 DeepSeek's original release had 19.5\% of its REG/NUM/TMP rows sitting at the old 300-character
 write-time cap (Appendix~\ref{app:truncation}), the highest rate of any model with a comparably small
-delta, so removing that cap plausibly recovers some of the swing---except that a Pearson correlation
-between each model's original at-cap rate and its matched-budget delta, computed across the other nine
-models, is $r = 0.09$, essentially zero, so logging truncation alone does not obviously scale with the
-observed deltas. Second, output-style or serving variance: a direct probe of the same OpenRouter
+delta, so removing that cap plausibly recovers some of the swing---but a Pearson correlation between
+each model's original at-cap rate and its matched-budget delta, computed across the other nine
+models (\texttt{scripts/matched\_budget\_correlation.py}), is $r = -0.67$: models with a
+\emph{higher} original truncation rate tend to show a \emph{smaller or negative} delta, the opposite
+of what a truncation-driven recovery story predicts. The two largest positive deltas among the nine
+(LLaMA-3-8B, $+4.19$pp; Mistral-7B, $+1.97$pp) belong to the only two models run locally via Ollama,
+with unchanged serving between the original run and the re-run and near-zero original truncation
+(0.3\% each); every remaining, provider-hosted model---whether it stayed on its original provider
+(GPT-OSS 120B/20B, Gemma 3 4B) or moved to OpenRouter for the re-run (LLaMA-3.3-70B, Llama 4 Scout
+17B, Qwen3-32B, Kimi K2)---shows a flat or negative delta regardless of its original truncation rate.
+This pattern argues against logging-truncation removal as the dominant driver of the matched-budget
+deltas generally, and toward the second candidate below, though neither explains on its own why
+DeepSeek specifically moved as far as it did. Second, output-style or serving variance: a direct probe of the same OpenRouter
 endpoint (\texttt{deepseek/deepseek-r1-distill-llama-70b}) made while preparing this analysis
 returned \texttt{provider: Novita} with the response's \texttt{content} field empty and a
 \texttt{reasoning} field populated instead---the same budget-consumed-by-hidden-reasoning failure

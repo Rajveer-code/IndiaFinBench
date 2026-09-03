@@ -2,14 +2,26 @@
 matched_budget_comparison.py
 ------------------------------
 Plan v3 Phase 2.5 / cleanup item 1: compares original strict accuracy against
-the matched-budget (512-token) re-run's strict accuracy, per model, using the
-same four-stage scorer (scripts/evaluate.py::score_answer) for both -- the
-budget is the only thing that changed.
+the matched-budget (512-token) re-run's strict accuracy, per model.
 
-Reads evaluation/results/*.csv (original, frozen) and evaluation/results_matched/
-*.csv (new). Only reports on models present in BOTH (i.e. the rerun completed
-for that model); prints which models are still missing rather than silently
-padding the comparison.
+BUG FOUND AND FIXED 2026-09-03: this script used to re-score the "original"
+side live from evaluation/results/*.csv's prediction column. But that column
+is write-time character-truncated (200/300/500 chars depending on model --
+see Appendix F.6), while the CSV's own `correct` column was scored on the
+FULL untruncated prediction at eval time, before truncation. Re-scoring the
+truncated text produced false negatives concentrated on tight-budget models
+(9 of 10 models' "original" column silently disagreed with the canonical
+evaluation/regime_three_way.json by up to 2.71pp / 11 items on LLaMA-3.3-70B),
+which corrupted every Delta-pp in Table 2. Fixed at the source per Guardrail 5:
+"original" now comes from regime_three_way.json's strict_406/strict_pct (the
+already-correct, full-text score), never re-derived from truncated CSV text.
+The matched-budget side is unaffected -- results_matched/*.csv predictions are
+written untruncated (Phase 2.1), so live-scoring them is safe and correct.
+
+Reads evaluation/regime_three_way.json (original, canonical) and
+evaluation/results_matched/*.csv (new, untruncated, scored live). Only reports
+on models present in BOTH (i.e. the rerun completed for that model); prints
+which models are still missing rather than silently padding the comparison.
 
 Output: evaluation/matched_budget_comparison.json
 """
@@ -20,9 +32,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from scripts.evaluate import score_answer  # noqa: E402
-from scripts.novel_methods_utils import MODEL_FILES  # noqa: E402
 
-RESULTS_DIR = Path("evaluation/results")
+REGIME_JSON = Path("evaluation/regime_three_way.json")
 MATCHED_DIR = Path("evaluation/results_matched")
 
 # Original per-model completion budget (tokens), from Appendix table_models / F3 -- for
@@ -33,8 +44,8 @@ ORIG_BUDGET = {
     "Llama 4 Scout 17B": 1024, "Kimi K2": 512, "Qwen3-32B": 1024, "Gemini 2.5 Flash": 200,
 }
 
-# MODEL_FILES: "Display Name" -> "xxx_results.csv" (original). The matched dir uses a
-# different, script-local key (see matched_budget_rerun.py::model_key) -- map explicitly.
+# Display Name -> matched-dir filename. The matched dir uses a different, script-local
+# key (see matched_budget_rerun.py::model_key) -- map explicitly.
 MATCHED_FILE_MAP = {
     "LLaMA-3-8B": "llama_3_8b_results.csv",
     "Mistral-7B": "mistral_7b_results.csv",
@@ -48,11 +59,6 @@ MATCHED_FILE_MAP = {
     "Qwen3-32B": "qwen3_32b_results.csv",
     "Gemini 2.5 Flash": "gemini_25_flash_results.csv",
 }
-
-# MODEL_FILES (novel_methods_utils.py) still keys DeepSeek under its original,
-# since-retired display label -- map explicitly rather than renaming it there
-# (out of scope for this comparison script to touch a shared canonical dict).
-ORIG_LABEL_MAP = {"DeepSeek-R1-Distill": "DeepSeek R1 70B"}
 
 
 def truncation_rate_512(path: Path) -> float:
@@ -75,16 +81,17 @@ def score_file(path: Path) -> dict:
 
 
 def main():
+    per_model = json.loads(REGIME_JSON.read_text(encoding="utf-8"))["per_model"]
     results = {}
     missing = []
     for label, matched_fname in MATCHED_FILE_MAP.items():
         matched_path = MATCHED_DIR / matched_fname
-        orig_fname = MODEL_FILES.get(ORIG_LABEL_MAP.get(label, label))
-        orig_path = RESULTS_DIR / orig_fname if orig_fname else None
-        if not matched_path.exists() or not orig_path or not orig_path.exists():
+        entry = per_model.get(label)
+        if not matched_path.exists() or entry is None:
             missing.append(label)
             continue
-        orig = score_file(orig_path)
+        orig = {"n_total": 406, "n_scored": 406, "n_errors": 0,
+                 "n_correct": entry["strict_406"], "pct": entry["strict_pct"]}
         matched = score_file(matched_path)
         results[label] = {"original": orig, "matched_budget_512": matched,
                            "delta_pp": round(matched["pct"] - orig["pct"], 2) if matched["pct"] is not None and orig["pct"] is not None else None,

@@ -132,9 +132,16 @@ audit script's regression guards (now pinning gemini\_vs\_phi4\_agreement.json a
 regime\_three\_way.json and iaa\_summary.json) exist specifically so this class of drift can't
 reappear silently on the next data regeneration.**
 
-**R4.2 — "Your matched-budget re-run has an unexplained +10.83pp outlier (DeepSeek) right next to a
+**R4.2 — "Your matched-budget re-run has an unexplained +10.59pp outlier (DeepSeek) right next to a
 result you're using to support your central thesis. Doesn't an unexplained anomaly undermine
 confidence in the other nine numbers in the same table?"**
+*(Note: this table's "original" column had a bug — found and fixed 2026-09-03 — where the original
+side was live-rescored against write-time-truncated CSV text instead of using the already-correct
+full-text score. Every delta in the table changed as a result, most by under 1pp but LLaMA-3.3-70B's
+delta shrank from +3.70 to +0.99. The corrected at-cap-rate correlation is r=-0.67, not the originally
+reported r=0.09 — see draft_03 Section 5.1 and Appendix G.2 for the current, correct numbers and
+interpretation. This note records that the underlying data changed; it does not change the answer to
+R4.2 itself.)*
 **Response:** The nine non-outlier deltas are individually small, mixed-sign, and each traces to a
 disclosed original-budget value in the same table (models with a low original budget gain, models
 already at or above 512 don't) — the outlier is flagged as an outlier precisely because it does not

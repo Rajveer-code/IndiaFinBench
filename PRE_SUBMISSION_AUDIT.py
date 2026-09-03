@@ -247,6 +247,41 @@ else:
     check("evaluation/gemini_vs_phi4_agreement.json exists", False,
           "run scripts/analyze_phi4_judge.py first")
 
+print("\n=== MATCHED-BUDGET COMPARISON CONSISTENCY (bug found+fixed 2026-09-03) ===")
+mbc_path = ROOT / "evaluation" / "matched_budget_comparison.json"
+if mbc_path.exists():
+    mbc = json.loads(mbc_path.read_text(encoding="utf-8"))["results"]
+    check("matched_budget_comparison.json: 10 models present",
+          len(mbc) == 10, f"found {len(mbc)}")
+    ds = mbc.get("DeepSeek-R1-Distill", {})
+    check("DeepSeek-R1-Distill original == 305/406 (75.12%%) -- must match regime_three_way.json, "
+          "not a truncated-text rescore", ds.get("original", {}).get("n_correct") == 305,
+          f"found {ds.get('original', {}).get('n_correct')}")
+    check("DeepSeek-R1-Distill matched-512 delta == +10.59pp (regression guard)",
+          ds.get("delta_pp") == 10.59, f"found {ds.get('delta_pp')}")
+    l70 = mbc.get("LLaMA-3.3-70B", {})
+    check("LLaMA-3.3-70B original == 340/406 (83.74%%) -- the truncated-rescore bug produced 329/406 "
+          "(81.03%%) here", l70.get("original", {}).get("pct") == 83.74,
+          f"found {l70.get('original', {}).get('pct')}")
+else:
+    check("evaluation/matched_budget_comparison.json exists", False,
+          "run scripts/matched_budget_comparison.py first")
+
+print("\n=== ITEM-DISCRIMINATION EXACT CONSISTENCY (discriminative-coverage math fix 2026-09-03) ===")
+ide_path = ROOT / "evaluation" / "item_discrimination_exact.json"
+if ide_path.exists():
+    ide = json.loads(ide_path.read_text(encoding="utf-8"))
+    check("item_discrimination_exact.json: zero-info items (k=0 or 12) == 148",
+          ide.get("zero_info_items_k0_or_k12") == 148, f"found {ide.get('zero_info_items_k0_or_k12')}")
+    check("item_discrimination_exact.json: old 'ceiling' band (k=11 or 12) == 213 -- confirms it is "
+          "NOT all zero-information", ide.get("old_ceiling_band_k11_or_k12") == 213,
+          f"found {ide.get('old_ceiling_band_k11_or_k12')}")
+    check("item_discrimination_exact.json: mean pairwise-disagreement fraction == 0.2285",
+          ide.get("mean_disagreement_fraction") == 0.2285, f"found {ide.get('mean_disagreement_fraction')}")
+else:
+    check("evaluation/item_discrimination_exact.json exists", False,
+          "run scripts/item_discrimination_exact.py first")
+
 print("\n=== MANUSCRIPT ===")
 
 STALE_STRINGS = [
@@ -276,6 +311,19 @@ STALE_STRINGS = [
     "only the weakest is significantly worse",  # superseded once Bonferroni was applied to the full 12-test family
     "12 items where both verdicts happened to match",  # the messy pre-freeze adjudication bookkeeping ChatGPT flagged
     "47.7\\%",  # the pre-freeze phi4-mini disagreement-match rate; frozen analysis uses 43.1%
+    # --- Matched-budget "original" rescore bug (found+fixed 2026-09-03): the comparison script
+    # was live-rescoring write-time-truncated CSV text instead of using the canonical full-text
+    # score, corrupting 9 of 10 deltas. These are the retired, wrong values.
+    "+10.83", "10.83\\%", "r = 0.09", "r=0.09", "essentially zero, so logging truncation",
+    "Completion Budget as a Confound",  # renamed: joint config sensitivity, not budget alone
+    "-0.74$ to $+3.94", "81.03", "74.88.*DeepSeek",
+    # --- Discriminative-coverage math fix (found+fixed 2026-09-03): the old "ceiling" band
+    # (p>=0.9, k in {11,12}) was described as carrying almost no information; only k=12 (143
+    # items) truly does -- k=11 (70 items) still separates 11 of 66 model pairs. Retired framing:
+    "213 of the 406 items are answered correctly by at least 11",
+    "213 of 406 are answered correctly by at least",
+    "213 of 406 items are answered\ncorrectly by at least",
+    "so those items separate almost no pair", "213 that do not",
     # --- Plan v3 (2026-09-02) retirements. These are EXPECTED to fail until Phase 1-4 land;
     # that is the point -- this blocklist is what makes "Phase 1 done" checkable rather than
     # a matter of opinion. See paper/tmlr/../../../../.claude/plans/... Plan v3 Section 1 (F1-F10).

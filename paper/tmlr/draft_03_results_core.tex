@@ -83,7 +83,7 @@ consumes model output through a format-sensitive parser really would fail on Dee
 the strict number cannot do is answer which model reasons best about the underlying regulatory
 content, and the two questions are routinely reported as if they were the same quantity.
 
-\subsection{Completion Budget as a Confound}
+\subsection{Evaluation-Configuration Sensitivity}
 \label{sec:budget-results}
 
 Section~\ref{sec:models} disclosed that the original evaluation used per-model completion budgets
@@ -101,84 +101,96 @@ reasons in full).
 \begin{table}[t]
 \centering\small
 \input{tables/table_matched_budget.tex}
-\caption{Strict accuracy under the original per-model budget versus a uniform 512-token budget, same
-four-stage scorer, same items. $\Delta$pp is bolded where $|\Delta| \geq 5$. ``Trunc.\ @512'' is the
-fraction of matched-run predictions that hit the 512-token cap (\texttt{finish\_reason=length}).
-Original completion budgets and truncation rates: Appendix~\ref{app:truncation}.}
+\caption{Strict accuracy under the archived original release (per-model budget, original provider)
+versus a re-run at a uniform 512-token budget, same four-stage scorer, same items. The two columns
+differ in budget, logging cap, and---for four models---inference provider (text below), so
+$\Delta$pp is a joint evaluation-configuration effect, not an isolated budget effect; it is bolded
+where $|\Delta| \geq 5$. ``Trunc.\ @512'' is the fraction of matched-run predictions that hit the
+512-token cap (\texttt{finish\_reason=length}). Original completion budgets and truncation rates:
+Appendix~\ref{app:truncation}.}
 \label{tab:matchedbudget}
 \end{table}
 
-This re-run changes two things relative to the original release at once---the completion budget and
-the removal of the write-time logging cap---so a per-model $\Delta$ here is their joint effect, not
-an isolated budget effect; the two cannot be separated post hoc from released data that never
-recorded generation-level truncation in the first place. Nine of the ten models shift by at most
-4 points in either direction ($-0.74$ to $+3.94$pp), consistent with a modest, mixed-sign operational
-effect on top of measurement noise. DeepSeek-R1-Distill is an outlier at $+10.83$pp; we report it
-without endorsing a single explanation, since it does not correlate with each model's original
-write-time-cap rate (Pearson $r = 0.09$) and at least one competing explanation, unrelated to budget,
-remains live (Appendix~\ref{app:matched-budget-ids} gives both candidates and the evidence for each in
-full). What the re-run supports without qualification is the general point: strict accuracy is
-sensitive to completion budget and logging configuration, sometimes by several points, for models
-whose original budget was well below 512---further evidence, alongside the scoring-regime result,
-that a single leaderboard number is a property of the measurement protocol as much as of the model.
+This re-run changes several things relative to the original release at once---completion budget, the
+removal of the write-time logging cap, and, for four of the ten models, a change of inference
+provider (Groq to OpenRouter, forced by Groq's deprecation of those model endpoints;
+Appendix~\ref{app:matched-budget-ids})---so a per-model $\Delta$ here is their joint effect, not an
+isolated budget effect; the individual contributions cannot be separated post hoc from released data
+that never recorded generation-level truncation in the first place. We therefore treat this as a
+test of joint sensitivity to evaluation configuration, not a controlled budget experiment. Nine of
+the ten models shift by at most 4.2 points in either direction ($-2.46$ to $+4.19$pp), consistent
+with a modest, mixed-sign operational effect on top of measurement noise---and, as Appendix
+G.2 details, the two largest positive shifts among those nine belong specifically to the two models
+whose serving configuration did not change at all (the local Ollama models), suggesting provider
+variance contributes at least as much as budget itself. DeepSeek-R1-Distill is an outlier at
+$+10.59$pp; we report it without endorsing a single explanation, since it does not positively
+correlate with each model's original write-time-cap rate (Pearson $r = -0.67$ across the other nine,
+if anything in the opposite direction from a truncation-recovery story) and at least one competing
+explanation, unrelated to budget, remains live (Appendix~\ref{app:matched-budget-ids} gives both
+candidates and the evidence for each in full). What the re-run supports without qualification is the
+general point: strict accuracy is sensitive to completion budget, logging configuration, and serving
+provider, sometimes by several points---further evidence, alongside the scoring-regime result, that a
+single leaderboard number is a property of the measurement protocol as much as of the model.
 
 \section{Discriminative Coverage: How Many Items Actually Discriminate}
 \label{sec:effsize}
 
 A benchmark's nominal size is the number of items it contains. Its \textbf{discriminative
 coverage}, for the purpose of separating systems, is the number of items on which systems actually
-differ. An item that every model answers correctly contributes to reported accuracy but
-distinguishes no pair of models. (We avoid ``effective size'': it invites confusion with
-effective-sample-size, a distinct and more specific statistical quantity we do not compute.)
+differ. (We avoid ``effective size'': it invites confusion with effective-sample-size, a distinct
+and more specific statistical quantity we do not compute.)
 
-For each item we take $p$, the fraction of the twelve models answering it correctly. The
-threshold-light fact is the most robust one: 213 of 406 items (52.5\%) are answered correctly by at
-least 11 of the 12 models --- the ceiling category. At $n=12$ models, $p$ only takes values
-$k/12$ for integer $k$, and the single achievable value in $(0.9, 1]$ below 1 itself is $11/12
-\approx 0.917$; consequently ``$p \ge 0.9$'' and ``$p > 0.90$'' pick out the identical set of items
-by construction, not because two independent checks happened to agree. We note this to be precise
-about what does and does not constitute corroboration here, not to claim a stronger result than the
-arithmetic supports.
+For an item on which $k$ of the twelve models answer correctly, the number of model \emph{pairs}
+that item places on opposite sides of a correct/incorrect split is exactly $D(k) = k(12-k)$, out of
+66 total pairs among twelve models. This is threshold-free and exact: $D(k)=0$ only at the two extremes
+($k=0$ or $k=12$, every model agrees), rises to a maximum $D(6)=36$ at the most evenly split items,
+and is symmetric ($D(k)=D(12-k)$). An earlier draft of this analysis defined a ``ceiling'' band as
+$p \ge 0.9$ (i.e.\ $k \in \{11,12\}$) and described it as carrying almost no discriminative
+information. That conflates two different items: a $k=12$ item genuinely distinguishes no pair
+($D=0$), but a $k=11$ item still separates the one dissenting model from the other eleven ---
+$D(11)=11$, or $11/66 \approx 16.7\%$ of all pairs. The same error affected the symmetric ``floor''
+band ($k \in \{0,1\}$). We correct this below using $D(k)$ directly rather than a $p$-threshold.
 
 \begin{table}[t]
 \centering
-\caption{Item categories by the fraction of models answering correctly ($p$). Ceiling items are
-answered correctly by at least 11 of 12 models; floor items by at most 1 of 12. The discriminative
-band is defined by $p$ alone; see the text for why an additional spread threshold on
-$s=4p(1-p)$ would not change this category's membership.}
+\caption{Items by exact pairwise discrimination $D(k)=k(12-k)$, $k$=models answering correctly out
+of 12. Zero-information items agree unanimously; every other item distinguishes at least 11 of the
+66 model pairs. The predefined band $0.3<p<0.8$ ($k\in\{4,\ldots,9\}$) from Table~\ref{tab:matchedbudget}'s
+companion analysis is retained as one descriptive slice, not as a claim that items outside it carry
+no signal.}
 \label{tab:effsize}
-\begin{tabular}{lrrl}
+\begin{tabular}{lrrr}
 \toprule
-Category & Items & \% & Criterion \\
+Category & Items & \% & $D(k)$ range \\
 \midrule
-Ceiling            & 213 & 52.5 & $p \ge 0.9$ \\
-Discriminative     & 134 & 33.0 & $0.3 < p < 0.8$ \\
-Intermediate       & 52  & 12.8 & remainder \\
-Floor              & 7   & 1.7  & $p \le 0.1$ \\
+Zero-information ($k=0$ or $12$)         & 148 & 36.5 & 0 \\
+Near-unanimous ($k=1$ or $11$)           & 72  & 17.7 & 11 \\
+Predefined band ($0.3<p<0.8$, $k\in\{4..9\}$) & 134 & 33.0 & 27--36 \\
+Remaining ($k\in\{2,3,10\}$)             & 52  & 12.8 & 20--27 \\
 \midrule
-Total              & 406 & 100  & \\
+Total                                     & 406 & 100  & \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-The discriminative band in Table~\ref{tab:effsize} is defined by $p$ alone: $0.3 < p < 0.8$, i.e.\
-$k \in \{4,\ldots,9\}$ of 12 models correct. An earlier version of this criterion also required
-$s=4p(1-p)$ above the sample median; at $n=12$ that second condition never binds within this
-$p$-range (its minimum there, at $k=9$, is $s=0.75$, already above the median item's $s=0.306$ at
-$k=11$), so it added no information and we removed it rather than retain a criterion that reads as
-more selective than it is. 134 items meet the $p$-range criterion.
-
-Half the benchmark sits at ceiling. 213 of 406 items are answered correctly by at least 11 of the
-12 models, and 7 more are answered correctly by at most one, so 220 items---slightly over
-half---carry almost no information about the relative ordering of these systems. The median item is
-answered correctly by 91.7\% of models.
+143 items are answered correctly by all twelve models and 5 by none; these 148 (36.5\%) are the
+benchmark's true zero-information items under any scoring rule, since no pair of systems is
+separated by them. A further 72 items (17.7\%) sit at $k=11$ or $k=1$ --- near-unanimous, but each
+still distinguishes 11 of 66 pairs, so we do not group them with the zero-information set. Averaged
+over all 406 items, the mean pairwise-disagreement fraction is $\overline{D}/66 = 0.229$: on a
+uniformly random pair of the twelve models, an average item has a 22.9\% chance of ranking them
+differently. The predefined band used elsewhere in this section ($0.3<p<0.8$) captures 134
+higher-$D$ items (33.0\%) as one descriptive slice among several reasonable ones, not as the
+complete set of informative items --- the corrected table above is now the basis for that
+distinction, superseding the $p\ge0.9$/$p\le0.1$ ceiling/floor framing.
 
 We report this about our own benchmark deliberately. It bears directly on how the results above
-should be read: a gap of a few points between two mid-table models rests on a subset of 134 items,
-not 406. It also suggests a construction lesson we did not anticipate when building the
-benchmark---annotating for coverage of a domain and annotating for discrimination between systems
-are different objectives, and expert effort spent on items that every competent model answers
-correctly buys descriptive completeness rather than measurement power.
+should be read: with 148 items (36.5\%) contributing no pairwise information at all, a gap of a few
+points between two mid-table models is supported by a smaller item pool than the nominal 406. It
+also suggests a construction lesson we did not anticipate when building the benchmark---annotating
+for coverage of a domain and annotating for discrimination between systems are different
+objectives, and expert effort spent on items every competent model answers correctly buys
+descriptive completeness rather than measurement power.
 
 We do not claim this ratio is unusual. We claim it is unmeasured: we are not aware of comparable
 benchmarks in this literature that report what fraction of their items separate the systems they

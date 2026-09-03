@@ -70,11 +70,11 @@ behaviour under a format-sensitive pipeline. Those are different questions, and 
 not distinguish them.
 
 A second measurement problem sits underneath the first. Counting items is not the same as counting
-evidence: 213 of the 406 items are answered correctly by at least 11 of the 12 models and therefore
-separate almost no pair of systems, leaving 134 items carrying the benchmark's discriminative
-signal. We report this for our own benchmark because it is the kind of quantity benchmarks
-generally do not report, and because discriminative coverage, not nominal size, determines how much a
-leaderboard difference can be trusted.
+evidence: 148 of the 406 items (36.5\%) are answered identically by every model and separate no
+pair of systems, while a predefined higher-discrimination band captures 134 items carrying
+substantially more of the benchmark's discriminative signal. We report this for our own benchmark
+because it is the kind of quantity benchmarks generally do not report, and because discriminative
+coverage, not nominal size, determines how much a leaderboard difference can be trusted.
 
 Our contributions, in the order the paper reports them: (1) a comparison of twelve LLMs under two
 primary scoring regimes and one operational composite, showing the primary regimes show no positive
@@ -82,7 +82,8 @@ rank correspondence and that no model holds its rank across all three; (2) a dir
 an assumption, of whether output length explains which strict failures a judge reclassifies --- it
 does not survive adjustment for task and model composition, a negative result we report as such
 rather than the intuitive but untested mechanism it replaces; (3) a discriminative-coverage analysis
-distinguishing the 134 items that separate systems from the 213 that do not; (4) IndiaFinBench
+using an exact pairwise-disagreement measure, showing 148 items separate no pair of systems while
+134 carry most of the benchmark's discriminative signal; (4) IndiaFinBench
 itself, with a validated annotation protocol and published agreement statistics; (5) a human
 reference point reported with its limits stated; and (6) full public release of the dataset, harness,
 per-item judge verdicts, and all model predictions.

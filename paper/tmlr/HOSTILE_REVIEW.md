@@ -90,15 +90,78 @@ requirement) — see NUMBERS.md and the plan's Phase 6.**
 
 ## Consolidated action items from this pass
 
-- [ ] Rerun connected-component clustered bootstrap on all 66 pairs, not the 6-7 headline ones
-      (R2.2) — free, local, no judge dependency, should do before final submission.
-- [ ] Add one sentence to `draft_07` making the CON-exclusion-strengthens-not-weakens-the-claim
-      point explicit (R1.1).
-- [ ] Add one hedged sentence to Limitations about the Gemma identity re-derivation being confirmed
-      via the paper's own methods text rather than an independent primary record (R1.2).
-- [ ] Add one sentence to the Introduction distinguishing "scoring regimes disagree" (folklore) from
-      this paper's actual claim (magnitude, structure, controlled same-items measurement) (R3.1).
-- [ ] Build and verify the anonymized supplementary package (R3.4 / Phase 6.5) — not started.
+- [x] Rerun connected-component clustered bootstrap on all 66 pairs, not the 6-7 headline ones
+      (R2.2) — done (`scripts/provenance_and_clustered_bootstrap.py`, all 66 pairs, 100k resamples,
+      5-seed stability check; Appendix A.3, Table 8).
+- [x] Add one sentence to `draft_07`/`draft_08` making the CON-exclusion-strengthens-not-weakens
+      point explicit (R1.1) — done (draft_08: "conservative for the disagreement rates we report
+      below, not convenient... removes a source of trivial agreement rather than manufacturing
+      disagreement elsewhere").
+- [x] Add one hedged sentence to Limitations about the Gemma identity re-derivation being confirmed
+      via the paper's own methods text rather than an independent primary record (R1.2) — done
+      (draft_09: "not fully independent confirmation... flag the residual uncertainty rather than
+      overstating it as settled fact").
+- [x] Add one sentence to the Introduction distinguishing "scoring regimes disagree" (folklore) from
+      this paper's actual claim (magnitude, structure, controlled same-items measurement) (R3.1) —
+      done (draft_02, opening of paragraph 2).
+- [ ] Build and verify the anonymized supplementary package (R3.4 / Phase 6.5) — not started, needs
+      Phase 9 final assembly.
 
-None of these are blocking discoveries that undermine a claim already made; all are strengthening
-edits. No finding here should change the paper's headline results.
+None of these were blocking discoveries that undermined a claim already made; all were strengthening
+edits, now landed except the supplementary package.
+
+---
+
+## Addendum — 2026-09-03, second pass (post three-regime reframe, judge-truncation fix, matched-budget
+re-run)
+
+Everything above predates the three-regime reframe and is now historical. This pass targets what's
+actually new since then: the retired "judge-audited" terminology, the judge-input-truncation fix and
+its 52 verdict flips, the IAA rescoring, and the new matched-budget confound section.
+
+**R4.1 — "You found and fixed four stale numbers in your own Discussion section this pass alone
+(Gemini-phi4 raw agreement, three worked rank examples). If a careful re-read still turns up drift
+after this many verification passes, how confident should a reviewer be that nothing else drifted?"**
+Real question, not deflectable with "we checked again." **Response:** The honest answer is these
+were caught precisely *because* of systematic re-verification (cross-checking every worked example
+against the regenerated JSON directly, not re-reading prose for internal plausibility) — the process
+that catches drift is the same process a reviewer should trust *more*, not less, once shown it works.
+The alternative (claiming zero drift without having looked) would be the actual red flag. **STATUS:
+addressed by disclosure, not fixable further — this is inherent to iterative correction, and the
+audit script's regression guards (now pinning gemini\_vs\_phi4\_agreement.json alongside
+regime\_three\_way.json and iaa\_summary.json) exist specifically so this class of drift can't
+reappear silently on the next data regeneration.**
+
+**R4.2 — "Your matched-budget re-run has an unexplained +10.83pp outlier (DeepSeek) right next to a
+result you're using to support your central thesis. Doesn't an unexplained anomaly undermine
+confidence in the other nine numbers in the same table?"**
+**Response:** The nine non-outlier deltas are individually small, mixed-sign, and each traces to a
+disclosed original-budget value in the same table (models with a low original budget gain, models
+already at or above 512 don't) — the outlier is flagged as an outlier precisely because it does not
+fit that pattern, which is evidence the other nine *are* behaving as expected, not evidence they're
+suspect too. **STATUS: addressed by explicit reporting of both the pattern and the exception; no
+further action — resolving DeepSeek's specific mechanism would need a live A/B test against the
+original OpenRouter response, which is not reproducible after the fact.**
+
+**R4.3 — "Independent adjudication was scoped into this revision but the blind sample sits unfilled.
+Does citing a 62-item stratified sample that hasn't been adjudicated read as claiming more progress
+than has actually happened?"**
+**Response:** The manuscript makes no claim about independent adjudication results anywhere — Section
+6.5's wording rule (never "the judge was validated by humans") already guards against this, and the
+existing 238-item sample is consistently labelled author adjudication throughout. **STATUS: no
+overclaim exists to fix; the sample's existence is not mentioned in the manuscript at all, only in
+the repository (`annotation/independent_adjudication/`), so there is nothing for a reviewer to read
+as premature.**
+
+**R4.4 — "Four of your matched-budget re-run's models moved from Groq to OpenRouter mid-project
+because Groq deprecated them. Is 'the same model' via a different inference provider actually the
+same measurement?"**
+Legitimate infrastructure-stability objection, not fully answerable with existing evidence.
+**Response:** For open-weight models this is a real, disclosed risk (Appendix G.1 states it
+explicitly for Kimi K2's dated snapshot) rather than an assumption. We cannot verify bit-identical
+serving behaviour across providers post hoc. **STATUS: PLAUSIBLE, disclosed, not resolvable further
+without re-running the original provider, which no longer serves these models at all — this is
+exactly the DeepSeek-outlier discussion's second candidate explanation, generalised.**
+
+No finding in this addendum changes a headline result. Two items (R4.1, R4.4) are disclosed
+limitations rather than fixes; the rest were already addressed by the manuscript's existing framing.

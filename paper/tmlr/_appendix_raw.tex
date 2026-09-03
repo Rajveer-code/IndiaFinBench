@@ -79,13 +79,23 @@ Predictions are character-capped at write time by the evaluation harness, at a l
 which script produced the row (200, 300, or 500 characters). 554 of the 4{,}128 judged REG/NUM/TMP
 rows (13.4\%) sit exactly at their model's cap, ranging from 31.1\% (Gemini 2.5 Flash, 200-char cap)
 to 0.3\% (LLaMA-3-8B and Mistral-7B, both repaired to a higher effective cap during the truncation
-fix described below). The judge itself imposes a second layer of truncation on its own inputs
-(\texttt{scripts/judge\_phi4\_crossmodel.py}: question capped at 600 characters, reference at 300,
-prediction at 500), independent of the logging cap. No response includes a provider-reported
-finish-reason, stop-reason, or token-usage field anywhere in the released data, so generation-level
-truncation---as opposed to the logging truncation quantified here---cannot be measured from the
-released artifacts at all; Section~\ref{sec:models} discloses the completion budgets that bound it
-and reports why a matched-budget re-run is the direct way to close this gap.
+fix described below). The judge previously imposed a second, undisclosed layer of truncation on its
+own inputs (question capped at 600 characters, reference at 300, prediction at 500), independent of
+the logging cap above; this has been removed. \texttt{scripts/judge\_phi4\_crossmodel.py} now sizes
+Ollama's context window (\texttt{num\_ctx}) per run from the longest question+reference+prediction
+triple in the corpus being judged, with a 25\% safety margin over the estimated token count plus the
+150-token output budget---2{,}048 tokens for the released judged data, logged in
+\texttt{evaluation/judge\_run\_manifest.json} together with an assertion, checked per item, that every
+prompt fits; zero of the 4{,}128 judged rows were flagged as not fitting. The 449 rows whose reference
+answer or prediction had been cut by the old 300/500-character judge-input caps (concentrated on
+Qwen3-32B, Llama 4 Scout 17B, LLaMA-3-8B, Mistral-7B, and Gemini 2.5 Pro's judged files) were
+re-judged under the fixed pipeline: 52 verdicts changed (19 strict-wrong items newly judged correct,
+33 newly judged incorrect), a mixed-direction shift consistent with removing a text-availability
+artifact rather than an infrastructure failure. No response includes a provider-reported finish-reason,
+stop-reason, or token-usage field anywhere in the released data, so generation-level truncation---as
+opposed to the logging truncation quantified here---cannot be measured from the original release at
+all; the matched-budget re-run (Section~\ref{sec:budget}) closes this gap directly, with full,
+untruncated responses and finish-reason logging for every model reached.
 
 Restricting to the 190 of 344 REG/NUM/TMP items where every one of the twelve models' predictions is
 strictly below its own cap---so no model's prediction on that item could possibly be a truncation

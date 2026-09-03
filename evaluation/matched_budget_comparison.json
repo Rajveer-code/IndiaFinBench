@@ -1,0 +1,177 @@
+{
+  "results": {
+    "LLaMA-3-8B": {
+      "original": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 318,
+        "pct": 78.33
+      },
+      "matched_budget_512": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 334,
+        "pct": 82.27
+      },
+      "delta_pp": 3.94
+    },
+    "Mistral-7B": {
+      "original": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 306,
+        "pct": 75.37
+      },
+      "matched_budget_512": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 316,
+        "pct": 77.83
+      },
+      "delta_pp": 2.46
+    },
+    "Gemma 3 4B": {
+      "original": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 321,
+        "pct": 79.06
+      },
+      "matched_budget_512": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 320,
+        "pct": 78.82
+      },
+      "delta_pp": -0.24
+    },
+    "GPT-OSS 120B": {
+      "original": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 307,
+        "pct": 75.62
+      },
+      "matched_budget_512": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 312,
+        "pct": 76.85
+      },
+      "delta_pp": 1.23
+    },
+    "GPT-OSS 20B": {
+      "original": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 307,
+        "pct": 75.62
+      },
+      "matched_budget_512": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 304,
+        "pct": 74.88
+      },
+      "delta_pp": -0.74
+    },
+    "DeepSeek-R1-Distill": {
+      "original": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 304,
+        "pct": 74.88
+      },
+      "matched_budget_512": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 348,
+        "pct": 85.71
+      },
+      "delta_pp": 10.83
+    },
+    "LLaMA-3.3-70B": {
+      "original": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 329,
+        "pct": 81.03
+      },
+      "matched_budget_512": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 344,
+        "pct": 84.73
+      },
+      "delta_pp": 3.7
+    },
+    "Llama 4 Scout 17B": {
+      "original": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 331,
+        "pct": 81.53
+      },
+      "matched_budget_512": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 328,
+        "pct": 80.79
+      },
+      "delta_pp": -0.74
+    },
+    "Kimi K2": {
+      "original": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 331,
+        "pct": 81.53
+      },
+      "matched_budget_512": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 330,
+        "pct": 81.28
+      },
+      "delta_pp": -0.25
+    },
+    "Qwen3-32B": {
+      "original": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 342,
+        "pct": 84.24
+      },
+      "matched_budget_512": {
+        "n_total": 406,
+        "n_scored": 406,
+        "n_errors": 0,
+        "n_correct": 341,
+        "pct": 83.99
+      },
+      "delta_pp": -0.25
+    }
+  },
+  "not_yet_complete": [
+    "Gemini 2.5 Flash"
+  ]
+}

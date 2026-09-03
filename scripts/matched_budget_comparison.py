@@ -41,6 +41,11 @@ MATCHED_FILE_MAP = {
     "Gemini 2.5 Flash": "gemini_25_flash_results.csv",
 }
 
+# MODEL_FILES (novel_methods_utils.py) still keys DeepSeek under its original,
+# since-retired display label -- map explicitly rather than renaming it there
+# (out of scope for this comparison script to touch a shared canonical dict).
+ORIG_LABEL_MAP = {"DeepSeek-R1-Distill": "DeepSeek R1 70B"}
+
 
 def score_file(path: Path) -> dict:
     with open(path, encoding="utf-8") as f:
@@ -59,7 +64,7 @@ def main():
     missing = []
     for label, matched_fname in MATCHED_FILE_MAP.items():
         matched_path = MATCHED_DIR / matched_fname
-        orig_fname = MODEL_FILES.get(label)
+        orig_fname = MODEL_FILES.get(ORIG_LABEL_MAP.get(label, label))
         orig_path = RESULTS_DIR / orig_fname if orig_fname else None
         if not matched_path.exists() or not orig_path or not orig_path.exists():
             missing.append(label)

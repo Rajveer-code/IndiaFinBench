@@ -90,15 +90,13 @@ Section~\ref{sec:models} disclosed that the original evaluation used per-model c
 that were not uniform (200--2048 tokens, chosen per provider for cost reasons) and that write-time
 logging separately capped stored predictions at 200--500 characters regardless of what the model
 generated (Appendix~\ref{app:truncation}). Both are operational choices, not properties of the
-models, and both can depress a model's strict score independently of its underlying answer. To
-measure this, we re-ran the 10 of 12 models still reachable under current API credentials at a
-single uniform completion budget of 512 tokens---chosen from a pilot across three candidate budgets
-(512, 1024, 2048) on a stratified subset, where raising the budget past 512 reduced an
-already-negligible truncation rate by well under a point---logging the complete prediction plus the
-provider's finish-reason and completion-token count for every item, neither of which the original
-release records for any model. Gemini 2.5 Pro is unreachable on any fresh API key (a live call
-returns \texttt{404}, ``no longer available to new users''); Gemini 2.5 Flash's re-run is blocked by
-a free-tier quota far below its documented rate limit on this key and is not yet complete.
+models, and both can depress a model's strict score independently of its underlying answer. We
+re-ran the 10 of 12 models reachable under current API credentials at a single uniform completion
+budget of 512 tokens---selected by pilot (Appendix~\ref{app:matched-budget-ids})---logging the
+complete prediction plus provider finish-reason and completion-token count for every item, neither of
+which the original release records for any model. Gemini 2.5 Pro is unreachable on any fresh API key;
+Gemini 2.5 Flash's re-run is not yet complete (Appendix~\ref{app:matched-budget-ids} gives both
+reasons in full).
 
 \begin{table}[t]
 \centering\small
@@ -115,21 +113,14 @@ the removal of the write-time logging cap---so a per-model $\Delta$ here is thei
 an isolated budget effect; the two cannot be separated post hoc from released data that never
 recorded generation-level truncation in the first place. Nine of the ten models shift by at most
 4 points in either direction ($-0.74$ to $+3.94$pp), consistent with a modest, mixed-sign operational
-effect on top of measurement noise. DeepSeek-R1-Distill is an outlier at $+10.83$pp, and we report it
-without endorsing a single explanation: its delta does not correlate with how often each model's
-original release sat at the write-time cap (Pearson $r = 0.09$ across the other nine models, so
-logging truncation alone does not obviously explain the outlier), and a direct probe of the same
-OpenRouter endpoint made while preparing this analysis returned the response's \texttt{content}
-field as empty with the model's reasoning field populated instead---the same budget-consumed-by-
-hidden-reasoning failure mode Qwen3-32B required an explicit \texttt{/no\_think} directive to avoid
-(Appendix~\ref{app:matched-budget-ids}). Open-weight checkpoints served through a third-party
-aggregator are not guaranteed stable between the original evaluation and a re-run weeks later, and we
-cannot rule out that DeepSeek-R1-Distill's serving behaviour changed in that window independent of
-the budget we varied. What the re-run supports without qualification is the general point: strict
-accuracy is sensitive to completion budget and logging configuration, sometimes by several points,
-for models whose original budget was well below 512---further evidence, alongside the scoring-regime
-result, that a single leaderboard number is a property of the measurement protocol as much as of the
-model.
+effect on top of measurement noise. DeepSeek-R1-Distill is an outlier at $+10.83$pp; we report it
+without endorsing a single explanation, since it does not correlate with each model's original
+write-time-cap rate (Pearson $r = 0.09$) and at least one competing explanation, unrelated to budget,
+remains live (Appendix~\ref{app:matched-budget-ids} gives both candidates and the evidence for each in
+full). What the re-run supports without qualification is the general point: strict accuracy is
+sensitive to completion budget and logging configuration, sometimes by several points, for models
+whose original budget was well below 512---further evidence, alongside the scoring-regime result,
+that a single leaderboard number is a property of the measurement protocol as much as of the model.
 
 \section{Discriminative Coverage: How Many Items Actually Discriminate}
 \label{sec:effsize}

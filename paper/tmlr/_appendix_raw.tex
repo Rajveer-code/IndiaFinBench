@@ -180,7 +180,46 @@ from the matched-budget re-run: a live call against \texttt{gemini-2.5-pro} on a
 returns \texttt{404 NOT\_FOUND}, ``This model \ldots{} is no longer available to new users''
 --- a platform access restriction, not a credentials problem, and not something a different model
 generation (e.g. \texttt{gemini-3.1-pro-preview}) can substitute for without re-running a different
-model than the one this paper reports on.
+model than the one this paper reports on. Gemini 2.5 Flash's own re-run is not yet complete: this
+fresh AI Studio key's free-tier quota for \texttt{gemini-2.5-flash} throttles after roughly 20
+requests regardless of request spacing (confirmed at 8s and 15s spacing, and via the exact
+\texttt{generate\_content\_free\_tier\_requests} quota-exceeded message returned), well below the
+model's documented rate limit, consistent with a new-project ramp-up restriction rather than a key
+or billing problem; the re-run resumes automatically once the quota window clears.
+
+\subsection{Budget Selection and the DeepSeek-R1-Distill Outlier}
+\label{app:budget-outlier}
+
+The matched budget (512 tokens) was chosen from a pilot across three candidates (512, 1024, 2048) on
+a stratified 24-item subset (8 each of REG/NUM/TMP) across all reachable models
+(\texttt{scripts/matched\_budget\_pilot.py}): mean truncation across models was 1.1\% at 512, 0.4\% at
+1024, and 0.0\% at 2048---raising the budget past 512 buys a reduction of about one point in an
+already-negligible rate, so 512 was taken as the lowest budget that does not materially change
+truncation relative to the higher candidates.
+
+DeepSeek-R1-Distill's $+10.83$pp delta (Table~\ref{tab:matchedbudget}) is the one result in this
+re-run we could not fully explain and report as such rather than resolving it into a clean story. Two
+candidate contributors are on the table, neither ruled in or out. First, logging truncation:
+DeepSeek's original release had 19.5\% of its REG/NUM/TMP rows sitting at the old 300-character
+write-time cap (Appendix~\ref{app:truncation}), the highest rate of any model with a comparably small
+delta, so removing that cap plausibly recovers some of the swing---except that a Pearson correlation
+between each model's original at-cap rate and its matched-budget delta, computed across the other nine
+models, is $r = 0.09$, essentially zero, so logging truncation alone does not obviously scale with the
+observed deltas. Second, output-style or serving variance: a direct probe of the same OpenRouter
+endpoint (\texttt{deepseek/deepseek-r1-distill-llama-70b}) made while preparing this analysis
+returned \texttt{provider: Novita} with the response's \texttt{content} field empty and a
+\texttt{reasoning} field populated instead---the same budget-consumed-by-hidden-reasoning failure
+mode Qwen3-32B needed an explicit \texttt{/no\_think} directive to avoid (Section~\ref{app:matched-budget-ids}
+above). Manual inspection of matched-run predictions confirms a stylistic shift on several items from
+the original's more discursive phrasing (e.g. ``The minimum average operating profit required is
+fifteen crore rupees over the preceding three years. \textbackslash n\textbackslash nAnswer: Fifteen
+crore rupees.'') to a terser, more exact-match-friendly form (``fifteen crore rupees''), which is
+consistent with either explanation and does not distinguish between them. Open-weight checkpoints
+served through a third-party aggregator are not guaranteed stable in underlying serving behaviour
+between the original evaluation and a re-run weeks later, and we cannot rule out that DeepSeek-R1-
+Distill's serving changed in that window independent of the budget we varied. We report the number,
+the two candidate explanations, and the evidence against attributing it cleanly to either, rather than
+picking the more convenient story.
 
 \section{Task Examples, Pipeline, and Failure Cases}
 \label{app:examples}

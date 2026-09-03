@@ -38,9 +38,13 @@ EXCLUDE_NAMES = {
     "upload_to_huggingface.py", "deploy_space.sh", "generate_paper_docx.py",
     "patch_docx.py", "patch_docx2.py",
     "build_anonymous_supplementary.py",  # this script itself -- a build tool, not part of reproduction
+    "build_adjudication_artifact.py",  # builds the named-recipient share page, not reproduction
 }
 EXCLUDE_SUFFIXES = {".pyc"}
-EXCLUDE_DIR_NAMES = {"__pycache__", "_novel_methods_BACKUP_11models_2026-08-31"}
+EXCLUDE_DIR_NAMES = {
+    "__pycache__", "_novel_methods_BACKUP_11models_2026-08-31",
+    "artifact",  # annotation/independent_adjudication/artifact/ names the author by design
+}
 
 SUPPLEMENTARY_README = """\
 # IndiaFinBench -- Anonymized Supplementary Material

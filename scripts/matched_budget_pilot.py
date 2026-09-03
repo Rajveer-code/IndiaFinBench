@@ -227,7 +227,10 @@ def call_gemini(model_id: str, prompt: str, budget: int) -> dict:
         except Exception as e:
             err = str(e)
             if "429" in err or "quota" in err.lower() or "rate" in err.lower() or "exhausted" in err.lower():
-                wait = min(2 ** attempt * 10, 90)
+                # Gemini's 429 body names an exact retry delay ("Please retry in 31.9s") --
+                # use it directly plus a small buffer instead of blind exponential backoff.
+                m = re.search(r"retry in (\d+(?:\.\d+)?)s", err)
+                wait = float(m.group(1)) + 3 if m else min(2 ** attempt * 10, 90)
                 time.sleep(wait)
                 continue
             return {"text": "", "finish_reason": None, "completion_tokens": None, "error": err[:200]}
@@ -265,7 +268,9 @@ def run_pilot():
     total = len(MODELS) * len(sample) * len(BUDGETS)
     done_n = len(done_keys)
 
-    delay_map = {"ollama": 0.2, "groq": 1.5, "openrouter": 2.0, "gemini": 4.5}
+    delay_map = {"ollama": 0.2, "groq": 1.5, "openrouter": 2.0, "gemini": 8.0}
+    # Gemini free tier: confirmed live 429 at ~20 req/min for gemini-2.5-flash. 8s spacing
+    # keeps us near 7-8 RPM, with headroom for the retry loop's own calls.
 
     for model_label, cfg in MODELS.items():
         caller = CALLERS[cfg["provider"]]

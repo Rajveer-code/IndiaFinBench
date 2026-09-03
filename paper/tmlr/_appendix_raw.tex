@@ -158,6 +158,30 @@ GGUF blob, re-confirmed 2026-09-03): \texttt{llama3:latest} = \texttt{365c0bd3c0
 \label{tab:models}
 \end{table*}
 
+\subsection{Matched-Budget Re-run: Provider and Model Identifiers}
+\label{app:matched-budget-ids}
+
+Four of the original Groq-hosted models (LLaMA-3.3-70B, Llama 4 Scout 17B, Qwen3-32B, Kimi K2) were
+confirmed removed from Groq's own model catalogue as of 2026-09-03 (a live \texttt{models.list()}
+call against Groq returns only the two GPT-OSS models from the original six); their open-weight
+checkpoints were re-run via OpenRouter instead, under exact identifiers verified live against
+OpenRouter's models endpoint: \texttt{meta-llama/llama-3.3-70b-instruct} (Meta: Llama 3.3 70B
+Instruct), \texttt{meta-llama/llama-4-scout} (Meta: Llama 4 Scout), \texttt{qwen/qwen3-32b} (Qwen:
+Qwen3 32B), \texttt{moonshotai/kimi-k2} (MoonshotAI: Kimi K2, the \texttt{0711} dated snapshot ---
+the original Groq-served checkpoint's exact build date is not recoverable, since Groq no longer
+serves it to check against). Qwen3-32B's OpenRouter route (Nebius) answers in extended-thinking mode
+by default, consuming budget on invisible reasoning before any visible answer; every Qwen3-32B call
+in the matched-budget re-run appends the model's own documented \texttt{/no\_think} directive to
+suppress this, matching the direct-answer, no-preamble system prompt used throughout. DeepSeek-R1-
+Distill-Llama-70B was already OpenRouter-hosted in the original run and uses the same identifier,
+\texttt{deepseek/deepseek-r1-distill-llama-70b}, unchanged. Gemini 2.5 Flash uses the AI Studio
+identifier \texttt{gemini-2.5-flash}, unchanged from the original run. Gemini 2.5 Pro is excluded
+from the matched-budget re-run: a live call against \texttt{gemini-2.5-pro} on a fresh API key
+returns \texttt{404 NOT\_FOUND}, ``This model \ldots{} is no longer available to new users''
+--- a platform access restriction, not a credentials problem, and not something a different model
+generation (e.g. \texttt{gemini-3.1-pro-preview}) can substitute for without re-running a different
+model than the one this paper reports on.
+
 \section{Task Examples, Pipeline, and Failure Cases}
 \label{app:examples}
 

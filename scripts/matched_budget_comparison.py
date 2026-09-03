@@ -90,9 +90,17 @@ def main():
         if not matched_path.exists() or entry is None:
             missing.append(label)
             continue
+        matched = score_file(matched_path)
+        # A CSV that exists but isn't actually finished (still mid-rerun, or a straggler
+        # error never retried) must not be silently scored as if it were representative --
+        # caught 2026-09-04 when a mid-run Gemini file with 65/160 rows errored still
+        # produced a percentage with no warning it covered only 95 of 406 items.
+        if matched["n_total"] != 406 or matched["n_errors"] > 0:
+            missing.append(f"{label} (incomplete: {matched['n_scored']}/{matched['n_total']} scored, "
+                            f"{matched['n_errors']} errors)")
+            continue
         orig = {"n_total": 406, "n_scored": 406, "n_errors": 0,
                  "n_correct": entry["strict_406"], "pct": entry["strict_pct"]}
-        matched = score_file(matched_path)
         results[label] = {"original": orig, "matched_budget_512": matched,
                            "delta_pp": round(matched["pct"] - orig["pct"], 2) if matched["pct"] is not None and orig["pct"] is not None else None,
                            "orig_budget": ORIG_BUDGET.get(label),

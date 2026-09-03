@@ -54,7 +54,14 @@ if _env_path.exists():
 
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
 OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "")
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEYS", os.environ.get("GOOGLE_API_KEY", "")).split(",")[0].strip()
+# GEMINI_API_KEYS holds every key we have, comma-separated; call_gemini rotates across them on
+# 429/quota instead of sleeping on an exhausted key (2026-09-03: rotation added after the single
+# original key throttled for 2+ hours with no recovery -- multiple fresh keys fixes this).
+GEMINI_API_KEYS = [k.strip() for k in
+                    os.environ.get("GEMINI_API_KEYS", os.environ.get("GOOGLE_API_KEY", "")).split(",")
+                    if k.strip()]
+GEMINI_API_KEY = GEMINI_API_KEYS[0] if GEMINI_API_KEYS else ""  # back-compat for any other importer
+_gemini_key_idx = [0]  # mutable cell so call_gemini can advance it across calls
 
 SYSTEM_PROMPT = """You are an expert in Indian financial regulation and policy.
 Answer questions using ONLY the provided context passage.
@@ -201,12 +208,16 @@ def call_ollama(model_id: str, prompt: str, budget: int) -> dict:
 
 
 def call_gemini(model_id: str, prompt: str, budget: int) -> dict:
-    if not GEMINI_API_KEY:
+    if not GEMINI_API_KEYS:
         return {"text": "", "finish_reason": None, "completion_tokens": None, "error": "GEMINI_API_KEYS/GOOGLE_API_KEY not set"}
     from google import genai
-    for attempt in range(5):
+    n_keys = len(GEMINI_API_KEYS)
+    # Try every key at most twice before falling back to a real sleep -- a 429 on one key
+    # rotates to the next key immediately (no sleep), since a fresh key's quota is independent.
+    for attempt in range(n_keys * 2):
+        key = GEMINI_API_KEYS[_gemini_key_idx[0] % n_keys]
         try:
-            client = genai.Client(api_key=GEMINI_API_KEY)
+            client = genai.Client(api_key=key)
             resp = client.models.generate_content(
                 model=model_id,
                 contents=f"{SYSTEM_PROMPT}\n\n{prompt}",
@@ -227,14 +238,19 @@ def call_gemini(model_id: str, prompt: str, budget: int) -> dict:
         except Exception as e:
             err = str(e)
             if "429" in err or "quota" in err.lower() or "rate" in err.lower() or "exhausted" in err.lower():
-                # Gemini's 429 body names an exact retry delay ("Please retry in 31.9s") --
-                # use it directly plus a small buffer instead of blind exponential backoff.
-                m = re.search(r"retry in (\d+(?:\.\d+)?)s", err)
-                wait = float(m.group(1)) + 3 if m else min(2 ** attempt * 10, 90)
-                time.sleep(wait)
+                _gemini_key_idx[0] += 1
+                if (attempt + 1) % n_keys == 0:
+                    # every key just failed once this round -- back off before the next round
+                    m = re.search(r"retry in (\d+(?:\.\d+)?)s", err)
+                    time.sleep(float(m.group(1)) + 3 if m else 15)
+                continue
+            if "404" in err and "no longer available" in err.lower():
+                # this key's account tier doesn't have this model at all (not a quota issue) --
+                # rotate past it permanently for this run rather than retrying it.
+                _gemini_key_idx[0] += 1
                 continue
             return {"text": "", "finish_reason": None, "completion_tokens": None, "error": err[:200]}
-    return {"text": "", "finish_reason": None, "completion_tokens": None, "error": "retries exhausted"}
+    return {"text": "", "finish_reason": None, "completion_tokens": None, "error": "all keys exhausted"}
 
 
 CALLERS = {"groq": call_groq, "openrouter": call_openrouter, "ollama": call_ollama, "gemini": call_gemini}

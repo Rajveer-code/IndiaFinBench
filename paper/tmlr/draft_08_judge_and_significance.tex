@@ -36,47 +36,38 @@ correctly holding the eighth, where the predicted figure simply did not match th
 pilot showed that phi4-mini both overturned strict failures and retained cases where the substantive
 answer remained incorrect.
 
-Table~\ref{tab:judgereliability} reports, for every model, the strict-to-judge overturn rate (items
-strict scoring marked wrong that phi4-mini marks correct), the judge rejection rate of strict-correct
-predictions (the reverse---estimable for the first time because this pass covers every item, not
-only strict failures), and the resulting 406-item judge-augmented accuracy (Appendix~\ref{app:regimetable}
-also reports the judge-only figure for every model, where the judge's verdict is taken as final
-rather than only ever overturning). We avoid ``false
-negative''/``false positive'' here: those terms presuppose the judge is ground truth, which it is
-not (Section~\ref{sec:judge} reports its own error rate against human adjudication). On the 874 items Gemini 2.5 Flash
-originally judged, phi4-mini agrees with it on 698 (\textbf{79.9\% raw agreement}). This is neither
-suspiciously high (which would suggest one judge merely rubber-stamping the other) nor low enough to
-call either judge unreliable outright; it indicates real, bounded disagreement between two models
-neither of which we treat as ground truth. To resolve genuine disagreement between judges and check whether agreement between methods also
-tracks human judgment, we hand-adjudicate 238 items: the 174 REG/NUM/TMP items where Gemini and
-phi4-mini disagree, plus a stratified 64-item control sample where they agree (Appendix~\ref{app:judge}
-reports the full sampling protocol). Adjudication is scored against the judge verdicts as they stood
-when the sample was drawn and handed to the adjudicator---not a later-updated state---so every
-disagreement item resolves to exactly one judge by construction; a subsequent data-quality fix
-(Section~\ref{sec:models}) that later corrected truncated reference text for a few items is reported
-independently rather than folded into this analysis. On the 64 control items the adjudicator
-concurred with the existing consensus 89.1\% of the time. On the 174 disagreement items, the human's
-verdict matched Gemini's on 56.9\% and phi4-mini's on 43.1\%, widest on numerical reasoning
-(Appendix~\ref{app:judge} reports the full per-task breakdown). Neither judge is right often enough
-on these disputed cases to be treated as ground truth, and phi4-mini's lower share here does not
-argue against using it as this paper's primary judge: that choice rests on full coverage
-(Section~\ref{sec:judge} could estimate false positives for the first time only because of it), not
-on a claim that phi4-mini is more accurate than Gemini. Section~\ref{sec:limitations} returns to this
-as a limitation of the cross-model judge design.
+Table~\ref{tab:judgereliability} reports, per model, the strict-to-judge overturn rate, the judge
+rejection rate of strict-correct predictions (estimable for the first time here, since this pass
+covers every item rather than only strict failures), and the resulting judge-augmented accuracy
+(Appendix~\ref{app:regimetable} adds the judge-only figure). We avoid ``false negative''/``false
+positive'': those terms presuppose the judge is ground truth, which it is not. On the 874 items
+Gemini 2.5 Flash originally judged, phi4-mini agrees with it on 698 (\textbf{79.9\% raw agreement})---
+neither suspiciously high (rubber-stamping) nor low enough to call either judge unreliable, but real,
+bounded disagreement between two models neither of which we treat as ground truth. To resolve that
+disagreement and check whether it tracks human judgment, we hand-adjudicate 238 items: the 174
+REG/NUM/TMP items where Gemini and phi4-mini disagree, plus a stratified 64-item control sample where
+they agree (Appendix~\ref{app:judge} gives the full sampling protocol). Adjudication is scored
+against the judge verdicts as they stood when the sample was drawn, so every disagreement item
+resolves to exactly one judge by construction; a later data-quality fix (Section~\ref{sec:models})
+that corrected truncated reference text for a few items is reported independently rather than folded
+in here. The adjudicator concurred with consensus on 89.1\% of control items; on the 174 disagreement
+items, the human matched Gemini on 56.9\% and phi4-mini on 43.1\%, widest on numerical reasoning
+(Appendix~\ref{app:judge} has the per-task breakdown). Neither judge is right often enough on these
+disputed cases to be ground truth, and phi4-mini's lower share does not argue against using it as the
+primary judge---that choice rests on full coverage, not on accuracy over Gemini.
+Section~\ref{sec:limitations} returns to this as a limitation of the cross-model judge design.
 
-\textbf{Decision rule, stated before the results were examined, and an ambiguity it did not
-anticipate.} We committed, before running the full pass, to a rule: if the cross-model judge
-supports DeepSeek-R1-Distill's strict-to-top reversal, report it as a central finding; if not, report
-the discrepancy plainly and let the discriminative-coverage result (Section~\ref{sec:effsize}) carry
-more of the paper's weight instead. The rule as written presupposed a single judge regime. It was not:
-the judge-augmented regime (Section~\ref{sec:regime}) satisfies it exactly---DeepSeek ties for 1st---
-while the judge-only regime, where the same judge's verdict is taken as final rather than only ever
-overturning strict failures, does not---DeepSeek ranks 7th of twelve there, tied with Qwen3-32B. We report both rather than
-choosing the reading the original rule anticipated: the reversal is real under judge-augmented
-scoring and is itself evidence for this paper's actual thesis, that the scoring rule---not only
-strict-versus-judge, but which of two defensible ways of applying a judge---materially changes the
-answer. Discriminative coverage (Section~\ref{sec:effsize}) is reported as a coequal finding, not a
-fallback triggered by the gate's failure.
+\textbf{A pre-registered decision rule met an ambiguity it did not anticipate.} Before running the
+full pass we committed to a rule: if the cross-model judge supports DeepSeek-R1-Distill's
+strict-to-top reversal, report it as a central finding; if not, let discriminative coverage
+(Section~\ref{sec:effsize}) carry more of the paper's weight instead. The rule presupposed a single
+judge regime, but there are two: judge-augmented (Section~\ref{sec:regime}) satisfies it
+exactly---DeepSeek ties for 1st---while judge-only, where the same judge's verdict is taken as final
+rather than only ever overturning, does not---DeepSeek ranks 7th of twelve there, tied with
+Qwen3-32B. We report both rather than choosing the reading the rule anticipated: the reversal is real
+under judge-augmented scoring and is itself evidence for the paper's actual thesis, that which of two
+defensible ways of applying a judge materially changes the answer. Discriminative coverage is a
+coequal finding, not a fallback triggered by the gate's failure.
 
 \textbf{What survives the judge audit.} Attributing every strict failure to a task-conditioned
 category (domain-knowledge, numerical, temporal, or context-grounding; Appendix~\ref{sec:errortax-sub})

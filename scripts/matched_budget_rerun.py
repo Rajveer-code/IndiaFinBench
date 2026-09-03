@@ -33,7 +33,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
 from matched_budget_pilot import (  # noqa: E402 -- reuse, don't reimplement
-    MODELS, EXCLUDED, CALLERS, SYSTEM_PROMPT, GEMINI_API_KEY,
+    MODELS, EXCLUDED, CALLERS, SYSTEM_PROMPT, GEMINI_API_KEYS,
 )
 
 BASE = Path(__file__).parent.parent

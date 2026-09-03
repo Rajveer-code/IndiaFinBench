@@ -1,0 +1,498 @@
+<title>Second Opinion</title>
+<style>
+:root{
+  --bg:#F4F5F7; --surface:#FFFFFF; --surface-2:#EDEFF3;
+  --text:#1A1D23; --text-dim:#5B6270;
+  --border:#D8DCE3;
+  --navy:#1E3A5F; --navy-ink:#16293F;
+  --gold:#A9812F;
+  --good:#276749; --good-bg:#E7F3EC; --good-border:#9AC7AC;
+  --bad:#A33B3B; --bad-bg:#FBEBEA; --bad-border:#E3A6A2;
+  --focus:#3B6FA0;
+  --shadow: 0 1px 2px rgba(20,26,38,.06), 0 6px 20px rgba(20,26,38,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11151C; --surface:#181D26; --surface-2:#1F2530;
+    --text:#E7E9EE; --text-dim:#9AA2B1;
+    --border:#2B3241;
+    --navy:#6E97C6; --navy-ink:#8FB2D8;
+    --gold:#D2AC5C;
+    --good:#7FCBA0; --good-bg:#173225; --good-border:#2E5A41;
+    --bad:#E39490; --bad-bg:#331B1B; --bad-border:#5C3130;
+    --focus:#7FA9D6;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11151C; --surface:#181D26; --surface-2:#1F2530;
+  --text:#E7E9EE; --text-dim:#9AA2B1;
+  --border:#2B3241;
+  --navy:#6E97C6; --navy-ink:#8FB2D8;
+  --gold:#D2AC5C;
+  --good:#7FCBA0; --good-bg:#173225; --good-border:#2E5A41;
+  --bad:#E39490; --bad-bg:#331B1B; --bad-border:#5C3130;
+  --focus:#7FA9D6;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+}
+
+*{box-sizing:border-box;}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:"IBM Plex Sans",-apple-system,Segoe UI,sans-serif;
+  min-height:100vh; display:flex; justify-content:center;
+  padding:32px 16px 64px;
+}
+.wrap{width:100%; max-width:680px;}
+h1,h2,h3{font-family:"Spectral",Georgia,serif; text-wrap:balance; margin:0;}
+.eyebrow{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--gold); font-weight:600;
+}
+p{line-height:1.6;}
+button{font-family:inherit; cursor:pointer;}
+button:focus-visible, a:focus-visible, textarea:focus-visible{
+  outline:2px solid var(--focus); outline-offset:2px;
+}
+::selection{background:var(--gold); color:#fff;}
+
+/* ---- top bar ---- */
+.topbar{display:flex; align-items:center; gap:14px; margin-bottom:28px;}
+.brand{
+  font-family:"Spectral",serif; font-weight:600; font-size:16px; color:var(--navy-ink);
+  display:flex; align-items:center; gap:8px;
+}
+.brand .mark{
+  width:22px; height:22px; border-radius:4px; background:var(--navy);
+  display:inline-flex; align-items:center; justify-content:center;
+  color:var(--bg); font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:700;
+}
+.progress-track{
+  flex:1; height:6px; background:var(--surface-2); border-radius:99px; overflow:hidden;
+}
+.progress-fill{
+  height:100%; background:linear-gradient(90deg,var(--navy),var(--gold));
+  border-radius:99px; transition:width .35s ease;
+}
+.progress-label{
+  font-family:"IBM Plex Mono",monospace; font-size:12px; color:var(--text-dim);
+  white-space:nowrap; font-variant-numeric:tabular-nums;
+}
+
+/* ---- screens ---- */
+.screen{display:none;}
+.screen.active{display:block; animation:rise .35s ease both;}
+@keyframes rise{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;}}
+@media (prefers-reduced-motion: reduce){.screen.active{animation:none;}}
+
+.card{
+  background:var(--surface); border:1px solid var(--border); border-radius:14px;
+  box-shadow:var(--shadow); padding:32px;
+}
+
+/* ---- intro ---- */
+.intro h1{font-size:28px; margin-bottom:14px; color:var(--navy-ink);}
+.intro p{color:var(--text-dim); font-size:15px;}
+.intro .lede{font-size:17px; color:var(--text); margin-bottom:20px;}
+.steps{list-style:none; margin:22px 0; padding:0; display:grid; gap:12px;}
+.steps li{
+  display:flex; gap:12px; align-items:flex-start; font-size:14.5px; color:var(--text);
+}
+.steps .num{
+  flex:none; width:24px; height:24px; border-radius:50%; background:var(--surface-2);
+  color:var(--navy-ink); font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:700;
+  display:flex; align-items:center; justify-content:center; margin-top:1px;
+}
+.note{
+  margin-top:22px; padding:14px 16px; background:var(--surface-2); border-radius:10px;
+  font-size:13.5px; color:var(--text-dim); border-left:3px solid var(--gold);
+}
+.name-row{margin:22px 0 6px; display:flex; flex-direction:column; gap:6px;}
+.name-row label{font-size:13px; color:var(--text-dim);}
+.name-row input{
+  font-family:inherit; font-size:15px; padding:10px 12px; border-radius:8px;
+  border:1px solid var(--border); background:var(--bg); color:var(--text);
+}
+.cta-row{margin-top:26px; display:flex; justify-content:flex-end;}
+
+.btn{
+  font-size:15px; font-weight:600; padding:12px 22px; border-radius:9px;
+  border:1px solid transparent; transition:transform .12s ease, box-shadow .12s ease;
+}
+.btn:active{transform:translateY(1px);}
+.btn-primary{background:var(--navy); color:#fff;}
+.btn-primary:hover{box-shadow:0 4px 14px rgba(30,58,95,.35);}
+.btn-ghost{background:transparent; color:var(--navy-ink); border-color:var(--border);}
+.btn-ghost:hover{background:var(--surface-2);}
+.btn:disabled{opacity:.45; cursor:not-allowed; transform:none; box-shadow:none;}
+
+/* ---- review screen ---- */
+.tag{
+  display:inline-block; font-family:"IBM Plex Mono",monospace; font-size:11px;
+  letter-spacing:.04em; text-transform:uppercase; padding:3px 9px; border-radius:99px;
+  background:var(--surface-2); color:var(--text-dim); margin-bottom:14px;
+}
+.q-block h2{font-size:19px; line-height:1.45; color:var(--text); font-weight:600;}
+.pair{display:grid; gap:14px; margin:22px 0;}
+.answer-box{border-radius:10px; padding:16px 18px; border:1px solid var(--border);}
+.answer-box .k{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--text-dim); margin-bottom:8px; display:block;
+}
+.answer-box .v{font-size:15px; line-height:1.55; white-space:pre-wrap;}
+.answer-box.ref{background:var(--surface-2); border-left:3px solid var(--gold);}
+.answer-box.pred{background:var(--surface); border-left:3px solid var(--navy);}
+
+.verdict-row{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:24px 0 16px;}
+.vbtn{
+  padding:16px; border-radius:10px; border:1.5px solid var(--border); background:var(--surface);
+  font-size:15px; font-weight:700; letter-spacing:.02em; display:flex; align-items:center;
+  justify-content:center; gap:8px; color:var(--text);
+}
+.vbtn .dot{width:9px; height:9px; border-radius:50%; background:var(--border);}
+.vbtn.correct.selected{background:var(--good-bg); border-color:var(--good-border); color:var(--good);}
+.vbtn.correct.selected .dot{background:var(--good);}
+.vbtn.incorrect.selected{background:var(--bad-bg); border-color:var(--bad-border); color:var(--bad);}
+.vbtn.incorrect.selected .dot{background:var(--bad);}
+.vbtn:hover{border-color:var(--focus);}
+
+.notes-field{width:100%;}
+.notes-field label{font-size:12.5px; color:var(--text-dim); display:block; margin-bottom:6px;}
+.notes-field textarea{
+  width:100%; min-height:64px; resize:vertical; font-family:inherit; font-size:14px;
+  padding:10px 12px; border-radius:8px; border:1px solid var(--border);
+  background:var(--bg); color:var(--text); line-height:1.5;
+}
+.nav-row{display:flex; justify-content:space-between; align-items:center; margin-top:26px;}
+.nav-row .spacer{flex:1;}
+
+/* ---- outro ---- */
+.outro h1{font-size:26px; color:var(--navy-ink); margin-bottom:8px;}
+.summary-strip{
+  display:flex; gap:18px; margin:20px 0 4px; padding:16px 18px; background:var(--surface-2);
+  border-radius:10px;
+}
+.summary-strip .stat{flex:1; text-align:center;}
+.summary-strip .stat .n{
+  font-family:"IBM Plex Mono",monospace; font-size:22px; font-weight:700; color:var(--navy-ink);
+  font-variant-numeric:tabular-nums;
+}
+.summary-strip .stat .l{font-size:11.5px; color:var(--text-dim); text-transform:uppercase; letter-spacing:.05em;}
+.export-actions{display:flex; gap:10px; margin-top:22px; flex-wrap:wrap;}
+.copy-hint{font-size:13px; color:var(--text-dim); margin-top:10px;}
+.copied-flash{color:var(--good); font-weight:600;}
+
+.footer-note{
+  text-align:center; margin-top:20px; font-size:12px; color:var(--text-dim);
+}
+
+@media (max-width:520px){
+  .card{padding:22px;}
+  .verdict-row{grid-template-columns:1fr;}
+  .summary-strip{flex-direction:column; gap:10px;}
+}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+
+<div class="wrap">
+  <div class="topbar" id="topbar" style="display:none;">
+    <div class="brand"><span class="mark">IF</span>Second Opinion</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="progress-label" id="progressLabel">0 / 62</div>
+  </div>
+
+  <!-- INTRO -->
+  <section class="screen active" id="screen-intro">
+    <div class="card intro">
+      <div class="eyebrow">IndiaFinBench &middot; Independent Check</div>
+      <h1>A second pair of eyes</h1>
+      <p class="lede">Rajveer built a benchmark that tests AI models on Indian financial-regulation questions. Two automated referees disagreed on 62 of the answers below, and he'd like an honest human read on who was actually right &mdash; that's you.</p>
+      <ul class="steps">
+        <li><span class="num">1</span><span>For each of the 62 items, you'll see a <strong>question</strong>, the <strong>reference answer</strong>, and what an <strong>AI model answered</strong>.</span></li>
+        <li><span class="num">2</span><span>Decide only whether the AI's answer is <strong>substantively correct</strong> &mdash; same facts, number, or conclusion &mdash; even if it's worded differently, longer, or shows its working.</span></li>
+        <li><span class="num">3</span><span>Mark it <strong>Correct</strong> or <strong>Incorrect</strong>. A note is optional but helpful if something's ambiguous.</span></li>
+        <li><span class="num">4</span><span>Your progress saves automatically in this browser &mdash; close the tab any time and pick up where you left off. At the end, one click copies your results to send back.</span></li>
+      </ul>
+      <div class="note">No technical or legal background needed. If you genuinely can't tell, say so in the note and move on &mdash; there's no penalty for "not sure." Takes most people 25&ndash;40 minutes for all 62.</div>
+      <div class="name-row">
+        <label for="adjudicatorName">Your name (so Rajveer knows whose review this is)</label>
+        <input type="text" id="adjudicatorName" placeholder="e.g. Priya" autocomplete="off">
+      </div>
+      <div class="cta-row"><button class="btn btn-primary" id="startBtn">Start reviewing &rarr;</button></div>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="screen" id="screen-review">
+    <div class="card">
+      <span class="tag" id="taskTag">&mdash;</span>
+      <div class="q-block"><h2 id="questionText"></h2></div>
+      <div class="pair">
+        <div class="answer-box ref"><span class="k">Reference answer</span><span class="v" id="refText"></span></div>
+        <div class="answer-box pred"><span class="k">What the AI answered</span><span class="v" id="predText"></span></div>
+      </div>
+      <div class="verdict-row">
+        <button class="vbtn correct" id="btnCorrect" data-verdict="CORRECT"><span class="dot"></span>Correct</button>
+        <button class="vbtn incorrect" id="btnIncorrect" data-verdict="INCORRECT"><span class="dot"></span>Incorrect</button>
+      </div>
+      <div class="notes-field">
+        <label for="notesInput">Notes (optional)</label>
+        <textarea id="notesInput" placeholder="Anything worth flagging about this one&hellip;"></textarea>
+      </div>
+      <div class="nav-row">
+        <button class="btn btn-ghost" id="backBtn">&larr; Back</button>
+        <div class="spacer"></div>
+        <button class="btn btn-primary" id="nextBtn" disabled>Next &rarr;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUTRO -->
+  <section class="screen" id="screen-outro">
+    <div class="card outro">
+      <div class="eyebrow">All done</div>
+      <h1>Thank you &mdash; that's genuinely useful</h1>
+      <p>Your 62 verdicts are ready. One click copies them as plain text &mdash; paste that into an email or message back to Rajveer, or use the download button if you'd rather send a file.</p>
+      <div class="summary-strip">
+        <div class="stat"><div class="n" id="statCorrect">0</div><div class="l">Correct</div></div>
+        <div class="stat"><div class="n" id="statIncorrect">0</div><div class="l">Incorrect</div></div>
+        <div class="stat"><div class="n" id="statNotes">0</div><div class="l">With notes</div></div>
+      </div>
+      <div class="export-actions">
+        <button class="btn btn-primary" id="copyBtn">Copy my results</button>
+        <button class="btn btn-ghost" id="downloadBtn" style="display:none;">Download as file</button>
+        <button class="btn btn-ghost" id="reviewAgainBtn">Review my answers</button>
+      </div>
+      <div class="copy-hint" id="copyHint">&nbsp;</div>
+    </div>
+    <p class="footer-note">Your responses stay saved in this browser even after copying &mdash; safe to revisit or double check anything.</p>
+  </section>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var ITEMS = __ITEMS_JSON__;
+  var STORE_KEY = "indiafinbench_second_opinion_v1";
+
+  function loadState(){
+    try{
+      var raw = localStorage.getItem(STORE_KEY);
+      if(raw) return JSON.parse(raw);
+    }catch(e){}
+    return {name:"", answers:{}, idx:0};
+  }
+  function saveState(){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  var state = loadState();
+  var els = {
+    topbar: document.getElementById("topbar"),
+    progressFill: document.getElementById("progressFill"),
+    progressLabel: document.getElementById("progressLabel"),
+    screenIntro: document.getElementById("screen-intro"),
+    screenReview: document.getElementById("screen-review"),
+    screenOutro: document.getElementById("screen-outro"),
+    nameInput: document.getElementById("adjudicatorName"),
+    startBtn: document.getElementById("startBtn"),
+    taskTag: document.getElementById("taskTag"),
+    questionText: document.getElementById("questionText"),
+    refText: document.getElementById("refText"),
+    predText: document.getElementById("predText"),
+    btnCorrect: document.getElementById("btnCorrect"),
+    btnIncorrect: document.getElementById("btnIncorrect"),
+    notesInput: document.getElementById("notesInput"),
+    backBtn: document.getElementById("backBtn"),
+    nextBtn: document.getElementById("nextBtn"),
+    copyBtn: document.getElementById("copyBtn"),
+    downloadBtn: document.getElementById("downloadBtn"),
+    reviewAgainBtn: document.getElementById("reviewAgainBtn"),
+    copyHint: document.getElementById("copyHint"),
+    statCorrect: document.getElementById("statCorrect"),
+    statIncorrect: document.getElementById("statIncorrect"),
+    statNotes: document.getElementById("statNotes"),
+  };
+
+  var TASK_LABELS = {
+    regulatory_interpretation: "Regulatory interpretation",
+    numerical_reasoning: "Numerical reasoning",
+    contradiction_detection: "Contradiction detection",
+    temporal_reasoning: "Temporal reasoning",
+  };
+
+  function showScreen(name){
+    [els.screenIntro, els.screenReview, els.screenOutro].forEach(function(s){ s.classList.remove("active"); });
+    var map = {intro: els.screenIntro, review: els.screenReview, outro: els.screenOutro};
+    map[name].classList.add("active");
+    els.topbar.style.display = name === "intro" ? "none" : "flex";
+    window.scrollTo(0,0);
+  }
+
+  function answeredCount(){
+    var n = 0;
+    for(var i=0;i<ITEMS.length;i++){ if(state.answers[i] && state.answers[i].verdict) n++; }
+    return n;
+  }
+
+  function updateProgress(){
+    var n = answeredCount();
+    els.progressLabel.textContent = n + " / " + ITEMS.length;
+    els.progressFill.style.width = Math.round(100 * n / ITEMS.length) + "%";
+  }
+
+  function renderReview(){
+    var item = ITEMS[state.idx];
+    var saved = state.answers[state.idx] || {};
+    els.taskTag.textContent = TASK_LABELS[item.task] || item.task;
+    els.questionText.textContent = item.q;
+    els.refText.textContent = item.ref;
+    els.predText.textContent = item.pred;
+    els.notesInput.value = saved.notes || "";
+    setVerdictUI(saved.verdict || null);
+    els.backBtn.disabled = state.idx === 0;
+    els.backBtn.style.visibility = state.idx === 0 ? "hidden" : "visible";
+    els.nextBtn.textContent = state.idx === ITEMS.length - 1 ? "Finish \u2192" : "Next \u2192";
+    els.nextBtn.disabled = !saved.verdict;
+    updateProgress();
+  }
+
+  function setVerdictUI(verdict){
+    els.btnCorrect.classList.toggle("selected", verdict === "CORRECT");
+    els.btnIncorrect.classList.toggle("selected", verdict === "INCORRECT");
+    els.nextBtn.disabled = !verdict;
+  }
+
+  function recordVerdict(verdict){
+    var existing = state.answers[state.idx] || {};
+    state.answers[state.idx] = {verdict: verdict, notes: existing.notes || ""};
+    setVerdictUI(verdict);
+    saveState();
+    updateProgress();
+  }
+
+  function recordNotes(){
+    var existing = state.answers[state.idx] || {verdict: null, notes: ""};
+    existing.notes = els.notesInput.value;
+    state.answers[state.idx] = existing;
+    saveState();
+  }
+
+  els.btnCorrect.addEventListener("click", function(){ recordVerdict("CORRECT"); });
+  els.btnIncorrect.addEventListener("click", function(){ recordVerdict("INCORRECT"); });
+  els.notesInput.addEventListener("blur", recordNotes);
+  els.notesInput.addEventListener("input", function(){
+    clearTimeout(window.__notesTimer);
+    window.__notesTimer = setTimeout(recordNotes, 500);
+  });
+
+  els.backBtn.addEventListener("click", function(){
+    if(state.idx > 0){ state.idx--; saveState(); renderReview(); }
+  });
+  els.nextBtn.addEventListener("click", function(){
+    if(state.idx < ITEMS.length - 1){
+      state.idx++; saveState(); renderReview();
+    } else {
+      renderOutro(); showScreen("outro");
+    }
+  });
+
+  els.startBtn.addEventListener("click", function(){
+    state.name = els.nameInput.value.trim();
+    saveState();
+    showScreen("review");
+    renderReview();
+  });
+
+  els.reviewAgainBtn.addEventListener("click", function(){
+    state.idx = 0; saveState();
+    showScreen("review");
+    renderReview();
+  });
+
+  function buildExportText(){
+    var lines = [];
+    var who = state.name ? state.name : "unnamed reviewer";
+    lines.push("IndiaFinBench independent adjudication -- " + who);
+    lines.push("Completed: " + new Date().toISOString());
+    lines.push("row,item_id,verdict,notes");
+    for(var i=0;i<ITEMS.length;i++){
+      var id = ITEMS[i].id;
+      var a = state.answers[i] || {verdict:"", notes:""};
+      var notes = (a.notes || "").replace(/"/g,'""').replace(/[\r\n]+/g," ");
+      lines.push((i + 1) + "," + id + "," + (a.verdict || "") + ',"' + notes + '"');
+    }
+    return lines.join("\n");
+  }
+
+  function renderOutro(){
+    var correct = 0, incorrect = 0, notes = 0;
+    for(var i=0;i<ITEMS.length;i++){
+      var a = state.answers[i];
+      if(!a) continue;
+      if(a.verdict === "CORRECT") correct++;
+      if(a.verdict === "INCORRECT") incorrect++;
+      if(a.notes && a.notes.trim()) notes++;
+    }
+    els.statCorrect.textContent = correct;
+    els.statIncorrect.textContent = incorrect;
+    els.statNotes.textContent = notes;
+  }
+
+  els.copyBtn.addEventListener("click", function(){
+    var text = buildExportText();
+    function flash(msg, ok){
+      els.copyHint.textContent = msg;
+      els.copyHint.className = ok ? "copy-hint copied-flash" : "copy-hint";
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){
+        flash("Copied. Paste it into an email or message to Rajveer.", true);
+      }, function(){ fallbackCopy(text, flash); });
+    } else {
+      fallbackCopy(text, flash);
+    }
+  });
+
+  function fallbackCopy(text, flash){
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    try{
+      document.execCommand("copy");
+      flash("Copied. Paste it into an email or message to Rajveer.", true);
+    }catch(e){
+      flash("Couldn't copy automatically \u2014 select the text manually.", false);
+    }
+    document.body.removeChild(ta);
+  }
+
+  var downloadsApi = null;
+  (function initDownloads(){
+    if(!(window.claude && window.claude.use)) return;
+    window.claude.use("downloads").then(function(ns){
+      if(ns){ downloadsApi = ns; els.downloadBtn.style.display = "inline-flex"; }
+    }).catch(function(){});
+  })();
+
+  els.downloadBtn.addEventListener("click", function(){
+    if(!downloadsApi) return;
+    var text = buildExportText();
+    downloadsApi.save({filename:"indiafinbench_second_opinion.csv", data:text}).then(function(){
+      els.copyHint.textContent = "Downloaded. Attach that file to your message to Rajveer.";
+      els.copyHint.className = "copy-hint copied-flash";
+    }).catch(function(){});
+  });
+
+  // resume: land on the outro if everything's already answered, otherwise
+  // pick back up mid-review; check completion FIRST so a fully-finished
+  // session doesn't get stuck showing its last answered item again.
+  if(ITEMS.length > 0 && answeredCount() === ITEMS.length){
+    renderOutro(); updateProgress(); showScreen("outro");
+  } else if(answeredCount() > 0 && state.idx > 0){
+    showScreen("review"); renderReview();
+  } else {
+    showScreen("intro");
+  }
+})();
+</script>

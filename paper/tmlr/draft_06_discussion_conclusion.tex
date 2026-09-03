@@ -77,10 +77,11 @@ best. Scoring twelve LLMs under strict string matching and under a full-coverage
 own verdict, over the same predictions, produces two rankings with no positive correspondence
 (Spearman $\rho = -0.273$): some models score higher under the judge and rank higher, some score
 higher under the judge and rank \emph{lower} because the field moved past them, and one model's raw
-score does not move at all yet its rank falls by nine places. Applying the judge asymmetrically---to
+score does not move at all yet its rank falls by eight places. Applying the judge asymmetrically---to
 rescue strict failures but never to challenge strict successes---produces a third ranking again,
 under which the model placed last under strict scoring ties for first, because 93.9\% of its strict
-errors are reclassified as correct. Neither regime is wrong. They answer different questions, and
+errors are reclassified as correct. Neither regime is ground truth, and neither is universally
+preferable; they answer different questions, and
 reporting one alone leaves the reader unable to tell which.
 
 Underneath that, half the benchmark carries no discriminative signal: 213 of 406 items are answered

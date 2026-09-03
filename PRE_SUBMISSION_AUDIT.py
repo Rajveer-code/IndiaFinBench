@@ -298,6 +298,13 @@ STALE_STRINGS = [
     "95.32",  # superseded judge-only max (was Llama 4 Scout 17B); real max is 94.83 (Gemini 2.5 Pro)
     "8.1 points",  # superseded judge-only spread; real value is 7.6 points
     "ranks 9th of twelve",  # superseded DeepSeek judge-only rank; real rank is 7th, tied w/ Qwen3-32B
+    "falls by nine places",  # superseded Gemini 2.5 Flash strict-to-judge-only rank fall; real fall is 8 places
+    # --- 2026-09-03: author-requested wording fixes (round 2 cleanup)
+    "independent quality-checker",  # overclaims independence for a model that's also evaluated; "secondary model-based quality check"
+    "Neither regime is wrong",  # implies a binary right/wrong frame; "neither is ground truth... universally preferable"
+    "reducing the likelihood that performance is explained by benchmark-specific familiarity",
+    # ^ implied the domain choice addresses contamination; softened to "lowers but does not rule out"
+    "less likely to be dominated by memorised recall",  # old unhedged claim; see "reasonable candidate" framing now
     # NOTE: "77.2%" (superseded pooled-180 overall IAA agreement) is deliberately NOT
     # blocklisted as a bare string -- Qwen3-32B's real, correct NUM accuracy is coincidentally
     # 77.2% and appears legitimately elsewhere (draft_05 main table, appendix few-shot table).

@@ -32,14 +32,16 @@ are accounted for, response length does not predict which strict failures a judg
 drives it item by item is not yet established, and we report that as an open question rather than
 papering over it with an intuitive but untested mechanism.
 
-Testing this needs a domain less likely to be dominated by memorised recall, so that scoring effects
-are not confounded with familiarity. Indian financial regulation supplies
-one. SEBI and RBI instruments embed numerical thresholds directly in prose, chain amendments across
+Testing this benefits from a domain where scoring effects are less likely to be confounded with
+memorised recall of common benchmark text. Indian financial regulation is a reasonable candidate.
+SEBI and RBI instruments embed numerical thresholds directly in prose, chain amendments across
 decades so that resolving a question requires tracking which circular superseded which, and use
 jurisdiction-specific terminology (LODR, PMLA, SFB, AIF, FEMA) that models trained predominantly on
-US and European financial corpora have little reason to have learned. Existing financial NLP
-benchmarks are built almost entirely from US or European sources (Section~\ref{sec:related}), so
-this setting is also unmeasured on its own terms.
+US and European financial corpora have comparatively less reason to have encountered as verbatim
+training text. We cannot verify what any evaluated model's training data contained, so this domain
+choice reduces rather than rules out a familiarity confound. Existing financial NLP benchmarks are
+built almost entirely from US or European sources (Section~\ref{sec:related}), so this setting is
+also unmeasured on its own terms.
 
 We introduce \textbf{IndiaFinBench}\footnote{Dataset, evaluation harness, and all model
 predictions: \url{https://anonymous.4open.science/r/IndiaFinBench-322D/}. De-anonymized upon

@@ -96,7 +96,7 @@ without external knowledge.
 \subsection{Model-Based Secondary Validation}
 
 To confirm that items are unambiguously answerable from context, a secondary validation pass used
-LLaMA-3.3-70B (via Groq API) as an independent quality-checker under a context-only, zero-shot
+LLaMA-3.3-70B (via Groq API) as a secondary model-based quality check under a context-only, zero-shot
 prompt (temperature = 0), accessed in isolation from the evaluation pipeline. Although LLaMA-3.3-70B
 also appears in the main evaluation, the two uses are functionally distinct: this pass asks whether a
 question is unambiguously answerable from its context passage, a different task from the

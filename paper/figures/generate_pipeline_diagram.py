@@ -5,6 +5,15 @@ static image that went stale (still said "120-item evaluation, kappa=0.611,
 76.7% overall" for the Human IAA box, while the actual IAA study is 180
 items, kappa=0.645, 77.2%, per Table 1 / draft_07 Section 3.5). Recreated
 from scratch matching the original's box/arrow layout and colour scheme.
+
+2026-09-04: went stale a second time the same way. The 0.645/77.2% values
+above were correct when this script was written, but a later judge-input-
+truncation fix changed the IAA rescoring to kappa=0.712/86.1% (Table 1,
+draft_07 Section 3.5) and this script's hardcoded box text was never
+updated -- caught by external review, not by this repo's own audit script,
+because PRE_SUBMISSION_AUDIT.py checks prose/table text, not figure pixel
+content. Fixed below; if the IAA numbers ever change again, this box is the
+one place they need to change with them.
 """
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch, FancyArrowPatch
@@ -14,7 +23,7 @@ boxes = [
     ("PDF parsing", "pdfplumber\ntext + tables", "#e8b04b"),
     ("Expert\nannotation", "REG 174 items\nNUM 92 items\nCON 62 items\nTMP 78 items\n\n406 total", "#b48ec4"),
     ("Quality\nvalidation", "Model-based\nsecondary pass\nκ = 0.918 (CON)\n90.7% overall", "#5fada0"),
-    ("Human IAA", "180-item\nevaluation\n\nκ = 0.645 (CON)\n77.2% overall", "#5b8fc9"),
+    ("Human IAA", "180-item\nevaluation\n\nκ = 0.712 (CON)\n86.1% overall", "#5b8fc9"),
     ("IndiaFinBench", "406 QA pairs\n4 task types\n12 models\nevaluated", "#5a9e6f"),
 ]
 

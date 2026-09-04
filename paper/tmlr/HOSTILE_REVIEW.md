@@ -181,3 +181,94 @@ exactly the DeepSeek-outlier discussion's second candidate explanation, generali
 
 No finding in this addendum changes a headline result. Two items (R4.1, R4.4) are disclosed
 limitations rather than fixes; the rest were already addressed by the manuscript's existing framing.
+
+---
+
+## Addendum — 2026-09-04, external cross-check (ChatGPT review, two rounds against the live PDF)
+
+User ran an independent review against the actual compiled manuscript (not from memory) and
+compared it to this repo's own audit. Two rounds: round 1 flagged items mostly already resolved by
+this point (see the resolved-vs-open triage in that session); round 2 reacted to the page-compression
+pass and surfaced three genuinely new, actionable points.
+
+**R5.1 — overclaim in the strict-vs-judge framing.** "What the strict number cannot do is answer
+which model reasons best about the underlying regulatory content" is too absolute: strict scoring
+isn't zero-evidence about reasoning, it conflates reasoning-correctness with format-compliance.
+**Fixed**: reworded to "What the strict number cannot isolate is underlying regulatory correctness
+from reference-format compliance" (`draft_03_results_core.tex`). Real, applied.
+
+**R5.2 — "neither regime is more valid" should be stated more forcefully.** Checked: this is already
+explicit in two places (`draft_03` Section 5 intro: "Neither regime is more correct than the
+other... a benchmark that reports only one has silently chosen which question to answer"; Discussion
+7.1: the judge's verdict "is its own imperfect measurement, not a ground truth the strict number
+falls short of"). Adding a third restatement would reintroduce the kind of repetition the
+page-compression pass just removed. **Declined, with reasoning given** — not a gap, already
+addressed twice.
+
+**R5.3 — abstract should reorder to separate the DeepSeek illustration from the main claim.**
+Checked against the actual abstract text: DeepSeek already sits inside the same paragraph as the
+"no positive rank correspondence" claim it illustrates, not elevated to its own spot. Separating them
+would break flow (reader hits the claim, jumps to an unrelated topic, then jumps back for the
+example). **Declined, with reasoning given.**
+
+**R5.4 — related-work refresh with genuinely current (2025-2026) citations**, superseding this
+session's earlier "skip it, can't verify ChatGPT's citation IDs" call. Independently re-searched
+(not trusting the earlier list) and verified two real papers via direct arXiv fetch (title, authors,
+abstract all confirmed, not just a matching ID):
+- Ho, Huang, Boudin, Aizawa (2025), "Reassessing Extractive QA Datasets at Scale: LLM-as-a-Judge and
+  In-Depth Analyses," arXiv:2504.11972 — EM/F1 correlate weakly with humans (0.22/0.40) vs.
+  LLM-judge up to 0.85 on extractive QA specifically.
+- Norman, Rivera, Hughes (2026), "Reliability without Validity: A Systematic, Large-Scale Evaluation
+  of LLM-as-a-Judge Models Across Agreement, Consistency, and Bias," arXiv:2606.19544 — raw judge
+  agreement overstates discriminative reliability once corrected for chance.
+
+Both added to `indiafinbench.bib` and cited in `draft_04_related_work.tex`'s "How benchmarks are
+scored" paragraph. Compiles clean, 0 undefined citations, bibliography entries verified rendering
+correctly in `main.bbl`. **Note for the record**: this session's earlier blanket dismissal of
+ChatGPT-suggested citations as "unverified/risky" was too cautious — two of the originally-cited
+arXiv IDs turned out to be real papers on independent re-check. The right response to an unverified
+citation is to verify it, not to discard it by default.
+
+**Self-correction, logged for transparency (per R5's own meta-point about trusting "done" claims):**
+this session initially reported the manuscript's "pre-registered decision rule" paragraph as absent,
+based on a grep for `"preregist"` that missed the actual hyphenated text `"pre-registered"`. Caught
+and corrected mid-session when the paragraph was found (and tightened) in `draft_08`'s Section 6.5.
+The paragraph itself was already well-handled (honest disclosure, no overclaim) — the process gap
+was in the initial verification step, not the manuscript.
+
+No finding in this addendum changes a headline result. R5.1 and R5.4 are real, applied fixes; R5.2
+and R5.3 were checked and declined with stated reasoning, not skipped.
+
+---
+
+## Addendum — 2026-09-04, judge-tolerance sensitivity (R6)
+
+**R6 — "the judge rubric's 1% rounding tolerance is stated with no sensitivity check, and this
+paper's whole thesis is that scoring-rule parameters matter."** Real gap, flagged independently by
+both the author's own review and the external ChatGPT cross-check. Closed with data, not argument:
+re-ran the full-coverage phi4-mini judge (4,128 REG/NUM/TMP judgements) at two additional
+tolerances -- exact numeric match and 0.1% -- under otherwise identical conditions, and compared
+against the existing 1% run. New Appendix F.2, Table 11 (`scripts/judge_tolerance_comparison.py`,
+`evaluation/judge_tolerance_comparison.json`).
+
+**Finding, in two parts that cut in different directions:**
+1. The paper's central claim is robust to the tolerance choice: strict-vs-judge-only shows no
+   significant rank correspondence at any of the three tolerances ($\rho = -0.32, -0.13, -0.27$,
+   all $p > 0.3$), and the judge-only spread stays in a similar 7.6-9.1pp band throughout.
+2. Individual models' judge-only *ranks* are more tolerance-sensitive than the headline spread
+   suggests -- 7 of 12 models move 4+ ranks across the three tolerances (LLaMA-3.3-70B moves 7
+   ranks). DeepSeek-R1-Distill's own judge-only rank moves 2 -> 4 -> 7 across exact/0.1%/1%, though
+   it never approaches its strict rank of 12. Under judge-augmented scoring specifically (the
+   paper's more dramatic "reversal" framing), DeepSeek is rank 1 or 2 at every tolerance tested
+   (98.0-98.8%) -- a precision check caught an early draft overstating this as "ties for 1st at
+   every tolerance," which is false at exact tolerance (DeepSeek is 1st outright there, no tie);
+   corrected before this landed anywhere final.
+
+**STATUS: resolved, and the result reinforces rather than weakens the paper.** Framed explicitly as
+such in the new appendix section: the finding is not "1% was a bad choice," it is that scoring-rule
+sensitivity extends one level deeper than strict-vs-judge alone -- a single numeric rubric parameter
+moves individual ranks by several positions even within one fixed judge. One-sentence pointer added
+to the main-text judge section (Section 6.5) so a main-body reader knows this check exists without
+main body absorbing the appendix's full word count.
+
+No finding in this addendum changes a headline result; it strengthens the central one.

@@ -9,7 +9,7 @@
 [![License: CC BY 4.0](https://img.shields.io/badge/Dataset-CC%20BY%204.0-lightgrey?style=flat-square)](https://creativecommons.org/licenses/by/4.0/)
 [![License: MIT](https://img.shields.io/badge/Code-MIT-blue?style=flat-square)](LICENSE)
 [![arXiv](https://img.shields.io/badge/arXiv-2604.19298-b31b1b?style=flat-square)](https://arxiv.org/abs/2604.19298)
-[![Under review: FinNLP @ EMNLP 2026](https://img.shields.io/badge/Under_review-FinNLP_%40_EMNLP_2026-red?style=flat-square)](https://arxiv.org/abs/2604.19298)
+[![Target venue: TMLR](https://img.shields.io/badge/Target_venue-TMLR-blue?style=flat-square)](https://jmlr.org/tmlr/)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21739533.svg)](https://doi.org/10.5281/zenodo.21739533)
 
 <br>
@@ -24,43 +24,43 @@
 
 ## Overview
 
-Existing financial NLP benchmarks — FinQA, ConvFinQA, FLUE — evaluate models on Western markets using SEC filings and US news. No public benchmark tests LLM performance on Indian regulatory text, despite India having one of the world's most prolific regulatory document ecosystems (SEBI, RBI, IRDAI, PFRDA) with millions of participants governed by its rules.
+A benchmark leaderboard reports one accuracy number, but that number is a joint product of a model **and** a scoring rule. Score the same 406 predictions from the same twelve models under strict string matching versus an LLM judge's own verdict, and the two rankings show **no positive rank correspondence** (Spearman ρ = −0.273, p = 0.39) — not "mostly agree with some noise," but no significant relationship at all. One model ranks last under strict scoring and ties for first once a judge is allowed to rescue (never reject) its answers.
 
-IndiaFinBench fills this gap. It is a **zero-shot, closed-book evaluation benchmark** of 406 expert-annotated question-answer pairs drawn from 192 circulars, regulations, and master directions published by SEBI and the RBI between 1992 and 2026. The benchmark tests four distinct reasoning capabilities — regulatory interpretation, numerical computation, contradiction detection across circulars, and temporal reasoning over chronological document sequences — each of which must be solved from document evidence alone, without retrieval.
+IndiaFinBench is the instrument that makes this measurable, not the headline claim itself. It is a **zero-shot, closed-book evaluation benchmark** of 406 expert-annotated question-answer pairs drawn from 192 circulars, regulations, and master directions published by SEBI and the RBI between 1992 and 2026 — a domain chosen specifically because it's underrepresented in the training data most benchmarks implicitly assume. Four task types (regulatory interpretation, numerical reasoning, contradiction detection, temporal reasoning) must be solved from document evidence alone, without retrieval.
 
-The benchmark reveals that **strict string-matching and semantic (LLM-judge-corrected) scoring tell substantively different stories** — the two regimes bracket true accuracy and separate genuine capability gaps from format non-compliance — that efficiency dominates scale (a 17B-parameter model statistically matches a 70B model), and that on a 60-item medium-and-hard subset no model significantly outperforms a careful non-specialist human (80.0%), while the weakest model is significantly worse.
+Beyond the scoring-regime finding: efficiency dominates scale (a 17B-parameter model statistically matches a 70B model on this benchmark), item-level analysis shows over a third of the benchmark's items separate no pair of the twelve evaluated systems at all, and on a 60-item medium-and-hard subset no model significantly outperforms a careful non-specialist human (80.0%) once corrected for testing twelve models at once.
 
 ---
 
 ## Research Contributions
 
-1. **First Indian financial regulatory NLP benchmark** — 406 items across four task types, sourced from 192 SEBI and RBI documents spanning 34 years (1992–2026). Fills a documented gap in non-Western financial NLP evaluation.
+1. **Scoring-regime sensitivity, measured not asserted** — the same 406 predictions from 12 LLMs scored under strict string matching and under a full-coverage cross-model LLM judge (every prediction judged, not only strict failures) show no positive rank correspondence (Spearman ρ = −0.273, p = 0.39). A third, asymmetric composite regime (rescue-but-never-reject) illustrates how far one specific, non-authoritative scoring choice can move a model.
 
-2. **Four-axis task taxonomy** — REG (regulatory interpretation), NUM (numerical reasoning), CON (contradiction detection), TMP (temporal reasoning) — designed to expose orthogonal capabilities that aggregate accuracy conceals.
+2. **A direct test of the verbosity explanation, not an assumption** — it's tempting to attribute judge overturns to output length; tested directly rather than asserted, and response length does not predict which strict failures a judge reclassifies once task type and model identity are controlled for. Reported as the negative result it is.
 
-3. **Human reference point with inter-annotator agreement** — 60-item human evaluation by a single non-specialist evaluator on medium and hard items (80.0%, 95% Wilson CI [68.2%, 88.2%]) with paired human-vs-model bootstrap tests, plus a 180-item three-round IAA study. No model significantly outperforms the human on the shared items; only the weakest is significantly worse.
+3. **Discriminative-coverage analysis** — an exact pairwise-disagreement measure (D(k) = k(12−k) over 12 models) shows 148 of 406 items (36.5%) separate no pair of the evaluated systems at all. Nominal benchmark size and discriminative coverage are different quantities, rarely distinguished in benchmark reporting.
 
-4. **Bootstrap statistical significance at scale** — Paired bootstrap (10,000 resamples) across all 66 model pairs under both scoring regimes (42/66 significant at p < 0.05 strict; 19/66 after Bonferroni), resolving which leaderboard gaps reflect genuine capability differences.
+4. **IndiaFinBench itself** — 406 expert-annotated items across four task types, sourced from 34 of 192 collected SEBI and RBI documents (1992–2026), with a validated annotation protocol (90.7% model-based agreement, 86.1% human IAA over 180 items).
 
-5. **Efficiency-over-scale finding** — Llama 4 Scout 17B matches LLaMA-3.3-70B (p = 0.80) with one-quarter the parameters. GPT-OSS 120B and 20B are statistically indistinguishable (p = 0.86). Both null results persist under judge-corrected scoring, directly challenging the scaling assumption in regulatory NLP deployment decisions.
+5. **A human reference point reported with its limits stated** — a single non-specialist evaluator on a 60-item medium/hard subset (80.0%, 95% Wilson CI [68.2%, 88.2%]); paired bootstrap tests against all twelve models find no significant difference in either direction once corrected for the twelve-test family.
 
-6. **Hybrid RAG system with full ablation** — Production-grade FAISS + BM25 pipeline with Reciprocal Rank Fusion, benchmarked across six retrieval configurations. Hybrid RRF improves Recall@5 by +9.7pp over dense-only retrieval; optimal chunk size empirically determined at 1,600 characters.
+6. **Full public release** — dataset, evaluation harness, per-item judge verdicts, and all model predictions, so every regime and every claim can be reproduced or contested independently.
 
-7. **Open, reproducible artefacts** — Dataset on HuggingFace, evaluation code, annotation guidelines, prediction CSVs for all 12 models, statistical scripts, and a live deployed demo — all in this repository.
+7. **Hybrid RAG system with full ablation** (repository extra, not part of the paper's claims) — production-grade FAISS + BM25 pipeline with Reciprocal Rank Fusion, benchmarked across six retrieval configurations. Hybrid RRF improves Recall@5 by +9.7pp over dense-only retrieval; optimal chunk size empirically determined at 1,600 characters.
 
 ---
 
 ## Key Findings
 
-> **No model significantly beats a careful non-specialist human on the benchmark's harder half.** On the 60 shared medium-and-hard items the human scores 80.0% (48/60); the best model reaches 85.0% (Gemini 2.5 Flash, paired bootstrap p = 0.44, not significant). Gemma 3 4B is the closest to a significant gap (66.7%, p = 0.02 uncorrected) but does not survive Bonferroni correction across the twelve-model family (α = 0.05/12); no model differs significantly from the human reader in either direction. Models decisively exceed the human only on multi-step numerical reasoning (best model 84.8% vs human 56.2%).
+> **Strict scoring and a cross-model judge's own verdict rank the field with no positive correspondence.** The same 406-item predictions, scored under strict string matching versus a cross-model judge (phi4-mini, sharing no model family with any of the 12 evaluated systems)'s own verdict taken as final in both directions — not merely accepting judge overturns — give Spearman ρ = −0.273 (p = 0.39) across the twelve models: only one model holds its rank under both. A third, asymmetric regime (strict-OR-judge — rescue failures, never challenge successes) is a sensitivity check, not a primary result: under it, DeepSeek-R1-Distill-Llama-70B goes from last under strict scoring to a tie for 1st, because the judge reclassifies 93.9% of its strict errors as correct. Under the judge's own verdict alone it ranks 7th, not 1st — a real, disclosed dependency on which of two defensible regimes is used, not evidence either regime is "correct."
 
-> **NUM is the most discriminating task type.** A 35.9 percentage-point spread between best (Gemini 2.5 Flash: 84.8%) and worst (Gemini 2.5 Pro: 48.9%) on numerical reasoning — versus only ~13pp on regulatory interpretation — identifies NUM as the primary capability differentiator.
+> **Over a third of the benchmark's items carry no discriminative signal.** 148 of 406 items (36.5%) are answered identically by all twelve models and separate no pair of systems; a further 72 items are near-unanimous. Nominal item count and discriminative coverage are different quantities that benchmarks rarely distinguish — a reported accuracy gap is only as trustworthy as the fraction of items actually separating the systems being compared.
 
-> **Strict scoring and a cross-model judge's own verdict rank the field with no positive correspondence.** Scoring the same 406-item predictions under strict string matching and under a cross-model judge (phi4-mini)'s own verdict — not merely accepting judge overturns, its verdict taken as final in both directions — gives Spearman ρ = −0.224 across the twelve models: no model holds its rank under both. DeepSeek-R1-Distill-Llama-70B illustrates how far a third, more permissive regime (strict-OR-judge, an asymmetric sensitivity check, not a primary result) can move a model: last under strict scoring, tied for 1st once the judge is allowed to rescue but never reject. Under its own verdict alone it ranks 9th, not 1st.
+> **No model significantly beats a careful non-specialist human on the benchmark's harder half.** On the 60 shared medium-and-hard items the human scores 80.0% (48/60); the best model reaches 85.0% (Gemini 2.5 Flash, paired bootstrap p = 0.44, not significant). No model differs significantly from the human reader in either direction once corrected for the twelve-model family (Bonferroni α = 0.05/12).
 
-> **No clean tier structure under strict scoring.** Tier 1 = Gemini 2.5 Flash, Qwen3-32B, LLaMA-3.3-70B, Llama 4 Scout 17B, Kimi K2 (81.5–89.7%), separated from the rest by a Bonferroni-robust gap. The remaining seven models (75.1–78.8%) form a plateau rather than a clean second/third tier: Gemma 3 4B (78.8%) is significantly below only the five Tier 1 models and is statistically indistinguishable from every other model in that plateau. The judge's own verdict compresses the field to 87.2–95.3%, with a different leader (Llama 4 Scout 17B) and trailer (Gemma 3 4B) than strict scoring's.
+> **Scale doesn't explain these results.** Llama 4 Scout 17B and LLaMA-3.3-70B are statistically indistinguishable (p = 0.786) across a four-fold parameter difference. GPT-OSS 120B and 20B are likewise indistinguishable (p = 0.912) across a six-fold difference within one model family — and their error overlap (Jaccard 0.427) is the highest of any pair in the study: they don't just score alike, they fail on substantially the same items.
 
-> **Task-type performance is highly dissociated.** Gemini 2.5 Pro ranks 1st on REG (89.7%) but last on NUM (48.9%) within the same model. Aggregate accuracy misrepresents deployment suitability for specific regulatory tasks.
+> **Task-type performance is highly dissociated.** Numerical reasoning is the most discriminating task (35.9-point spread, 84.8% to 48.9%); contradiction detection has the highest mean (91.5%) but discriminates least once corrected for its class imbalance (85.5% majority-class baseline). Gemini 2.5 Pro ranks near the top on REG (89.7%) but last on NUM (48.9%) — aggregate accuracy misrepresents deployment suitability for a specific regulatory task.
 
 ---
 
@@ -94,16 +94,16 @@ Zero-shot, closed-book evaluation on the full 406-item benchmark. All prompts pr
 | 3 | LLaMA-3.3-70B | 86.2% | 75.0% | 95.2% | 79.5% | 83.7% | [79.8%, 87.0%] |
 | 4 | Llama 4 Scout 17B | 86.2% | 66.3% | **98.4%** | 84.6% | 83.3% | [79.3%, 86.6%] |
 | 5 | Kimi K2 | **89.1%** | 65.2% | 91.9% | 75.6% | 81.5% | [77.5%, 85.0%] |
-| 6 | LLaMA-3-8B | 79.9% | 64.1% | 93.5% | 78.2% | 78.1% | [73.8%, 81.8%] |
-| 7 | GPT-OSS 120B | 79.9% | 59.8% | 95.2% | 76.9% | 77.1% | [72.8%, 80.9%] |
-| 8 | GPT-OSS 20B | 79.9% | 58.7% | 95.2% | 76.9% | 76.8% | [72.5%, 80.7%] |
-| 9 | Gemini 2.5 Pro | 89.7% | 48.9% | 93.5% | 64.1% | 76.1% | [71.8%, 80.0%] |
-| 10 | Mistral-7B | 79.9% | 66.3% | 80.6% | 74.4% | 75.9% | [71.5%, 79.8%] |
-| 11 | Gemma 3 4B | 86.2% | 70.7% | 79.0% | 71.8% | 78.8% | [74.6%, 82.5%] |
-| 12 | DeepSeek R1 70B | 72.4% | 69.6% | **96.8%** | 70.5% | 75.1% | [70.7%, 79.1%] |
+| 6 | Gemma 3 4B | 86.2% | 70.7% | 79.0% | 71.8% | 78.8% | [74.6%, 82.5%] |
+| 7 | LLaMA-3-8B | 79.9% | 64.1% | 93.5% | 78.2% | 78.1% | [73.8%, 81.8%] |
+| 8 | GPT-OSS 120B | 79.9% | 59.8% | 95.2% | 76.9% | 77.1% | [72.8%, 80.9%] |
+| 9 | GPT-OSS 20B | 79.9% | 58.7% | 95.2% | 76.9% | 76.8% | [72.5%, 80.7%] |
+| 10 | Gemini 2.5 Pro | 89.7% | 48.9% | 93.5% | 64.1% | 76.1% | [71.7%, 80.0%] |
+| 11 | Mistral-7B | 79.9% | 66.3% | 80.6% | 74.4% | 75.9% | [71.5%, 79.8%] |
+| 12 | DeepSeek-R1-Distill-Llama-70B | 72.4% | 69.6% | **96.8%** | 70.5% | 75.1% | [70.7%, 79.1%] |
 | — | **Human (non-specialist)** *(n=60, med+hard)* | 100.0 | 56.2 | 82.4 | 87.5 | 80.0% | [68.2%, 88.2%] |
 
-95% Wilson score confidence intervals. Paired bootstrap significance (10,000 resamples) across all 66 model pairs confirms three statistically distinct performance tiers. Full significance matrix: `evaluation/bootstrap_significance_results.json`.
+Strict string-matching pipeline, 95% Wilson score confidence intervals. Paired bootstrap significance (100,000 resamples) across all 66 model pairs finds 36 significantly different at p < 0.05, of which 15–16 survive Bonferroni correction (α = 0.05/66). This is one of three scoring regimes reported in the paper, not the sole ranking — see [Key Findings](#key-findings) above. Full significance matrix: `evaluation/bootstrap_significance_results.json`.
 
 > **†** Claude 3 Haiku was evaluated on the initial 150-item development subset: Overall **91.3%**. Not directly comparable to the 406-item results above.
 
@@ -152,13 +152,13 @@ IndiaFinBench  (406 items, sourced from 192 SEBI and RBI documents, 1992–2026)
 
 | Task | Items | Agreement | Cohen's κ |
 |------|------:|:---------:|:---------:|
-| Regulatory Interpretation | 63 | 85.7% | — |
-| Numerical Reasoning | 44 | 59.1% | — |
-| Contradiction Detection | 35 | 88.6% | **0.645** |
-| Temporal Reasoning | 38 | 73.7% | — |
-| **Overall** | **180** | **77.2%** | — |
+| Regulatory Interpretation | 63 | 92.1% | — |
+| Numerical Reasoning | 44 | 81.8% | — |
+| Contradiction Detection | 35 | 80.0% | **0.712** |
+| Temporal Reasoning | 38 | 86.8% | — |
+| **Overall** | **180** | **86.1%** | — |
 
-κ = 0.645 for contradiction detection falls in the "substantial agreement" range (Landis & Koch, 1977). NUM agreement of 59.1% reflects a formatting artefact: reviewer notes included derivations where reference answers give concise final values. Post-hoc review of all 26 NUM disagreements confirmed zero substantive arithmetic errors. Full IAA data: `annotation/iaa/`.
+κ = 0.712 for contradiction detection falls in the "substantial agreement" range (Landis & Koch, 1977). NUM and CON have the two lowest task-level agreement rates, both driven by the same mechanism: reference answers are terse final values, while the second annotator's answers often embed a full derivation the strict scorer's exact/numeric-match stages can miss. All eight discordant numerical-reasoning items were manually re-verified: every case's computed value was equivalent, disagreements were purely presentational. Full IAA data: `annotation/iaa/`.
 
 ### Model-Based Validation
 
@@ -370,8 +370,9 @@ IndiaFinBench/
 │   └── tests/test_app.py                  # 14 API behaviour tests
 │
 ├── paper/
-│   ├── indiafinbench_paper_v12.md         # Current paper draft (target: EMNLP 2026)
-│   ├── references.bib
+│   ├── tmlr/                              # Current manuscript, target venue TMLR
+│   │   ├── draft_*.tex                    # Section sources, assembled by tmlr_submission/main.tex
+│   │   └── tmlr_submission/main.pdf       # Build output (gitignored; run latexmk to produce)
 │   └── figures/                           # Publication figures
 │
 ├── Dockerfile                             # Root Dockerfile for HuggingFace Spaces

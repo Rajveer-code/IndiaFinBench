@@ -57,17 +57,15 @@ disputed cases to be ground truth, and phi4-mini's lower share does not argue ag
 primary judge---that choice rests on full coverage, not on accuracy over Gemini.
 Section~\ref{sec:limitations} returns to this as a limitation of the cross-model judge design.
 
-\textbf{A pre-registered decision rule met an ambiguity it did not anticipate.} Before running the
-full pass we committed to a rule: if the cross-model judge supports DeepSeek-R1-Distill's
-strict-to-top reversal, report it as a central finding; if not, let discriminative coverage
-(Section~\ref{sec:effsize}) carry more of the paper's weight instead. The rule presupposed a single
-judge regime, but there are two: judge-augmented (Section~\ref{sec:regime}) satisfies it
-exactly---DeepSeek ties for 1st---while judge-only, where the same judge's verdict is taken as final
-rather than only ever overturning, does not---DeepSeek ranks 7th of twelve there, tied with
-Qwen3-32B. We report both rather than choosing the reading the rule anticipated: the reversal is real
-under judge-augmented scoring and is itself evidence for the paper's actual thesis, that which of two
-defensible ways of applying a judge materially changes the answer. Discriminative coverage is a
-coequal finding, not a fallback triggered by the gate's failure.
+\textbf{A pre-registered decision rule met an ambiguity it did not anticipate.} We had committed to
+reporting DeepSeek-R1-Distill's strict-to-top reversal as a central finding only if the cross-model
+judge supported it, and letting discriminative coverage (Section~\ref{sec:effsize}) carry more
+weight otherwise. The rule presupposed one judge regime; there are two, and they disagree---the
+reversal holds under judge-augmented scoring (Section~\ref{sec:regime}) but not judge-only, where
+DeepSeek ranks 7th of twelve, tied with Qwen3-32B. Rather than picking the reading the rule
+anticipated, we report both: the reversal is itself evidence for the paper's thesis that which of
+two defensible ways of applying a judge changes the answer, and discriminative coverage is a
+coequal finding, not a fallback.
 
 \textbf{What survives the judge audit.} Attributing every strict failure to a task-conditioned
 category (domain-knowledge, numerical, temporal, or context-grounding; Appendix~\ref{sec:errortax-sub})
@@ -83,13 +81,12 @@ and representative failure examples.
 \subsection{Statistical Significance and Performance Tiers}
 \label{sec:significance}
 
-Paired bootstrap significance testing (100,000 resamples, verified stable across 5 independent
-seeds) across all 66 model pairs finds 36 pairs significantly different at $p < 0.05$, of which
-15--16 survive Bonferroni correction ($\alpha = 0.05/66 \approx 0.00076$): the count is 16 under 4
-of 5 seeds and 15 under the fifth, because one pair (DeepSeek-R1-Distill vs.\ Llama 4 Scout 17B) sits
-within Monte Carlo noise of the threshold itself ($p \approx 0.0007$--$0.0008$ across seeds). We
-report the range rather than a single seed's count, since a point estimate here would understate how
-close that one comparison sits to the correction boundary. Three descriptive performance clusters
+Paired bootstrap significance testing (100,000 resamples, stable across 5 seeds) across all 66
+model pairs finds 36 pairs significantly different at $p < 0.05$, of which 15--16 survive Bonferroni
+correction ($\alpha = 0.05/66 \approx 0.00076$)---16 under 4 of 5 seeds, 15 under the fifth, because
+one pair (DeepSeek-R1-Distill vs.\ Llama 4 Scout 17B) sits within Monte Carlo noise of the threshold
+itself ($p \approx 0.0007$--$0.0008$); we report the range rather than a single seed's count for
+that reason. Three descriptive performance clusters
 organize the results under strict scoring; their boundaries are robust at the top and bottom of the
 ranking but statistical, not categorical, in the middle.
 
@@ -103,9 +100,8 @@ DeepSeek-R1-Distill, Mistral-7B, Gemini 2.5 Pro, and both GPT-OSS variants. Unde
 bottom seven models form one broad, largely undifferentiated cluster rather than the two-tier
 structure a cursory read of the ranking would suggest.
 
-Section~\ref{sec:discussion} returns to two comparisons inside the Tier 1 plateau---Llama 4 Scout
-17B vs.\ LLaMA-3.3-70B and GPT-OSS 120B vs.\ 20B---where a large parameter difference produces no
-measurable accuracy difference.
+Section~\ref{sec:discussion} returns to two Tier 1 pairs where a large parameter difference produces
+no measurable accuracy difference.
 
 \textbf{Robustness to document-level clustering.} 406 items are not 406 independent draws: they trace
 to 34 source documents (Section~\ref{sec:models}, Section~\ref{app:provenance}), and several

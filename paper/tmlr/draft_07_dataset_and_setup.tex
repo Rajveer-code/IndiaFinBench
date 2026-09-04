@@ -38,40 +38,45 @@ in Section~\ref{sec:significance}, since items sharing a source document are not
 
 \subsection{Task Types}
 
-IndiaFinBench defines four task types, each probing a distinct reasoning capability.
-Figure~\ref{fig:taskexamples} (Appendix~\ref{app:examples}) provides a representative example of
-each.
+IndiaFinBench defines four task types, each probing a distinct reasoning capability
+(Table~\ref{tab:tasktypes}); Figure~\ref{fig:taskexamples} (Appendix~\ref{app:examples}) gives a
+full worked example of each.
 
-\textbf{Regulatory Interpretation (REG, 174 items).} Given a regulatory passage, identify the
-correct rule, compliance threshold, or scope of applicability---e.g., that a stock exchange must
-forward a registration application ``not later than thirty days of receipt.''
-
-\textbf{Numerical Reasoning (NUM, 92 items).} Perform arithmetic over figures embedded in
-regulatory text---e.g., computing a Small Finance Bank's maximum eligible dividend from its Tier 1
-Capital Ratio and adjusted profit after tax. Requires both correct extraction and arithmetic
-execution.
-
-\textbf{Contradiction Detection (CON, 62 items).} Given two passages from different regulatory
-instruments, determine (Yes/No, with a one-sentence explanation) whether they contradict on the
-issue described---probing supersession tracking, a core challenge where circulars are frequently
-amended.
-
-\textbf{Temporal Reasoning (TMP, 78 items).} Establish chronological ordering of regulatory events,
-identify which version of a rule was in force at a given time, or compute elapsed time between
-milestones. Indian regulatory documents frequently reference earlier instruments only by date,
-requiring a consistent regulatory timeline.
+\begin{table}[t]
+\centering\small
+\begin{tabular}{lrp{9.7cm}}
+\toprule
+\textbf{Task} & \textbf{N} & \textbf{Definition} \\
+\midrule
+Regulatory Interpretation (REG) & 174 & Identify the correct rule, compliance threshold, or scope
+of applicability from a regulatory passage---e.g., that a stock exchange must forward a registration
+application ``not later than thirty days of receipt.'' \\
+Numerical Reasoning (NUM) & 92 & Perform arithmetic over figures embedded in regulatory
+text---e.g., a Small Finance Bank's maximum eligible dividend from its Tier 1 Capital Ratio and
+adjusted profit after tax---requiring correct extraction \emph{and} execution. \\
+Contradiction Detection (CON) & 62 & Given two passages from different regulatory instruments,
+determine (Yes/No, one-sentence explanation) whether they contradict, probing supersession
+tracking across frequently-amended circulars. \\
+Temporal Reasoning (TMP) & 78 & Establish chronological ordering of regulatory events, identify
+which rule version was in force at a given time, or compute elapsed time between milestones
+referenced only by date. \\
+\bottomrule
+\end{tabular}
+\caption{IndiaFinBench task types.}
+\label{tab:tasktypes}
+\end{table}
 
 \subsection{Annotation Protocol}
 
 All question-answer pairs were authored by the primary annotator, who has specialist experience with
-Indian financial regulatory documents. Expert single-annotator construction is standard for
-domain-specific benchmarks where annotation requires expertise unavailable to crowdsourced pools
-\citep{hendrycks2021cuad, malik2021ildc, islam2023financebench}; IndiaFinBench requires parallel
-familiarity with SEBI's securities regulation framework, RBI's prudential norms, and the
-amendment-chain structure linking hundreds of circulars over three decades. Section~\ref{sec:iaa}
-presents an independent human inter-annotator agreement study that empirically validates annotation
-quality. Each item consists of a context passage (80--500 words), a question, a reference answer,
-and metadata fields (task type, difficulty, source document).
+Indian financial regulatory documents spanning SEBI's securities regulation framework, RBI's
+prudential norms, and the amendment-chain structure linking hundreds of circulars over three
+decades---expertise unavailable to crowdsourced pools, so expert single-annotator construction is
+standard for domain-specific benchmarks \citep{hendrycks2021cuad, malik2021ildc,
+islam2023financebench}, validated empirically by an independent human inter-annotator agreement
+study (Section~\ref{sec:iaa}). Each item was individually reviewed for an unambiguous, unique answer
+derivable from context alone, and consists of a context passage (80--500 words), a question, a
+reference answer, and metadata fields (task type, difficulty, source document).
 
 Answer formats are standardized by task type: extractive spans for regulatory interpretation and
 temporal reasoning; calculated values with units for numerical reasoning (e.g., `Rs.~5,500 crore');
@@ -80,18 +85,10 @@ and `Yes' or `No' with a brief explanation for contradiction detection.
 Difficulty levels were assigned by the number of reasoning steps required: easy items are
 single-step extraction (160 items, 39.4\%), medium items require multi-clause reasoning or
 calculation (182, 44.8\%), and hard items span multiple instruments or complex arithmetic (64,
-15.8\%). Section~\ref{sec:difficulty} reports that this label predicts empirical difficulty for only
-three of the twelve evaluated models.
-
-\textbf{Annotation scale rationale.} The 406-item scale is a deliberate quality-over-quantity
-decision: each item requires domain knowledge of SEBI circulars, RBI master directions, and their
-decade-spanning amendment chains, structurally incompatible with crowdsourcing (cf.\ FinanceBench's
-150 expert-verified items, Section~\ref{sec:related}). The IAA study (Section~\ref{sec:iaa})
-independently validates 44.3\% of all items.
-
-Every item was individually reviewed to ensure: (1) the answer is unambiguously derivable from the
-provided context; (2) the question has exactly one correct answer; and (3) the context is sufficient
-without external knowledge.
+15.8\%; Section~\ref{sec:difficulty} finds this label predicts empirical difficulty for only three
+of the twelve evaluated models). The 406-item scale reflects a deliberate quality-over-quantity
+decision, structurally incompatible with crowdsourcing (cf.\ FinanceBench's 150 expert-verified
+items, Section~\ref{sec:related}).
 
 \subsection{Model-Based Secondary Validation}
 
@@ -162,11 +159,11 @@ numeric or substantive-conclusion discrepancy.
 \label{sec:models}
 
 We evaluate twelve models spanning a wide range of sizes, providers, and access modes on the full
-406-item benchmark (Table~\ref{tab:models}, Appendix~\ref{app:models}): Gemini 2.5 Flash (Google AI
-Studio) and Gemini 2.5 Pro (Google Vertex AI); Qwen3-32B, LLaMA-3.3-70B, Llama 4 Scout 17B, Kimi K2,
-GPT-OSS 120B, and GPT-OSS 20B (Groq API); DeepSeek-R1-Distill-Llama-70B (OpenRouter); and
-LLaMA-3-8B, Mistral-7B, and Gemma 3 4B run locally via Ollama v0.6.5 in 4-bit quantization
-(Q4\_K\_M) on an RTX 4060 (8~GB). All models were evaluated zero-shot with no fine-tuning or prompt
+406-item benchmark: Gemini 2.5 Flash, Gemini 2.5 Pro, Qwen3-32B, LLaMA-3.3-70B, Llama 4 Scout 17B,
+Kimi K2, GPT-OSS 120B, GPT-OSS 20B, DeepSeek-R1-Distill-Llama-70B, LLaMA-3-8B, Mistral-7B, and
+Gemma 3 4B (the last three run locally via Ollama v0.6.5, 4-bit quantization, on an RTX 4060,
+8~GB; exact providers, API identifiers, and completion budgets: Table~\ref{tab:models},
+Appendix~\ref{app:models}). All models were evaluated zero-shot with no fine-tuning or prompt
 adaptation, at temperature 0.0 --- but \textbf{not} under a shared completion budget: the harness set
 per-provider generation limits (200--2048 tokens) for cost reasons unrelated to any experimental
 design choice, and Gemini 2.5 Pro received no explicit cap at all. Budget heterogeneity is a
@@ -193,10 +190,9 @@ the model's ability to reason about the supplied regulatory text from its abilit
 memorized facts; it does not by itself establish that the underlying regulatory documents are
 absent from any model's training corpus, only that the model cannot use such memorized content
 \emph{instead of} the supplied passage without the context-only instruction being violated. All
-models received a system prompt establishing the context-only constraint: ``You are an expert in
-Indian financial regulation and policy. Answer questions using ONLY the provided context passage.
-Do not use any external knowledge. Be concise and precise. Give only the answer---no preamble.''
-Task-specific user prompts provided appropriate formatting instructions for each task type. For
+models received a system prompt establishing the context-only constraint (full text:
+Appendix~\ref{app:prompt}). Task-specific user prompts provided appropriate formatting instructions
+for each task type. For
 contradiction detection, both passages were labelled explicitly as `Passage A / Passage B'. For
 numerical reasoning, models were instructed to show calculation steps and include units---an
 instruction in tension with the system prompt's ``no preamble'' constraint, which is one source of

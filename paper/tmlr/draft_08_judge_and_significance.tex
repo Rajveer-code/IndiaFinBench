@@ -28,13 +28,14 @@ conservative for the disagreement rates we report below, not convenient: CON is 
 strict and judge-based scoring would agree almost by construction, so its absence removes a source
 of trivial agreement rather than manufacturing disagreement elsewhere.
 
-Before committing to the full pass we validated the judge on two small, targeted samples: phi4-mini
-agreed with all eight items Gemini 2.5 Flash itself answered correctly under strict scoring (a
-sanity check, not evidence of discrimination), and on eight DeepSeek-R1-Distill items marked
-incorrect under strict scoring, flipped seven to correct---each a genuine format mismatch---while
-correctly holding the eighth, where the predicted figure simply did not match the reference. The
-pilot showed that phi4-mini both overturned strict failures and retained cases where the substantive
-answer remained incorrect.
+The judge rubric (Appendix~\ref{app:judge}) accepts numeric answers within 1\% rounding of the
+reference; Appendix~\ref{app:judge-tolerance} tests that specific tolerance against two stricter
+alternatives and finds the strict-versus-judge-only claim above holds at all three, though
+individual models' judge-only ranks are more tolerance-sensitive than the headline spread suggests.
+
+Before committing to the full pass we validated the judge on two small, targeted samples that
+confirmed it both overturns genuine format mismatches and retains cases where the substantive
+answer is wrong (Appendix~\ref{app:judge}).
 
 Table~\ref{tab:judgereliability} reports, per model, the strict-to-judge overturn rate, the judge
 rejection rate of strict-correct predictions (estimable for the first time here, since this pass

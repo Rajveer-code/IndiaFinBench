@@ -1,0 +1,320 @@
+{
+  "exact": {
+    "per_model": {
+      "DeepSeek-R1-Distill": {
+        "strict_pct": 75.12,
+        "judge_only_pct": 95.57,
+        "judge_augmented_pct": 98.77,
+        "strict_rank": 12,
+        "judge_only_rank": 2,
+        "judge_augmented_rank": 1
+      },
+      "Gemini 2.5 Pro": {
+        "strict_pct": 76.11,
+        "judge_only_pct": 95.57,
+        "judge_augmented_pct": 96.8,
+        "strict_rank": 10,
+        "judge_only_rank": 2,
+        "judge_augmented_rank": 6
+      },
+      "Gemini 2.5 Flash": {
+        "strict_pct": 89.66,
+        "judge_only_pct": 92.86,
+        "judge_augmented_pct": 96.8,
+        "strict_rank": 1,
+        "judge_only_rank": 5,
+        "judge_augmented_rank": 6
+      },
+      "Gemma 3 4B": {
+        "strict_pct": 78.82,
+        "judge_only_pct": 87.68,
+        "judge_augmented_pct": 93.35,
+        "strict_rank": 6,
+        "judge_only_rank": 7,
+        "judge_augmented_rank": 9
+      },
+      "GPT-OSS 120B": {
+        "strict_pct": 77.09,
+        "judge_only_pct": 95.57,
+        "judge_augmented_pct": 98.52,
+        "strict_rank": 8,
+        "judge_only_rank": 2,
+        "judge_augmented_rank": 2
+      },
+      "GPT-OSS 20B": {
+        "strict_pct": 76.85,
+        "judge_only_pct": 96.8,
+        "judge_augmented_pct": 98.52,
+        "strict_rank": 9,
+        "judge_only_rank": 1,
+        "judge_augmented_rank": 2
+      },
+      "LLaMA-3.3-70B": {
+        "strict_pct": 83.74,
+        "judge_only_pct": 94.33,
+        "judge_augmented_pct": 98.28,
+        "strict_rank": 3,
+        "judge_only_rank": 3,
+        "judge_augmented_rank": 3
+      },
+      "Kimi K2": {
+        "strict_pct": 81.53,
+        "judge_only_pct": 95.57,
+        "judge_augmented_pct": 98.03,
+        "strict_rank": 5,
+        "judge_only_rank": 2,
+        "judge_augmented_rank": 4
+      },
+      "LLaMA-3-8B": {
+        "strict_pct": 78.08,
+        "judge_only_pct": 94.09,
+        "judge_augmented_pct": 96.55,
+        "strict_rank": 7,
+        "judge_only_rank": 4,
+        "judge_augmented_rank": 7
+      },
+      "Llama 4 Scout 17B": {
+        "strict_pct": 83.25,
+        "judge_only_pct": 95.57,
+        "judge_augmented_pct": 98.03,
+        "strict_rank": 4,
+        "judge_only_rank": 2,
+        "judge_augmented_rank": 4
+      },
+      "Mistral-7B": {
+        "strict_pct": 75.86,
+        "judge_only_pct": 89.41,
+        "judge_augmented_pct": 94.58,
+        "strict_rank": 11,
+        "judge_only_rank": 6,
+        "judge_augmented_rank": 8
+      },
+      "Qwen3-32B": {
+        "strict_pct": 85.47,
+        "judge_only_pct": 92.86,
+        "judge_augmented_pct": 97.04,
+        "strict_rank": 2,
+        "judge_only_rank": 5,
+        "judge_augmented_rank": 5
+      }
+    },
+    "judge_only_spread_pp": 9.12,
+    "judge_augmented_spread_pp": 5.42,
+    "strict_vs_judge_only_spearman_rho": -0.316,
+    "strict_vs_judge_only_spearman_p": 0.317,
+    "strict_vs_judge_only_kendall_tau": -0.2822,
+    "strict_vs_judge_only_kendall_p": 0.2235
+  },
+  "0.1pct": {
+    "per_model": {
+      "DeepSeek-R1-Distill": {
+        "strict_pct": 75.12,
+        "judge_only_pct": 94.58,
+        "judge_augmented_pct": 98.28,
+        "strict_rank": 12,
+        "judge_only_rank": 4,
+        "judge_augmented_rank": 2
+      },
+      "Gemini 2.5 Pro": {
+        "strict_pct": 76.11,
+        "judge_only_pct": 95.07,
+        "judge_augmented_pct": 96.55,
+        "strict_rank": 10,
+        "judge_only_rank": 3,
+        "judge_augmented_rank": 6
+      },
+      "Gemini 2.5 Flash": {
+        "strict_pct": 89.66,
+        "judge_only_pct": 92.86,
+        "judge_augmented_pct": 96.8,
+        "strict_rank": 1,
+        "judge_only_rank": 7,
+        "judge_augmented_rank": 5
+      },
+      "Gemma 3 4B": {
+        "strict_pct": 78.82,
+        "judge_only_pct": 87.68,
+        "judge_augmented_pct": 93.6,
+        "strict_rank": 6,
+        "judge_only_rank": 10,
+        "judge_augmented_rank": 9
+      },
+      "GPT-OSS 120B": {
+        "strict_pct": 77.09,
+        "judge_only_pct": 95.32,
+        "judge_augmented_pct": 98.52,
+        "strict_rank": 8,
+        "judge_only_rank": 2,
+        "judge_augmented_rank": 1
+      },
+      "GPT-OSS 20B": {
+        "strict_pct": 76.85,
+        "judge_only_pct": 95.81,
+        "judge_augmented_pct": 98.28,
+        "strict_rank": 9,
+        "judge_only_rank": 1,
+        "judge_augmented_rank": 2
+      },
+      "LLaMA-3.3-70B": {
+        "strict_pct": 83.74,
+        "judge_only_pct": 93.6,
+        "judge_augmented_pct": 98.28,
+        "strict_rank": 3,
+        "judge_only_rank": 5,
+        "judge_augmented_rank": 2
+      },
+      "Kimi K2": {
+        "strict_pct": 81.53,
+        "judge_only_pct": 95.81,
+        "judge_augmented_pct": 98.28,
+        "strict_rank": 5,
+        "judge_only_rank": 1,
+        "judge_augmented_rank": 2
+      },
+      "LLaMA-3-8B": {
+        "strict_pct": 78.08,
+        "judge_only_pct": 92.36,
+        "judge_augmented_pct": 96.06,
+        "strict_rank": 7,
+        "judge_only_rank": 8,
+        "judge_augmented_rank": 7
+      },
+      "Llama 4 Scout 17B": {
+        "strict_pct": 83.25,
+        "judge_only_pct": 95.07,
+        "judge_augmented_pct": 97.54,
+        "strict_rank": 4,
+        "judge_only_rank": 3,
+        "judge_augmented_rank": 3
+      },
+      "Mistral-7B": {
+        "strict_pct": 75.86,
+        "judge_only_pct": 88.92,
+        "judge_augmented_pct": 94.33,
+        "strict_rank": 11,
+        "judge_only_rank": 9,
+        "judge_augmented_rank": 8
+      },
+      "Qwen3-32B": {
+        "strict_pct": 85.47,
+        "judge_only_pct": 93.1,
+        "judge_augmented_pct": 97.04,
+        "strict_rank": 2,
+        "judge_only_rank": 6,
+        "judge_augmented_rank": 4
+      }
+    },
+    "judge_only_spread_pp": 8.13,
+    "judge_augmented_spread_pp": 4.92,
+    "strict_vs_judge_only_spearman_rho": -0.1263,
+    "strict_vs_judge_only_spearman_p": 0.6957,
+    "strict_vs_judge_only_kendall_tau": -0.1231,
+    "strict_vs_judge_only_kendall_p": 0.5815
+  },
+  "1pct": {
+    "per_model": {
+      "DeepSeek-R1-Distill": {
+        "strict_pct": 75.12,
+        "judge_only_pct": 92.36,
+        "judge_augmented_pct": 98.03,
+        "strict_rank": 12,
+        "judge_only_rank": 7,
+        "judge_augmented_rank": 1
+      },
+      "Gemini 2.5 Pro": {
+        "strict_pct": 76.11,
+        "judge_only_pct": 94.83,
+        "judge_augmented_pct": 96.55,
+        "strict_rank": 10,
+        "judge_only_rank": 1,
+        "judge_augmented_rank": 5
+      },
+      "Gemini 2.5 Flash": {
+        "strict_pct": 89.66,
+        "judge_only_pct": 89.66,
+        "judge_augmented_pct": 96.55,
+        "strict_rank": 1,
+        "judge_only_rank": 9,
+        "judge_augmented_rank": 5
+      },
+      "Gemma 3 4B": {
+        "strict_pct": 78.82,
+        "judge_only_pct": 87.19,
+        "judge_augmented_pct": 94.09,
+        "strict_rank": 6,
+        "judge_only_rank": 11,
+        "judge_augmented_rank": 8
+      },
+      "GPT-OSS 120B": {
+        "strict_pct": 77.09,
+        "judge_only_pct": 93.84,
+        "judge_augmented_pct": 97.54,
+        "strict_rank": 8,
+        "judge_only_rank": 3,
+        "judge_augmented_rank": 3
+      },
+      "GPT-OSS 20B": {
+        "strict_pct": 76.85,
+        "judge_only_pct": 93.1,
+        "judge_augmented_pct": 97.54,
+        "strict_rank": 9,
+        "judge_only_rank": 6,
+        "judge_augmented_rank": 3
+      },
+      "LLaMA-3.3-70B": {
+        "strict_pct": 83.74,
+        "judge_only_pct": 88.67,
+        "judge_augmented_pct": 98.03,
+        "strict_rank": 3,
+        "judge_only_rank": 10,
+        "judge_augmented_rank": 1
+      },
+      "Kimi K2": {
+        "strict_pct": 81.53,
+        "judge_only_pct": 93.35,
+        "judge_augmented_pct": 97.78,
+        "strict_rank": 5,
+        "judge_only_rank": 5,
+        "judge_augmented_rank": 2
+      },
+      "LLaMA-3-8B": {
+        "strict_pct": 78.08,
+        "judge_only_pct": 93.6,
+        "judge_augmented_pct": 96.31,
+        "strict_rank": 7,
+        "judge_only_rank": 4,
+        "judge_augmented_rank": 6
+      },
+      "Llama 4 Scout 17B": {
+        "strict_pct": 83.25,
+        "judge_only_pct": 94.33,
+        "judge_augmented_pct": 97.54,
+        "strict_rank": 4,
+        "judge_only_rank": 2,
+        "judge_augmented_rank": 3
+      },
+      "Mistral-7B": {
+        "strict_pct": 75.86,
+        "judge_only_pct": 91.38,
+        "judge_augmented_pct": 95.57,
+        "strict_rank": 11,
+        "judge_only_rank": 8,
+        "judge_augmented_rank": 7
+      },
+      "Qwen3-32B": {
+        "strict_pct": 85.47,
+        "judge_only_pct": 92.36,
+        "judge_augmented_pct": 97.29,
+        "strict_rank": 2,
+        "judge_only_rank": 7,
+        "judge_augmented_rank": 4
+      }
+    },
+    "judge_only_spread_pp": 7.64,
+    "judge_augmented_spread_pp": 3.94,
+    "strict_vs_judge_only_spearman_rho": -0.2732,
+    "strict_vs_judge_only_spearman_p": 0.3902,
+    "strict_vs_judge_only_kendall_tau": -0.1679,
+    "strict_vs_judge_only_kendall_p": 0.4496
+  }
+}

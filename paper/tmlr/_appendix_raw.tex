@@ -60,6 +60,49 @@ Rules:\\
 Reply with exactly: CORRECT or INCORRECT, plus a one-sentence reason.
 \end{quote}
 
+\subsection{Judge-Tolerance Sensitivity}
+\label{app:judge-tolerance}
+
+The rubric above accepts rounding within 1\%. Because this paper's central claim is that
+scoring-rule choices are themselves consequential, that tolerance is exactly the kind of parameter
+the claim should be tested against rather than left as an undefended default. We re-ran the
+full-coverage phi4-mini judge (Section~\ref{sec:judge}) at two additional tolerances---exact numeric
+match (no rounding clause) and 0.1\%---under otherwise identical conditions (same model, temperature,
+context sizing, and full REG/NUM/TMP coverage), and compare all three against the 1\% run used
+throughout the paper.
+
+\begin{table*}[t]
+\centering\small
+\input{tables/table_judgetolerance.tex}
+\caption{Judge-only accuracy and rank at three rounding tolerances, all twelve models, sorted by the
+1\% (paper) rank. Same phi4-mini judge and full REG/NUM/TMP coverage at every tolerance; only the
+rubric's rounding clause differs.}
+\label{tab:judgetolerance}
+\end{table*}
+
+Two findings, in different directions. First, the paper's central claim is robust: strict and
+judge-only show no significant rank correspondence at any tolerance (Spearman $\rho = -0.32$,
+$-0.13$, $-0.27$ at exact, 0.1\%, and 1\% respectively, all $p > 0.3$), and the judge-only spread
+stays within a similar 7.6--9.1 point band throughout. Second, individual models' judge-only
+\emph{ranks} are more tolerance-sensitive than the headline numbers suggest: seven of twelve models
+move 4 or more ranks across the three tolerances tested, most sharply LLaMA-3.3-70B (rank 3 to 10, 7
+positions) and GPT-OSS 20B (rank 1 to 6, 5 positions). DeepSeek-R1-Distill itself moves from
+judge-only rank 2 (exact) to 4 (0.1\%) to 7 (1\%)---a real, disclosed dependency on tolerance,
+though it never approaches its strict rank of 12 at any tolerance tested. Under judge-augmented
+scoring specifically, DeepSeek-R1-Distill is 1st outright at exact tolerance (98.77\%, no tie),
+tied for 2nd at 0.1\% (98.28\%, with GPT-OSS 20B and LLaMA-3.3-70B), and tied for 1st at 1\% (98.03\%,
+with LLaMA-3.3-70B---the paper's headline finding): rank 1 or 2 at every tolerance tested, the more
+stable of its two headline results.
+
+We read this as reinforcing rather than undermining the paper's thesis, not as a reason to prefer
+one tolerance over another. The finding is not that 1\% was a poor choice---judge-only's defining
+property, no positive correspondence with strict, holds regardless of which of the three tolerances
+is used---it is that scoring-rule sensitivity extends one level deeper than the strict-versus-judge
+comparison alone: even within a fixed judge model and prompt, a single numeric rubric parameter
+moves individual model ranks by several positions. A benchmark that reports judge-only accuracy at
+one tolerance without stating it as a choice among defensible alternatives understates how much of
+the reported ranking is attributable to that specific choice.
+
 \subsection{Gemini Pilot}
 
 Before committing to a full-coverage second judge, we piloted semantic re-scoring with Gemini 2.5 Flash---one of the twelve evaluated models---over items strict scoring marked incorrect across NUM, REG, and TMP. The strict pipeline flagged 935 such predictions; 874 were judged, and the remaining 61 (58 empty responses, 3 API failures) were retained as incorrect without review, since no semantic judgment can rescue an empty prediction. CON items use exact Yes/No matching and were not part of this pilot.
@@ -67,6 +110,16 @@ Before committing to a full-coverage second judge, we piloted semantic re-scorin
 Judge reliability was estimated on a stratified 28-item manual audit (20 NUM, 5 REG, 3 TMP). Manual review confirmed 25 of 28 verdicts (89.3\%) as correct. The three judge errors all involved multi-step numerical problems where the model showed correct intermediate reasoning but reached a wrong final answer (NUM\_074: predicted Rs.~19,000 crore vs.\ reference Rs.~33,000 crore; NUM\_103: concluded wrong direction for a threshold comparison; NUM\_136: applied wrong regulatory fee slab)---the judge's tendency to over-credit partial reasoning chains on NUM items, referenced in Section~\ref{sec:discussion}. Across the 874 judged predictions, Gemini reclassified 685 from incorrect to correct, an overall flip rate of 78.4\% (REG: 261/327 = 79.8\%; NUM: 272/348 = 78.2\%; TMP: 152/199 = 76.4\%).
 
 Because Gemini is itself one of the evaluated models and this pilot covered only strict failures---so it could characterise strict-to-judge overturns but not the judge's rejection rate of strict-correct predictions---these results motivated, rather than substitute for, the full-coverage cross-model judge (phi4-mini, sharing no model family with any evaluated system, reviewing all 4{,}128 REG/NUM/TMP predictions including strict-correct ones) whose results are reported in Section~\ref{sec:judge} and Table~\ref{tab:judgereliability}. Item-level Gemini verdicts remain available at \texttt{evaluation/results\_judged/} in the repository; the judge-only and judge-augmented accuracies used throughout this paper are computed from phi4-mini's full-coverage pass (\texttt{evaluation/results\_judged\_phi4/}), not from this pilot.
+
+\subsection{phi4-mini Pilot Validation}
+
+Before committing to the full cross-model pass, we validated phi4-mini on two small, targeted
+samples: it agreed with all eight items Gemini 2.5 Flash itself answered correctly under strict
+scoring (a sanity check, not evidence of discrimination), and on eight DeepSeek-R1-Distill items
+marked incorrect under strict scoring, flipped seven to correct---each a genuine format
+mismatch---while correctly holding the eighth, where the predicted figure simply did not match the
+reference. The pilot showed that phi4-mini both overturned strict failures and retained cases where
+the substantive answer remained incorrect.
 
 \subsection{Root Causes}
 

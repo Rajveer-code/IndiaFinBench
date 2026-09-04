@@ -48,8 +48,8 @@ that is wide enough to separate the field but narrow enough that most adjacent p
 individually distinguishable.
 
 The task means are more informative than the model means. Averaged across models, contradiction
-detection is highest at 91.0\%, followed by regulatory interpretation at 83.8\%, temporal reasoning
-at 77.0\%, and numerical reasoning at 65.5\%. That ordering is stable: Kendall's $W$ across the four
+detection is highest at 91.5\%, followed by regulatory interpretation at 84.0\%, temporal reasoning
+at 77.8\%, and numerical reasoning at 67.2\%. That ordering is stable: Kendall's $W$ across the four
 task profiles is 0.853 ($\chi^2 = 30.7$, $p < 0.001$, $n = 12$), so the models largely agree about
 which tasks are hard, even where they disagree about their own overall standing. Difficulty here is
 a property of the tasks rather than of any particular system.
@@ -73,7 +73,7 @@ answer.
 
 \textbf{Contradiction detection discriminates least, despite the highest mean.} 53 of its 62 items
 carry the gold label `No', so a classifier that always answers `No' scores 85.5\%. Against that
-baseline the 91.0\% task mean is a 5.5-point margin, not a strong result, and 10 of 12 models
+baseline the 91.5\% task mean is a 6.0-point margin, not a strong result, and 10 of 12 models
 exceed the baseline while Mistral-7B (80.6\%) and Gemma 3 4B (79.0\%) fall below a trivial
 majority classifier. High accuracy on an imbalanced binary task is close to uninformative, and we
 report balanced accuracy in Appendix~\ref{app:con} rather than leaning on the raw figure.

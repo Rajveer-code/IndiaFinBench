@@ -153,12 +153,21 @@ original OpenRouter response, which is not reproducible after the fact.**
 **R4.3 — "Independent adjudication was scoped into this revision but the blind sample sits unfilled.
 Does citing a 62-item stratified sample that hasn't been adjudicated read as claiming more progress
 than has actually happened?"**
-**Response:** The manuscript makes no claim about independent adjudication results anywhere — Section
-6.5's wording rule (never "the judge was validated by humans") already guards against this, and the
-existing 238-item sample is consistently labelled author adjudication throughout. **STATUS: no
-overclaim exists to fix; the sample's existence is not mentioned in the manuscript at all, only in
-the repository (`annotation/independent_adjudication/`), so there is nothing for a reviewer to read
-as premature.**
+**UPDATE 2026-09-04 — resolved with real data, not just avoided.** Two independent, non-author
+adjudicators (recruited by the author, blind to model identity, judge verdicts, and each other's
+answers) completed the full 62-item sample. Reported in Appendix~F.7: 82.3% pairwise agreement
+between them ($\kappa=0.652$), 87.1%/82.3% agreement with the author's own earlier verdicts on the
+same items ($\kappa=0.739$/$0.647$) — all three comparisons in the "substantial agreement" band by
+Landis & Koch (1977) convention — and both independently reproduce the author's own
+51.6%/48.4% Gemini/phi4-mini split on disputed items almost exactly (51.6%/48.4% and 53.2%/46.8%).
+The Limitations section (Section 8) points to this from the DeepSeek-specific single-adjudicator
+caveat, and the wording discipline from the original response is preserved explicitly in the new
+appendix text: this is reported as *replication of a disagreement pattern*, never as *validation of
+either judge*. **STATUS: resolved. Original response (superseded, kept for the record below): the
+manuscript made no claim about independent adjudication results anywhere — Section 6.5's wording
+rule (never "the judge was validated by humans") already guarded against overclaiming, and the
+existing 238-item sample was consistently labelled author adjudication throughout, so there was
+nothing for a reviewer to read as premature even before real data existed.**
 
 **R4.4 — "Four of your matched-budget re-run's models moved from Groq to OpenRouter mid-project
 because Groq deprecated them. Is 'the same model' via a different inference provider actually the

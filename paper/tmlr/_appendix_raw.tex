@@ -113,6 +113,52 @@ To check both judges against a human reader, we built a 238-item adjudication sh
 
 All 238 items were adjudicated by the author, scored against the judge verdicts as they stood at the time of adjudication (Section~\ref{sec:judge}). Section~\ref{sec:judge} reports the headline split (89.1\% control-agreement, 56.9\%/43.1\% Gemini/phi4-mini on disputed items); per stratum, the control-agreement rate ranged from 75.0\% (\texttt{NUM\_strict\_incorrect\_judges\_agree}, \texttt{TMP\_strict\_correct\_phi4\_agrees}) to 100\% (both CON strata and \texttt{REG\_strict\_correct\_phi4\_agrees}), with no stratum below 75\%---agreement between methods tracked human judgment reasonably well across every category sampled, not only on average. On the 174 disagreement items the human/Gemini--human/phi4-mini split is widest on numerical reasoning (Gemini matched 44 of 68, 64.7\%, against phi4-mini's 24, 35.3\%) and narrows to near-even on regulatory interpretation (30 of 59 vs.\ 29 of 59) and temporal reasoning (25 of 47 vs.\ 22 of 47). Section~\ref{sec:limitations} reports the DeepSeek-R1-Distill-specific breakdown of the disputed-item sample.
 
+\subsection{Independent (Non-Author) Adjudication}
+\label{app:independent-adjudication}
+
+The adjudication above was performed by the author, which leaves open whether it reflects a
+personal reading rather than one a different human would reach. To check this, two independent
+adjudicators---acquaintances of the author with no role in constructing the benchmark, blind to
+model identity, to both judges' verdicts, and to each other's answers throughout---each completed
+the full 62-item stratified subsample of the 174-item Gemini/phi4-mini disagreement set (drawn with
+a fixed seed, stratified by task, disagreement direction, strict-correctness status, prediction
+length, and truncation status; \texttt{scripts/build\_independent\_adjudication\_sample.py}), via a
+purpose-built review page presenting one item at a time with no technical interface
+(\texttt{scripts/build\_adjudication\_artifact.py}). Agreement is computed directly from both
+completed sheets (\texttt{scripts/score\_independent\_adjudication.py}); we report raw percent
+agreement and Cohen's $\kappa$ throughout, never treating any of the three human verdicts (author,
+or either independent adjudicator) as ground truth over the others.
+
+The two independent adjudicators agree with each other on 51 of 62 items (82.3\%, $\kappa=0.652$)
+and with the author's own earlier verdicts at 87.1\% ($\kappa=0.739$) and 82.3\% ($\kappa=0.647$)
+respectively---all three pairwise comparisons fall in the ``substantial agreement'' band by
+\citet{landiskoch1977} convention, the same convention used for the CON inter-annotator statistic in
+Table~\ref{tab:validation}. This does not establish that the author's original adjudication was correct on
+any specific item, but it is evidence against the narrower concern that a single self-adjudicating
+author's verdicts on this sample are idiosyncratic: two people with no stake in the benchmark and no
+knowledge of the author's own verdicts landed on the same reading at a rate comparable to expert
+human agreement rates reported for similar tasks. Agreement is not uniform across tasks: regulatory
+interpretation and numerical reasoning items show strong three-way agreement (76--100\% pairwise
+across all three adjudicators), while temporal reasoning items are markedly harder to adjudicate
+consistently (62.5\% pairwise agreement between the two independent adjudicators, and between each
+and the author)---consistent with temporal-reasoning items already being the ones this paper's
+error-taxonomy analysis (Appendix~\ref{sec:errortax-sub}) finds hardest for the judge to clear
+cleanly, now shown to be hard for independent human readers as well, not only for the automated
+pipeline.
+
+Against the two judges, both independent adjudicators land close to the author's own split and to
+each other: Gemini agreement is 51.6\% (Adjudicator A) and 53.2\% (Adjudicator B), phi4-mini
+agreement is 48.4\% and 46.8\% respectively, against the author's own 51.6\%/48.4\% on the identical
+62-item subsample.
+A majority vote across all three human verdicts reproduces the same 51.6\%/48.4\% split exactly.
+Three independent readings therefore converge on the same qualitative picture as the author's
+single-handed one: on genuinely disputed items, human readers side with Gemini over phi4-mini only
+slightly more often than the reverse, and neither judge is right often enough on these cases to
+stand in for ground truth. We report this as independent replication of that specific finding, not
+as validation of either judge---the wording distinction matters, since ``the judge was validated by
+humans'' is a stronger and different claim than ``independent humans replicate the same disagreement
+pattern the author found alone,'' and only the latter is supported here.
+
 \section{Evaluated Models}
 \label{app:models}
 

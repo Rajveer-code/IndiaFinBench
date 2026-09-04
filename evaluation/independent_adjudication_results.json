@@ -1,0 +1,47 @@
+{
+  "n": 62,
+  "pairwise": {
+    "adjudicator_a_vs_adjudicator_b": {
+      "agree_pct": 82.3,
+      "kappa": 0.652
+    },
+    "adjudicator_a_vs_author": {
+      "agree_pct": 87.1,
+      "kappa": 0.739
+    },
+    "adjudicator_b_vs_author": {
+      "agree_pct": 82.3,
+      "kappa": 0.647
+    }
+  },
+  "vs_judges": {
+    "adjudicator_a_vs_gemini": 51.6,
+    "adjudicator_a_vs_phi4": 48.4,
+    "adjudicator_b_vs_gemini": 53.2,
+    "adjudicator_b_vs_phi4": 46.8,
+    "author_vs_gemini": 51.6,
+    "author_vs_phi4": 48.4,
+    "majority3_vs_gemini": 51.6,
+    "majority3_vs_phi4": 48.4
+  },
+  "per_task": {
+    "regulatory_interpretation": {
+      "n": 21,
+      "adjudicator_a_vs_adjudicator_b": 90.5,
+      "adjudicator_a_vs_author": 85.7,
+      "adjudicator_b_vs_author": 76.2
+    },
+    "numerical_reasoning": {
+      "n": 25,
+      "adjudicator_a_vs_adjudicator_b": 88.0,
+      "adjudicator_a_vs_author": 88.0,
+      "adjudicator_b_vs_author": 100.0
+    },
+    "temporal_reasoning": {
+      "n": 16,
+      "adjudicator_a_vs_adjudicator_b": 62.5,
+      "adjudicator_a_vs_author": 87.5,
+      "adjudicator_b_vs_author": 62.5
+    }
+  }
+}

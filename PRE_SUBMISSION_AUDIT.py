@@ -285,6 +285,20 @@ else:
     check("evaluation/item_discrimination_exact.json exists", False,
           "run scripts/item_discrimination_exact.py first")
 
+print("\n=== INDEPENDENT ADJUDICATION CONSISTENCY (Phase 7, completed 2026-09-04) ===")
+iac_path = ROOT / "evaluation" / "independent_adjudication_results.json"
+if iac_path.exists():
+    iac = json.loads(iac_path.read_text(encoding="utf-8"))
+    check("independent_adjudication_results.json: n == 62", iac.get("n") == 62, f"found {iac.get('n')}")
+    ts = iac.get("pairwise", {}).get("adjudicator_a_vs_adjudicator_b", {})
+    check("independent adjudicators pairwise agreement == 82.3%% (regression guard)",
+          ts.get("agree_pct") == 82.3, f"found {ts.get('agree_pct')}")
+    check("independent adjudicators pairwise kappa == 0.652 (regression guard)",
+          ts.get("kappa") == 0.652, f"found {ts.get('kappa')}")
+else:
+    check("evaluation/independent_adjudication_results.json exists", False,
+          "run scripts/score_independent_adjudication.py first")
+
 print("\n=== MANUSCRIPT ===")
 
 STALE_STRINGS = [
@@ -333,6 +347,10 @@ STALE_STRINGS = [
     "r = -0.67", "across the other nine\nmodels", "across the other nine models",
     "the two largest positive shifts among those nine",
     "Gemini 2.5 Flash's re-run is not yet complete", "for four of the ten models",
+    # --- Independent-adjudicator real names (found+fixed 2026-09-04): the paper's own Ethics
+    # Statement promises no identifying participant information is released; the manuscript
+    # must always refer to them as "Adjudicator A"/"Adjudicator B", never by first name.
+    "Tanya", "Swarnim",
     # --- Plan v3 (2026-09-02) retirements. These are EXPECTED to fail until Phase 1-4 land;
     # that is the point -- this blocklist is what makes "Phase 1 done" checkable rather than
     # a matter of opinion. See paper/tmlr/../../../../.claude/plans/... Plan v3 Section 1 (F1-F10).

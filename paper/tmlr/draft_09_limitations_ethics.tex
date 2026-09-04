@@ -28,8 +28,14 @@ phi4-mini reclassified 10 of these 14 as correct, and human review disagreed wit
 is a small, disagreement-selected subsample---not sized to estimate what fraction of DeepSeek's
 93.9\% reclassification rate would survive full human review---but it is a genuine limitation of the
 cross-model judge design worth stating plainly rather than only reporting the more favourable
-control-agreement rate (89.1\%). The benchmark also does not cover Hindi--English code-switched
-regulatory text that appears in some official documents.
+control-agreement rate (89.1\%). Because this adjudication was performed by the author, two
+independent, non-author adjudicators separately completed a 62-item stratified subsample of the same
+disagreement set (Appendix~\ref{app:independent-adjudication}); their pairwise agreement with each
+other and with the author's own verdicts falls in the substantial-agreement band ($\kappa=0.65$--$0.74$),
+and both independently reproduce the same near-even Gemini/phi4-mini split the author found alone,
+which is evidence against the specific concern that the author's own adjudication is idiosyncratic,
+though it does not extend to a larger or differently-selected sample. The benchmark also does not
+cover Hindi--English code-switched regulatory text that appears in some official documents.
 
 The human reference study involves a single non-specialist evaluator on 60 medium-and-hard items; it
 anchors the harder half of the benchmark but supports no population-level claims about human
@@ -87,14 +93,16 @@ the questions, reference answers, difficulty and task-type annotations, evaluati
 model predictions. Every item's provenance (source document and, where applicable, URL) is included
 in the release so that claims can be traced back to the original regulatory text.
 
-\textbf{Human participants.} Two human contributions appear in this paper: the second annotator in
-the inter-annotator agreement study (Section~\ref{sec:iaa}) and the non-specialist evaluator
-(Section~\ref{sec:human}). Both were volunteers from the author's personal and academic network
-(fellow students and family members), recruited directly rather than through any institutional
-subject pool, informed of the study's purpose before participating, and uncompensated. No
-demographic, identifying, or personal information about either participant is collected, stored, or
-released; the public dataset contains only their task responses (answers to benchmark items), not
-any information about who they are. \textbf{Institutional review status:} this activity has not
+\textbf{Human participants.} Four human contributions appear in this paper: the second annotator in
+the inter-annotator agreement study (Section~\ref{sec:iaa}), the non-specialist evaluator
+(Section~\ref{sec:human}), and two independent adjudicators (Appendix~\ref{app:independent-adjudication}).
+All were volunteers from the author's personal and academic network (fellow students and family
+members), recruited directly rather than through any institutional subject pool, informed of the
+study's purpose before participating, and uncompensated. No demographic, identifying, or personal
+information about any participant is collected, stored, or released; the public dataset contains
+only their task responses (answers to benchmark items, or adjudication verdicts), not any
+information about who they are, and the two independent adjudicators are referred to only as
+Adjudicator A and Adjudicator B throughout. \textbf{Institutional review status:} this activity has not
 been reviewed by an institutional ethics board, and we make no determination here about whether such
 review would be required under any particular institution's policy---that determination is left to
 readers applying their own institution's standards, and to the author's institution before any

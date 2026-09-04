@@ -35,17 +35,20 @@ df["shift_sj"] = df["rank_s"] - df["rank_j"]
 df = df.sort_values("rank_s")
 
 
-def label_offsets(rank_col):
+def label_offsets(rank_col, spacing=0.34):
     offsets = {}
     for _, group in df.groupby(rank_col):
         members = list(group.index)
         for i, idx in enumerate(members):
-            offsets[idx] = (i - (len(members) - 1) / 2) * 0.34 if len(members) > 1 else 0.0
+            offsets[idx] = (i - (len(members) - 1) / 2) * spacing if len(members) > 1 else 0.0
     return offsets
 
 
 off_s = label_offsets("rank_s")
-off_j = label_offsets("rank_j")
+# Judge-only labels are small font (7pt) and short ("(NN.N)"), so a tied pair at the
+# default 0.34 spacing (±0.17) renders as two nearly-overlapping, illegible strings --
+# confirmed on the Qwen3-32B / DeepSeek-R1-Distill exact tie at 92.36%. Wider spacing here only.
+off_j = label_offsets("rank_j", spacing=0.85)
 off_a = label_offsets("rank_a")
 
 fig, ax = plt.subplots(figsize=(9.5, 8.2))

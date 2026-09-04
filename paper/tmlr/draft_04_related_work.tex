@@ -25,12 +25,16 @@ token-overlap F1 against a reference string. Those conventions were designed for
 from a passage, where the space of correct surface forms is small. Applied to open-ended
 quantitative answers---where \texttt{Rs.\ 19,000 crore}, \texttt{19,000 crore}, and
 \texttt{nineteen thousand crore} are the same answer---they measure formatting as much as
-correctness. LLM-as-judge evaluation has emerged as the usual alternative
+correctness. On extractive QA specifically, exact match and F1 correlate weakly with human judgments
+(0.22, 0.40) where LLM-as-judge scores correlate far more strongly, up to 0.85
+\citep{ho2025reassessing}---the same gap this paper measures, on open-ended regulatory answers rather
+than short spans. LLM-as-judge evaluation has emerged as the usual alternative
 \citep{zheng2023judging,gu2024survey}, and its own failure modes are documented: position, verbosity,
 and self-enhancement biases \citep{zheng2023judging}, familiarity and anchoring effects
-\citep{wang2024fairevaluators}, and a preference for a judge's own family's outputs
-\citep{wataoka2024selfpreference}. We are not claiming to discover that judges can be biased; that is
-established. Our contribution is measuring, on one benchmark, how large the disagreement between a
+\citep{wang2024fairevaluators}, a preference for a judge's own family's outputs
+\citep{wataoka2024selfpreference}, and raw agreement rates that overstate discriminative reliability
+once corrected for chance \citep{norman2026reliability}. We are not claiming to discover that judges
+can be biased; that is established. Our contribution is measuring, on one benchmark, how large the disagreement between a
 string-matching pipeline and a cross-model judge actually is, in both directions, and how much that
 disagreement alone---independent of which specific bias produces it---can move a twelve-model
 leaderboard. Our position is not that one regime is correct. It is that the two regimes answer

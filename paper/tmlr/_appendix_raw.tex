@@ -306,9 +306,10 @@ correlate with each model's original write-time-cap rate (Pearson $r = -0.77$ ac
 if anything in the opposite direction from a truncation-recovery story) and at least one competing
 explanation, unrelated to budget, remains live (the following subsection gives both candidates and
 the evidence for each in full). What the re-run supports without qualification is the general point:
-strict accuracy is sensitive to completion budget, logging configuration, and serving provider,
-sometimes by several points---further evidence, alongside the scoring-regime result, that a single
-leaderboard number is a property of the measurement protocol as much as of the model.
+strict accuracy is sensitive to the combined evaluation configuration---completion budget, logging
+configuration, and serving provider jointly, not any one in isolation---sometimes by several points.
+Further evidence, alongside the scoring-regime result, that a single leaderboard number is a property
+of the measurement protocol as much as of the model.
 
 \subsection{Matched-Budget Re-run: Provider and Model Identifiers}
 \label{app:matched-budget-ids}
@@ -451,7 +452,7 @@ an explicit multi-step chain easier to follow than a terse single clause that hi
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{figures/fig_correlation.png}
-\caption{Inter-task correlation matrix across the four task types. Values indicate Spearman $\rho$ correlation of per-model accuracy vectors across tasks (n=12 models). With n=12, the critical $\rho$ for significance at p$<$0.05 (two-tailed) is approximately 0.58; no pairwise inter-task correlation reaches this threshold: NUM--TMP is the largest at $\rho$=0.50, REG--CON and NUM--CON are weakly negative ($\rho\approx-0.33$), and the remaining pairs are small and positive. Task performance is largely task-specific rather than reflecting one latent capability.}
+\caption{Inter-task correlation matrix across the four task types. Values indicate Spearman $\rho$ correlation of per-model accuracy vectors across tasks (n=12 models). With n=12, the critical $\rho$ for significance at p$<$0.05 (two-tailed) is approximately 0.58; no pairwise inter-task correlation reaches this threshold: NUM--TMP is the largest at $\rho$=0.50, REG--CON and NUM--CON are weakly negative ($\rho\approx-0.33$), and the remaining pairs are small and positive. No pairwise inter-task correlation reaches significance in this 12-model sample, suggesting substantial task-specific variation; the sample is too small to support stronger claims about latent capability structure.}
 \label{fig:correlation}
 \end{figure}
 
